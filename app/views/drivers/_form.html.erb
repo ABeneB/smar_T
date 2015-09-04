@@ -1,41 +1,34 @@
-<%= form_for(@driver) do |f| %>
-  <% if @driver.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@driver.errors.count, "error") %> prohibited this driver from being saved:</h2>
-
-      <ul>
-      <% @driver.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= form_for @driver, :html => { :class => 'form-horizontal form-model' } do |f| %>
+  <div class="form-group">
+    <%= f.label :work_start_time, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.datetime_select :work_start_time, :class => 'text-field form-control' %>
     </div>
-  <% end %>
+  </div>
+  <div class="form-group">
+    <%= f.label :work_end_time, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.datetime_select :work_end_time, :class => 'text-field form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :activ, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.check_box :activ, :class => 'text-field form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :working_time, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.number_field :working_time, :class => 'text-field form-control' %>
+    </div>
+  </div>
 
-  <div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.text_field :user_id %>
-  </div>
-  <div class="field">
-    <%= f.label :company_id %><br>
-    <%= f.text_field :company_id %>
-  </div>
-  <div class="field">
-    <%= f.label :work_start_time %><br>
-    <%= f.datetime_select :work_start_time %>
-  </div>
-  <div class="field">
-    <%= f.label :work_end_time %><br>
-    <%= f.datetime_select :work_end_time %>
-  </div>
-  <div class="field">
-    <%= f.label :activ %><br>
-    <%= f.check_box :activ %>
-  </div>
-  <div class="field">
-    <%= f.label :working_time %><br>
-    <%= f.number_field :working_time %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-group">
+    <div class='col-md-offset-2 col-md-10'>
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                  drivers_path, :class => 'btn btn-default' %>
+    </div>
   </div>
 <% end %>

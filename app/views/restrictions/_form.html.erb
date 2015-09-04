@@ -1,53 +1,52 @@
-<%= form_for(@restriction) do |f| %>
-  <% if @restriction.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@restriction.errors.count, "error") %> prohibited this restriction from being saved:</h2>
-
-      <ul>
-      <% @restriction.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= form_for @restriction, :html => { :class => 'form-horizontal form-model' } do |f| %>
+  <div class="form-group">
+    <%= f.label :problem, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.text_field :problem, :class => 'text-field form-control' %>
     </div>
-  <% end %>
+  </div>
+  <div class="form-group">
+    <%= f.label :dynamic, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.check_box :dynamic, :class => 'text-field form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :multi_vehicle, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.check_box :multi_vehicle, :class => 'text-field form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :time_window, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.check_box :time_window, :class => 'text-field form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :capacity_restriction, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.check_box :capacity_restriction, :class => 'text-field form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :priorities, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.check_box :priorities, :class => 'text-field form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :work_time, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.check_box :work_time, :class => 'text-field form-control' %>
+    </div>
+  </div>
 
-  <div class="field">
-    <%= f.label :company_id %><br>
-    <%= f.text_field :company_id %>
-  </div>
-  <div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.text_field :user_id %>
-  </div>
-  <div class="field">
-    <%= f.label :problem %><br>
-    <%= f.text_field :problem %>
-  </div>
-  <div class="field">
-    <%= f.label :dynamic %><br>
-    <%= f.check_box :dynamic %>
-  </div>
-  <div class="field">
-    <%= f.label :multi_vehicle %><br>
-    <%= f.check_box :multi_vehicle %>
-  </div>
-  <div class="field">
-    <%= f.label :time_window %><br>
-    <%= f.check_box :time_window %>
-  </div>
-  <div class="field">
-    <%= f.label :capacity_restriction %><br>
-    <%= f.check_box :capacity_restriction %>
-  </div>
-  <div class="field">
-    <%= f.label :priorities %><br>
-    <%= f.check_box :priorities %>
-  </div>
-  <div class="field">
-    <%= f.label :work_time %><br>
-    <%= f.check_box :work_time %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-group">
+    <div class='col-md-offset-2 col-md-10'>
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                  restrictions_path, :class => 'btn btn-default' %>
+    </div>
   </div>
 <% end %>

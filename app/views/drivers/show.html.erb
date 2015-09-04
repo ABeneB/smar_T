@@ -1,34 +1,30 @@
-<p id="notice"><%= notice %></p>
+<%- model_class = Driver -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => Driver %></h1>
+</div>
 
-<p>
-  <strong>User:</strong>
-  <%= @driver.user %>
-</p>
+<div class="fieldset">
+  <dl>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:work_start_time) %></dt>
+      <dd><pre class="prettyprint"><%= @driver.work_start_time %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:work_end_time) %></dt>
+      <dd><pre class="prettyprint"><%= @driver.work_end_time %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:activ) %></dt>
+      <dd><pre class="prettyprint"><%= @driver.activ %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:working_time) %></dt>
+      <dd><pre class="prettyprint"><%= @driver.working_time %></pre></dd>
+  </dl>
+</div>
 
-<p>
-  <strong>Company:</strong>
-  <%= @driver.company %>
-</p>
+<div class="form-group">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              drivers_path, :class => 'btn btn-default'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_driver_path(@driver), :class => 'btn btn-default' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              driver_path(@driver),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+</div>
 
-<p>
-  <strong>Work start time:</strong>
-  <%= @driver.work_start_time %>
-</p>
-
-<p>
-  <strong>Work end time:</strong>
-  <%= @driver.work_end_time %>
-</p>
-
-<p>
-  <strong>Activ:</strong>
-  <%= @driver.activ %>
-</p>
-
-<p>
-  <strong>Working time:</strong>
-  <%= @driver.working_time %>
-</p>
-
-<%= link_to 'Edit', edit_driver_path(@driver) %> |
-<%= link_to 'Back', drivers_path %>

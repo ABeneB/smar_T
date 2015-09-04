@@ -1,0 +1,40 @@
+<%- model_class = Costumer -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => Costumer %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th><%= model_class.human_attribute_name(:address) %></th>
+      <th><%= model_class.human_attribute_name(:telefon) %></th>
+      <th><%= model_class.human_attribute_name(:priority) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @costumers.each do |costumer| %>
+      <tr>
+        <td><%= costumer.id %></td>
+        <td><%= costumer.address %></td>
+        <td><%= costumer.telefon %></td>
+        <td><%= costumer.priority %></td>
+        <td><%=l costumer.created_at, format: :long %></td>
+        <td>
+          <%= link_to costumer_path(costumer), :class => 'btn btn-xs', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
+            <%= glyph 'info-sign' %>
+            <%= glyph 'pencil' %>
+          <%- end -%>
+          <%= link_to costumer_path(costumer), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs', :title => "#{ t('.destroy', :default => t('helpers.links.destroy')) }" do %>
+            <%= glyph 'remove' %>
+          <%- end -%>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_costumer_path,
+            :class => 'btn btn-primary' %>

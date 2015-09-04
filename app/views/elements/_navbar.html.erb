@@ -15,13 +15,26 @@
     <ul class="nav navbar-nav">
       <% if defined?(Devise) %>
         <% if user_signed_in? %>
-              <li><%= link_to "Aufträge", edit_user_registration_path %></li>
+              <!-- FIXME Beschränkung nach user.role fehlt noch -->
+              <li><%= link_to "Touren", tours_path %></li>
               <li class="divider"></li>
-              <li><%= link_to "Create new user", new_user_registration_path %></li> <!-- FIXME: neue Nutzer anlegen, auch wenn man schon eingeloggt ist -->
+              <li><%= link_to "Aufträge", orders_path %></li>
               <li class="divider"></li>
-              <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
+              <li><%= link_to "Kunden", costumers_path %></li>
+              <li class="divider"></li>
+              <li><%= link_to "Fahrer", drivers_path %></li>
+              <li class="divider"></li>
+              <li><%= link_to "Fahrzeuge", vehicles_path %></li>
+              <li class="divider"></li>
+              <li><%= link_to "Nutzer", root_path %></li> <!-- FIXME fehlt noch -->
+              <li class="divider"></li>
+              <li><%= link_to "Beschränkungen", restrictions_path %></li>
+              <li class="divider"></li>
+              <li><%= link_to "Unternehmen", companies_path %></li>
+              <li class="divider"></li>
+              <li><%= link_to "Depots", depots_path %></li>
         <% else %>
-          <li><%= link_to "Login", new_user_session_path %></li>
+          
         <% end %>
       <% end %>
     </ul>

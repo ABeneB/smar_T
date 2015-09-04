@@ -1,24 +1,26 @@
-<p id="notice"><%= notice %></p>
+<%- model_class = Depot -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => Depot %></h1>
+</div>
 
-<p>
-  <strong>User:</strong>
-  <%= @depot.user %>
-</p>
+<div class="fieldset">
+  <dl>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:address) %></dt>
+      <dd><pre class="prettyprint"><%= @depot.address %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:duration) %></dt>
+      <dd><pre class="prettyprint"><%= @depot.duration %></pre></dd>
+  </dl>
+</div>
 
-<p>
-  <strong>Company:</strong>
-  <%= @depot.company %>
-</p>
+<div class="form-group">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              depots_path, :class => 'btn btn-default'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_depot_path(@depot), :class => 'btn btn-default' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              depot_path(@depot),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+</div>
 
-<p>
-  <strong>Address:</strong>
-  <%= @depot.address %>
-</p>
-
-<p>
-  <strong>Duration:</strong>
-  <%= @depot.duration %>
-</p>
-
-<%= link_to 'Edit', edit_depot_path(@depot) %> |
-<%= link_to 'Back', depots_path %>

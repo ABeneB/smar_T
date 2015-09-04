@@ -1,41 +1,22 @@
-<%= form_for(@order_tour) do |f| %>
-  <% if @order_tour.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@order_tour.errors.count, "error") %> prohibited this order_tour from being saved:</h2>
-
-      <ul>
-      <% @order_tour.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= form_for @order_tour, :html => { :class => 'form-horizontal form-model' } do |f| %>
+  <div class="form-group">
+    <%= f.label :location, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.text_field :location, :class => 'text-field form-control' %>
     </div>
-  <% end %>
+  </div>
+  <div class="form-group">
+    <%= f.label :place, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.number_field :place, :class => 'text-field form-control' %>
+    </div>
+  </div>
 
-  <div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.text_field :user_id %>
-  </div>
-  <div class="field">
-    <%= f.label :order_id %><br>
-    <%= f.text_field :order_id %>
-  </div>
-  <div class="field">
-    <%= f.label :tour_id %><br>
-    <%= f.text_field :tour_id %>
-  </div>
-  <div class="field">
-    <%= f.label :company_id %><br>
-    <%= f.text_field :company_id %>
-  </div>
-  <div class="field">
-    <%= f.label :location %><br>
-    <%= f.text_field :location %>
-  </div>
-  <div class="field">
-    <%= f.label :place %><br>
-    <%= f.number_field :place %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-group">
+    <div class='col-md-offset-2 col-md-10'>
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                  order_tours_path, :class => 'btn btn-default' %>
+    </div>
   </div>
 <% end %>

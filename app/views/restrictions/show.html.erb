@@ -1,49 +1,36 @@
-<p id="notice"><%= notice %></p>
+<%- model_class = Restriction -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => Restriction %></h1>
+</div>
 
-<p>
-  <strong>Company:</strong>
-  <%= @restriction.company %>
-</p>
+<div class="fieldset">
+  <dl>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:problem) %></dt>
+      <dd><pre class="prettyprint"><%= @restriction.problem %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:dynamic) %></dt>
+      <dd><pre class="prettyprint"><%= @restriction.dynamic %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:multi_vehicle) %></dt>
+      <dd><pre class="prettyprint"><%= @restriction.multi_vehicle %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:time_window) %></dt>
+      <dd><pre class="prettyprint"><%= @restriction.time_window %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:capacity_restriction) %></dt>
+      <dd><pre class="prettyprint"><%= @restriction.capacity_restriction %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:priorities) %></dt>
+      <dd><pre class="prettyprint"><%= @restriction.priorities %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:work_time) %></dt>
+      <dd><pre class="prettyprint"><%= @restriction.work_time %></pre></dd>
+  </dl>
+</div>
 
-<p>
-  <strong>User:</strong>
-  <%= @restriction.user %>
-</p>
+<div class="form-group">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              restrictions_path, :class => 'btn btn-default'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_restriction_path(@restriction), :class => 'btn btn-default' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              restriction_path(@restriction),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+</div>
 
-<p>
-  <strong>Problem:</strong>
-  <%= @restriction.problem %>
-</p>
-
-<p>
-  <strong>Dynamic:</strong>
-  <%= @restriction.dynamic %>
-</p>
-
-<p>
-  <strong>Multi vehicle:</strong>
-  <%= @restriction.multi_vehicle %>
-</p>
-
-<p>
-  <strong>Time window:</strong>
-  <%= @restriction.time_window %>
-</p>
-
-<p>
-  <strong>Capacity restriction:</strong>
-  <%= @restriction.capacity_restriction %>
-</p>
-
-<p>
-  <strong>Priorities:</strong>
-  <%= @restriction.priorities %>
-</p>
-
-<p>
-  <strong>Work time:</strong>
-  <%= @restriction.work_time %>
-</p>
-
-<%= link_to 'Edit', edit_restriction_path(@restriction) %> |
-<%= link_to 'Back', restrictions_path %>

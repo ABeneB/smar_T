@@ -1,6 +1,5 @@
-<h1>Editing depot</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Show', @depot %> |
-<%= link_to 'Back', depots_path %>
+<%- model_class = Depot -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => Depot %></h1>
+</div>
+<%= render :partial => 'form' %>

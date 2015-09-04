@@ -1,26 +1,26 @@
-<h1>Listing restrictions</h1>
-
-<table>
+<%- model_class = Restriction -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => Restriction %></h1>
+</div>
+<table class="table table-striped">
   <thead>
     <tr>
-      <th>Company</th>
-      <th>User</th>
-      <th>Problem</th>
-      <th>Dynamic</th>
-      <th>Multi vehicle</th>
-      <th>Time window</th>
-      <th>Capacity restriction</th>
-      <th>Priorities</th>
-      <th>Work time</th>
-      <th colspan="3"></th>
+      <th>ID</th>
+      <th><%= model_class.human_attribute_name(:problem) %></th>
+      <th><%= model_class.human_attribute_name(:dynamic) %></th>
+      <th><%= model_class.human_attribute_name(:multi_vehicle) %></th>
+      <th><%= model_class.human_attribute_name(:time_window) %></th>
+      <th><%= model_class.human_attribute_name(:capacity_restriction) %></th>
+      <th><%= model_class.human_attribute_name(:priorities) %></th>
+      <th><%= model_class.human_attribute_name(:work_time) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
-
   <tbody>
     <% @restrictions.each do |restriction| %>
       <tr>
-        <td><%= restriction.company %></td>
-        <td><%= restriction.user %></td>
+        <td><%= restriction.id %></td>
         <td><%= restriction.problem %></td>
         <td><%= restriction.dynamic %></td>
         <td><%= restriction.multi_vehicle %></td>
@@ -28,14 +28,21 @@
         <td><%= restriction.capacity_restriction %></td>
         <td><%= restriction.priorities %></td>
         <td><%= restriction.work_time %></td>
-        <td><%= link_to 'Show', restriction %></td>
-        <td><%= link_to 'Edit', edit_restriction_path(restriction) %></td>
-        <td><%= link_to 'Destroy', restriction, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%=l restriction.created_at, format: :long %></td>
+        <td>
+          <%= link_to restriction_path(restriction), :class => 'btn btn-xs', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
+            <%= glyph 'info-sign' %>
+            <%= glyph 'pencil' %>
+          <%- end -%>
+          <%= link_to restriction_path(restriction), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs', :title => "#{ t('.destroy', :default => t('helpers.links.destroy')) }" do %>
+            <%= glyph 'remove' %>
+          <%- end -%>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Restriction', new_restriction_path %>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_restriction_path,
+            :class => 'btn btn-primary' %>

@@ -1,6 +1,5 @@
-<h1>Editing restriction</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Show', @restriction %> |
-<%= link_to 'Back', restrictions_path %>
+<%- model_class = Restriction -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => Restriction %></h1>
+</div>
+<%= render :partial => 'form' %>

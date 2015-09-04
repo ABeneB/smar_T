@@ -1,34 +1,26 @@
-<p id="notice"><%= notice %></p>
+<%- model_class = OrderTour -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => OrderTour %></h1>
+</div>
 
-<p>
-  <strong>User:</strong>
-  <%= @order_tour.user %>
-</p>
+<div class="fieldset">
+  <dl>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:location) %></dt>
+      <dd><pre class="prettyprint"><%= @order_tour.location %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:place) %></dt>
+      <dd><pre class="prettyprint"><%= @order_tour.place %></pre></dd>
+  </dl>
+</div>
 
-<p>
-  <strong>Order:</strong>
-  <%= @order_tour.order %>
-</p>
+<div class="form-group">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              order_tours_path, :class => 'btn btn-default'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_order_tour_path(@order_tour), :class => 'btn btn-default' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              order_tour_path(@order_tour),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+</div>
 
-<p>
-  <strong>Tour:</strong>
-  <%= @order_tour.tour %>
-</p>
-
-<p>
-  <strong>Company:</strong>
-  <%= @order_tour.company %>
-</p>
-
-<p>
-  <strong>Location:</strong>
-  <%= @order_tour.location %>
-</p>
-
-<p>
-  <strong>Place:</strong>
-  <%= @order_tour.place %>
-</p>
-
-<%= link_to 'Edit', edit_order_tour_path(@order_tour) %> |
-<%= link_to 'Back', order_tours_path %>

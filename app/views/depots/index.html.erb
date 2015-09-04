@@ -1,31 +1,38 @@
-<h1>Listing depots</h1>
-
-<table>
+<%- model_class = Depot -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => Depot %></h1>
+</div>
+<table class="table table-striped">
   <thead>
     <tr>
-      <th>User</th>
-      <th>Company</th>
-      <th>Address</th>
-      <th>Duration</th>
-      <th colspan="3"></th>
+      <th>ID</th>
+      <th><%= model_class.human_attribute_name(:address) %></th>
+      <th><%= model_class.human_attribute_name(:duration) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
-
   <tbody>
     <% @depots.each do |depot| %>
       <tr>
-        <td><%= depot.user %></td>
-        <td><%= depot.company %></td>
+        <td><%= depot.id %></td>
         <td><%= depot.address %></td>
         <td><%= depot.duration %></td>
-        <td><%= link_to 'Show', depot %></td>
-        <td><%= link_to 'Edit', edit_depot_path(depot) %></td>
-        <td><%= link_to 'Destroy', depot, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%=l depot.created_at, format: :long %></td>
+        <td>
+          <%= link_to depot_path(depot), :class => 'btn btn-xs', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
+            <%= glyph 'info-sign' %>
+            <%= glyph 'pencil' %>
+          <%- end -%>
+          <%= link_to depot_path(depot), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs', :title => "#{ t('.destroy', :default => t('helpers.links.destroy')) }" do %>
+            <%= glyph 'remove' %>
+          <%- end -%>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Depot', new_depot_path %>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_depot_path,
+            :class => 'btn btn-primary' %>

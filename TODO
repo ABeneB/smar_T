@@ -1,0 +1,10 @@
+user anlegen (controller und view für index, edit, delete, new) - scaffold geht nicht
+role vergeben - admin, fahrer, planer
+rolen entsprechend die nav anzeigen
+form verändern, so das beziehungen eingeben werden können (Costumer zu Order etc)
+tourenbildungs knopf "new" - mit tourengenerieren verbinden
+models anlegen für touren bildung
+touren bilden -> fahrzeit errechnen? - https://github.com/alexreisner/geocoder
+OrderTour-Objekte erzeugen und speichern
+ansicht für role faher - Touren -> mit google maps - view_toures_path - https://github.com/apneadiving/Google-Maps-for-Rails
+css/view anpassen - nicht alles am rand - klaren container in der mitte

@@ -1,10 +1,4 @@
-<%= form_for @company, :html => { :class => 'form-horizontal form-model' } do |f| %>
-  <div class="form-group">
-    <%= f.label :name, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.text_field :name, :class => 'text-field form-control' %>
-    </div>
-  </div>
+<%= form_for @costumer, :html => { :class => 'form-horizontal form-model' } do |f| %>
   <div class="form-group">
     <%= f.label :address, :class => 'control-label col-md-2' %>
     <div class="col-md-10">
@@ -17,12 +11,18 @@
       <%= f.text_field :telefon, :class => 'text-field form-control' %>
     </div>
   </div>
+  <div class="form-group">
+    <%= f.label :priority, :class => 'control-label col-md-2' %>
+    <div class="col-md-10">
+      <%= f.text_field :priority, :class => 'text-field form-control' %>
+    </div>
+  </div>
 
   <div class="form-group">
     <div class='col-md-offset-2 col-md-10'>
       <%= f.submit nil, :class => 'btn btn-primary' %>
       <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                  companies_path, :class => 'btn btn-default' %>
+                  costumers_path, :class => 'btn btn-default' %>
     </div>
   </div>
 <% end %>
