@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  company_id: 
+  user_id: 
+  problem: MyString
+  dynamic: false
+  multi_vehicle: false
+  time_window: false
+  capacity_restriction: false
+  priorities: false
+  work_time: false
+
+two:
+  company_id: 
+  user_id: 
+  problem: MyString
+  dynamic: false
+  multi_vehicle: false
+  time_window: false
+  capacity_restriction: false
+  priorities: false
+  work_time: false

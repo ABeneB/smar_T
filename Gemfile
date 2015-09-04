@@ -38,6 +38,12 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+# For schema_to_scaffold
+gem 'activesupport'
+
+# Scaffold for schema.rb
+gem 'schema_to_scaffold'
+
 gem 'bundler'
 
 gem 'bootstrap-sass', '3.3.5'

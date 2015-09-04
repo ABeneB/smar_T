@@ -1,0 +1,31 @@
+<h1>Listing depots</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Company</th>
+      <th>Address</th>
+      <th>Duration</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @depots.each do |depot| %>
+      <tr>
+        <td><%= depot.user %></td>
+        <td><%= depot.company %></td>
+        <td><%= depot.address %></td>
+        <td><%= depot.duration %></td>
+        <td><%= link_to 'Show', depot %></td>
+        <td><%= link_to 'Edit', edit_depot_path(depot) %></td>
+        <td><%= link_to 'Destroy', depot, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Depot', new_depot_path %>

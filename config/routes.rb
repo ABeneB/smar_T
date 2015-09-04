@@ -1,4 +1,20 @@
 Rails.application.routes.draw do
+  resources :vehicles
+
+  resources :tours
+
+  resources :restrictions
+
+  resources :orders
+
+  resources :order_tours
+
+  resources :drivers
+
+  resources :depots
+
+  resources :companies
+
   get 'welcome/index'
 
   devise_for :users, controllers: {registrations: "users/registrations", sessions: "users/sessions", passwords: "users/passwords"}, skip: [:sessions, :registrations]

@@ -1,0 +1,41 @@
+<h1>Listing restrictions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Company</th>
+      <th>User</th>
+      <th>Problem</th>
+      <th>Dynamic</th>
+      <th>Multi vehicle</th>
+      <th>Time window</th>
+      <th>Capacity restriction</th>
+      <th>Priorities</th>
+      <th>Work time</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @restrictions.each do |restriction| %>
+      <tr>
+        <td><%= restriction.company %></td>
+        <td><%= restriction.user %></td>
+        <td><%= restriction.problem %></td>
+        <td><%= restriction.dynamic %></td>
+        <td><%= restriction.multi_vehicle %></td>
+        <td><%= restriction.time_window %></td>
+        <td><%= restriction.capacity_restriction %></td>
+        <td><%= restriction.priorities %></td>
+        <td><%= restriction.work_time %></td>
+        <td><%= link_to 'Show', restriction %></td>
+        <td><%= link_to 'Edit', edit_restriction_path(restriction) %></td>
+        <td><%= link_to 'Destroy', restriction, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Restriction', new_restriction_path %>

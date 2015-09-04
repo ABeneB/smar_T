@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @order_tour.user %>
+</p>
+
+<p>
+  <strong>Order:</strong>
+  <%= @order_tour.order %>
+</p>
+
+<p>
+  <strong>Tour:</strong>
+  <%= @order_tour.tour %>
+</p>
+
+<p>
+  <strong>Company:</strong>
+  <%= @order_tour.company %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @order_tour.location %>
+</p>
+
+<p>
+  <strong>Place:</strong>
+  <%= @order_tour.place %>
+</p>
+
+<%= link_to 'Edit', edit_order_tour_path(@order_tour) %> |
+<%= link_to 'Back', order_tours_path %>

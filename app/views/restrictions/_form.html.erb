@@ -1,0 +1,53 @@
+<%= form_for(@restriction) do |f| %>
+  <% if @restriction.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@restriction.errors.count, "error") %> prohibited this restriction from being saved:</h2>
+
+      <ul>
+      <% @restriction.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :company_id %><br>
+    <%= f.text_field :company_id %>
+  </div>
+  <div class="field">
+    <%= f.label :user_id %><br>
+    <%= f.text_field :user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :problem %><br>
+    <%= f.text_field :problem %>
+  </div>
+  <div class="field">
+    <%= f.label :dynamic %><br>
+    <%= f.check_box :dynamic %>
+  </div>
+  <div class="field">
+    <%= f.label :multi_vehicle %><br>
+    <%= f.check_box :multi_vehicle %>
+  </div>
+  <div class="field">
+    <%= f.label :time_window %><br>
+    <%= f.check_box :time_window %>
+  </div>
+  <div class="field">
+    <%= f.label :capacity_restriction %><br>
+    <%= f.check_box :capacity_restriction %>
+  </div>
+  <div class="field">
+    <%= f.label :priorities %><br>
+    <%= f.check_box :priorities %>
+  </div>
+  <div class="field">
+    <%= f.label :work_time %><br>
+    <%= f.check_box :work_time %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

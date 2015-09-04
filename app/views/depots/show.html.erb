@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @depot.user %>
+</p>
+
+<p>
+  <strong>Company:</strong>
+  <%= @depot.company %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @depot.address %>
+</p>
+
+<p>
+  <strong>Duration:</strong>
+  <%= @depot.duration %>
+</p>
+
+<%= link_to 'Edit', edit_depot_path(@depot) %> |
+<%= link_to 'Back', depots_path %>

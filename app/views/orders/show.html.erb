@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @order.user %>
+</p>
+
+<p>
+  <strong>Costumer:</strong>
+  <%= @order.costumer %>
+</p>
+
+<p>
+  <strong>Company:</strong>
+  <%= @order.company %>
+</p>
+
+<p>
+  <strong>Pickup location:</strong>
+  <%= @order.pickup_location %>
+</p>
+
+<p>
+  <strong>Delivery location:</strong>
+  <%= @order.delivery_location %>
+</p>
+
+<p>
+  <strong>Capacity:</strong>
+  <%= @order.capacity %>
+</p>
+
+<p>
+  <strong>Start time:</strong>
+  <%= @order.start_time %>
+</p>
+
+<p>
+  <strong>End time:</strong>
+  <%= @order.end_time %>
+</p>
+
+<%= link_to 'Edit', edit_order_path(@order) %> |
+<%= link_to 'Back', orders_path %>

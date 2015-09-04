@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @driver.user %>
+</p>
+
+<p>
+  <strong>Company:</strong>
+  <%= @driver.company %>
+</p>
+
+<p>
+  <strong>Work start time:</strong>
+  <%= @driver.work_start_time %>
+</p>
+
+<p>
+  <strong>Work end time:</strong>
+  <%= @driver.work_end_time %>
+</p>
+
+<p>
+  <strong>Activ:</strong>
+  <%= @driver.activ %>
+</p>
+
+<p>
+  <strong>Working time:</strong>
+  <%= @driver.working_time %>
+</p>
+
+<%= link_to 'Edit', edit_driver_path(@driver) %> |
+<%= link_to 'Back', drivers_path %>
