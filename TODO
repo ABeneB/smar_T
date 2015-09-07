@@ -1,10 +1,22 @@
 user anlegen (controller und view für index, edit, delete, new) - scaffold geht nicht
+    - views umschreiben - _navbars erstellen
 role vergeben - admin, fahrer, planer
 rolen entsprechend die nav anzeigen
 form verändern, so das beziehungen eingeben werden können (Costumer zu Order etc)
+    - https://github.com/plataformatec/simple_form - Associations
 tourenbildungs knopf "new" - mit tourengenerieren verbinden
-models anlegen für touren bildung
+    - tours_controller
+model(s) anlegen für touren bildung
 touren bilden -> fahrzeit errechnen? - https://github.com/alexreisner/geocoder
+    -   nominatim
 OrderTour-Objekte erzeugen und speichern
+Allgemein die Änderungen in DB Sppeichern
 ansicht für role faher - Touren -> mit google maps - view_toures_path - https://github.com/apneadiving/Google-Maps-for-Rails
-css/view anpassen - nicht alles am rand - klaren container in der mitte
+    - google maps ist eingebunden, orte/tour noch reinschmeißen - genrating jason
+css/view anpassen - nicht alles am rand -  container in der mitte
+
+migration für latitude und longitude als float ergänzend zu adresse (also für Driver, depots, company, Customer
+
+validate problem von restrictions (wie in model/user.rb)
+
+migration OrderTour duration (wie lange dauert der pickup/delivery?),  time (wie lange braucht man von der vorhirgen location zu dieser)

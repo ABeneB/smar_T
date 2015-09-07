@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   resources :depots
 
   resources :companies
+  
+  resources :registered_users
 
   get 'welcome/index'
 

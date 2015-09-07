@@ -38,11 +38,20 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+# simple_form
+gem 'simple_form'
+
 # For schema_to_scaffold
 gem 'activesupport'
 
 # Scaffold for schema.rb
 gem 'schema_to_scaffold'
+
+# Google Maps for rails - https://github.com/apneadiving/Google-Maps-for-Rails
+gem 'gmaps4rails'
+
+# Geocoder - https://github.com/alexreisner/geocoder
+gem 'geocoder'
 
 gem 'bundler'
 

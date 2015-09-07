@@ -13,6 +13,7 @@ class ToursController < ApplicationController
   end
 
   def new
+    # FIXME - g = Generate.new g.genrate:tours()
     @tour = Tour.new
     respond_with(@tour)
   end

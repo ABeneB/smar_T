@@ -1,0 +1,44 @@
+<nav class="navbar navbar-default" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <%= link_to "smar[T]", defined?(root_path) ? root_path : "#", class: "navbar-brand" %>
+  </div>
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse" id="navbar-collapse-1">
+    <ul class="nav navbar-nav">
+      <% if defined?(Devise) %>
+        <% if user_signed_in? %>
+              <li><%= link_to "Touren", tours_path %></li>
+              <li class="divider"></li>
+              <li><%= link_to "Aufträge", orders_path %></li>
+              <li class="divider"></li>
+              <li><%= link_to "Kunden", costumers_path %></li>
+              <li class="divider"></li>
+              <li><%= link_to "Fahrer", drivers_path %></li>
+              <li class="divider"></li>
+              <li><%= link_to "Fahrzeuge", vehicles_path %></li>
+              <li class="divider"></li>
+              <li><%= link_to "Depots", depots_path %></li>
+        <% else %>
+          <!-- Sollte nicht der Fall sein -->
+        <% end %>
+      <% end %>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <% if defined?(Devise) %>
+        <% if user_signed_in? %>
+              <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
+        <% else %>
+          <li><%= link_to "Login", new_user_session_path %></li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div><!-- /.navbar-collapse -->
+</nav>
