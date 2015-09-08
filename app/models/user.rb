@@ -4,10 +4,6 @@ class User < ActiveRecord::Base
   DRIVER_ROLE = "driver"
   PLANER_ROLE = "planer"
   
-  # Validate
-  validates :role, inclusion: { in: [USER_ROLE, ADMIN_ROLE, DRIVER_ROLE, PLANER_ROLE],
-    message: "%{role} is not a valid role. Please only use user, admin, driver, planer" }
-  
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,

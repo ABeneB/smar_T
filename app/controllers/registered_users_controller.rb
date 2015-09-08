@@ -42,6 +42,6 @@ class RegisteredUsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:user_id, :name, :address, :telefon) # FIXME
+      params.require(:user).permit(:id, :email, :last_sign_in_at, :created_at, :username, :role)
     end
 end

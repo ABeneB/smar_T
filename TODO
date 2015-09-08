@@ -1,7 +1,4 @@
-user anlegen (controller und view für index, edit, delete, new) - scaffold geht nicht
-    - views umschreiben - _navbars erstellen
-role vergeben - admin, fahrer, planer
-rolen entsprechend die nav anzeigen
+TODO
 form verändern, so das beziehungen eingeben werden können (Costumer zu Order etc)
     - https://github.com/plataformatec/simple_form - Associations
 tourenbildungs knopf "new" - mit tourengenerieren verbinden
@@ -20,3 +17,16 @@ migration für latitude und longitude als float ergänzend zu adresse (also für
 validate problem von restrictions (wie in model/user.rb)
 
 migration OrderTour duration (wie lange dauert der pickup/delivery?),  time (wie lange braucht man von der vorhirgen location zu dieser)
++ capacity_status (wie ist der Ladestatus an dem OrderTour Abschnitt der Tour?) + capacity (+ oder - icc)
+
+Auf sensiblen Seiten Rolle nochmal überprüfen (ADmin-Seiten etc.)
+
+signin entferen, nachdwm new uswe funktuoniert (password?), in den seeds den admin anlegen?
+
+views edit, new, delete von user funktioniernen nicht
+
+DONE
+user anlegen (controller und view für index, edit, delete, new) - scaffold geht nicht
+    - views umschreiben - _navbars erstellen
+role vergeben - admin, fahrer, planer
+rolen entsprechend die nav anzeigen

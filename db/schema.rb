@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150905170203) do
+ActiveRecord::Schema.define(version: 20150908133103) do
 
   create_table "companies", force: true do |t|
     t.integer  "user_id"
@@ -72,7 +72,12 @@ ActiveRecord::Schema.define(version: 20150905170203) do
     t.integer  "place"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "caomment"
+    t.string   "comment"
     t.string   "type"
+    t.integer  "capacity"
+    t.integer  "capacity_status"
+    t.integer  "time"
   end
 
   add_index "order_tours", ["company_id"], name: "index_order_tours_on_company_id"
@@ -91,6 +96,7 @@ ActiveRecord::Schema.define(version: 20150905170203) do
     t.datetime "end_time"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "comment"
   end
 
   add_index "orders", ["company_id"], name: "index_orders_on_company_id"
