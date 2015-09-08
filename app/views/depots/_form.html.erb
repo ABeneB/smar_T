@@ -1,22 +1,7 @@
-<%= form_for @depot, :html => { :class => 'form-horizontal form-model' } do |f| %>
-  <div class="form-group">
-    <%= f.label :address, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.text_field :address, :class => 'text-field form-control' %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :duration, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.number_field :duration, :class => 'text-field form-control' %>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <div class='col-md-offset-2 col-md-10'>
-      <%= f.submit nil, :class => 'btn btn-primary' %>
-      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                  depots_path, :class => 'btn btn-default' %>
-    </div>
-  </div>
+<%= simple_form_for @depot do |f| %>
+  <%= f.input :name %>
+  <%= f.input :address %>
+  <%= f.input :duration %>
+  <%= f.association :company %>
+  <%= f.button :submit %>
 <% end %>

@@ -1,32 +1,44 @@
 TODO
-form verändern, so das beziehungen eingeben werden können (Costumer zu Order etc)
-    - https://github.com/plataformatec/simple_form - Associations
-tourenbildungs knopf "new" - mit tourengenerieren verbinden
+_form von Order und Driver anpassen - deaktivieren (null setzen) von work_end_time etc.
+    - restrictions einbeziehen -> wenn keine working_time restriction besteht, dann auch kein Feld im Formular beim Planer
+tours_controller new eingabe für generate überarbeiten
+index.html.erb überarbeiten für neue Attribute (name etc)
+Alle Objekte (Driver, Order etc.) automatisch mit der Company des users associeren
     - tours_controller
-model(s) anlegen für touren bildung
 touren bilden -> fahrzeit errechnen? - https://github.com/alexreisner/geocoder
     -   nominatim
 OrderTour-Objekte erzeugen und speichern
 Allgemein die Änderungen in DB Sppeichern
-ansicht für role faher - Touren -> mit google maps - view_toures_path - https://github.com/apneadiving/Google-Maps-for-Rails
+ansicht für role faher - https://github.com/apneadiving/Google-Maps-for-Rails
     - google maps ist eingebunden, orte/tour noch reinschmeißen - genrating jason
-css/view anpassen - nicht alles am rand -  container in der mitte
 
 migration für latitude und longitude als float ergänzend zu adresse (also für Driver, depots, company, Customer
 
-validate problem von restrictions (wie in model/user.rb)
-
-migration OrderTour duration (wie lange dauert der pickup/delivery?),  time (wie lange braucht man von der vorhirgen location zu dieser)
-+ capacity_status (wie ist der Ladestatus an dem OrderTour Abschnitt der Tour?) + capacity (+ oder - icc)
-
 Auf sensiblen Seiten Rolle nochmal überprüfen (ADmin-Seiten etc.)
 
-signin entferen, nachdwm new uswe funktuoniert (password?), in den seeds den admin anlegen?
+signin entferen
+-  new user (password?)
 
 views edit, new, delete von user funktioniernen nicht
 
+
+
+user name = username für simple_form (sonst zeigt er interne Bezeichnung an)
+
+!!! driver.edit ändert nichts! ggf. auch bei den anderen edit-views
+
+!!! order -> Adresse eingeben, bzw. übernehmen von Kunden, auch anzeigen im view
+
 DONE
+icons für view, edit und delete ändern
+tourenbildungs knopf "new" - mit tourengenerieren verbinden
+Löschen von edit, new und _form für Tour, OrderTour -> da diese nicht verändert werden sollen
+validate problem von restrictions (wie in model/user.rb)
+_form mit associations (company, customer, depot, driver, order, registred_user, restriction
+validation for priority in costumer
 user anlegen (controller und view für index, edit, delete, new) - scaffold geht nicht
     - views umschreiben - _navbars erstellen
 role vergeben - admin, fahrer, planer
 rolen entsprechend die nav anzeigen
+migration OrderTour duration (wie lange dauert der pickup/delivery?),  time (wie lange braucht man von der vorhirgen location zu dieser)
++ capacity_status (wie ist der Ladestatus an dem OrderTour Abschnitt der Tour?) + capacity (+ oder - icc)

@@ -1,28 +1,6 @@
-<%= form_for @vehicle, :html => { :class => 'form-horizontal form-model' } do |f| %>
-  <div class="form-group">
-    <%= f.label :position, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.text_field :position, :class => 'text-field form-control' %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :capacity, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.number_field :capacity, :class => 'text-field form-control' %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :duration, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.number_field :duration, :class => 'text-field form-control' %>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <div class='col-md-offset-2 col-md-10'>
-      <%= f.submit nil, :class => 'btn btn-primary' %>
-      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                  vehicles_path, :class => 'btn btn-default' %>
-    </div>
-  </div>
+<%= simple_form_for @vehicle do |f| %>
+  <%= f.input :position %>
+  <%= f.input :capacity %>
+  <%= f.association :driver %>
+  <%= f.button :submit %>
 <% end %>

@@ -17,15 +17,6 @@
         <td><%= tour.id %></td>
         <td><%= tour.duration %></td>
         <td><%=l tour.created_at, format: :long %></td>
-        <td>
-          <%= link_to tour_path(tour), :class => 'btn btn-xs', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
-            <%= glyph 'info-sign' %>
-            <%= glyph 'pencil' %>
-          <%- end -%>
-          <%= link_to tour_path(tour), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs', :title => "#{ t('.destroy', :default => t('helpers.links.destroy')) }" do %>
-            <%= glyph 'remove' %>
-          <%- end -%>
-        </td>
       </tr>
     <% end %>
   </tbody>

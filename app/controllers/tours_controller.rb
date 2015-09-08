@@ -13,8 +13,13 @@ class ToursController < ApplicationController
   end
 
   def new
-    # FIXME - g = Generate.new g.genrate:tours()
-    @tour = Tour.new
+    # FIXME - Filtern nach user -> company -> Driver/Order
+    driver = Driver.all
+    order = Order.all
+    company = Company.all 
+    Generate.new g.genrate_tours(driver, order, company)
+    # Generate erzeugt und speichert die neuen Touren, OrderTour-Objekte
+    @tours = Tour.all
     respond_with(@tour)
   end
 

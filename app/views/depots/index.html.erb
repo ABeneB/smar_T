@@ -19,15 +19,10 @@
         <td><%= depot.address %></td>
         <td><%= depot.duration %></td>
         <td><%=l depot.created_at, format: :long %></td>
-        <td>
-          <%= link_to depot_path(depot), :class => 'btn btn-xs', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
-            <%= glyph 'info-sign' %>
-            <%= glyph 'pencil' %>
-          <%- end -%>
-          <%= link_to depot_path(depot), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs', :title => "#{ t('.destroy', :default => t('helpers.links.destroy')) }" do %>
-            <%= glyph 'remove' %>
-          <%- end -%>
-        </td>
+        <td><%= link_to 'Show', depot, :class => 'btn btn-info btn-xs' %></td>
+        <td><%= link_to 'Edit', edit_depot_path(depot), :class => 'btn btn-warning btn-xs' %></td>
+        <td><%= link_to 'Destroy', depot, method: :delete, 
+        data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
       </tr>
     <% end %>
   </tbody>

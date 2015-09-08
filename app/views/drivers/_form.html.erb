@@ -1,34 +1,8 @@
-<%= form_for @driver, :html => { :class => 'form-horizontal form-model' } do |f| %>
-  <div class="form-group">
-    <%= f.label :work_start_time, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.datetime_select :work_start_time, :class => 'text-field form-control' %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :work_end_time, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.datetime_select :work_end_time, :class => 'text-field form-control' %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :activ, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.check_box :activ, :class => 'text-field form-control' %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :working_time, :class => 'control-label col-md-2' %>
-    <div class="col-md-10">
-      <%= f.number_field :working_time, :class => 'text-field form-control' %>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <div class='col-md-offset-2 col-md-10'>
-      <%= f.submit nil, :class => 'btn btn-primary' %>
-      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                  drivers_path, :class => 'btn btn-default' %>
-    </div>
-  </div>
+<%= simple_form_for @driver do |f| %>
+  <%= f.input :name %>
+  <%= f.input :work_start_time %>
+  <%= f.input :work_end_time %>
+  <%= f.input :working_time %>
+  <%= f.input :activ %>
+  <%= f.button :submit %>
 <% end %>
