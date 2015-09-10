@@ -1,19 +1,16 @@
 <%- model_class = Order -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => Order %></h1>
+  <h1>Aufträge</h1>
 </div>
 <table class="table table-striped">
   <thead>
     <tr>
       <th>ID</th>
-      <th><%= model_class.human_attribute_name(:order_id) %></th>
-      <th><%= model_class.human_attribute_name(:address) %></th>
-      <th><%= model_class.human_attribute_name(:pickup_location) %></th>
-      <th><%= model_class.human_attribute_name(:delivery_location) %></th>
-      <th><%= model_class.human_attribute_name(:capacity) %></th>
-      <th><%= model_class.human_attribute_name(:start_time) %></th>
-      <th><%= model_class.human_attribute_name(:end_time) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th>Kunde</th>
+      <th>Abholort</th>
+      <th>Lieferort</th>
+      <th>Kapazität</th>
+      <th>Aktiv</th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
@@ -21,14 +18,11 @@
     <% @orders.each do |order| %>
       <tr>
         <td><%= order.id %></td>
-        <td><%= order.order_id %></td>
-        <td><%= order.address %></td>
+        <td><%= order.costumer_id %></td>
         <td><%= order.pickup_location %></td>
         <td><%= order.delivery_location %></td>
         <td><%= order.capacity %></td>
-        <td><%= order.start_time %></td>
-        <td><%= order.end_time %></td>
-        <td><%=l order.created_at, format: :long %></td>
+        <td><%= order.activ%></td>
         <td><%= link_to 'Show', order, :class => 'btn btn-info btn-xs' %></td>
         <td><%= link_to 'Edit', edit_order_path(order), :class => 'btn btn-warning btn-xs' %></td>
         <td><%= link_to 'Destroy', order, method: :delete, 

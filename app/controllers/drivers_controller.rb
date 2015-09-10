@@ -42,6 +42,6 @@ class DriversController < ApplicationController
     end
 
     def driver_params
-      params.require(:driver).permit(:user_id, :company_id, :work_start_time, :work_end_time, :activ, :working_time)
+      params.require(:driver).permit(:user_id, :name, :company_id, :work_start_time, :work_end_time, :activ, :working_time)
     end
 end

@@ -6,9 +6,11 @@
   <thead>
     <tr>
       <th>ID</th>
-      <th><%= model_class.human_attribute_name(:address) %></th>
-      <th><%= model_class.human_attribute_name(:duration) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th>Unternehmen</th>
+      <th>Name</th>
+      <th>Adresse</th>
+      <th>Einladedauer</th>
+      <th>Erstellt am</th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
@@ -16,6 +18,8 @@
     <% @depots.each do |depot| %>
       <tr>
         <td><%= depot.id %></td>
+        <td><%= depot.company.name %></td>
+        <td><%= depot.name %></td>
         <td><%= depot.address %></td>
         <td><%= depot.duration %></td>
         <td><%=l depot.created_at, format: :long %></td>

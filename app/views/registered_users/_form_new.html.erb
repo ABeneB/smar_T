@@ -1,0 +1,7 @@
+<%= simple_form_for @user, :url => new_registered_user_path, :id => user.id do |f| %>
+  <%= f.input :username %>
+  <%= f.input :email %>
+  <%= f.input :password %>
+  <%= f.input :role %>
+  <%= f.button :submit %>
+<% end %>

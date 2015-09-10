@@ -6,6 +6,7 @@
   <thead>
     <tr>
       <th>ID</th>
+      <th>Unternehmen</th>
       <th><%= model_class.human_attribute_name(:problem) %></th>
       <th><%= model_class.human_attribute_name(:dynamic) %></th>
       <th><%= model_class.human_attribute_name(:multi_vehicle) %></th>
@@ -21,6 +22,7 @@
     <% @restrictions.each do |restriction| %>
       <tr>
         <td><%= restriction.id %></td>
+        <td><%= restriction.company.name %></td>
         <td><%= restriction.problem %></td>
         <td><%= restriction.dynamic %></td>
         <td><%= restriction.multi_vehicle %></td>
@@ -28,7 +30,6 @@
         <td><%= restriction.capacity_restriction %></td>
         <td><%= restriction.priorities %></td>
         <td><%= restriction.work_time %></td>
-        <td><%=l restriction.created_at, format: :long %></td>
         <td><%= link_to 'Show', restriction, :class => 'btn btn-info btn-xs' %></td>
         <td><%= link_to 'Edit', edit_restriction_path(restriction), :class => 'btn btn-warning btn-xs' %></td>
         <td><%= link_to 'Destroy', restriction, method: :delete, 

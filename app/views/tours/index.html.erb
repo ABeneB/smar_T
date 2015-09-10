@@ -6,8 +6,9 @@
   <thead>
     <tr>
       <th>ID</th>
-      <th><%= model_class.human_attribute_name(:duration) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th>Fahrer</th>
+      <th>Dauer</th>
+      <th>Erstellt am</th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
@@ -15,6 +16,7 @@
     <% @tours.each do |tour| %>
       <tr>
         <td><%= tour.id %></td>
+        <td><%= tour.driver_id %></td>
         <td><%= tour.duration %></td>
         <td><%=l tour.created_at, format: :long %></td>
       </tr>

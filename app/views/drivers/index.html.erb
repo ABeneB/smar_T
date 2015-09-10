@@ -1,17 +1,15 @@
 <%- model_class = Driver -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => Driver %></h1>
+  <h1>Fahrer</h1>
 </div>
 <table class="table table-striped">
   <thead>
     <tr>
       <th>ID</th>
-      <th><%= model_class.human_attribute_name(:name) %></th>
-      <th><%= model_class.human_attribute_name(:work_start_time) %></th>
-      <th><%= model_class.human_attribute_name(:work_end_time) %></th>
-      <th><%= model_class.human_attribute_name(:activ) %></th>
-      <th><%= model_class.human_attribute_name(:working_time) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th>Name</th>
+      <th>Aktiv</th>
+      <th>Arbeitszeit</th>
+      <th>Erstellt am</th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
@@ -20,8 +18,6 @@
       <tr>
         <td><%= driver.id %></td>
         <td><%= driver.name %></td>
-        <td><%= driver.work_start_time %></td>
-        <td><%= driver.work_end_time %></td>
         <td><%= driver.activ %></td>
         <td><%= driver.working_time %></td>
         <td><%=l driver.created_at, format: :long %></td>

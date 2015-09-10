@@ -1,20 +1,28 @@
 <%- model_class = Order -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => Order %></h1>
+  <h1>Auftrag</h1>
 </div>
 
 <div class="fieldset">
   <dl>
-      <dt class="label label-default"><%= model_class.human_attribute_name(:pickup_location) %></dt>
+      <dt class="label label-default">Abholort</dt>
       <dd><pre class="prettyprint"><%= @order.pickup_location %></pre></dd>
-      <dt class="label label-default"><%= model_class.human_attribute_name(:delivery_location) %></dt>
+      <dt class="label label-default">Einladedauer</dt>
+      <dd><pre class="prettyprint"><%= @order.duration_delivery %></pre></dd>
+      <dt class="label label-default">Lieferort</dt>
       <dd><pre class="prettyprint"><%= @order.delivery_location %></pre></dd>
-      <dt class="label label-default"><%= model_class.human_attribute_name(:capacity) %></dt>
-      <dd><pre class="prettyprint"><%= @order.capacity %></pre></dd>
-      <dt class="label label-default"><%= model_class.human_attribute_name(:start_time) %></dt>
+      <dt class="label label-default">Ausladedauer</dt>
+      <dd><pre class="prettyprint"><%= @order.duration_delivery %></pre></dd>
+      <dt class="label label-default">Startzeit</dt>
       <dd><pre class="prettyprint"><%= @order.start_time %></pre></dd>
-      <dt class="label label-default"><%= model_class.human_attribute_name(:end_time) %></dt>
+      <dt class="label label-default">Endzeit</dt>
       <dd><pre class="prettyprint"><%= @order.end_time %></pre></dd>
+      <dt class="label label-default">Kapzität</dt>
+      <dd><pre class="prettyprint"><%= @order.capacity %></pre></dd>
+      <dt class="label label-default">Beschreibung</dt>
+      <dd><pre class="prettyprint"><%= @order.comment %></pre></dd>
+      <dt class="label label-default">Aktiv</dt>
+      <dd><pre class="prettyprint"><%= @order.activ %></pre></dd>
   </dl>
 </div>
 

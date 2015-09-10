@@ -1,11 +1,13 @@
 <%= simple_form_for @order do |f| %>
   <%= f.association :costumer %>
-  <%= f.input :adress %>
+  <%= f.input :pickup_location %>
+  <%= f.input :duration_pickup %>
+  <%= f.input :delivery_location %>
+  <%= f.input :duration_delivery %>
   <%= f.input :start_time %>
   <%= f.input :end_time %>
-  <%= f.input :duration_pickup %>
-  <%= f.input :duration_delivery %>
   <%= f.input :capacity %>
   <%= f.input :comment %>
+  <%= f.input :activ %>
   <%= f.button :submit %>
 <% end %>

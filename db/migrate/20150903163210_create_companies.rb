@@ -1,12 +1,7 @@
-class CreateCompanies < ActiveRecord::Migration
+class CreateUsers < ActiveRecord::Migration
   def change
-    create_table :companies do |t|
-      t.references :user, index: true
-      t.string :name
-      t.string :address
-      t.string :telefon
+    create_table :users do |t|
 
-      t.timestamps
     end
   end
 end

@@ -21,7 +21,7 @@
         <td><%= company.name %></td>
         <td><%= company.address %></td>
         <td><%= company.telefon %></td>
-        <td><%= company.user_id %></td>
+        <td><%= company.user.username %></td>
         <td><%=l company.created_at, format: :long %></td>
         <td><%= link_to 'Show', company, :class => 'btn btn-info btn-xs' %></td>
         <td><%= link_to 'Edit', edit_company_path(company), :class => 'btn btn-warning btn-xs' %></td>

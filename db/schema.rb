@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150908164303) do
+ActiveRecord::Schema.define(version: 20150908190403) do
 
   create_table "companies", force: true do |t|
     t.integer  "user_id"
@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(version: 20150908164303) do
     t.string   "telefon"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   add_index "companies", ["user_id"], name: "index_companies_on_user_id"
@@ -33,6 +35,8 @@ ActiveRecord::Schema.define(version: 20150908164303) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   add_index "costumers", ["company_id"], name: "index_costumers_on_company_id"
@@ -46,6 +50,8 @@ ActiveRecord::Schema.define(version: 20150908164303) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   add_index "depots", ["company_id"], name: "index_depots_on_company_id"
@@ -75,12 +81,14 @@ ActiveRecord::Schema.define(version: 20150908164303) do
     t.integer  "place"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "caomment"
     t.string   "comment"
     t.string   "type"
     t.integer  "capacity"
     t.integer  "capacity_status"
     t.integer  "time"
+    t.integer  "duration"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   add_index "order_tours", ["company_id"], name: "index_order_tours_on_company_id"
@@ -102,7 +110,9 @@ ActiveRecord::Schema.define(version: 20150908164303) do
     t.string   "comment"
     t.integer  "duration_pickup"
     t.integer  "duration_delivery"
-    t.string   "adress"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.boolean  "activ"
   end
 
   add_index "orders", ["company_id"], name: "index_orders_on_company_id"
@@ -168,6 +178,8 @@ ActiveRecord::Schema.define(version: 20150908164303) do
     t.integer  "driver_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   add_index "vehicles", ["driver_id"], name: "index_vehicles_on_driver_id"

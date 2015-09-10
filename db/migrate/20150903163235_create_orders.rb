@@ -9,6 +9,7 @@ class CreateOrders < ActiveRecord::Migration
       t.integer :capacity
       t.datetime :start_time
       t.datetime :end_time
+      t.boolean :activ
 
       t.timestamps
     end

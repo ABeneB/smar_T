@@ -42,6 +42,6 @@ class DepotsController < ApplicationController
     end
 
     def depot_params
-      params.require(:depot).permit(:user_id, :company_id, :address, :duration)
+      params.require(:depot).permit(:user_id, :name, :company_id, :address, :duration)
     end
 end
