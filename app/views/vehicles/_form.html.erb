@@ -1,6 +1,16 @@
-<%= simple_form_for @vehicle do |f| %>
-  <%= f.input :position %>
-  <%= f.input :capacity %>
-  <%= f.association :driver %>
-  <%= f.button :submit %>
+<% if current_user.role == "admin" %>
+  <%= simple_form_for @vehicle do |f| %>
+    <%= f.input :position %>
+    <%= f.input :capacity %>
+    <%= f.association :driver %>
+    <%= f.association :user %>
+    <%= f.button :submit %>
+  <% end %>
+<% elsif current_user.role =="planer" %>
+  <%= simple_form_for @vehicle do |f| %>
+    <%= f.input :position %>
+    <%= f.input :capacity %>
+    <%= f.association :driver %>
+    <%= f.button :submit %>
+  <% end %>
 <% end %>

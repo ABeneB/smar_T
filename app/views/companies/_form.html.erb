@@ -1,7 +1,10 @@
-<%= simple_form_for @company do |f| %>
-  <%= f.input :name %>
-  <%= f.input :address %>
-  <%= f.input :telefon %>
-  <%= f.association :user %>
-  <%= f.button :submit %>
+<% if current_user.role == "admin" %>
+  <%= simple_form_for @company do |f| %>
+    <%= f.input :name %>
+    <%= f.input :address %>
+    <%= f.input :telefon %>
+    <%= f.association :user %>
+    <%= f.button :submit %>
+  <% end %>
 <% end %>
+

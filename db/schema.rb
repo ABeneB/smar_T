@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20150908190403) do
     t.float    "latitude"
     t.float    "longitude"
   end
-
+ 
   add_index "depots", ["company_id"], name: "index_depots_on_company_id"
   add_index "depots", ["user_id"], name: "index_depots_on_user_id"
 

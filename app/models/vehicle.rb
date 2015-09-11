@@ -5,5 +5,5 @@ class Vehicle < ActiveRecord::Base
   # Koordinaten aus Adresse
   geocoded_by :position   
   after_validation :geocode
-  
+
 end

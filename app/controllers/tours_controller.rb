@@ -14,16 +14,17 @@ class ToursController < ApplicationController
 
   def new
     # Orders, Drivers und Company filter/suchen
-    drivers = current_user.drivers #FIXME nur aktive
-    orders = current_user.orders #FIXME  nur aktive
-    company = current_user.company
+    user = User.find(current_user.id)
+    drivers = Driver.where(user_id: user.id, activ: true)
+    orders = Order.where(user_id: user.id, activ: true)
+    company = Company.find(user.id)
     # Tourenplanungsalgorithmus starten
     g = Generate.new
     g.drivers = drivers
     g.orders = orders
     g.company = company
     g.user = current_user
-    g.genrate_tours()
+    g.generate_tours()
     # Generate erzeugt und speichert die neuen Touren, OrderTour-Objekte
     @tours = Tour.all
     respond_with(@tour)

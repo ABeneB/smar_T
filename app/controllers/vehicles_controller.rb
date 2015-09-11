@@ -22,12 +22,14 @@ class VehiclesController < ApplicationController
 
   def create
     @vehicle = Vehicle.new(vehicle_params)
+    @vehicle.user_id = current_user.id
     @vehicle.save
     respond_with(@vehicle)
   end
 
   def update
     @vehicle.update(vehicle_params)
+    @vehicle.save
     respond_with(@vehicle)
   end
 

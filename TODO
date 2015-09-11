@@ -1,4 +1,7 @@
 TODO
+
+!!! ids automatisch setzen (user_id, company_id etc!!!)
+
 _form von Order und Driver anpassen - deaktivieren (null setzen) von work_end_time etc.
     - restrictions einbeziehen -> wenn keine working_time restriction besteht, 
         dann auch kein Feld im Formular beim Planer

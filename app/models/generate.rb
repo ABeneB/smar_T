@@ -11,10 +11,10 @@ class Generate
     
     #Methoden
     #DONE
-    # generiete die Touren für alle driver und orders entsprechend der restrictions von Unternehmen
+    # generiete die Touren für alle driver und orders entsprechend der company.restriction
     def generate_tours()
         # Prüfen ob Prioritätsstufen bestehen
-        if restrictions.priority
+        if company.restriction.priorities
             # orders ändern zu array von arrays, für jede priority eine array
             orders = by_priority()
             i = 0
@@ -170,6 +170,7 @@ class Generate
         order_tour_delivery = create_delivery(order)
         # Array für beste tour
         best_tour = []
+        
         # OrderTours an verschiedenen Positionen von old_tour einsetzen
         old_tour.for_each_with_index do |location_first, index_first|
             # Abbrechen bevor nach home eingesetzt wird
@@ -178,82 +179,63 @@ class Generate
             end
             #potenziell neue Tour erstellen
             new_tour = duplicate_tour_array(old_tour)
-            # OrderTours_Pickup einsetzen in tour an Stelle index_first+1
-            # index_first + 1, damit nicht vor vehicle_position eingesetzt wird
+            
             # Pickup einsetzen
             new_tour.insert(index_first+1, order_tour_pickup)
-            #FIXME
-            # Pickup OrderTour.time setzen
-            new_tour(index_first+1).time = time_for_distance(new_tour(index_first), new_tour(index_first+1))
-            # Pickup OrderTour.capacity_status setzen
-            new_tour(index_first+1).capacity_status = new_tour(index_first).capacity_status + new_tour(index_first+1).capcity
-            # OrderTour.capacity_status für alle Nachfolgenden setzen
-            new_tour.for_each_with_index do |order_tour, index|
-                # erst nach neuem element
-                if index == index_first+2
-                    new_tour(index_first+1).capacity_status = new_tour(index_first).capacity_status + new_tour(index_first+1).capcity
-                end
+            # OrderTour.time updaten
+            new_tour = update_time(new_tour, index_first)
+            # Wenn eine Capacity_restriction besteht...
+            if restriction.capacity_restriction
+                # ...Order.capacity_status updaten
+                new_tour = update_capacity(new_tour_index_first)
             end
             
-            # bis zur neuen OrderTour in new_tour nichts ändern
-            # bei Order Tour die Fahrzeit von vorheriger zur neuen berechnen
-            # Fahrzeit + pickup_duration + vorherige OrderTour.time = OrderTour.time
-            # OrderTour.capacity_status für jede OrderTour setzen
-            
-            # Pickup in new_tour einsetzen
-            new_tour.for_each_with_index do |location_secound, index_secound|
-                # Abbrechen beovr nach home eingesetzt wird
-                if index_secound+1 == new_tour.length
+            # Delivery in new_tour einsetzen
+            new_tour.for_each_with_index do |location_second, index_second|
+                # Abbrechen bevor nach home eingesetzt wird
+                if index_second+1 == new_tour.length
                     break
                 end
-                
-                # zweite OrderTours einsetzen wenn index_secound == index_first
-                # Nach index_first einsetzen
-                if index_secound > index_first+1
-                    #Einsetzen von delivery
-                    new_tour.insert(index_secound+1, order_tour_delivery)
-                    # OrderTour.time für jede OrderTour setzen
-                    # bis zur neuen OrderTour in new_tour nichts ändern
-                    # bei Order Tour die Fahrzeit von vorheriger zur neuen berechnen
-                    # Fahrzeit + pickup_duration + vorherige OrderTour.time = OrderTour.time
-                    # OrderTour.capacity_status für jede OrderTour setzen
+                # Delivery erst nach Pickup einsetzen 
+                if index_second > index_first+1
+                    #Delivery einsetzen
+                    new_tour.insert(index_second+1, order_tour_delivery)
                     
-                    # prüft restriction und bricht ab, wenn gegen restriction verstoßen wird
-                    if restrictions.time_window
-                        if time_window?(new_tour, order, driver)
-                            break
-                        end
+                    # OrderTour.time updaten
+                    new_tour = update_time(new_tour, index_second+1)
+                    # Wenn eine Capacity_restriction besteht...
+                    if restriction.capacity_restriction
+                        # ...Order.capacity_status updaten
+                        new_tour = update_capacity(new_tour, index_second+1)
                     end
-                    
-                    # prüft restriction und bricht ab, wenn gegen restriction verstoßen wird
-                    if restrictions.capacity_restriction
-                        if capcity?(new_tour, driver)
-                            break
-                        end
-                    end
-                    
-                    # prüft restriction und bricht ab, wenn gegen restriction verstoßen wird
-                    if restrictions.working_time
-                        if working_time?(new_tour, driver)
-                            break
-                        end
-                    end    
+                    # Prüfen ob Beschränkungen eingehalten werden
+                    if check_restriction(new_tour, order, driver)
+                        break
+                    end   
                 end
-                duration = #neue duration
-                # überprüfen ob die neue duration < old_tour[0] (alte duration)
-                if duration < old_tour[0]
-                    tour.unshift(duration)
+                
+                # Depot als letztes vor home einsetzen, zum Entladen
+                depot = create_depot()
+                depot.capacity = old.tour[tour.length-2].capacity_status*-1 # Fahrzeug wird entladen
+                old_tour.insert(old_tour.length-2 , depot)
+                
+                # best_tour = erste new_tour
+                if best_tour.length < new_tour.length
                     best_tour = duplicate_tour_array(new_tour)
+                else # wenn das schon passiert ist...
+                    # ...überprüfen ob die neue tour kürzer ist als die vorherige
+                    if calc_tour_time(new_tour) < calc_tour_time(best_tour)
+                        best_tour = duplicate_tour_array(new_tour)
+                    end
                 end
             end
         end
-        best_tour # return - tour ist array OrderTour-Objekte in Reihenfolge + als erstes die duration
+        best_tour # return
     end # end insertion_pdp()
     
     #FIXME
     #Insertionalgo für DP
     def insertion_dp(order, driver)
-        # Ggf einhalten von time_window?(), capcity?(), working_time?()
         # load tour vom driver (wenn eine besteht)
         old_tour = []
         # Alle OrderTour Elemente laden und old_tour befüllen
@@ -261,8 +243,25 @@ class Generate
             old_tour.push(tour_elemnt)
         end
         
+        #Wenn es keine alte Tour gab, neue Tour vorbereiten
+        if old_tour.empty?
+            # startpostion einfügen
+            vehicle_position = create_vehicle_position(driver)
+            old_tour.push(vehicle_position)
+            # Depot einsetzen - zum Beladen des Fahrzeuges
+            depot = create_depot()
+            depot.capacity = driver.capacity # Fahrzeug wird voll beladen
+            old_tour.push(depot)
+            # home einfügen - entspricht unternehmensadresse
+            home = create_home(vehicle_position, driver)
+            old_tour.push(home)
+        end
+        
         # Delivery OrderTour
         order_tour_delivery = create_delivery(order)
+        
+        # Array für beste tour
+        best_tour = []
         
         # OrderTour an verschiedenen Positionen einsetzen
         old_tour.for_each_with_index do |location, index|
@@ -271,47 +270,42 @@ class Generate
                 break
             end
                 
-            #potenziell neue Tour erstellen
+            # Potenziell neue Tour erstellen
             new_tour = duplicate_tour_array(old_tour) 
             
             # Delivery einsetzen
             new_tour.insert(index+1, order_tour_delivery)
-            # OrderTour.time für jede OrderTour setzen
-            # bis zur neuen OrderTour in new_tour nichts ändern
-            # bei Order Tour die Fahrzeit von vorheriger zur neuen berechnen
-            # Fahrzeit + pickup_duration + vorherige OrderTour.time = OrderTour.time
-            # OrderTour.capacity_status für jede OrderTour setzen
-            
-            # prüft restriction und bricht ab, wenn gegen restriction verstoßen wird
-            if restrictions.time_window
-                if time_window?(new_tour, order, driver)
-                    break
-                end
+
+            # OrderTour.time updaten
+            new_tour = update_time(new_tour, index+1)
+            # Wenn eine Capacity_restriction besteht...
+            if restriction.capacity_restriction
+                # ...Order.capacity_status updaten
+                new_tour = update_capacity(new_tour, index)
             end
             
-            # prüft restriction und bricht ab, wenn gegen restriction verstoßen wird    
-            if restrictions.capacity_restriction
-                if capcity?(new_tour, driver)
-                    break
+            # Prüfen ob Beschränkungen eingehalten werden
+            if check_restriction(new_tour, order, driver)
+                break
+            end
+
+            # best_tour mit ersten new_tour befüllen
+            if best_tour.length < new_tour.length
+                best_tour = duplicate_tour_array(new_tour)
+            else # wenn das schon passiert ist...
+                # ...überprüfen ob die neue tour kürzer ist als die vorherige
+                if calc_tour_time(new_tour) < calc_tour_time(best_tour)
+                    best_tour = duplicate_tour_array(new_tour)
                 end
             end
-            
-            # prüft restriction und bricht ab, wenn gegen restriction verstoßen wird 
-            if restrictions.working_time
-                if working_time?(new_tour, driver)
-                    break
-                end
-            end
-            
         end
-        
-        tour # return - tour ist array OrderTour-Objekte in Reihenfolge + als erstes die duration
+        best_tour # return
     end # end insertion_dp()
     
     #FIXME
     #Insertionalgo für PP
     def insertion_pp(order, driver)
-        # Ggf einhalten von time_window?(), capcity?(), working_time?()
+        # Ggf einhalten von time_window?(), capacity?(), working_time?()
         # load tour vom driver (wenn eine besteht)
         old_tour = []
         # Alle OrderTour Elemente laden und old_tour befüllen
@@ -334,67 +328,23 @@ class Generate
             
             # Pickup einsetzen
             new_tour.insert(index+1, order_tour_pickup)
-            # OrderTour.time für jede OrderTour setzen
-            # bis zur neuen OrderTour in new_tour nichts ändern
-            # bei Order Tour die Fahrzeit von vorheriger zur neuen berechnen
-            # Fahrzeit + pickup_duration + vorherige OrderTour.time = OrderTour.time
-            # OrderTour.capacity_status für jede OrderTour setzen
             
-            # prüft restriction und bricht ab, wenn gegen restriction verstoßen wird
-            if restrictions.time_window
-                if time_window?(new_tour, order, driver)
-                    break
-                end
+            # OrderTour.time updaten
+            new_tour = update_time(new_tour, index+1)
+            # Wenn eine Capacity_restriction besteht...
+            if restriction.capacity_restriction
+                # ...Order.capacity_status updaten
+                new_tour = update_capacity(new_tour, index)
             end
             
-            # prüft restriction und bricht ab, wenn gegen restriction verstoßen wird    
-            if restrictions.capacity_restriction
-                if capcity?(new_tour, driver)
-                    break
-                end
+            # Prüfen ob Beschränkungen eingehalten werden
+            if check_restriction(new_tour, order, driver)
+                break
             end
-              
-            # prüft restriction und bricht ab, wenn gegen restriction verstoßen wird  
-            if restrictions.working_time
-                if working_time?(new_tour, driver)
-                    break
-                end
-            end
+           
         end
-        
-        tour # return - tourobjekt und array OrderTour-Objekte in Reihenfolge + als erstes die duration
+        tour # return
     end # end insertion_pp()
-    
-    #DONE
-    # Überprüfen ob Capacity restricion eingehalten wird
-    def capcity?(tour, driver) # liefert true, wenn gegen restriction verstoßen wird
-        tour.each do |order_tour|
-            # Wenn eine bei einem Punkt in Tour die Capacity überschritten wird...
-            if order_tour.capacity_status > driver.vehicle.capcity
-                # dann true zurück geben,...
-                return true # FIXME ist das auch gleichzeitig break? - soll nicht mehr weiter iterieren
-            end
-        end
-        # ...sonst false
-        return false
-    end # end capcity?()
-    
-    #FIXME
-    # Überprüfen ob Time Windows eingehalten werden
-    def time_window?(tour, order, driver) # liefert true, wenn gegen restriction verstoßen wird
-        
-    end
-    
-    #DONE
-    # Überprüfen ob working time eingehalten wird
-    def working_time?(tour, driver) # liefert true, wenn gegen restriction verstoßen wird
-        # Prüfen ob die Tourdauer (.time letztes Element)> als working_time vom Driver
-        if tour[tour.length-1].time > driver.working_time
-            # true wenn tour zu lang ist
-            return true
-        end
-        return false
-    end # end working_time?()
     
     #DONE
     #Orders in Gruppen nach den Priorities einteilen
@@ -430,10 +380,11 @@ class Generate
         # place (Plazierung) wird im commit gesetzt
         order_tour_pickup.comment = order.comment
         order_tour_pickup.type = "pickup"
-        order_tour_pickup.capcity = order.capcity
+        order_tour_pickup.capacity = order.capacity
         # capacity_status (Ladestatus Fahrzeug) wird im algo gesetzt
         # time wird im Algo gesetzt
         order_tour_pickup.duration = order.duration_pickup
+        # latitude/longitude werden von Geocoder gesetzt
         order_tour_pickup # return
     end # end create_pickup
     
@@ -449,15 +400,16 @@ class Generate
         # place (Plazierung) wird im commit gesetzt
         order_tour_delivery.comment = order.comment
         order_tour_delivery.type = "delivery"
-        order_tour_delivery.capcity = order.capcity*-1 # negativ weil entladen wird
+        order_tour_delivery.capacity = order.capacity*-1 # negativ weil entladen wird
         # capacity_status (Ladestatus Fahrzeug) wird im algo gesetzt
         # time wird im Algo gesetzt
         order_tour_delivery.duration = order.duration_delivery
+        # latitude/longitude werden von Geocoder gesetzt
         order_tour_delivery # return
     end # end create_delivery
     
     # DONE
-    # erstellt OrderTour für driver
+    # erstellt OrderTour für vp driver
     def create_vehicle_position(driver)    
         # carrier.vehicle.position einsetzen als OrderTour
         vehicle_position = OrderTour.new
@@ -466,19 +418,19 @@ class Generate
         # tour_id wird in commit gesetzt
         # company_id wird in commit gesetzt
         vehicle_position.location = driver.vehicle.position
-        set_lat_long(vehicle_position)
         # place (Platzierung) wird im commit gesetzt
         vehicle_position.comment = nil
         vehicle_position.type = "position"
-        vehicle_position.capcity = 0
-        # capacity_status (Ladestatus Fahrzeug) wird im algo gesetzt
+        vehicle_position.capacity = 0
+        vehicle_position.capacity_status = 0
         vehicle_position.time = 0 # Keine Zeit vergangen
         vehicle_position.duration = 0 # Keine Zeit benötigt
+        # latitude/longitude werden von Geocoder gesetzt
         vehicle_position # return
     end # end create_vehicle_position
     
     # DONE
-    # erstellt OrderTour für driver
+    # erstellt OrderTour home für driver
     def create_home(verhicle_position, driver)
         # home = company.address
         home = OrderTour.new
@@ -487,31 +439,162 @@ class Generate
         # tour_id wird in commit gesetzt
         # company_id wird in commit gesetzt
         home.location = driver.vehicle.position
-        set_lat_long(home)
         # place (Platzierung) wird im commit gesetzt
         home.comment = nil
         home.type = "home"
-        home.capcity = 0
+        home.capacity = 0
         # capacity_status (Ladestatus Fahrzeug) wird im algo gesetzt
         home.time = time_for_distance(vehicle_position, home)
         home.duration = 0 # Keine Zeit benötigt
+        # latitude/longitude werden von Geocoder gesetzt
         home # return
     end # end create_home
     
-    
     #FIXME
-    # address zu latitude, longitude umrechnen
-    def set_lat_long(order_tour)
-        # per Geocide umwandeln von adress zu latitude und logitude
-    end
+    # erstellt OrderTour depot
+    def create_depot()
+        # depot = company.depot
+        depot = OrderTour.new
+        # user_id wird in commit gesetzt
+        depot.order_id = nil
+        # tour_id wird in commit gesetzt
+        # company_id wird in commit gesetzt
+        depot.location = company.depot.address
+        # place wird in commit gesetzt
+        depot.comment = "Warenbestand auffüllen"
+        depot.type = "depot"
+        # Cpacity wird im Algo gesetzt - Fahrzeug soll voll beladen oder entladen werden
+        # capacity_status wird in algo gesetzt
+        # time wird im Algo gesetzt
+        depot.duration = company.depot.duration
+        # latitude/longitude werden von Geocoder gesetzt
+        depot # return
+    end # end create_depot()
     
     #FIXME
     # Berechnet die Zeit für die Fahrt von order_tour1 nach order_tour2
     def time_for_distance(ot1, ot2)
         # per geocode, Nominatim die Fahrzeit zwischen ot1.lat / long und ot2.lat / long herausfinden
+        # eine Anfrage pro Sekunde!
+        10 # return 10min für alle
     end# end time_for_distance()
     
-    #FIXME
+    # FIXME
+    # Überprüft für die tour ob die Beschränkungen eingehalten werden
+    def check_restriction(tour,order,driver)
+        # Check
+        if company.restriction.time_window
+            if time_window?(tour, order, driver)
+                return true
+            end
+        end
+        
+        #FIXME Depots einfügen
+        if company.restriction.capacity_restriction
+            if capacity?(tour, driver)
+                    return true
+            end
+        end
+              
+        if company.restriction.working_time
+            if working_time?(tour, driver)
+                return true
+            end
+        end
+        false # liefert true, wenn alle Beschränkungen eingehalten werden
+    end # end check_restriction()
+    
+    #FIXME - Depots einsetzen
+    # Überprüfen ob Capacity restricion eingehalten wird und setzt ggf. Depots ein
+    def capacity?(tour, driver) # liefert true, wenn gegen restriction verstoßen wird
+        tour.for_each_with_index do |order_tour, index|
+            # Wenn eine bei einem Punkt in Tour die Capacity überschritten wird
+            if order_tour.capacity_status > driver.vehicle.capacity 
+                if company.restriction == "PP" # Und es ein PP ist,...
+                    #... dann soll ein Depot davor eingesetzt werden
+                    depot = create_depot()
+                    # Fahrzeug komplett entleeren
+                    depot.capacity = tour[index-1]*-1
+                    # Vor Verstoß einsetzen
+                    tour.insert(index-1, depot)
+                    # FIXME update capacity_status
+                else
+                    return true # Wenn es PDP ist, dann Verstoß
+                end
+            elsif order_tour.capacity_status <= 0  # oder kleiner, gleich 0 ist
+                if company.restriction == "DP" # Und es ein DP ist,...
+                    #... dann soll ein Depot davor eingesetzt werden
+                    depot = create_depot()
+                    # Fahrzeug vollbeladen
+                    depot.capacity = driver.capacity - tour[index-1]
+                    # Vor Verstoß einsetzen
+                    tour.insert(index-1, depot)
+                    # Capacity_status updaten
+                    tour = update_capacity(tour, index)
+                else
+                    return true # Wenn es PDP ist, dann Verstoß
+                end
+            end
+        end
+        # ...sonst false
+        return false
+    end # end capacity?()
+    
+    #FIXME - Warten um eine Order einsetzen zu können
+    # Überprüfen ob Time Windows eingehalten werden
+    def time_window?(tour, order, driver) # liefert true, wenn gegen restriction verstoßen wird
+        # Uhrzeit von jetzt bis OrderTour von Order prüfen
+        # Wenn die Uhrzeit < order.start_time
+        # return true -> Pickup ist zu früh
+        # Wenn PDP
+        # Prüfen ob der Delivery nach order.end_time ist
+        # return true -> Delivery ist zu spät
+        
+                    
+        # FIXME - wenn durch time_window keine zulässige Tour gebildet werden konnte
+        # dann an die matrix eintragen, dass es nicht geht durch sehr lange duration
+            
+    end
+    
+    #DONE
+    # Überprüfen ob working time eingehalten wird
+    def working_time?(tour, driver) # liefert true, wenn gegen restriction verstoßen wird
+        # Prüfen ob die Tourdauer > als working_time vom Driver
+        if calc_tour_time(tour) > driver.working_time
+            # true wenn tour zu lang ist
+            return true
+        end
+        return false
+    end # end working_time?()
+    
+    #DONE
+    # Berechnet OrderTour.time neu
+    def update_time(tour, index)
+        # OrderTour.time setzen
+        tour(index).time = time_for_distance(new_tour(index-1), new_tour(index))
+        #... und das nächste Element
+        tour(index+1).time = time_for_distance(new_tour(index), new_tour(index_first+1))
+        
+        tour # return
+    end
+    
+    #DONE
+    # Berechnet OrderTour.capacity_status neu für alle OrderTours ab index
+    def update_capacity(tour, index)
+        # OrderTour.capacity_status setzen für Pickup-Element...
+        tour(index).capacity_status = tour(index-1).capacity_status + tour(index).capacity
+        # OrderTour.capacity_status für alle Nachfolgenden setzen
+        tour.for_each_with_index do |order_tour, index2|
+            # erst nach neuem element updaten
+            if index2 > index
+                order_tour.capacity_status = new_tour(index2-1).capacity_status + new_tour(index2).capacity
+            end
+        end 
+        
+        tour # return
+    end
+    
+    #DONE
     # erzeugt echte Copy von Array
     def duplicate_tour_array (tour)
         new_tour = []
@@ -522,13 +605,14 @@ class Generate
         new_tour
     end# end duplicate_tour_array()
     
-    # gibt die Zeit für die Tour zurück
+    #DONE
+    # gibt die Zeit für die gesamte Tour zurück
     def calc_tour_time(tour)
-        duration = 0
+        tour_time = 0
         tour.each do |order_tour|
-            duration += order_tour.time # Fahrzeit
-            duration += order_tour.duration # Arbeitszeit
+            tour_time += order_tour.time # Fahrzeit
+            tour_time += order_tour.duration # Arbeitszeit
         end
-        duration # return
+        tour_time # return
     end# end calc_tour_time()
 end

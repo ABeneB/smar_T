@@ -1,8 +1,10 @@
-<%= simple_form_for @user, :url => edit_registered_user_path do |f| %>
-  <%= f.input :username %>
-  <%= f.input :email %>
-  <%= f.input :password %>
-  <%= f.input :role %>
-  <%= f.assiation :company %>
-  <%= f.button :submit %>
+<% if current_user.role == "admin" %>
+  <%= simple_form_for @user, :url => edit_registered_user_path do |f| %>
+    <%= f.input :username %>
+    <%= f.input :email %>
+    <%= f.input :password %>
+    <%= f.input :role %>
+    <%= f.assiation :company %>
+    <%= f.button :submit %>
+  <% end %>
 <% end %>

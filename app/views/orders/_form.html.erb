@@ -1,13 +1,31 @@
-<%= simple_form_for @order do |f| %>
-  <%= f.association :costumer %>
-  <%= f.input :pickup_location %>
-  <%= f.input :duration_pickup %>
-  <%= f.input :delivery_location %>
-  <%= f.input :duration_delivery %>
-  <%= f.input :start_time %>
-  <%= f.input :end_time %>
-  <%= f.input :capacity %>
-  <%= f.input :comment %>
-  <%= f.input :activ %>
-  <%= f.button :submit %>
+<% if current_user.role == "admin" %>
+  <%= simple_form_for @order do |f| %>
+    <%= f.association :user %>
+    <%= f.association :company %>
+    <%= f.association :costumer %>
+    <%= f.input :pickup_location %>
+    <%= f.input :duration_pickup %>
+    <%= f.input :delivery_location %>
+    <%= f.input :duration_delivery %>
+    <%= f.input :start_time %>
+    <%= f.input :end_time %>
+    <%= f.input :capacity %>
+    <%= f.input :comment %>
+    <%= f.input :activ %>
+    <%= f.button :submit %>
+  <% end %>
+<% elsif current_user.role == "planer" %>
+  <%= simple_form_for @order do |f| %>
+    <%= f.association :costumer %>
+    <%= f.input :pickup_location %>
+    <%= f.input :duration_pickup %>
+    <%= f.input :delivery_location %>
+    <%= f.input :duration_delivery %>
+    <%= f.input :start_time %>
+    <%= f.input :end_time %>
+    <%= f.input :capacity %>
+    <%= f.input :comment %>
+    <%= f.input :activ %>
+    <%= f.button :submit %>
+  <% end %>
 <% end %>
