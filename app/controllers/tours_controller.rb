@@ -14,8 +14,8 @@ class ToursController < ApplicationController
 
   def new
     # Orders, Drivers und Company filter/suchen
-    drivers = current_user.drivers 
-    orders = current_user.orders
+    drivers = current_user.drivers #FIXME nur aktive
+    orders = current_user.orders #FIXME  nur aktive
     company = current_user.company
     # Tourenplanungsalgorithmus starten
     g = Generate.new

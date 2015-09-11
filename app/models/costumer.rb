@@ -4,6 +4,10 @@ class Costumer < ActiveRecord::Base
   has_many :order
 
   validates :priority, inclusion: { in: ["A", "B", "C", "D"],
-    message: "%{value} is not a valid priority, please use A,B,C or D" }
+  message: "%{value} is not a valid priority, please use A,B,C or D" }
+  
+  # Koordinaten aus Adresse
+  geocoded_by :address   
+  after_validation :geocode
   
 end

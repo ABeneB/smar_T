@@ -7,6 +7,7 @@ class Generate
     
     #Variablen
     attr_accessor :drivers, :orders, :company, :user
+    # Depot und home können aus dem Kontext abgeleitet werden
     
     #Methoden
     #DONE
@@ -17,7 +18,7 @@ class Generate
             # orders ändern zu array von arrays, für jede priority eine array
             orders = by_priority()
             i = 0
-            # Jedes array in orders nacheiander lösen
+            # Jedes order in orders nacheiander lösen
             while i < orders.length do
                 # Matrix für jede Prioritässtufe
                 matrix = build_matrix(orders[i])
@@ -78,7 +79,7 @@ class Generate
             order = shortest_tour[1]
             tour = shortest_tour[2]
             # Driver die Tour (samt neuer Order) zuteilen
-            commit_order(driver, tour)
+            commit_order(driver, tour, order)
             #update matrix - Löschen aller Einträge mit der Order und die Zeiten vom Fahrer updaten
             update_matrix(matrix, driver, order)
             i += 1
@@ -106,7 +107,7 @@ class Generate
     
     #DONE
     # Erstellt die OrderTour objekte und speichert die neue Tour und OrderTour in der DB
-    def commit_order(driver, tour)
+    def commit_order(driver, tour, order)
         # alte Tour löschen
         driver.tour.destroy
         # neue Tour erstellen
@@ -124,6 +125,8 @@ class Generate
         new_tour.duration=last_element.time
         # Driver mit Tour verbinden
         driver.tour_id= new_tour.id 
+        # Order deaktivieren
+        order.aktiv = false
     end # end commit_order()
     
     #DONE
@@ -376,6 +379,7 @@ class Generate
         return false
     end # end capcity?()
     
+    #FIXME
     # Überprüfen ob Time Windows eingehalten werden
     def time_window?(tour, order, driver) # liefert true, wenn gegen restriction verstoßen wird
         

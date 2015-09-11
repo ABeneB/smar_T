@@ -21,7 +21,7 @@ Alle Objekte (Driver, Order etc.) automatisch mit der Company des users associer
     - tours_controller
     
 touren bilden -> fahrzeit errechnen? - https://github.com/alexreisner/geocoder
-    -   nominatim
+    -   nominatimaktiv
     
 OrderTour-Objekte erzeugen und speichern
 
@@ -33,6 +33,8 @@ ansicht für role faher - https://github.com/apneadiving/Google-Maps-for-Rails
         - start, pause, done, end
         - Tour vom Driver lösen, wenn fertig
 
+
+.csv inport für testdaten
 
 Auf sensiblen Seiten Rolle nochmal überprüfen (ADmin-Seiten etc.)
 
@@ -48,3 +50,6 @@ user name = username für simple_form (sonst Objekt-Bezeichnung)
 Sprache in show and _form anpassen
 
 SLEEP-param bei Geocoder, um die Abfrage pro Sekunde nicht zu überschreiten
+
+DONE
+Geocoder eingefügt
