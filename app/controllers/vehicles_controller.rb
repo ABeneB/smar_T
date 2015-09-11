@@ -29,7 +29,6 @@ class VehiclesController < ApplicationController
 
   def update
     @vehicle.update(vehicle_params)
-    @vehicle.save
     respond_with(@vehicle)
   end
 

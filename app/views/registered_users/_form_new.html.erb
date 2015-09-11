@@ -1,5 +1,5 @@
 <% if current_user.role == "admin" %>
-  <%= simple_form_for @user, :url => new_registered_user_path, :id => user.id do |f| %>
+  <%= simple_form_for @user, :url => new_registered_user_path, :id => @user.id do |f| %>
     <%= f.input :username %>
     <%= f.input :email %>
     <%= f.input :password %>

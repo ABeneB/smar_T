@@ -1,10 +1,9 @@
 TODO
 
-!!! ids automatisch setzen (user_id, company_id etc!!!)
+löschen von Fahrer löscht auch Tour und Elmente!
 
-_form von Order und Driver anpassen - deaktivieren (null setzen) von work_end_time etc.
-    - restrictions einbeziehen -> wenn keine working_time restriction besteht, 
-        dann auch kein Feld im Formular beim Planer
+alle controller so anpassen, dass nur eigene daten gesehen werden als Planer
+und das Fahrer bei Tour nur seine sieht
 
 Alle Einträge eines Planer seiner Firma zuteilen und gleiches für Driver
   

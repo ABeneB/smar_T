@@ -22,6 +22,7 @@ class DriversController < ApplicationController
 
   def create
     @driver = Driver.new(driver_params)
+    @driver.user_id = current_user.id # automatisches setzen der user_id
     @driver.save
     respond_with(@driver)
   end

@@ -1,2 +1,12 @@
-<h1>Welcome#index</h1>
-<p>Find me in app/views/welcome/index.html.erb</p>
+<% if current_user %>
+
+    <% if current_user.role == "admin" %>
+        <p>Admin muss Objekt anlegen und kann anschließend die Associationen verändern</p>
+    <% elsif current_user.role =="planer" %>
+        <p>Jedes vom Planer angelegte Objekt wird automatisch mit ihm und dessen Company verbunden</p>
+    <% end %>
+
+<% else %>
+    <p>Willkommen, Bitte einloggen.</p>
+<% end %>
+

@@ -22,6 +22,7 @@ class OrdersController < ApplicationController
 
   def create
     @order = Order.new(order_params)
+    @order.user_id = current_user.id # automatisches setzen der user_id
     @order.save
     respond_with(@order)
   end

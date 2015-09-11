@@ -22,7 +22,7 @@ class CostumersController < ApplicationController
 
   def create
     @costumer = Costumer.new(costumer_params)
-    @costumer.save
+    @costumer.user_id = current_user.id # automatisches setzen der user_id
     respond_with(@costumer)
   end
 
