@@ -6,6 +6,7 @@
   <thead>
     <tr>
       <th>ID</th>
+      <th>Bezeichnung</th>
       <th>Name</th>
       <th>Aktiv</th>
       <th>Arbeitszeit</th>
@@ -18,6 +19,11 @@
       <tr>
         <td><%= driver.id %></td>
         <td><%= driver.name %></td>
+        <% if driver.user %>
+        <td><%= driver.user.username %></td>
+        <% else %>
+        <td></td>
+        <% end %>
         <td><%= driver.activ %></td>
         <td><%= driver.working_time %></td>
         <td><%=l driver.created_at, format: :long %></td>

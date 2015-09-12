@@ -6,7 +6,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def new
-    super
+    redirect_to(root_path, alert:"No signup!")
   end
 
   def edit

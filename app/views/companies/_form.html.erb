@@ -3,7 +3,7 @@
     <%= f.input :name %>
     <%= f.input :address %>
     <%= f.input :telefon %>
-    <%= f.association :user %>
+    <%= f.association :user, :include_blank => false, :label_method => :form_label %>
     <%= f.button :submit %>
   <% end %>
 <% end %>

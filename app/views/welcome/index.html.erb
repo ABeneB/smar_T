@@ -4,6 +4,10 @@
         <p>Admin muss Objekt anlegen und kann anschließend die Associationen verändern</p>
     <% elsif current_user.role =="planer" %>
         <p>Jedes vom Planer angelegte Objekt wird automatisch mit ihm und dessen Company verbunden</p>
+    <% elsif current_user.role =="driver" %> 
+        <p>Unter Tour können Sie die Ihnen zugeteilte Tour einsehen.</p>
+    <% else%> 
+        <p>Willkommen, Sie haben noch keien Rolle. Wenden sie sich an den Admin.</p>
     <% end %>
 
 <% else %>

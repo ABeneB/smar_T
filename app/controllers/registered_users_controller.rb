@@ -23,17 +23,20 @@ class RegisteredUsersController < ApplicationController
   def create
     @user = User.new(user_params)
     @user.save
-    respond_with(@user)
+    redirect_to(registered_user_path(@user))
   end
 
   def update
-    @user.update(user_params)
-    respond_with(@user)
+    if @user.update_attributes(user_params)
+      redirect_to(registered_user_path(@user))
+    else
+      render("edit")
+    end
   end
 
   def destroy
     @user.destroy
-    respond_with(@user)
+    redirect_to(registered_user_path)
   end
 
   private
@@ -42,6 +45,6 @@ class RegisteredUsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:id, :email, :last_sign_in_at, :created_at, :username, :role)
+      params.require(:user).permit(:id, :email, :password, :last_sign_in_at, :created_at, :username, :role)
     end
 end

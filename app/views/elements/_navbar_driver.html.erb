@@ -15,7 +15,11 @@
     <ul class="nav navbar-nav">
       <% if defined?(Devise) %>
         <% if user_signed_in? %>
-              <li><%= link_to "Touren", tours_path %></li>
+          <% if @tour %>
+              <li><%= link_to "Tour", tour_path(@tour) %></li>
+          <% else %>
+              <li><%= link_to "NO TOUR" %></li>
+          <% end %>
         <% else %>
           <!-- Sollte nicht der Fall sein -->
         <% end %>

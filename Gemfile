@@ -51,7 +51,16 @@ gem 'schema_to_scaffold'
 gem 'gmaps4rails'
 
 # Geocoder - https://github.com/alexreisner/geocoder
+# Für grobe Entfernung
 gem 'geocoder'
+
+gem 'better_errors'
+gem 'binding_of_caller'
+
+# Für Fahrzeit
+gem 'google_directions'
+
+gem 'pry'
 
 gem 'bundler'
 

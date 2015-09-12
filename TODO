@@ -6,11 +6,13 @@ alle controller so anpassen, dass nur eigene daten gesehen werden als Planer
 und das Fahrer bei Tour nur seine sieht
 
 Alle Einträge eines Planer seiner Firma zuteilen und gleiches für Driver
+    - Create aller controller die company_id setzen
+    - Update auch um sicher zugehen
   
 handy-gps für position von vehicle 
     + vehicle.position regelmäßig updaten
-        
-UTC zu MESZ ändern, damit Zeiteingabe stimmt        
+
+f.association :user in allen _form ergänzen um , :include_blank => false, :label_method => :form_label %>
         
 tours_controller new eingabe für generate überarbeiten (Input params filtern)
 
@@ -24,10 +26,7 @@ Alle Objekte (Driver, Order etc.) automatisch mit der Company des users associer
     
 touren bilden -> fahrzeit errechnen? - https://github.com/alexreisner/geocoder
     -   nominatimaktiv
-    
-OrderTour-Objekte erzeugen und speichern
 
-Allgemein die Änderungen in DB Sppeichern Objekt.save und .create
 
 ansicht für role faher - https://github.com/apneadiving/Google-Maps-for-Rails
     - google maps ist eingebunden, orte/tour noch reinschmeißen - genrating jason
@@ -35,23 +34,7 @@ ansicht für role faher - https://github.com/apneadiving/Google-Maps-for-Rails
         - start, pause, done, end
         - Tour vom Driver lösen, wenn fertig
 
-
 .csv inport für testdaten
-
-Auf sensiblen Seiten Rolle nochmal überprüfen (ADmin-Seiten etc.)
-
-signin entferen
--  new user (password?)
-
-_form - edit, new, delete von user funktioniernen nicht
-
-user name = username für simple_form (sonst Objekt-Bezeichnung)
-
-!!! order -> Adresse eingeben, bzw. übernehmen von Kunden, auch anzeigen im view
 
 Sprache in show and _form anpassen
 
-SLEEP-param bei Geocoder, um die Abfrage pro Sekunde nicht zu überschreiten
-
-DONE
-Geocoder eingefügt

@@ -28,35 +28,11 @@ class ToursController < ApplicationController
   def new
     # Orders, Drivers und Company filter/suchen
     user = User.find(current_user.id)
-    
-    #FIXME - er filltert nicht richtig
-    #drivers = Driver.where(user_id: user.id)
-    #activ_drivers = []
-    #drivers.each do |driver|
-    #  if driver.activ
-    #    activ_drivers.push(driver)
-    #  end
-    #end
-    
-    activ_drivers = Driver.all
-    
-    #orders = Order.where(user_id: user.id)
-    #activ_orders = []
-    #orders.each do |order|
-    #  if order.activ
-    #    activ_orders.push(order)
-    #  end
-    #end
-    activ_orders = Order.all
-    
-    company = Company.find(user.id)
-    
-    # Tourenplanungsalgorithmus starten
     g = Generate.new
-    g.drivers = activ_drivers
-    g.orders = activ_orders
-    g.company = company
-    g.user = current_user
+    g.drivers = user.company.drivers.where(activ: true)
+    g.orders = user.company.orders.where(activ: true)
+    g.company = user.company
+    g.user = user
     
     # Generate erzeugt und speichert die neuen Touren, OrderTour-Objekte
     g.generate_tours
@@ -64,17 +40,14 @@ class ToursController < ApplicationController
     #Ausgabe nach Rolle filtern
     if current_user.is_admin?
       @tours = Tour.all
-      respond_with(@tours)
     elsif current_user.is_driver?
       company = Company.find(user_id: current_user.id)
       @tours = Tour.where(company_id: company.id)
-      respond_with(@tours)
     elsif current_user.is_planer?
       company = Company.find(user_id: current_user.id)
       @tours = Tour.where(company_id: company.id)
-      respond_with(@tours)
     else
-      respond_with([])# nichts
+      @tours = []
     end
     
   end
@@ -94,6 +67,11 @@ class ToursController < ApplicationController
   end
 
   def destroy
+    # Alle OrderTours von @tour löschen
+    order_tours = @tour.order_tours
+    order_tours.each do |order_tour|
+      order_tour.destroy
+    end
     @tour.destroy
     respond_with(@tour)
   end

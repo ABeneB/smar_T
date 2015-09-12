@@ -1,8 +1,6 @@
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+  has_one :company
+  
   USER_ROLE = "user"
   ADMIN_ROLE = "admin"
   DRIVER_ROLE = "driver"
@@ -10,7 +8,7 @@ class User < ActiveRecord::Base
   
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable,
         :recoverable, :rememberable, :trackable, :validatable
   attr_accessor :login
   
@@ -26,10 +24,6 @@ class User < ActiveRecord::Base
 
 
   devise authentication_keys: [:login]
-  
-  before_create do
-    self.role = USER_ROLE
-  end
   
   def is_admin?
     role == ADMIN_ROLE
@@ -47,4 +41,10 @@ class User < ActiveRecord::Base
     role == PLANER_ROLE
   end
   
+  validates :role, inclusion: { in: ["admin", "planer", "driver", "user", "guest"],
+    message: "%{value} is not a valid role." }
+  
+  def form_label
+    username
+  end
 end

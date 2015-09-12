@@ -45,8 +45,6 @@
             <ul class="dropdown-menu">
               <li><%= link_to "Edit Account", edit_user_registration_path %></li>
               <li class="divider"></li>
-              <li><%= link_to "Create new user", new_user_registration_path %></li> <!-- FIXME: neue Nutzer anlegen, auch wenn man schon eingeloggt ist -->
-              <li class="divider"></li>
               <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
             </ul>
           </li>
