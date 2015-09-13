@@ -63,7 +63,7 @@ class Generate
     def solve_matrix(matrix, order_count)
         # für jeder Order eine Tour finden
         i = 0
-        while order_count > i
+        while  i < order_count
             shortest_tour = matrix[0] # erste tour als shortest_tour
             # schnellste Tour ermitteln
             matrix.each do |possible_tour|
@@ -87,21 +87,25 @@ class Generate
         end
     end
     
-    #TESTED
+    # FIXME - die touren in der matrix werden nicht upgedated
     # Nach einer Zuteilung die matrix erneuern
     def update_matrix(matrix, driver, order)
         # Alle Einträge in matrix mit order löschen
-        matrix.each_with_index do |tour, index|
-            # Driver steht in tour[0]
-            if tour[0].id == driver.id
-                # Tour neuberechnen
-                new_tour = build_tour(tour[1], driver)
-                tour[2] = new_tour
+        length = matrix.length
+        while length > 0
+            element = matrix[length-1]
+            if element[1].id == order.id # in element[1] steht die order
+                matrix.delete_at(length-1)
             end
-            # Order steht in tour[1]
-            if tour[1].id == order.id
-                # alten Eintrag entfernen
-                matrix.delete_at(index)
+            length -= 1
+        end
+        
+        # Einträge mit der Order löschen
+        matrix.each_with_index do |tour, index|
+            # Alle Einträge von Driver updaten
+            if tour[0].id == driver.id # Driver steht in tour[0]
+                # Tour neuberechnen
+                tour[2] = build_tour(tour[1], tour[0]) 
             end
         end
         matrix # return
@@ -111,31 +115,35 @@ class Generate
     # Erstellt die OrderTour objekte und speichert die neue Tour und OrderTour in der DB
     def commit_order(driver, tour, order)
         #Alte tour suchen und ggf. löschen, sowie die OrderTours davon
-        # FIXME später wieder einfügen
-        #if Tour.where(driver_id: driver.id).exists?
-        #     original_tour = Tour.where(driver_id: driver.id).take
+        if Tour.where(driver_id: driver.id).exists?
+             original_tour = Tour.where(driver_id: driver.id).take
             #OrderTours der Tour löschen
-        #    OrderTour.where(tour_id: original_tour.id).find_each do |order_tour|
-        #       order_tour.destroy
-        #   end
+            OrderTour.where(tour_id: original_tour.id).find_each do |order_tour|
+               order_tour.destroy
+           end
             # Tour löschen
-        #   original_tour.destroy
-        #end
+           original_tour.destroy
+        end
         
         # neue Tour erstellen
         new_tour= Tour.create(user_id: user.id, driver_id: driver.id, company_id: company.id, duration: 0)
         # fehlende Attribute setzen und mit new_tour verbinden
         tour.each_with_index do |order_tour, index|
-            OrderTour.create(user_id: user.id, tour_id: new_tour.id, company_id: company.id, location: order_tour.location, place: index, comment: order_tour.comment, capacity: order_tour.capacity, capacity_status: order_tour.capacity_status, time: order_tour.time, duration: order_tour.time, kind: order_tour.kind)
+            if order_tour.duration.nil?
+                order_tour.duration = 0
+            end
+            OrderTour.create(user_id: user.id, tour_id: new_tour.id, company_id: company.id, location: order_tour.location, place: index, comment: order_tour.comment, capacity: order_tour.capacity, capacity_status: order_tour.capacity_status, time: order_tour.time, duration: order_tour.duration, kind: order_tour.kind)
         end
         # Duration setzen
         new_tour.duration = calc_tour_time(tour)
         # Tour mit Driver verbinden
         new_tour.driver_id = driver.id  
         new_tour.save
+        driver.tour = new_tour
         # Order deaktivieren, damit sie in nächsten Planungen nicht versehentlich verplant wird
-        # FIXME später wieder hinzufügen - order.activ = false
-        # order.save
+        # FIXME - wieder einkommentieren
+        #order.activ = false
+        #order.save
     end # end commit_order()
     
     #DONE
@@ -246,9 +254,7 @@ class Generate
         old_tour = []
         
         # Alle OrderTour Elemente laden und old_tour befüllen
-        # FIXME!!! driver.tour wird nicht gefunden
         unless driver.tour.nil?
-            ente()
             driver.tour.order_tours.each do |tour_element|
                 old_tour.push(tour_element)
             end
@@ -434,7 +440,12 @@ class Generate
         # place (Plazierung) wird im commit gesetzt
         order_tour_delivery.comment = order.comment
         order_tour_delivery.kind = "delivery"
-        order_tour_delivery.capacity = order.capacity*-1 # negativ weil entladen wird
+        # Nur bei Capacity Restriction wichtig
+        if company.restriction.capacity_restriction
+            order_tour_delivery.capacity = order.capacity*-1 # negativ weil entladen wird
+        else
+            order_tour_delivery.capacity = 0
+        end
         # capacity_status (Ladestatus Fahrzeug) wird im algo gesetzt
         # time wird im Algo gesetzt
         order_tour_delivery.duration = order.duration_delivery
@@ -508,16 +519,25 @@ class Generate
         depot # return
     end # end create_depot()
     
-    #DONE
+    #Tested
     # Berechnet die Zeit für die Fahrt von order_tour1 nach order_tour2
     def time_for_distance(ot1, ot2)
-        # FIXME für echten Test
         # Google Maps - Echte Farhezit - Anfrangen beschränkt
-        # directions = GoogleDirections.new(ot1.address, ot2.address)
-        # directions.drive_time_in_minutes
-        # Geocoder - Distanze in km - für erste Tests
-        # Geocoder::Calculations.distance_between([ot1.latitude,ot1.longitude], [ot2.latitude,ot2.longitude])
-        rand(1...20)
+        # FIXME - liefert abn und zu 0 zurück!
+        directions = GoogleDirections.new(ot1.location, ot2.location)
+        directions.drive_time_in_minutes
+        # Geocoder - Distanze in km
+        #if ot1.latitude.nil?
+        #    geocords = Geocoder.search(ot1.location) 
+        #    ot1.latitude = geocords[1].boundingbox[0]
+        #    ot1.longitude = geocords[1].boundingbox[2]
+        #end
+        #if ot2.latitude.nil?
+        #    geocords = Geocoder.search(ot2.location) 
+        #    ot2.latitude = geocords[0].boundingbox[0]
+        #    ot2.longitude = geocords[0].boundingbox[2]
+        #end
+        #Geocoder::Calculations.distance_between([ot1.latitude,ot1.longitude], [ot2.latitude,ot2.longitude])
     end# end time_for_distance()
     
     # DONE
@@ -640,7 +660,6 @@ class Generate
     def duplicate_tour_array (tour)
         new_tour = []
         tour.each do |element|
-            #OrderTour.new(location: element.location, capacity: element.capacity, capacity_status: element.capacity_status, time: element.time, duration: element.duration, kind: element.kind)
             new_tour.push(element.clone)
         end
         new_tour
@@ -650,10 +669,20 @@ class Generate
     # gibt die Zeit für die gesamte Tour zurück
     def calc_tour_time(tour)
         tour_time = 0
-        tour.each do |order_tour|
-            tour_time += order_tour.time # Fahrzeit
-            tour_time += order_tour.duration # Arbeitszeit
+        # ungespeichertes Tour.arry
+        if tour.kind_of?(Array)
+            tour.each do |order_tour|
+                tour_time += order_tour.time # Fahrzeit
+                if order_tour.duration # Manche Aufträge haben ggf. keine Arbeitszeit
+                    tour_time += order_tour.duration # Arbeitszeit
+                end
+            end
+        else # gespeicherte Tour Relation
+            tour.order_tours.each do |order_tour|
+                tour_time += order_tour.time # Fahrzeit
+            end
         end
+
         tour_time # return
     end# end calc_tour_time()
 end

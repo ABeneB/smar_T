@@ -10,7 +10,8 @@
       <th>Art</th>
       <th><%= model_class.human_attribute_name(:location) %></th>
       <th><%= model_class.human_attribute_name(:place) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%= model_class.human_attribute_name(:time) %></th>
+      <th><%= model_class.human_attribute_name(:duration) %></th>
       <th>Action</th>
     </tr>
   </thead>
@@ -22,7 +23,8 @@
         <td><%= order_tour.kind %></td>
         <td><%= order_tour.location %></td>
         <td><%= order_tour.place %></td>
-        <td><%=l order_tour.created_at, format: :long %></td>
+        <td><%= order_tour.time %></td>
+        <td><%= order_tour.duration %></td>
         <td><%= link_to 'Destroy', order_tour, method: :delete, 
         data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
       </tr>

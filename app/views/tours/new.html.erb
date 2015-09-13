@@ -19,7 +19,7 @@
         <td><%= tour.id %></td>
         <td><%= tour.driver_id %></td>
         <td><%= tour.duration %></td>
-        <td>FIXME Summe der OrderTours</td>
+        <td><%= tour.order_tours.count %></td>
         <td><%=l tour.created_at, format: :long %></td>
         <td><%= link_to 'Show', tour, :class => 'btn btn-info btn-xs' %></td>
         <td><%= link_to 'Edit', edit_tour_path(tour), :class => 'btn btn-warning btn-xs' %></td>
