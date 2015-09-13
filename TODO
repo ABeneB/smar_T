@@ -1,7 +1,5 @@
 TODO
 
-löschen von Fahrer löscht auch Tour und Elmente!
-
 alle controller so anpassen, dass nur eigene daten gesehen werden als Planer
 und das Fahrer bei Tour nur seine sieht
 
@@ -23,10 +21,6 @@ index.html.erb überarbeiten für neue Attribute (name etc)
 
 Alle Objekte (Driver, Order etc.) automatisch mit der Company des users associeren
     - tours_controller
-    
-touren bilden -> fahrzeit errechnen? - https://github.com/alexreisner/geocoder
-    -   nominatimaktiv
-
 
 ansicht für role faher - https://github.com/apneadiving/Google-Maps-for-Rails
     - google maps ist eingebunden, orte/tour noch reinschmeißen - genrating jason
@@ -35,6 +29,8 @@ ansicht für role faher - https://github.com/apneadiving/Google-Maps-for-Rails
         - Tour vom Driver lösen, wenn fertig
 
 .csv inport für testdaten
+
+Planer Ansicht mit der Position aller Driver und mit einer Ansicht der Touren
 
 Sprache in show and _form anpassen
 

@@ -26,15 +26,14 @@ class Generate
                 # jede Prioritätsstufe nacheinander bearbeiten
                 solve_matrix(matrix, order_count)
             end
-        # keine Prioritätsstufen
-        else
+        else # keine Prioritätsstufen
             # Matrix zwischen allen Drivern und allen Orders aufspannen
             matrix = build_matrix()
             order_count = orders.length
             # Alle Orders in Matrix zuteilen 
             solve_matrix(matrix, order_count)
         end
-        ente()
+        # Touren generiert
     end # end generate_tour()
     
     #TESTED
@@ -59,7 +58,7 @@ class Generate
         matrix #return - matrix ist ein langes Array (beachten!)
     end
     
-    #DONE
+    # DONE
     # MMM durchführen
     def solve_matrix(matrix, order_count)
         # für jeder Order eine Tour finden
@@ -83,25 +82,26 @@ class Generate
             # Driver die Tour (samt neuer Order) zuteilen
             commit_order(driver, tour, order)
             #update matrix - Löschen aller Einträge mit der Order und die Zeiten vom Fahrer updaten
-            update_matrix(matrix, driver, order)
+            matrix = update_matrix(matrix, driver, order)
             i += 1
         end
     end
     
     #TESTED
     # Nach einer Zuteilung die matrix erneuern
-    def update_matrix(matrix, order, driver)
+    def update_matrix(matrix, driver, order)
         # Alle Einträge in matrix mit order löschen
         matrix.each_with_index do |tour, index|
+            # Driver steht in tour[0]
+            if tour[0].id == driver.id
+                # Tour neuberechnen
+                new_tour = build_tour(tour[1], driver)
+                tour[2] = new_tour
+            end
             # Order steht in tour[1]
             if tour[1].id == order.id
                 # alten Eintrag entfernen
                 matrix.delete_at(index)
-            end
-            # Driver steht in tour[0]
-            if tour[0].id == driver.id
-                # Tour neuberechnen
-                tour = build_tour(tour[1], driver)
             end
         end
         matrix # return
@@ -111,15 +111,16 @@ class Generate
     # Erstellt die OrderTour objekte und speichert die neue Tour und OrderTour in der DB
     def commit_order(driver, tour, order)
         #Alte tour suchen und ggf. löschen, sowie die OrderTours davon
-        if Tour.where(driver_id: driver.id).exists?
-            original_tour = Tour.where(driver_id: driver.id).take
+        # FIXME später wieder einfügen
+        #if Tour.where(driver_id: driver.id).exists?
+        #     original_tour = Tour.where(driver_id: driver.id).take
             #OrderTours der Tour löschen
-            OrderTour.where(tour_id: original_tour.id).find_each do |order_tour|
-                order_tour.destroy
-            end
+        #    OrderTour.where(tour_id: original_tour.id).find_each do |order_tour|
+        #       order_tour.destroy
+        #   end
             # Tour löschen
-            original_tour.destroy
-        end
+        #   original_tour.destroy
+        #end
         
         # neue Tour erstellen
         new_tour= Tour.create(user_id: user.id, driver_id: driver.id, company_id: company.id, duration: 0)
@@ -127,14 +128,14 @@ class Generate
         tour.each_with_index do |order_tour, index|
             OrderTour.create(user_id: user.id, tour_id: new_tour.id, company_id: company.id, location: order_tour.location, place: index, comment: order_tour.comment, capacity: order_tour.capacity, capacity_status: order_tour.capacity_status, time: order_tour.time, duration: order_tour.time, kind: order_tour.kind)
         end
-        # Duration setzen, entspricht letzen Tour element
+        # Duration setzen
         new_tour.duration = calc_tour_time(tour)
-        # Tour mit verbinden
+        # Tour mit Driver verbinden
         new_tour.driver_id = driver.id  
         new_tour.save
-        # Order deaktivieren
-        # FIXME order.activ = false
-        order.save
+        # Order deaktivieren, damit sie in nächsten Planungen nicht versehentlich verplant wird
+        # FIXME später wieder hinzufügen - order.activ = false
+        # order.save
     end # end commit_order()
     
     #DONE
@@ -151,14 +152,16 @@ class Generate
         tour # return tour
     end # end build_tour()
     
-    # FIXME
+    # Not Tested
     # Insertionalgo für PDP
     def insertion_pdp(order, driver)
         # load tour vom driver (wenn eine besteht)
         old_tour = []
         # Alle OrderTour Elemente laden und old_tour befüllen
-        OrderTour.where(tour_id: driver.tour_id).find_each do |tour_element|
-            old_tour.push(tour_elemnt)
+        unless Tour.where(driver_id: driver.id).nil?
+            driver.tour.order_tours.each do |tour_element|
+                old_tour.push(tour_element)
+            end
         end
         
         #Wenn es keine alte Tour gab, neue Tour vorbereiten
@@ -236,15 +239,17 @@ class Generate
         best_tour # return
     end # end insertion_pdp()
     
-    #FIXME
+    # Not tested
     #Insertionalgo für DP
     def insertion_dp(order, driver)
         # load tour vom driver (wenn eine besteht)
         old_tour = []
+        
         # Alle OrderTour Elemente laden und old_tour befüllen
-        if Tour.where(driver_id: driver.id).exists?
-            original_tour = Tour.where(driver_id: driver.id).take
-            OrderTour.where(tour_id: original_tour.id).each do |tour_element|
+        # FIXME!!! driver.tour wird nicht gefunden
+        unless driver.tour.nil?
+            ente()
+            driver.tour.order_tours.each do |tour_element|
                 old_tour.push(tour_element)
             end
         end
@@ -286,7 +291,6 @@ class Generate
             new_tour.insert(index+2, order_tour_delivery)
 
             # OrderTour.time updaten
-            # FIXME bei einem ELement ist .time = nil !!
             new_tour = update_time(new_tour, index+2)
             
             # Wenn eine Capacity_restriction besteht...
@@ -313,16 +317,15 @@ class Generate
         best_tour # return
     end # end insertion_dp()
     
-    #FIXME
+    # Not tested
     #Insertionalgo für PP
     def insertion_pp(order, driver)
         # load tour vom driver (wenn eine besteht)
         old_tour = []
         # Alle OrderTour Elemente laden und old_tour befüllen
-        if Tour.where(driver_id: driver.id).exists?
-            original_tour = Tour.where(driver_id: driver.id)
-            OrderTour.where(tour_id: original_tour.id).find_each do |tour_element|
-                old_tour.push(tour_elemnt)
+        unless driver.tour.nil?
+            driver.tour.order_tours.each do |tour_element|
+                old_tour.push(tour_element)
             end
         end
         
@@ -391,6 +394,7 @@ class Generate
             elsif order.costumer.priority = "C"
                 prioC.push(order)
             else # Prio "D" oder null oder Eingabefehler
+            # FIXME - sagt immmer "A" obwohl prio ganz klar "D"
                 prioD.push(order)
             end
         end
@@ -401,7 +405,7 @@ class Generate
     #DONE
     # erstellt zu order ein ordertour vom typ pickup
     def create_pickup(order)
-        order_tour_pickup = OrderTour.new # FIXME geht das?
+        order_tour_pickup = OrderTour.new
         # user_id wird in commit gesetzt
         order_tour_pickup.order_id = order.id
         # tour_id wird in commit gesetzt
@@ -421,7 +425,7 @@ class Generate
     #DONE
     # erstellt zu order ein ordertour vom typ delivery
     def create_delivery(order)
-        order_tour_delivery = OrderTour.new # FIXME geht das?
+        order_tour_delivery = OrderTour.new
         # user_id wird in commit gesetzt
         order_tour_delivery.order_id = order.id
         # tour_id wird in commit gesetzt
@@ -482,7 +486,7 @@ class Generate
         home # return
     end # end create_home
     
-    #FIXME
+    # DONE
     # erstellt OrderTour depot
     def create_depot()
         # depot = company.depot
@@ -513,10 +517,10 @@ class Generate
         # directions.drive_time_in_minutes
         # Geocoder - Distanze in km - für erste Tests
         # Geocoder::Calculations.distance_between([ot1.latitude,ot1.longitude], [ot2.latitude,ot2.longitude])
-        rand (1...20)
+        rand(1...20)
     end# end time_for_distance()
     
-    # FIXME
+    # DONE
     # Überprüft für die tour ob die Beschränkungen eingehalten werden
     def check_restriction(tour,order,driver)
         # Check
@@ -541,7 +545,7 @@ class Generate
         false # liefert true, wenn alle Beschränkungen eingehalten werden
     end # end check_restriction()
     
-    #FIXME - Depots einsetzen
+    # Not tested
     # Überprüfen ob Capacity restricion eingehalten wird und setzt ggf. Depots ein
     def capacity?(tour, driver) # liefert true, wenn gegen restriction verstoßen wird
         tour.each_with_index do |order_tour, index|
@@ -554,7 +558,8 @@ class Generate
                     depot.capacity = tour[index-1]*-1
                     # Vor Verstoß einsetzen
                     tour.insert(index-1, depot)
-                    # FIXME update capacity_status
+                    # update capacity_status
+                    tour = update_capacity(tour, index)
                 else
                     return true # Wenn es PDP ist, dann Verstoß
                 end
@@ -588,7 +593,7 @@ class Generate
         # return true -> Delivery ist zu spät
         
                     
-        # FIXME - wenn durch time_window keine zulässige Tour gebildet werden konnte
+        # wenn durch time_window keine zulässige Tour gebildet werden konnte
         # dann an die matrix eintragen, dass es nicht geht durch sehr lange duration
             
     end
@@ -635,7 +640,7 @@ class Generate
     def duplicate_tour_array (tour)
         new_tour = []
         tour.each do |element|
-            OrderTour.new(location: element.location, capacity: element.capacity, capacity_status: element.capacity_status, time: element.time, duration: element.duration, kind: element.kind)
+            #OrderTour.new(location: element.location, capacity: element.capacity, capacity_status: element.capacity_status, time: element.time, duration: element.duration, kind: element.kind)
             new_tour.push(element.clone)
         end
         new_tour
