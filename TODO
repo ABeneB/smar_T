@@ -1,5 +1,7 @@
 TODO
 
+working_time beachten !
+
 alle controller so anpassen, dass nur eigene daten gesehen werden als Planer
 und das Fahrer bei Tour nur seine sieht
 
@@ -35,3 +37,9 @@ Planer Ansicht mit der Position aller Driver und mit einer Ansicht der Touren
 Sprache in show and _form anpassen
 
 Costumer können nicht angelegt werden
+
+Search in orders and costumer
+
+Ladebalken oder ähnliches während algo läuft - sonst error bei zu langer antwortzeit
+generate unabhängig vom user ausführen (Berechnung starten -> was anderes machen. zurück kommen und status der berechung etc. sehen)
+ - Mutech mäßig unabbrechbar machen

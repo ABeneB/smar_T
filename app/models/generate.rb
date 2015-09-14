@@ -87,7 +87,7 @@ class Generate
         end
     end
     
-    # FIXME - die touren in der matrix werden nicht upgedated
+    # getested
     # Nach einer Zuteilung die matrix erneuern
     def update_matrix(matrix, driver, order)
         # Alle Einträge in matrix mit order löschen
@@ -141,9 +141,9 @@ class Generate
         new_tour.save
         driver.tour = new_tour
         # Order deaktivieren, damit sie in nächsten Planungen nicht versehentlich verplant wird
-        # FIXME - wieder einkommentieren
-        #order.activ = false
-        #order.save
+        # FIXME - wieder einkommentieren für echten Betrieb, bzw testen mehrere Daten
+        order.activ = false
+        order.save
     end # end commit_order()
     
     #DONE
@@ -160,7 +160,7 @@ class Generate
         tour # return tour
     end # end build_tour()
     
-    # Not Tested
+    # TESTEN
     # Insertionalgo für PDP
     def insertion_pdp(order, driver)
         # load tour vom driver (wenn eine besteht)
@@ -247,8 +247,8 @@ class Generate
         best_tour # return
     end # end insertion_pdp()
     
-    # Not tested
-    #Insertionalgo für DP
+    # Tested
+    # Insertionalgo für DP
     def insertion_dp(order, driver)
         # load tour vom driver (wenn eine besteht)
         old_tour = []
@@ -323,7 +323,7 @@ class Generate
         best_tour # return
     end # end insertion_dp()
     
-    # Not tested
+    # Testen !
     #Insertionalgo für PP
     def insertion_pp(order, driver)
         # load tour vom driver (wenn eine besteht)
@@ -522,8 +522,8 @@ class Generate
     #Tested
     # Berechnet die Zeit für die Fahrt von order_tour1 nach order_tour2
     def time_for_distance(ot1, ot2)
-        # Google Maps - Echte Farhezit - Anfrangen beschränkt
-        # FIXME - liefert abn und zu 0 zurück!
+        # Google Maps
+        sleep(1) # Nur eine anfrage pro Sekunde
         directions = GoogleDirections.new(ot1.location, ot2.location)
         directions.drive_time_in_minutes
         # Geocoder - Distanze in km
