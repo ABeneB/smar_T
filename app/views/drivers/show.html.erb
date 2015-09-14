@@ -25,4 +25,29 @@
               :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
               :class => 'btn btn-danger' %>
 </div>
-
+<% if @driver.tour %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th><%= model_class.human_attribute_name(:place) %></th>
+        <th>Art</th>
+        <th><%= model_class.human_attribute_name(:location) %></th>
+        <th><%= model_class.human_attribute_name(:time) %></th>
+        <th><%= model_class.human_attribute_name(:duration) %></th>
+        <th>Beschreibung</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @driver.tour.order_tours.each do |order_tour| %>
+        <tr>
+          <td><%= order_tour.place+1 %></td>
+          <td><%= order_tour.kind %></td>
+          <td><%= order_tour.location %></td>
+          <td><%= order_tour.time %></td>
+          <td><%= order_tour.duration %></td>
+          <td><%= order_tour.comment %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

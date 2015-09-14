@@ -3,49 +3,80 @@
 
 <%- model_class = Tour -%>
 <div class="page-header">
-  <h1>Touren</h1>
+  <h1>Tour</h1>
 </div>
 
 <div class="fieldset">
-  <dl>
-      <dt class="label label-default"><%= model_class.human_attribute_name(:duration) %></dt>
-      <dd><pre class="prettyprint"><%= @tour.duration %></pre></dd>
-  </dl>
-</div>
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th><%= model_class.human_attribute_name(:place) %></th>
+        <th>Art</th>
+        <th><%= model_class.human_attribute_name(:location) %></th>
+        <th><%= model_class.human_attribute_name(:time) %></th>
+        <th><%= model_class.human_attribute_name(:duration) %></th>
+        <th>Beschreibung</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tour.order_tours.each do |order_tour| %>
+        <tr>
+          <td><%= order_tour.place+1 %></td>
+          <td><%= order_tour.kind %></td>
+          <td><%= order_tour.location %></td>
+          <td><%= order_tour.time %></td>
+          <td><%= order_tour.duration %></td>
+          <td><%= order_tour.comment %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<% if false %>
-  <div class="form-group">
-    <%= link_to t('.back', :default => t("helpers.links.back")),
-                tours_path, :class => 'btn btn-default'  %>
-    <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                edit_tour_path(@tour), :class => 'btn btn-default' %>
-    <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                tour_path(@tour),
-                :method => 'delete',
-                :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                :class => 'btn btn-danger' %>
-  </div>
+<% if current_user.is_driver? %>
+  <td><%= link_to 'Start', edit_tour_path(@tour), :class => 'btn btn-info' %></td>
+  <td><%= link_to 'Pause', edit_tour_path(@tour), :class => 'btn btn-info' %></td>
+  <td><%= link_to 'Done', edit_tour_path(@tour), method: :delete, 
+        data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' %></td>
+  <td><%= link_to 'Find me!', '#', :onclick => 'findMe();', :class => 'btn btn-info' %></td>   
 <% end %>
 
 <div style='width: 800px;'>
-  <div id="map" style='width: 800px; height: 400px;'></div>
+  <div id="map" style='width: 900px; height: 400px;'></div>
 </div>
 
 <script>
-  handler = Gmaps.build('Google');
-  handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
-  markers = handler.addMarkers([
-    {
-      "lat": 0,
-      "lng": 0,
-      "picture": {
-        "url": "https://addons.cdn.mozilla.net/img/uploads/addon_icons/13/13028-64.png",
-        "width":  36,
-        "height": 36
-      },
-      "infowindow": "hello!"
+/*
+Fahranweisunge, Kartendarstellung, Marks nummeriert 
+
+var directionsDisplay = new google.maps.DirectionsRenderer();
+var directionsService = new google.maps.DirectionsService();
+
+function calcRoute() {
+  var origin      = new google.maps.LatLng(41.850033, -87.6500523);
+  var destination = new google.maps.LatLng(42.850033, -85.6500523);
+  var request = {
+      origin:      origin,
+      destination: destination,
+      travelMode:  google.maps.TravelMode.DRIVING
+  };
+  directionsService.route(request, function(response, status) {
+    if (status == google.maps.DirectionsStatus.OK) {
+      directionsDisplay.setDirections(response);
     }
-  ]);
+  });
+}
+
+calcRoute();
+
+var handler = Gmaps.build('Google');
+handler.buildMap({ internal: {id: 'directions'}}, function(){
+  directionsDisplay.setMap(handler.getMap());
+});
+
+*/
+handler = Gmaps.build('Google');
+handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+  markers = handler.addMarkers(<%=raw @hash.to_json %>);
   handler.bounds.extendWith(markers);
   handler.fitMapToBounds();
 });

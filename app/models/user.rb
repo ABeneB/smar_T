@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  has_one :company
+  belongs_to :company
   
   USER_ROLE = "user"
   ADMIN_ROLE = "admin"

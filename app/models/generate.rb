@@ -74,15 +74,11 @@ class Generate
                 if duration_shortest_tour > duration_tour 
                     shortest_tour = possible_tour # ...dann ist die possible_tour die neue shortest_tour
                 end
-            end
-            # leserlich umspeichern
-            driver = shortest_tour[0]
-            order = shortest_tour[1]
-            tour = shortest_tour[2]
+            end   
             # Driver die Tour (samt neuer Order) zuteilen
-            commit_order(driver, tour, order)
+            commit_order(shortest_tour[0], shortest_tour[2], shortest_tour[1])
             #update matrix - Löschen aller Einträge mit der Order und die Zeiten vom Fahrer updaten
-            matrix = update_matrix(matrix, driver, order)
+            matrix = update_matrix(matrix, shortest_tour[0], shortest_tour[1])
             i += 1
         end
     end
@@ -142,8 +138,8 @@ class Generate
         driver.tour = new_tour
         # Order deaktivieren, damit sie in nächsten Planungen nicht versehentlich verplant wird
         # FIXME - wieder einkommentieren für echten Betrieb, bzw testen mehrere Daten
-        order.activ = false
-        order.save
+        #order.activ = false
+        #order.save
     end # end commit_order()
     
     #DONE
@@ -393,14 +389,19 @@ class Generate
         prioC=[]
         prioD=[]
         orders.each do |order|
-            if order.costumer.priority = "A"
-                prioA.push(order)
-            elsif order.costumer.priority = "B"
-                prioB.push(order)
-            elsif order.costumer.priority = "C"
-                prioC.push(order)
-            else # Prio "D" oder null oder Eingabefehler
-            # FIXME - sagt immmer "A" obwohl prio ganz klar "D"
+            # Prüfen ob es priorities gibt
+            unless order.costumer.nil?
+            # wenn ja, dann nach der priority sortieren
+                if order.costumer.priority = "A"
+                    prioA.push(order)
+                elsif order.costumer.priority = "B"
+                    prioB.push(order)
+                elsif order.costumer.priority = "C"
+                    prioC.push(order)
+                else
+                    prioD.push(order)
+                end
+            else# Wenn es kein Prio gibt, dann in D
                 prioD.push(order)
             end
         end
@@ -523,9 +524,10 @@ class Generate
     # Berechnet die Zeit für die Fahrt von order_tour1 nach order_tour2
     def time_for_distance(ot1, ot2)
         # Google Maps
-        sleep(1) # Nur eine anfrage pro Sekunde
-        directions = GoogleDirections.new(ot1.location, ot2.location)
-        directions.drive_time_in_minutes
+        # sleep(1) # Nur eine Anfrage pro Sekunde
+        # FIXME ineffizient - speichert die ganezn docs davon, obwohl ich nur Zeit brauche
+        # directions = GoogleDirections.new(ot1.location, ot2.location)
+        # directions.drive_time_in_minutes
         # Geocoder - Distanze in km
         #if ot1.latitude.nil?
         #    geocords = Geocoder.search(ot1.location) 
@@ -537,7 +539,8 @@ class Generate
         #    ot2.latitude = geocords[0].boundingbox[0]
         #    ot2.longitude = geocords[0].boundingbox[2]
         #end
-        #Geocoder::Calculations.distance_between([ot1.latitude,ot1.longitude], [ot2.latitude,ot2.longitude])
+        #time = Geocoder::Calculations.distance_between([ot1.latitude,ot1.longitude], [ot2.latitude,ot2.longitude])
+        rand(10...20)
     end# end time_for_distance()
     
     # DONE
@@ -550,7 +553,6 @@ class Generate
             end
         end
         
-        #FIXME Depots einfügen
         if company.restriction.capacity_restriction
             if capacity?(tour, driver)
                     return true
@@ -602,7 +604,7 @@ class Generate
         return false
     end # end capacity?()
     
-    #FIXME - Warten um eine Order einsetzen zu können
+    #FIXME - Warten um eine Order einsetzen zu können?
     # Überprüfen ob Time Windows eingehalten werden
     def time_window?(tour, order, driver) # liefert true, wenn gegen restriction verstoßen wird
         # Uhrzeit von jetzt bis OrderTour von Order prüfen
@@ -682,7 +684,6 @@ class Generate
                 tour_time += order_tour.time # Fahrzeit
             end
         end
-
         tour_time # return
     end# end calc_tour_time()
 end

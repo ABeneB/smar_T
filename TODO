@@ -1,9 +1,9 @@
 TODO
 
-working_time beachten !
-
-alle controller so anpassen, dass nur eigene daten gesehen werden als Planer
-und das Fahrer bei Tour nur seine sieht
+company has_many user , user belongs to company
+    - dadurch können Fahrer und Driver einer Firma gefunden werden
+    - migration
+    - forms anpassen ggf
 
 Alle Einträge eines Planer seiner Firma zuteilen und gleiches für Driver
     - Create aller controller die company_id setzen
@@ -11,23 +11,21 @@ Alle Einträge eines Planer seiner Firma zuteilen und gleiches für Driver
   
 handy-gps für position von vehicle 
     + vehicle.position regelmäßig updaten
+    + Funktion ist in app/assets/javascript/position.js -> kann per findMe() aufgerufen werden
 
 f.association :user in allen _form ergänzen um , :include_blank => false, :label_method => :form_label %>
         
-tours_controller new eingabe für generate überarbeiten (Input params filtern)
-
 controller anpassen, dass sie nur die daten des nutzers weitergeben und nicht alle, außer beim admin
     - If user.is_admin? dann .all | else (Nur daten vom user) end
-
-index.html.erb überarbeiten für neue Attribute (name etc)
+views anpassen, dass sie bei falscher rolle ZUGANG VERWEIGERT anzeigen
+    - wie bei company index.html.erb
 
 Alle Objekte (Driver, Order etc.) automatisch mit der Company des users associeren
     - tours_controller
 
 ansicht für role faher - https://github.com/apneadiving/Google-Maps-for-Rails
-    - google maps ist eingebunden, orte/tour noch reinschmeißen - genrating jason
-    - Driver tour abarbeiten (OrderTour-Elemente bestätigen und Tour abschließen)
-        - start, pause, done, end
+    - Punkte werden angezeigt -> Routen fehlen
+        - start, pause, done - controller funktionen hinterlegen
         - Tour vom Driver lösen, wenn fertig
 
 .csv inport für testdaten
@@ -38,8 +36,14 @@ Sprache in show and _form anpassen
 
 Costumer können nicht angelegt werden
 
-Search in orders and costumer
+Search in orders and costumer, sort, ggf. checkboxen für aktiv und nich aktiv
+
+Google API blockt einen wegen zu vielen Anfragen -> Wird der API Schlüssel genutzt???
+https://github.com/joshcrews/google-directions-ruby
+https://console.developers.google.com/project/eternal-skyline-106615/apiui/credential/key/0
 
 Ladebalken oder ähnliches während algo läuft - sonst error bei zu langer antwortzeit
 generate unabhängig vom user ausführen (Berechnung starten -> was anderes machen. zurück kommen und status der berechung etc. sehen)
- - Mutech mäßig unabbrechbar machen
+    - Mutech mäßig unabbrechbar machen
+    - abbrechen
+Memory recht voll. ggf. weil objekte gespeicher werden, nachdem ergebnis schon geliefert/ gespeicehrt worden ist?

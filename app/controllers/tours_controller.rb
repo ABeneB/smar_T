@@ -22,7 +22,12 @@ class ToursController < ApplicationController
   end
 
   def show
-    respond_with(@tour)
+    @order_tours = @tour.order_tours
+    @hash = Gmaps4rails.build_markers(@order_tours) do |order_tour, marker|
+      marker.lat order_tour.latitude
+      marker.lng order_tour.longitude
+    end
+    respond_with(@tour, @hash)
   end
 
   def new
@@ -53,6 +58,7 @@ class ToursController < ApplicationController
   end
 
   def edit
+    #FIXME pause, start, done funktionen einfügen
   end
 
   def create

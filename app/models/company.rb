@@ -1,5 +1,5 @@
 class Company < ActiveRecord::Base
-    belongs_to :user
+    has_many :user
     has_one :restriction
     has_many :drivers
     has_many :orders
