@@ -406,6 +406,7 @@ class Generate
             end
         end
         prioArray =[prioA, prioB, prioC, prioD]
+        ente()
         prioArray # return
     end # end by_priority()
     

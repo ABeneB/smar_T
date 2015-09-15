@@ -2,8 +2,8 @@
   <%= simple_form_for @user, :url => registered_user_path(@user) do |f| %>
     <%= f.input :username %>
     <%= f.input :email %>
-    <%= f.input :password %>
     <%= f.input :role %>
+    <%= f.association :company %>
     <%= f.button :submit %>
   <% end %>
 <% end %>

@@ -27,37 +27,28 @@
                 :class => 'btn btn-danger' %>
   </div>
   
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Username</th>
-          <th>Role</th>
-          <th>Email</th>
-          <th>Erstellt am</th>
-          <th><%=t '.actions', :default => t("helpers.actions") %></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @company.users.each do |registered_user| %>
+  <% if @company.drivers %>
+      <table class="table table-striped">
+        <thead>
           <tr>
-            <td><%= registered_user.id %></td>
-            <td><%= registered_user.username %></td>
-            <td><%= registered_user.role %></td>
-            <td><%= registered_user.email %></td>
-            <td><%= registered_user.created_at %></td>
-            <td><%= link_to 'Show', registered_user_path(registered_user), :class => 'btn btn-info btn-xs' %></td>
-            <td><%= link_to 'Edit', edit_registered_user_path(registered_user), :class => 'btn btn-warning btn-xs' %></td>
-            <td><%= link_to 'Destroy', registered_user_path(registered_user ), method: :delete, 
-            data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Position</th>
+            <th><%=t '.actions', :default => t("helpers.actions") %></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
-    
-    <%= link_to t('.new', :default => t("helpers.links.new")),
-                new_registered_user_path,
-                :class => 'btn btn-primary' %>
+        </thead>
+        <tbody>
+          <% @company.drivers.each do |driver| %>
+            <tr>
+              <td><%= driver.id %></td>
+              <td><%= driver.name %></td>
+              <td><%= driver.vehicle.position %></td>
+              <td><%= link_to 'Show', driver_path(driver), :class => 'btn btn-info btn-xs' %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
                 
 <% else %>
   ZUGANG VERWEIGERT

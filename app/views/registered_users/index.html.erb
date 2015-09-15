@@ -11,7 +11,7 @@
         <th>Username</th>
         <th>Role</th>
         <th>Email</th>
-        <th>Erstellt am</th>
+        <th>Unternehmen</th>
         <th><%=t '.actions', :default => t("helpers.actions") %></th>
       </tr>
     </thead>
@@ -22,7 +22,11 @@
           <td><%= registered_user.username %></td>
           <td><%= registered_user.role %></td>
           <td><%= registered_user.email %></td>
-          <td><%= registered_user.created_at %></td>
+          <% if registered_user.company %>
+            <td><%= registered_user.company.name %></td>
+          <% else %>
+            <td>No</td>
+          <% end %>
           <td><%= link_to 'Show', registered_user_path(registered_user), :class => 'btn btn-info btn-xs' %></td>
           <td><%= link_to 'Edit', edit_registered_user_path(registered_user), :class => 'btn btn-warning btn-xs' %></td>
           <td><%= link_to 'Destroy', registered_user_path(registered_user ), method: :delete, 

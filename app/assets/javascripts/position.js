@@ -1,9 +1,7 @@
 function findMe() {
   if(navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      document.getElementById('checkin_latitude').value = position.coords.latitude;
-      document.getElementById('checkin_longitude').value = position.coords.longitude;
-      alert('Your position is:' + position.coords.latitude +', ' + position.coords.longitude);
+    navigator.geolocation.getCurrentPosition(function(position) { 
+      document.getElementById("info").value = position.coords.latitude +', ' + position.coords.longitude;
     }, function() {
       alert('We couldn\'t find your position.');
     });

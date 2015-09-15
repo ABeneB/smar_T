@@ -1,10 +1,5 @@
 TODO
 
-company has_many user , user belongs to company
-    - dadurch können Fahrer und Driver einer Firma gefunden werden
-    - migration
-    - forms anpassen ggf
-
 Alle Einträge eines Planer seiner Firma zuteilen und gleiches für Driver
     - Create aller controller die company_id setzen
     - Update auch um sicher zugehen
@@ -19,14 +14,11 @@ controller anpassen, dass sie nur die daten des nutzers weitergeben und nicht al
     - If user.is_admin? dann .all | else (Nur daten vom user) end
 views anpassen, dass sie bei falscher rolle ZUGANG VERWEIGERT anzeigen
     - wie bei company index.html.erb
+orders_controller, vehicles_controller, drivers_controller, costumers_controller
+    
 
 Alle Objekte (Driver, Order etc.) automatisch mit der Company des users associeren
     - tours_controller
-
-ansicht für role faher - https://github.com/apneadiving/Google-Maps-for-Rails
-    - Punkte werden angezeigt -> Routen fehlen
-        - start, pause, done - controller funktionen hinterlegen
-        - Tour vom Driver lösen, wenn fertig
 
 .csv inport für testdaten
 

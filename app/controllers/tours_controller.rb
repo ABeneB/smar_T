@@ -4,28 +4,24 @@ class ToursController < ApplicationController
   respond_to :html
 
   def index
-    # FIXME ünbergabe alle OrderTours der Tour
+    # Nur Daten die Zur Rolle passen anzeigen
     if current_user.is_admin?
       @tours = Tour.all
-      respond_with(@tours)
     elsif current_user.is_driver?
-      company = Company.find(user_id: current_user.id)
+      company = current_user.company
       @tours = Tour.where(company_id: company.id)
-      respond_with(@tours)
     elsif current_user.is_planer?
-      company = Company.find(user_id: current_user.id)
+      company = current_user.company
       @tours = Tour.where(company_id: company.id)
-      respond_with(@tours)
     else
-      respond_with([])# nichts
+      @tours = []
     end
   end
 
   def show
     @order_tours = @tour.order_tours
-    @hash = Gmaps4rails.build_markers(@order_tours) do |order_tour, marker|
-      marker.lat order_tour.latitude
-      marker.lng order_tour.longitude
+    @hash = @order_tours.map do | order_tour|
+      {latitude: order_tour.latitude, longitude: order_tour.longitude, place: order_tour.place.to_s}
     end
     respond_with(@tour, @hash)
   end
@@ -46,10 +42,10 @@ class ToursController < ApplicationController
     if current_user.is_admin?
       @tours = Tour.all
     elsif current_user.is_driver?
-      company = Company.find(user_id: current_user.id)
+      company = current_user.company
       @tours = Tour.where(company_id: company.id)
     elsif current_user.is_planer?
-      company = Company.find(user_id: current_user.id)
+      company = current_user.company
       @tours = Tour.where(company_id: company.id)
     else
       @tours = []

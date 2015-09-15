@@ -4,11 +4,22 @@ class CostumersController < ApplicationController
   respond_to :html
 
   def index
-    @costumers = Costumer.all
-    respond_with(@costumers)
+    
+    if current_user.is_admin?
+      @costumers = Costumer.all
+    elsif current_user.is_driver?
+      @tours = []
+    elsif current_user.is_planer?
+      company = current_user.company
+      @tours = Costumer.where(company_id: company.id)
+    else
+      @tours = []
+    end
+    
   end
 
   def show
+    # FIXME - hat er zurgriff?
     respond_with(@costumer)
   end
 
