@@ -9,7 +9,7 @@ class CsvImport
     # import aus csv. vom typ delivery aus dem zuvor mitgegebenen folder
     def import_delivery_orders(company)
         # alle .csv files laden
-        order_array = get_all_files().each do |file|
+        get_all_files().each do |file|
             # Trennen am Semikolon und zu array aufbereiten
             CSV.foreach(file, col_sep: ";") do |row|
                 # neue Order anlegen

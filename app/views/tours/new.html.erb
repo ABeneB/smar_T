@@ -22,7 +22,6 @@
         <td><%= tour.order_tours.count %></td>
         <td><%=l tour.created_at, format: :long %></td>
         <td><%= link_to 'Show', tour, :class => 'btn btn-info btn-xs' %></td>
-        <td><%= link_to 'Edit', edit_tour_path(tour), :class => 'btn btn-warning btn-xs' %></td>
         <td><%= link_to 'Destroy', tour, method: :delete, 
         data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
       </tr>

@@ -3,9 +3,10 @@ TODO
 Sicherheit
 controller anpassen, dass sie nur die daten des nutzers weitergeben und nicht alle, außer beim admin
     - If user.is_admin? dann .all | else (Nur daten vom user) end
+    - companies, registered_users, restrictions, depots -> admin
 views anpassen, dass sie bei falscher rolle ZUGANG VERWEIGERT anzeigen
     - wie bei company index.html.erb
-orders_controller, vehicles_controller, drivers_controller, costumers_controller
+    - orders_controller, vehicles_controller, drivers_controller, costumers_controller
 
 Funktion
 dropdowns nur eigene Drivers, vehicles etc.

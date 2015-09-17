@@ -16,7 +16,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @tour.order_tours.each do |order_tour| %>
+      <% @order_tours.each do |order_tour| %>
         <tr>
           <td><%= order_tour.place+1 %></td>
           <td><%= order_tour.kind %></td>
@@ -34,9 +34,9 @@
   <td><%= link_to 'Pause', edit_tour_path(@tour), :class => 'btn btn-info' %></td>
   <td><%= link_to 'Erledigt', edit_tour_path(@tour), method: :delete, 
         data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' %></td>   
-<% end %>
-
+        
 <input type="text" id="info" disabled>
+<% end %>
 
 <div style='width: 800px;'>
   <div id="map" style='width: 900px; height: 400px;'></div>

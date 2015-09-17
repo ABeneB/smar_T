@@ -19,32 +19,38 @@ class ToursController < ApplicationController
   end
 
   def show
-    @order_tours = @tour.order_tours
+    # FIXME Sort by .place
+    @order_tours = @tour.order_tours.sort_by &:place
     @hash = @order_tours.map do | order_tour|
-      {latitude: order_tour.latitude, longitude: order_tour.longitude, place: order_tour.place.to_s}
+      place = order_tour.place+1
+      {latitude: order_tour.latitude, longitude: order_tour.longitude, place: place.to_s}
     end
     respond_with(@tour, @hash)
   end
 
   def new
-    # Orders, Drivers und Company filter/suchen
-    user = User.find(current_user.id)
-    g = Generate.new
-    g.drivers = user.company.drivers.where(activ: true)
-    g.orders = user.company.orders.where(activ: true)
-    g.company = user.company
-    g.user = user
-    
-    # Generate erzeugt und speichert die neuen Touren, OrderTour-Objekte
-    g.generate_tours
-    
     #Ausgabe nach Rolle filtern
     if current_user.is_admin?
+      # Orders, Drivers und Company filter/suchen
+      user = User.find(current_user.id)
+      g = Generate.new
+      g.drivers = user.company.drivers.where(activ: true)
+      g.orders = user.company.orders.where(activ: true)
+      g.company = user.company
+      g.user = user
+      # Generate erzeugt und speichert die neuen Touren, OrderTour-Objekte
+      g.generate_tours
       @tours = Tour.all
-    elsif current_user.is_driver?
-      company = current_user.company
-      @tours = Tour.where(company_id: company.id)
     elsif current_user.is_planer?
+      # Orders, Drivers und Company filter/suchen
+      user = User.find(current_user.id)
+      g = Generate.new
+      g.drivers = user.company.drivers.where(activ: true)
+      g.orders = user.company.orders.where(activ: true)
+      g.company = user.company
+      g.user = user
+      # Generate erzeugt und speichert die neuen Touren, OrderTour-Objekte
+      g.generate_tours
       company = current_user.company
       @tours = Tour.where(company_id: company.id)
     else

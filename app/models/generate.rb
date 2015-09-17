@@ -72,18 +72,18 @@ class Generate
                 # tour ist im dritten element [2] von possible_tour
                 duration_shortest_tour = calc_tour_time(shortest_tour[2])
                 duration_tour = calc_tour_time(possible_tour[2])
-                # Wenn tourtime/|OT| kürzer ist...
+                # Wenn tourtime/|TR| kürzer ist...
                 if (duration_shortest_tour/shortest_tour[2].length) > (duration_tour/shortest_tour[2].length) 
                     shortest_tour = possible_tour # ...dann ist die possible_tour die neue shortest_tour
                 end
             end   
             # Driver die Tour (samt neuer Order) zuteilen
-            commit_order(shortest_tour[0], shortest_tour[2], shortest_tour[1])
+            commit_order(shortest_tour[0], shortest_tour[1], shortest_tour[2])
             #update matrix - Löschen aller Einträge mit der Order und die Zeiten vom Fahrer updaten
             matrix = update_matrix(matrix, shortest_tour[0], shortest_tour[1])
             i += 1
         end
-    end
+    end# end solve_matrix
     
     # getested
     # Nach einer Zuteilung die matrix erneuern
@@ -109,34 +109,38 @@ class Generate
         matrix # return
     end # end update_matrix()
     
-    #DONE
+    # Tested
     # Erstellt die OrderTour objekte und speichert die neue Tour und OrderTour in der DB
-    def commit_order(driver, tour, order)
+    def commit_order(driver, order, tour) # tour kommt mit richtigen .place
+        # driver.tour kopieren, um neue OrderTour einzufügen
+        driver_tour = Tour.where(driver_id: driver.id).take
         # Tour erstellen, falls keine existiert
-        unless Tour.where(driver_id: driver.id).exists?
-           driver.tour = Tour.create(user_id: user.id, driver_id: driver.id, company_id: company.id, duration: 0)
+        if driver_tour.nil?
+            driver_tour = Tour.create(user_id: user.id, company_id: company.id, duration: 0)
         end
-        #Neue Order_tours identifizieren und anlegen - für neue tour alle Elemente
+        #Neue Order_Tours identifizieren und in DB anlegen
         tour.each do |order_tour|
+            # Wenn OrderTour noch nicht existiert...
             if order_tour.id.nil?
-                # Element anlegen in in DB speichern
+                # ...Element anlegen in DB speichern
                 if order_tour.duration.nil?
                     order_tour.duration = 0
                 end
-                # neues OrderTour-Element erstellen und mit bestehender Tour verbinden
-                OrderTour.create(user_id: user.id, tour_id: driver.tour.id, company_id: company.id, location: order_tour.location, place: order_tour.place, comment: order_tour.comment, capacity: order_tour.capacity, capacity_status: order_tour.capacity_status, time: order_tour.time, duration: order_tour.duration, kind: order_tour.kind)
+                OrderTour.create(user_id: user.id, order_id: order_tour.id, tour_id: driver_tour.id, company_id: company.id, place: order_tour.place, location: order_tour.location, comment: order_tour.comment, capacity: order_tour.capacity, capacity_status: order_tour.capacity_status, time: order_tour.time, duration: order_tour.duration, kind: order_tour.kind)
+            end
+            # .place anpassen
+            unless order_tour.id.nil?
+                if order_tour.place != OrderTour.where(id: order_tour.id) && OrderTour.find(order_tour.id)
+                    ot = OrderTour.find(order_tour.id)
+                    ot.place = order_tour.place
+                    ot.save
+                end
             end
         end
-        # Tour anpassen
-        # Reihenfolge (.place anpassen)
-        place = 0
-        driver.tour.order_tours.each do |order_tour|
-            order_tour.place = place
-            order_tour.save
-            place += 1
-        end
         # Duration setzen
-        driver.tour.duration = calc_tour_time(tour)
+        driver_tour.duration = calc_tour_time(tour)
+        # Tour speichern und Faher zu ordnen
+        driver.tour = driver_tour
         # Order deaktivieren, damit sie in nächsten Planungen nicht versehentlich verplant wird
         # FIXME - wieder einkommentieren für echten Betrieb, bzw testen mehrere Daten
         #order.activ = false
@@ -163,8 +167,11 @@ class Generate
         # load tour vom driver (wenn eine besteht)
         old_tour = []
         # Alle OrderTour Elemente laden und old_tour befüllen
-        unless Tour.where(driver_id: driver.id).nil?
-            driver.tour.order_tours.each do |tour_element|
+        unless driver.tour.nil?
+            # sortiert nach place
+            driver_tour = driver.tour.order_tours
+            driver_tour = driver_tour.sort {|x,y| x.place <=> y.place}
+            driver_tour.each do |tour_element|
                 old_tour.push(tour_element)
             end
         end
@@ -241,6 +248,10 @@ class Generate
                 end
             end
         end
+        # .place (reihenfolge) speichern
+        best_tour.each_with_index do |order_tour, index|
+            order_tour.place = index
+        end
         best_tour # return
     end # end insertion_pdp()
     
@@ -252,7 +263,10 @@ class Generate
         
         # Alle OrderTour Elemente laden und old_tour befüllen
         unless driver.tour.nil?
-            driver.tour.order_tours.each do |tour_element|
+        # sortiert nach place
+            driver_tour = driver.tour.order_tours
+            driver_tour = driver_tour.sort {|x,y| x.place <=> y.place}
+            driver_tour.each do |tour_element|
                 old_tour.push(tour_element)
             end
         end
@@ -317,17 +331,24 @@ class Generate
                 end
             end
         end
+        # .place (reihenfolge) speichern
+        best_tour.each_with_index do |order_tour, index|
+            order_tour.place = index
+        end
         best_tour # return
     end # end insertion_dp()
     
     # Testen !
-    #Insertionalgo für PP
+    # Insertionalgo für PP
     def insertion_pp(order, driver)
         # load tour vom driver (wenn eine besteht)
         old_tour = []
         # Alle OrderTour Elemente laden und old_tour befüllen
         unless driver.tour.nil?
-            driver.tour.order_tours.each do |tour_element|
+            # sortiert nach place
+            driver_tour = driver.tour.order_tours
+            driver_tour = driver_tour.sort {|x,y| x.place <=> y.place}
+            driver_tour.each do |tour_element|
                 old_tour.push(tour_element)
             end
         end
@@ -370,14 +391,27 @@ class Generate
             if check_restriction(new_tour, order, driver)
                 break
             end
-                           
+            
             # Depot als letztes vor home einsetzen, zum Entladen
+            # Bestehendes Depot anpassen .capacity
             depot = create_depot()
             depot.capacity = old.tour[tour.length-2].capacity_status*-1 # Fahrzeug wird entladen
             old_tour.insert(old_tour.length-2 , depot)
             update_time(old_tour, tour.length-2) # .time depot und home setzen
             # FIXME -> capcity und time updaten
-                
+            # best_tour mit ersten new_tour befüllen
+            if best_tour.length < new_tour.length
+                best_tour = duplicate_tour_array(new_tour)
+            else # wenn das schon passiert ist...
+                # ...überprüfen ob die neue tour kürzer ist als die vorherige
+                if calc_tour_time(new_tour) < calc_tour_time(best_tour)
+                    best_tour = duplicate_tour_array(new_tour)
+                end
+            end  
+        end
+        # .place (reihenfolge) speichern
+        best_tour.each_with_index do |order_tour, index|
+            order_tour.place = index
         end
         tour # return
     end # end insertion_pp()
@@ -407,7 +441,6 @@ class Generate
             end
         end
         prioArray =[prioA, prioB, prioC, prioD]
-        ente()
         prioArray # return
     end # end by_priority()
     
@@ -420,7 +453,7 @@ class Generate
         # tour_id wird in commit gesetzt
         # company_id wird in commit gesetzt
         order_tour_pickup.location = order.pickup_location
-        # place (Plazierung) wird im commit gesetzt
+        # place (Plazierung) wird im algo gesetzt
         order_tour_pickup.comment = order.comment
         order_tour_pickup.kind = "pickup"
         order_tour_pickup.capacity = order.capacity
@@ -440,7 +473,7 @@ class Generate
         # tour_id wird in commit gesetzt
         # company_id wird in commit gesetzt
         order_tour_delivery.location = order.delivery_location
-        # place (Plazierung) wird im commit gesetzt
+        # place (Plazierung) wird im algo gesetzt
         order_tour_delivery.comment = order.comment
         order_tour_delivery.kind = "delivery"
         # Nur bei Capacity Restriction wichtig
@@ -464,11 +497,11 @@ class Generate
         # user_id wird in commit gesetzt
         vehicle_position.order_id = nil
         # tour_id wird in commit gesetzt
-        # company_id wird in commit gesetzt
+        # company_id wird im algo gesetzt
         driver_vehicle = Vehicle.where(driver_id: driver.id).take
         vehicle_position.location = driver_vehicle.position
         # place (Platzierung) wird im commit gesetzt
-        vehicle_position.comment = nil
+        vehicle_position.comment = "Start der Tour"
         vehicle_position.kind = "position"
         vehicle_position.capacity = 0
         vehicle_position.capacity_status = 0
@@ -486,11 +519,11 @@ class Generate
         # user_id wird in commit gesetzt
         home.order_id = nil
         # tour_id wird in commit gesetzt
-        # company_id wird in commit gesetzt
+        # company_id wird im algo gesetzt
         driver_vehicle = Vehicle.where(driver_id: driver.id).take
         home.location = driver_vehicle.position
         # place (Platzierung) wird im commit gesetzt
-        home.comment = nil
+        home.comment = "Ende der Tour"
         home.kind = "home"
         home.capacity = 0
         # capacity_status (Ladestatus Fahrzeug) wird im algo gesetzt
@@ -511,7 +544,7 @@ class Generate
         # company_id wird in commit gesetzt
         company_depot = Depot.where(company_id: company.id).take
         depot.location = company_depot.address
-        # place wird in commit gesetzt
+        # place wird im algo gesetzt
         depot.comment = "Warenbestand auffüllen"
         depot.kind = "depot"
         # Cpacity wird im Algo gesetzt - Fahrzeug soll voll beladen oder entladen werden
@@ -526,10 +559,13 @@ class Generate
     # Berechnet die Zeit für die Fahrt von order_tour1 nach order_tour2
     def time_for_distance(ot1, ot2)
         # Google Maps
-        # FIXME
-        #sleep(1)
-        #directions = GoogleDirections.new(ot1.location, ot2.location)
-        #directions.drive_time_in_minutes
+        # FIXME - liefert nicht die Zeit
+        sleep(1)
+        directions = GoogleDirections.new(ot1.location, ot2.location)
+        time = directions.drive_time_in_minutes
+        #if directions.status == "NOT_FOUND"
+        #    binding.pry
+        #end
         # Geocoder - Distanze in km
         #if ot1.latitude.nil?
         #    geocords = Geocoder.search(ot1.location) 
@@ -543,7 +579,7 @@ class Generate
         #end
         #time = Geocoder::Calculations.distance_between([ot1.latitude,ot1.longitude], [ot2.latitude,ot2.longitude])
         # for testing
-        rand(10...20)
+        #rand(10...20)
     end# end time_for_distance()
     
     # DONE
@@ -685,6 +721,9 @@ class Generate
         else # gespeicherte Tour Relation
             tour.order_tours.each do |order_tour|
                 tour_time += order_tour.time # Fahrzeit
+                if order_tour.duration # Manche Aufträge haben ggf. keine Arbeitszeit
+                    tour_time += order_tour.duration # Arbeitszeit
+                end
             end
         end
         tour_time # return
