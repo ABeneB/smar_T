@@ -1,5 +1,7 @@
 #Klasse zur Erstellung der Touren entsprechen der Konfiguration
 
+# eager loading association .includes
+
 #Ideas : durch OrderTour.time kann man herausfinden wie lange man von der vorherigen location zu dieser braucht. Dadruch weniger anfragen an Maps,
 # denn man muss für jede Einsetzung nur die time vom eignen und nächsten location updaten und die nummerirung aller nachfolgenden orderTour +1
 
@@ -70,8 +72,8 @@ class Generate
                 # tour ist im dritten element [2] von possible_tour
                 duration_shortest_tour = calc_tour_time(shortest_tour[2])
                 duration_tour = calc_tour_time(possible_tour[2])
-                # Wenn tour kürzer ist...
-                if duration_shortest_tour > duration_tour 
+                # Wenn tourtime/|OT| kürzer ist...
+                if (duration_shortest_tour/shortest_tour[2].length) > (duration_tour/shortest_tour[2].length) 
                     shortest_tour = possible_tour # ...dann ist die possible_tour die neue shortest_tour
                 end
             end   
@@ -110,32 +112,31 @@ class Generate
     #DONE
     # Erstellt die OrderTour objekte und speichert die neue Tour und OrderTour in der DB
     def commit_order(driver, tour, order)
-        #Alte tour suchen und ggf. löschen, sowie die OrderTours davon
-        if Tour.where(driver_id: driver.id).exists?
-             original_tour = Tour.where(driver_id: driver.id).take
-            #OrderTours der Tour löschen
-            OrderTour.where(tour_id: original_tour.id).find_each do |order_tour|
-               order_tour.destroy
-           end
-            # Tour löschen
-           original_tour.destroy
+        # Tour erstellen, falls keine existiert
+        unless Tour.where(driver_id: driver.id).exists?
+           driver.tour = Tour.create(user_id: user.id, driver_id: driver.id, company_id: company.id, duration: 0)
         end
-        
-        # neue Tour erstellen
-        new_tour= Tour.create(user_id: user.id, driver_id: driver.id, company_id: company.id, duration: 0)
-        # fehlende Attribute setzen und mit new_tour verbinden
-        tour.each_with_index do |order_tour, index|
-            if order_tour.duration.nil?
-                order_tour.duration = 0
+        #Neue Order_tours identifizieren und anlegen - für neue tour alle Elemente
+        tour.each do |order_tour|
+            if order_tour.id.nil?
+                # Element anlegen in in DB speichern
+                if order_tour.duration.nil?
+                    order_tour.duration = 0
+                end
+                # neues OrderTour-Element erstellen und mit bestehender Tour verbinden
+                OrderTour.create(user_id: user.id, tour_id: driver.tour.id, company_id: company.id, location: order_tour.location, place: order_tour.place, comment: order_tour.comment, capacity: order_tour.capacity, capacity_status: order_tour.capacity_status, time: order_tour.time, duration: order_tour.duration, kind: order_tour.kind)
             end
-            OrderTour.create(user_id: user.id, tour_id: new_tour.id, company_id: company.id, location: order_tour.location, place: index, comment: order_tour.comment, capacity: order_tour.capacity, capacity_status: order_tour.capacity_status, time: order_tour.time, duration: order_tour.duration, kind: order_tour.kind)
+        end
+        # Tour anpassen
+        # Reihenfolge (.place anpassen)
+        place = 0
+        driver.tour.order_tours.each do |order_tour|
+            order_tour.place = place
+            order_tour.save
+            place += 1
         end
         # Duration setzen
-        new_tour.duration = calc_tour_time(tour)
-        # Tour mit Driver verbinden
-        new_tour.driver_id = driver.id  
-        new_tour.save
-        driver.tour = new_tour
+        driver.tour.duration = calc_tour_time(tour)
         # Order deaktivieren, damit sie in nächsten Planungen nicht versehentlich verplant wird
         # FIXME - wieder einkommentieren für echten Betrieb, bzw testen mehrere Daten
         #order.activ = false
@@ -525,10 +526,10 @@ class Generate
     # Berechnet die Zeit für die Fahrt von order_tour1 nach order_tour2
     def time_for_distance(ot1, ot2)
         # Google Maps
-        # sleep(1) # Nur eine Anfrage pro Sekunde
-        # FIXME ineffizient - speichert die ganezn docs davon, obwohl ich nur Zeit brauche
-        # directions = GoogleDirections.new(ot1.location, ot2.location)
-        # directions.drive_time_in_minutes
+        # FIXME
+        #sleep(1)
+        #directions = GoogleDirections.new(ot1.location, ot2.location)
+        #directions.drive_time_in_minutes
         # Geocoder - Distanze in km
         #if ot1.latitude.nil?
         #    geocords = Geocoder.search(ot1.location) 
@@ -541,6 +542,7 @@ class Generate
         #    ot2.longitude = geocords[0].boundingbox[2]
         #end
         #time = Geocoder::Calculations.distance_between([ot1.latitude,ot1.longitude], [ot2.latitude,ot2.longitude])
+        # for testing
         rand(10...20)
     end# end time_for_distance()
     

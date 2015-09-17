@@ -31,5 +31,14 @@
 </table>
 
 <%= link_to t('.new', :default => t("helpers.links.new")),
-            new_tour_path,
-            :class => 'btn btn-primary' %>
+            new_tour_path,:class => 'btn btn-primary new_btn' %>
+  <div class= "loader"><%= image_tag "ajax-loader.gif" %></div>
+
+<script>
+  $(function(){
+    $('.loader').hide();
+    $('.new_btn').on('click', function(){
+      $('.loader').show();
+    })
+  })
+</script>

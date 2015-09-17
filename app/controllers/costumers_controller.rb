@@ -8,14 +8,13 @@ class CostumersController < ApplicationController
     if current_user.is_admin?
       @costumers = Costumer.all
     elsif current_user.is_driver?
-      @tours = []
+      @costumers = []
     elsif current_user.is_planer?
       company = current_user.company
-      @tours = Costumer.where(company_id: company.id)
+      @costumers = Costumer.where(company_id: company.id)
     else
-      @tours = []
+      @costumers = []
     end
-    
   end
 
   def show
@@ -33,8 +32,14 @@ class CostumersController < ApplicationController
 
   def create
     @costumer = Costumer.new(costumer_params)
-    # @costumer.user_id = current_user.id # automatisches setzen der user_id
-    respond_with(@costumer)
+    @costumer.user_id = current_user.id # automatisches setzen der user_id
+    @costumer.company_id = current_user.company.id
+    @costumer.save
+    if @costumer.save 
+      redirect_to costumers_path, notice: "saved"
+    else
+      render 'new'
+    end
   end
 
   def update

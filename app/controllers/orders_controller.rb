@@ -4,8 +4,17 @@ class OrdersController < ApplicationController
   respond_to :html
 
   def index
-    @orders = Order.all
-    respond_with(@orders)
+    if current_user.is_admin?
+      @orders = Order.all
+    elsif current_user.is_driver?
+      company = current_user.company
+      @orders = Order.where(company_id: company.id)
+    elsif current_user.is_planer?
+      company = current_user.company
+      @orders = Order.where(company_id: company.id)
+    else
+      @orders = []
+    end
   end
 
   def show

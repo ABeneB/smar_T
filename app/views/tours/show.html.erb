@@ -32,7 +32,7 @@
 <% if current_user.is_driver? %>
   <td><%= link_to 'Start', edit_tour_path(@tour), :class => 'btn btn-info' %></td>
   <td><%= link_to 'Pause', edit_tour_path(@tour), :class => 'btn btn-info' %></td>
-  <td><%= link_to 'Done', edit_tour_path(@tour), method: :delete, 
+  <td><%= link_to 'Erledigt', edit_tour_path(@tour), method: :delete, 
         data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' %></td>   
 <% end %>
 

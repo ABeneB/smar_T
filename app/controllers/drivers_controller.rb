@@ -4,8 +4,14 @@ class DriversController < ApplicationController
   respond_to :html
 
   def index
-    @drivers = Driver.all
-    respond_with(@drivers)
+    if current_user.is_admin?
+      @drivers = Drivers.all
+    elsif current_user.is_planer?
+      company = current_user.company
+      @drivers = company.drivers
+    else
+      @drivers = []
+    end
   end
 
   def show
@@ -23,8 +29,13 @@ class DriversController < ApplicationController
   def create
     @driver = Driver.new(driver_params)
     @driver.user_id = current_user.id # automatisches setzen der user_id
+    @driver.company_id = current_user.company.id # automatisches setzen der user_id
     @driver.save
-    respond_with(@driver)
+    if @driver.save 
+      redirect_to drivers_path, notice: "saved"
+    else
+      render 'new'
+    end
   end
 
   def update

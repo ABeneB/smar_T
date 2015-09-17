@@ -1,41 +1,24 @@
 TODO
 
-Alle Einträge eines Planer seiner Firma zuteilen und gleiches für Driver
-    - Create aller controller die company_id setzen
-    - Update auch um sicher zugehen
-  
-handy-gps für position von vehicle 
-    + vehicle.position regelmäßig updaten
-    + Funktion ist in app/assets/javascript/position.js -> kann per findMe() aufgerufen werden
-
-f.association :user in allen _form ergänzen um , :include_blank => false, :label_method => :form_label %>
-        
+Sicherheit
 controller anpassen, dass sie nur die daten des nutzers weitergeben und nicht alle, außer beim admin
     - If user.is_admin? dann .all | else (Nur daten vom user) end
 views anpassen, dass sie bei falscher rolle ZUGANG VERWEIGERT anzeigen
     - wie bei company index.html.erb
 orders_controller, vehicles_controller, drivers_controller, costumers_controller
-    
 
-Alle Objekte (Driver, Order etc.) automatisch mit der Company des users associeren
-    - tours_controller
-
-.csv inport für testdaten
-
-Planer Ansicht mit der Position aller Driver und mit einer Ansicht der Touren
-
-Sprache in show and _form anpassen
-
-Costumer können nicht angelegt werden
-
-Search in orders and costumer, sort, ggf. checkboxen für aktiv und nich aktiv
-
+Funktion
+dropdowns nur eigene Drivers, vehicles etc.
+.csv inport für testdaten -> über rails c ausführen -> lädt alles aus dem angegeben Ordner tmp/csv ->
 Google API blockt einen wegen zu vielen Anfragen -> Wird der API Schlüssel genutzt???
 https://github.com/joshcrews/google-directions-ruby
 https://console.developers.google.com/project/eternal-skyline-106615/apiui/credential/key/0
 
-Ladebalken oder ähnliches während algo läuft - sonst error bei zu langer antwortzeit
-generate unabhängig vom user ausführen (Berechnung starten -> was anderes machen. zurück kommen und status der berechung etc. sehen)
-    - Mutech mäßig unabbrechbar machen
-    - abbrechen
-Memory recht voll. ggf. weil objekte gespeicher werden, nachdem ergebnis schon geliefert/ gespeicehrt worden ist?
+Form
+Sprache in show and _form anpassen
+Alle Objekte (Driver, Order etc.) automatisch mit der Company des users associeren
+    - tours_controller
+f.association :user in allen _form ergänzen um , :include_blank => false, :label_method => :form_label %>
+Alle Einträge eines Planer seiner Firma zuteilen und gleiches für Driver
+    - Create aller controller die company_id setzen
+    - Update auch um sicher zugehen

@@ -4,8 +4,14 @@ class VehiclesController < ApplicationController
   respond_to :html
 
   def index
-    @vehicles = Vehicle.all
-    respond_with(@vehicles)
+    if current_user.is_admin?
+      @vehicles = Vehicle.all
+    elsif current_user.is_planer?
+      company = current_user.company
+      @vehicles = Vehicle.where(driver_id: company.driver_ids)
+    else
+      @orders = []
+    end
   end
 
   def show
