@@ -5,7 +5,7 @@ class DriversController < ApplicationController
 
   def index
     if current_user.is_admin?
-      @drivers = Drivers.all
+      @drivers = Driver.all
     elsif current_user.is_planer?
       company = current_user.company
       @drivers = company.drivers
@@ -15,15 +15,27 @@ class DriversController < ApplicationController
   end
 
   def show
-    respond_with(@driver)
+    if current_user
+      if current_user.is_admin? 
+        @driver
+      elsif current_user.is_planer?
+        if @driver.company_id == current_user.company_id
+          @driver
+        end
+      end
+    end
   end
 
   def new
-    @driver = Driver.new
-    respond_with(@driver)
+    if current_user
+      if current_user.is_admin? || current_user.is_planer?
+        @driver = Driver.new
+      end
+    end
   end
 
   def edit
+    # FIXME
   end
 
   def create

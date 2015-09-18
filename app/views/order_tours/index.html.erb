@@ -1,40 +1,42 @@
 <%- model_class = OrderTour -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => OrderTour %></h1>
-</div>
-
-<% if current_user.role == "admin" %>
-
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Tour</th>
-      <th>Art</th>
-      <th><%= model_class.human_attribute_name(:location) %></th>
-      <th><%= model_class.human_attribute_name(:place) %></th>
-      <th><%= model_class.human_attribute_name(:time) %></th>
-      <th><%= model_class.human_attribute_name(:duration) %></th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @order_tours.each do |order_tour| %>
-      <tr>
-        <td><%= order_tour.id %></td>
-        <td><%= order_tour.tour_id %></td>
-        <td><%= order_tour.kind %></td>
-        <td><%= order_tour.location %></td>
-        <td><%= order_tour.place+1 %></td>
-        <td><%= order_tour.time %></td>
-        <td><%= order_tour.duration %></td>
-        <td><%= link_to 'Destroy', order_tour, method: :delete, 
-        data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+<% if current_user %>
+  <% if current_user.role == "admin" %>
+    <div class="page-header">
+      <h1><%=t '.title', :default => OrderTour %></h1>
+    </div>
+    
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Tour</th>
+          <th>Art</th>
+          <th><%= model_class.human_attribute_name(:location) %></th>
+          <th><%= model_class.human_attribute_name(:place) %></th>
+          <th><%= model_class.human_attribute_name(:time) %></th>
+          <th><%= model_class.human_attribute_name(:duration) %></th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @order_tours.each do |order_tour| %>
+          <tr>
+            <td><%= order_tour.id %></td>
+            <td><%= order_tour.tour_id %></td>
+            <td><%= order_tour.kind %></td>
+            <td><%= order_tour.location %></td>
+            <td><%= order_tour.place+1 %></td>
+            <td><%= order_tour.time %></td>
+            <td><%= order_tour.duration %></td>
+            <td><%= link_to 'Destroy', order_tour, method: :delete, 
+            data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+  ZUGANG VERWEIGERT
+  <% end %>
 <% else %>
 ZUGANG VERWEIGERT
 <% end %>

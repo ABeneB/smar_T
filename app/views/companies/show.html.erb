@@ -1,9 +1,8 @@
 <%- model_class = Company -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => Company %></h1>
-</div>
-
-<% if current_user.role == "admin" %>
+<% if current_user && current_user.role == "admin" %>
+  <div class="page-header">
+    <h1><%=t '.title', :default => Company %></h1>
+  </div>
   <div class="fieldset">
     <dl>
         <dt class="label label-default"><%= model_class.human_attribute_name(:name) %></dt>
@@ -49,7 +48,6 @@
         </tbody>
       </table>
     <% end %>
-                
 <% else %>
   ZUGANG VERWEIGERT
 <% end %>

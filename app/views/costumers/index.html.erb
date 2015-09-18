@@ -1,35 +1,43 @@
 <%- model_class = Costumer -%>
-<div class="page-header">
-  <h1>Kunden</h1>
-</div>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Adresse</th>
-      <th>Telefonnummer</th>
-      <th>Priorität</th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @costumers.each do |costumer| %>
-      <tr>
-        <td><%= costumer.id %></td>
-        <td><%= costumer.name %></td>
-        <td><%= costumer.address %></td>
-        <td><%= costumer.telefon %></td>
-        <td><%= costumer.priority %></td>
-        <td><%= link_to 'Show', costumer, :class => 'btn btn-info btn-xs' %></td>
-        <td><%= link_to 'Edit', edit_costumer_path(costumer), :class => 'btn btn-warning btn-xs' %></td>
-        <td><%= link_to 'Destroy', costumer, method: :delete, 
-        data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
-      </tr>
+<% if current_user %>
+    <% if current_user.is_admin? || current_user.is_planer?%>
+      <div class="page-header">
+        <h1>Kunden</h1>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Adresse</th>
+            <th>Telefonnummer</th>
+            <th>Priorität</th>
+            <th><%=t '.actions', :default => t("helpers.actions") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @costumers.each do |costumer| %>
+            <tr>
+              <td><%= costumer.id %></td>
+              <td><%= costumer.name %></td>
+              <td><%= costumer.address %></td>
+              <td><%= costumer.telefon %></td>
+              <td><%= costumer.priority %></td>
+              <td><%= link_to 'Show', costumer, :class => 'btn btn-info btn-xs' %></td>
+              <td><%= link_to 'Edit', edit_costumer_path(costumer), :class => 'btn btn-warning btn-xs' %></td>
+              <td><%= link_to 'Destroy', costumer, method: :delete, 
+              data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      
+      <%= link_to t('.new', :default => t("helpers.links.new")),
+                  new_costumer_path,
+                  :class => 'btn btn-primary' %>
+    <% else %>
+    ZUGANG VERWEIGERT
     <% end %>
-  </tbody>
-</table>
-
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_costumer_path,
-            :class => 'btn btn-primary' %>
+<% else %>
+ZUGANG VERWEIGERT
+<% end %>

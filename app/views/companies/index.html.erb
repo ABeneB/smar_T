@@ -1,41 +1,40 @@
 <%- model_class = Company -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => Company %></h1>
-</div>
-
-<% if current_user.role == "admin" %>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th><%= model_class.human_attribute_name(:name) %></th>
-        <th><%= model_class.human_attribute_name(:address) %></th>
-        <th><%= model_class.human_attribute_name(:telefon) %></th>
-        <th><%= model_class.human_attribute_name(:created_at) %></th>
-        <th><%=t '.actions', :default => t("helpers.actions") %></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @companies.each do |company| %>
+<% if current_user && current_user.role == "admin" %>
+  <div class="page-header">
+    <h1><%=t '.title', :default => Company %></h1>
+  </div>
+    <table class="table table-striped">
+      <thead>
         <tr>
-          <td><%= company.id %></td>
-          <td><%= company.name %></td>
-          <td><%= company.address %></td>
-          <td><%= company.telefon %></td>
-          <td><%=l company.created_at, format: :long %></td>
-          <td><%= link_to 'Show', company, :class => 'btn btn-info btn-xs' %></td>
-          <td><%= link_to 'Edit', edit_company_path(company), :class => 'btn btn-warning btn-xs' %></td>
-          <td><%= link_to 'Destroy', company, method: :delete, 
-          data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
+          <th>ID</th>
+          <th><%= model_class.human_attribute_name(:name) %></th>
+          <th><%= model_class.human_attribute_name(:address) %></th>
+          <th><%= model_class.human_attribute_name(:telefon) %></th>
+          <th><%= model_class.human_attribute_name(:created_at) %></th>
+          <th><%=t '.actions', :default => t("helpers.actions") %></th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% @companies.each do |company| %>
+          <tr>
+            <td><%= company.id %></td>
+            <td><%= company.name %></td>
+            <td><%= company.address %></td>
+            <td><%= company.telefon %></td>
+            <td><%=l company.created_at, format: :long %></td>
+            <td><%= link_to 'Show', company, :class => 'btn btn-info btn-xs' %></td>
+            <td><%= link_to 'Edit', edit_company_path(company), :class => 'btn btn-warning btn-xs' %></td>
+            <td><%= link_to 'Destroy', company, method: :delete, 
+            data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    
+    <%= link_to t('.new', :default => t("helpers.links.new")),
+                new_company_path,
+                :class => 'btn btn-primary' %>
   
-  <%= link_to t('.new', :default => t("helpers.links.new")),
-              new_company_path,
-              :class => 'btn btn-primary' %>
-
 <% else %>
 ZUGANG VERWEIGERT
 <% end %>

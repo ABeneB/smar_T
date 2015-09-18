@@ -726,6 +726,10 @@ class Generate
                 end
             end
         end
+        # damit nicht durch 0 geteilt wird
+        if tour_time == 0
+            tour_time = 1
+        end
         tour_time # return
     end# end calc_tour_time()
 end

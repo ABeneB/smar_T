@@ -1,44 +1,43 @@
 <%- model_class = User -%>
-<div class="page-header">
-  <h1>Nutzer</h1>
-</div>
-
-<% if current_user.role == "admin" %>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Username</th>
-        <th>Role</th>
-        <th>Email</th>
-        <th>Unternehmen</th>
-        <th><%=t '.actions', :default => t("helpers.actions") %></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @users.each do |registered_user| %>
+<% if current_user && if current_user.is_admin? %>
+  <div class="page-header">
+    <h1>Nutzer</h1>
+  </div>
+    <table class="table table-striped">
+      <thead>
         <tr>
-          <td><%= registered_user.id %></td>
-          <td><%= registered_user.username %></td>
-          <td><%= registered_user.role %></td>
-          <td><%= registered_user.email %></td>
-          <% if registered_user.company %>
-            <td><%= registered_user.company.name %></td>
-          <% else %>
-            <td>No</td>
-          <% end %>
-          <td><%= link_to 'Show', registered_user_path(registered_user), :class => 'btn btn-info btn-xs' %></td>
-          <td><%= link_to 'Edit', edit_registered_user_path(registered_user), :class => 'btn btn-warning btn-xs' %></td>
-          <td><%= link_to 'Destroy', registered_user_path(registered_user ), method: :delete, 
-          data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Role</th>
+          <th>Email</th>
+          <th>Unternehmen</th>
+          <th><%=t '.actions', :default => t("helpers.actions") %></th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
-  
-  <%= link_to t('.new', :default => t("helpers.links.new")),
-              new_registered_user_path,
-              :class => 'btn btn-primary' %>
+      </thead>
+      <tbody>
+        <% @users.each do |registered_user| %>
+          <tr>
+            <td><%= registered_user.id %></td>
+            <td><%= registered_user.username %></td>
+            <td><%= registered_user.role %></td>
+            <td><%= registered_user.email %></td>
+            <% if registered_user.company %>
+              <td><%= registered_user.company.name %></td>
+            <% else %>
+              <td>No</td>
+            <% end %>
+            <td><%= link_to 'Show', registered_user_path(registered_user), :class => 'btn btn-info btn-xs' %></td>
+            <td><%= link_to 'Edit', edit_registered_user_path(registered_user), :class => 'btn btn-warning btn-xs' %></td>
+            <td><%= link_to 'Destroy', registered_user_path(registered_user ), method: :delete, 
+            data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    
+    <%= link_to t('.new', :default => t("helpers.links.new")),
+                new_registered_user_path,
+                :class => 'btn btn-primary' %>
               
 <% else %>
   ZUGANG VERWEIGERT

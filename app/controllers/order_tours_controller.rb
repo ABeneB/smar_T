@@ -4,36 +4,38 @@ class OrderToursController < ApplicationController
   respond_to :html
 
   def index
-    @order_tours = OrderTour.all
-    respond_with(@order_tours)
+    if current_user && current_user.is_admin?
+      @order_tours = OrderTour.all
+    end
   end
 
   def show
-    respond_with(@order_tour)
+    if current_user && current_user.is_admin?
+      @order_tour
+    end
   end
 
   def new
-    @order_tour = OrderTour.new
-    respond_with(@order_tour)
+    if current_user && current_user.is_admin?
+      @order_tour = OrderTour.new
+    end
   end
 
   def edit
+    # FIXME
   end
 
   def create
     @order_tour = OrderTour.new(order_tour_params)
     @order_tour.save
-    respond_with(@order_tour)
   end
 
   def update
     @order_tour.update(order_tour_params)
-    respond_with(@order_tour)
   end
 
   def destroy
     @order_tour.destroy
-    respond_with(@order_tour)
   end
 
   private

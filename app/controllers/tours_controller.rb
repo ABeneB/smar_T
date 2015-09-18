@@ -19,13 +19,24 @@ class ToursController < ApplicationController
   end
 
   def show
-    # FIXME Sort by .place
-    @order_tours = @tour.order_tours.sort_by &:place
-    @hash = @order_tours.map do | order_tour|
-      place = order_tour.place+1
-      {latitude: order_tour.latitude, longitude: order_tour.longitude, place: place.to_s}
+    if current_user
+      if current_user.is_admin? 
+        @order_tours = @tour.order_tours.sort_by &:place
+        @hash = @order_tours.map do | order_tour|
+          place = order_tour.place+1
+          {latitude: order_tour.latitude, longitude: order_tour.longitude, place: place.to_s}
+        end
+      elsif current_user.is_planer?
+        if @tour.company_id == current_user.company_id
+          @order_tours = @tour.order_tours.sort_by &:place
+          @hash = @order_tours.map do | order_tour|
+            place = order_tour.place+1
+            {latitude: order_tour.latitude, longitude: order_tour.longitude, place: place.to_s}
+          end
+        end
+      end
+      respond_with(@tour, @hash)
     end
-    respond_with(@tour, @hash)
   end
 
   def new
@@ -51,12 +62,8 @@ class ToursController < ApplicationController
       g.user = user
       # Generate erzeugt und speichert die neuen Touren, OrderTour-Objekte
       g.generate_tours
-      company = current_user.company
-      @tours = Tour.where(company_id: company.id)
-    else
-      @tours = []
+      @tours = Tour.where(company_id: current_user.company)
     end
-    
   end
 
   def edit

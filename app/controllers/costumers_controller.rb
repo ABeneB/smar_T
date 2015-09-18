@@ -4,30 +4,42 @@ class CostumersController < ApplicationController
   respond_to :html
 
   def index
-    
-    if current_user.is_admin?
-      @costumers = Costumer.all
-    elsif current_user.is_driver?
-      @costumers = []
-    elsif current_user.is_planer?
-      company = current_user.company
-      @costumers = Costumer.where(company_id: company.id)
-    else
-      @costumers = []
+    # Nur Daten die Zur Rolle passen anzeigen
+    if current_user 
+      if current_user.is_admin?
+        @costumers = Costumer.all
+      elsif current_user.is_planer?
+        company = current_user.company
+        @costumers = Costumer.where(company_id: company.id)
+      else
+        @costumers = []
+      end
     end
   end
 
   def show
-    # FIXME - hat er zurgriff?
-    respond_with(@costumer)
+    if current_user
+      if current_user.is_admin? 
+        @costumer
+      elsif current_user.is_planer?
+        if @costumer.company_id == current_user.company_id
+          @costumer
+        end
+      end
+    end
   end
 
   def new
-    @costumer = Costumer.new
-    respond_with(@costumer)
+    # Nur Daten die Zur Rolle passen anzeigen
+    if current_user
+      if current_user.is_admin? || current_user.is_planer?
+        @costumer = Costumer.new
+      end
+    end
   end
 
   def edit
+    # FIXME
   end
 
   def create

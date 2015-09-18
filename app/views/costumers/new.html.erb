@@ -1,6 +1,13 @@
 <%- model_class = Costumer -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => Costumer %></h1>
-</div>
-<%= render :partial => 'form' %>
-
+<% if current_user %>
+    <% if current_user.is_admin? || current_user.is_planer?%>
+        <div class="page-header">
+          <h1><%=t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => Costumer %></h1>
+        </div>
+        <%= render :partial => 'form' %>
+    <% else %>
+    ZUGANG VERWEIGERT
+    <% end %>
+<% else %>
+ZUGANG VERWEIGERT
+<% end %>

@@ -19,28 +19,33 @@ class VehiclesController < ApplicationController
   end
 
   def new
-    @vehicle = Vehicle.new
-    respond_with(@vehicle)
+    if current_user
+      if current_user.is_admin? 
+        @vehicle = Vehicle.new
+      elsif current_user.is_planer?
+        if @vehcle.company_id == current_user.company_id
+          @vehicle
+        end
+      end
+    end
   end
 
   def edit
+    # FIXME
   end
 
   def create
     @vehicle = Vehicle.new(vehicle_params)
     @vehicle.user_id = current_user.id
     @vehicle.save
-    respond_with(@vehicle)
   end
 
   def update
     @vehicle.update(vehicle_params)
-    respond_with(@vehicle)
   end
 
   def destroy
     @vehicle.destroy
-    respond_with(@vehicle)
   end
 
   private

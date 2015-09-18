@@ -6,9 +6,6 @@ class OrdersController < ApplicationController
   def index
     if current_user.is_admin?
       @orders = Order.all
-    elsif current_user.is_driver?
-      company = current_user.company
-      @orders = Order.where(company_id: company.id)
     elsif current_user.is_planer?
       company = current_user.company
       @orders = Order.where(company_id: company.id)
@@ -18,12 +15,23 @@ class OrdersController < ApplicationController
   end
 
   def show
-    respond_with(@order)
+    if current_user
+      if current_user.is_admin? 
+        @order
+      elsif current_user.is_planer?
+        if @driver.company_id == current_user.company_id
+          @driver
+        end
+      end
+    end
   end
 
   def new
-    @order = Order.new
-    respond_with(@order)
+    if current_user
+      if current_user.is_admin? || current_user.is_planer?
+        @order = Order.new
+      end
+    end
   end
 
   def edit

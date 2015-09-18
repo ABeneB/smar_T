@@ -4,36 +4,39 @@ class CompaniesController < ApplicationController
   respond_to :html
 
   def index
-    @companies = Company.all
-    respond_with(@companies)
+    # Nur Daten die Zur Rolle passen anzeigen
+    if current_user && current_user.is_admin?
+        @companies = Company.all
+    end
   end
 
   def show
-    respond_with(@company)
+    if current_user && current_user.is_admin?
+        @company
+    end
   end
 
   def new
-    @company = Company.new
-    respond_with(@company)
+    if current_user && current_user.is_admin?
+      @company = Company.new
+    end
   end
 
   def edit
+    # FIXME
   end
 
   def create
-    @company = Company.new(company_params)
-    @company.save
-    respond_with(@company)
+      @company = Company.new(company_params)
+      @company.save
   end
 
   def update
-    @company.update(company_params)
-    respond_with(@company)
+      @company.update(company_params)
   end
 
   def destroy
-    @company.destroy
-    respond_with(@company)
+      @company.destroy
   end
 
   private

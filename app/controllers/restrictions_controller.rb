@@ -4,20 +4,25 @@ class RestrictionsController < ApplicationController
   respond_to :html
 
   def index
-    @restrictions = Restriction.all
-    respond_with(@restrictions)
+    if current_user && current_user.is_admin?
+      @restrictions = Restriction.all
+    end
   end
 
   def show
-    respond_with(@restriction)
+    if current_user && current_user.is_admin?
+      @restriction
+    end
   end
 
   def new
-    @restriction = Restriction.new
-    respond_with(@restriction)
+    if current_user && current_user.is_admin?
+      @restriction = Restriction.new
+    end
   end
 
   def edit
+    # FIXME
   end
 
   def create

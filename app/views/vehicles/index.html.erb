@@ -1,33 +1,41 @@
 <%- model_class = Vehicle -%>
-<div class="page-header">
-  <h1>Fahrzeuge</h1>
-</div>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Position</th>
-      <th>Kapazität</th>
-      <th>Fahrer</th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @vehicles.each do |vehicle| %>
-      <tr>
-        <td><%= vehicle.id %></td>
-        <td><%= vehicle.position %></td>
-        <td><%= vehicle.capacity %></td>
-        <td><%= vehicle.driver_id %></td>
-        <td><%= link_to 'Show', vehicle, :class => 'btn btn-info btn-xs' %></td>
-        <td><%= link_to 'Edit', edit_vehicle_path(vehicle), :class => 'btn btn-warning btn-xs' %></td>
-        <td><%= link_to 'Destroy', vehicle, method: :delete, 
-        data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
-      </tr>
+<% if current_user %>
+    <% if current_user.is_admin? || current_user.is_planer?%>
+      <div class="page-header">
+        <h1>Fahrzeuge</h1>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Position</th>
+            <th>Kapazität</th>
+            <th>Fahrer</th>
+            <th><%=t '.actions', :default => t("helpers.actions") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @vehicles.each do |vehicle| %>
+            <tr>
+              <td><%= vehicle.id %></td>
+              <td><%= vehicle.position %></td>
+              <td><%= vehicle.capacity %></td>
+              <td><%= vehicle.driver_id %></td>
+              <td><%= link_to 'Show', vehicle, :class => 'btn btn-info btn-xs' %></td>
+              <td><%= link_to 'Edit', edit_vehicle_path(vehicle), :class => 'btn btn-warning btn-xs' %></td>
+              <td><%= link_to 'Destroy', vehicle, method: :delete, 
+              data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      
+      <%= link_to t('.new', :default => t("helpers.links.new")),
+                  new_vehicle_path,
+                  :class => 'btn btn-primary' %>
+    <% else %>
+    ZUGANG VERWEIGERT
     <% end %>
-  </tbody>
-</table>
-
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_vehicle_path,
-            :class => 'btn btn-primary' %>
+<% else %>
+ZUGANG VERWEIGERT
+<% end %>

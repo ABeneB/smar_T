@@ -4,17 +4,37 @@ class DepotsController < ApplicationController
   respond_to :html
 
   def index
-    @depots = Depot.all
-    respond_with(@depots)
+    # Nur Daten die Zur Rolle passen anzeigen
+    if current_user 
+      if current_user.is_admin?
+        @depots = Depot.all
+      elsif current_user.is_planer?
+        company = current_user.company
+        @depots = Depot.where(company_id: company.id)
+      else
+        @depots = []
+      end
+    end
   end
 
   def show
-    respond_with(@depot)
+    if current_user
+      if current_user.is_admin?
+        @depot
+      elsif current_user.is_planer?
+        if @depot.company_id == current_user.company_id
+          @depot
+        end
+      end
+    end
   end
 
   def new
-    @depot = Depot.new
-    respond_with(@depot)
+    if current_user
+      if current_user.is_admin? || current_user.is_planer?
+        @depot = Depot.new
+      end
+    end
   end
 
   def edit

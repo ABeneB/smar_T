@@ -1,41 +1,49 @@
 <%- model_class = Order -%>
-<div class="page-header">
-  <h1>Aufträge</h1>
-</div>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Kunde</th>
-      <th>Abholort</th>
-      <th>Einladedauer</th>
-      <th>Lieferort</th>
-      <th>Ausladedauer</th>
-      <th>Kapazität</th>
-      <th>Aktiv</th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @orders.each do |order| %>
-      <tr>
-        <td><%= order.id %></td>
-        <td><%= order.costumer_id %></td>
-        <td><%= order.pickup_location %></td>
-        <td><%= order.duration_pickup %></td>
-        <td><%= order.delivery_location %></td>
-        <td><%= order.duration_delivery %></td>
-        <td><%= order.capacity %></td>
-        <td><%= order.activ%></td>
-        <td><%= link_to 'Show', order, :class => 'btn btn-info btn-xs' %></td>
-        <td><%= link_to 'Edit', edit_order_path(order), :class => 'btn btn-warning btn-xs' %></td>
-        <td><%= link_to 'Destroy', order, method: :delete, 
-        data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
-      </tr>
+<% if current_user %>
+    <% if current_user.is_admin? || current_user.is_planer?%>
+      <div class="page-header">
+        <h1>Aufträge</h1>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Kunde</th>
+            <th>Abholort</th>
+            <th>Einladedauer</th>
+            <th>Lieferort</th>
+            <th>Ausladedauer</th>
+            <th>Kapazität</th>
+            <th>Aktiv</th>
+            <th><%=t '.actions', :default => t("helpers.actions") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @orders.each do |order| %>
+            <tr>
+              <td><%= order.id %></td>
+              <td><%= order.costumer_id %></td>
+              <td><%= order.pickup_location %></td>
+              <td><%= order.duration_pickup %></td>
+              <td><%= order.delivery_location %></td>
+              <td><%= order.duration_delivery %></td>
+              <td><%= order.capacity %></td>
+              <td><%= order.activ%></td>
+              <td><%= link_to 'Show', order, :class => 'btn btn-info btn-xs' %></td>
+              <td><%= link_to 'Edit', edit_order_path(order), :class => 'btn btn-warning btn-xs' %></td>
+              <td><%= link_to 'Destroy', order, method: :delete, 
+              data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      
+      <%= link_to t('.new', :default => t("helpers.links.new")),
+                  new_order_path,
+                  :class => 'btn btn-primary' %>
+    <% else %>
+    ZUGANG VERWEIGERT
     <% end %>
-  </tbody>
-</table>
-
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_order_path,
-            :class => 'btn btn-primary' %>
+<% else %>
+ZUGANG VERWEIGERT
+<% end %>

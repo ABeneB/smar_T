@@ -4,20 +4,25 @@ class RegisteredUsersController < ApplicationController
   respond_to :html
 
   def index
-    @users = User.all
-    respond_with(@users)
+    if current_user && current_user.is_admin?
+      @users = User.all
+    end
   end
 
   def show
-    respond_with(@user)
+    if current_user && current_user.is_admin?
+      @user
+    end
   end
 
   def new
-    @user = User.new
-    respond_with(@user)
+    if current_user && current_user.is_admin?
+      @user = User.new
+    end
   end
 
   def edit
+    # FIXME
   end
 
   def create

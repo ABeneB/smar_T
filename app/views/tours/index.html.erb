@@ -1,43 +1,51 @@
 <%- model_class = Tour -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => Tour %></h1>
-</div>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Fahrer</th>
-      <th>Dauer</th>
-      <th>Anfahrpunkte</th>
-      <th>Erstellt am</th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @tours.each do |tour| %>
-      <tr>
-        <td><%= tour.id %></td>
-        <td><%= tour.driver_id %></td>
-        <td><%= tour.duration %></td>
-        <td><%= tour.order_tours.count %></td>
-        <td><%=l tour.created_at, format: :long %></td>
-        <td><%= link_to 'Show', tour, :class => 'btn btn-info btn-xs' %></td>
-        <td><%= link_to 'Destroy', tour, method: :delete, 
-        data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
-      </tr>
+<% if current_user %>
+    <% if current_user.is_admin? || current_user.is_planer?%>
+      <div class="page-header">
+        <h1><%=t '.title', :default => Tour %></h1>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Fahrer</th>
+            <th>Dauer</th>
+            <th>Anfahrpunkte</th>
+            <th>Erstellt am</th>
+            <th><%=t '.actions', :default => t("helpers.actions") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @tours.each do |tour| %>
+            <tr>
+              <td><%= tour.id %></td>
+              <td><%= tour.driver_id %></td>
+              <td><%= tour.duration %></td>
+              <td><%= tour.order_tours.count %></td>
+              <td><%=l tour.created_at, format: :long %></td>
+              <td><%= link_to 'Show', tour, :class => 'btn btn-info btn-xs' %></td>
+              <td><%= link_to 'Destroy', tour, method: :delete, 
+              data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      
+      <%= link_to t('.new', :default => t("helpers.links.new")),
+                  new_tour_path,:class => 'btn btn-primary new_btn' %>
+        <div class= "loader"><%= image_tag "ajax-loader.gif" %></div>
+      
+      <script>
+        $(function(){
+          $('.loader').hide();
+          $('.new_btn').on('click', function(){
+            $('.loader').show();
+          })
+        })
+      </script>
+    <% else %>
+    ZUGANG VERWEIGERT
     <% end %>
-  </tbody>
-</table>
-
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_tour_path,:class => 'btn btn-primary new_btn' %>
-  <div class= "loader"><%= image_tag "ajax-loader.gif" %></div>
-
-<script>
-  $(function(){
-    $('.loader').hide();
-    $('.new_btn').on('click', function(){
-      $('.loader').show();
-    })
-  })
-</script>
+<% else %>
+ZUGANG VERWEIGERT
+<% end %>

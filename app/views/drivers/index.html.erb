@@ -1,41 +1,49 @@
 <%- model_class = Driver -%>
-<div class="page-header">
-  <h1>Fahrer</h1>
-</div>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Bezeichnung</th>
-      <th>Name</th>
-      <th>Aktiv</th>
-      <th>Arbeitszeit</th>
-      <th>Erstellt am</th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @drivers.each do |driver| %>
-      <tr>
-        <td><%= driver.id %></td>
-        <td><%= driver.name %></td>
-        <% if driver.user %>
-        <td><%= driver.user.username %></td>
-        <% else %>
-        <td></td>
-        <% end %>
-        <td><%= driver.activ %></td>
-        <td><%= driver.working_time %></td>
-        <td><%=l driver.created_at, format: :long %></td>
-        <td><%= link_to 'Show', driver, :class => 'btn btn-info btn-xs' %></td>
-        <td><%= link_to 'Edit', edit_driver_path(driver), :class => 'btn btn-warning btn-xs' %></td>
-        <td><%= link_to 'Destroy', driver, method: :delete, 
-        data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
-      </tr>
+<% if current_user %>
+    <% if current_user.is_admin? || current_user.is_planer?%>
+      <div class="page-header">
+        <h1>Fahrer</h1>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Bezeichnung</th>
+            <th>Name</th>
+            <th>Aktiv</th>
+            <th>Arbeitszeit</th>
+            <th>Erstellt am</th>
+            <th><%=t '.actions', :default => t("helpers.actions") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @drivers.each do |driver| %>
+            <tr>
+              <td><%= driver.id %></td>
+              <td><%= driver.name %></td>
+              <% if driver.user %>
+              <td><%= driver.user.username %></td>
+              <% else %>
+              <td></td>
+              <% end %>
+              <td><%= driver.activ %></td>
+              <td><%= driver.working_time %></td>
+              <td><%=l driver.created_at, format: :long %></td>
+              <td><%= link_to 'Show', driver, :class => 'btn btn-info btn-xs' %></td>
+              <td><%= link_to 'Edit', edit_driver_path(driver), :class => 'btn btn-warning btn-xs' %></td>
+              <td><%= link_to 'Destroy', driver, method: :delete, 
+              data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      
+      <%= link_to t('.new', :default => t("helpers.links.new")),
+                  new_driver_path,
+                  :class => 'btn btn-primary' %>
+    <% else %>
+    ZUGANG VERWEIGERT
     <% end %>
-  </tbody>
-</table>
-
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_driver_path,
-            :class => 'btn btn-primary' %>
+<% else %>
+ZUGANG VERWEIGERT
+<% end %>
