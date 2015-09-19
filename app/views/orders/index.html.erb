@@ -8,7 +8,7 @@
         <thead>
           <tr>
             <th>ID</th>
-            <th>Kunde</th>
+            <th>Priorität</th>
             <th>Abholort</th>
             <th>Einladedauer</th>
             <th>Lieferort</th>
@@ -22,7 +22,11 @@
           <% @orders.each do |order| %>
             <tr>
               <td><%= order.id %></td>
-              <td><%= order.costumer_id %></td>
+              <% if order.costumer %>
+              <td><%= order.costumer.priority %></td>
+              <% else %>
+              <td>keine</td>
+              <% end %>
               <td><%= order.pickup_location %></td>
               <td><%= order.duration_pickup %></td>
               <td><%= order.delivery_location %></td>

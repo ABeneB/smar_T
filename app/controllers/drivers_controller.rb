@@ -4,9 +4,7 @@ class DriversController < ApplicationController
   respond_to :html
 
   def index
-    if current_user.is_admin?
-      @drivers = Driver.all
-    elsif current_user.is_planer?
+    if current_user.is_admin? || current_user.is_planer?
       company = current_user.company
       @drivers = company.drivers
     else

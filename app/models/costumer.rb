@@ -3,8 +3,8 @@ class Costumer < ActiveRecord::Base
   belongs_to :company
   has_many :order
 
-  validates :priority, inclusion: { in: ["A", "B", "C", "D"],
-  message: "%{value} is not a valid priority, please use A,B,C or D" }
+  validates :priority, inclusion: { in: ["A", "B", "C", "D", "E"],
+  message: "%{value} ist nicht zulässig. Bitte benutzen Sie A,B,C, D oderr E" }
   
   # Koordinaten aus Adresse
   geocoded_by :address   

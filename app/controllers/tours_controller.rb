@@ -5,12 +5,10 @@ class ToursController < ApplicationController
 
   def index
     # Nur Daten die Zur Rolle passen anzeigen
-    if current_user.is_admin?
-      @tours = Tour.all
-    elsif current_user.is_driver?
+    if current_user.is_admin? || current_user.is_planer?
       company = current_user.company
       @tours = Tour.where(company_id: company.id)
-    elsif current_user.is_planer?
+    elsif current_user.is_driver?
       company = current_user.company
       @tours = Tour.where(company_id: company.id)
     else
@@ -41,18 +39,7 @@ class ToursController < ApplicationController
 
   def new
     #Ausgabe nach Rolle filtern
-    if current_user.is_admin?
-      # Orders, Drivers und Company filter/suchen
-      user = User.find(current_user.id)
-      g = Generate.new
-      g.drivers = user.company.drivers.where(activ: true)
-      g.orders = user.company.orders.where(activ: true)
-      g.company = user.company
-      g.user = user
-      # Generate erzeugt und speichert die neuen Touren, OrderTour-Objekte
-      g.generate_tours
-      @tours = Tour.all
-    elsif current_user.is_planer?
+    if current_user.is_admin? || current_user.is_planer?
       # Orders, Drivers und Company filter/suchen
       user = User.find(current_user.id)
       g = Generate.new

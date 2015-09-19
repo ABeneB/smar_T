@@ -6,11 +6,8 @@ class CostumersController < ApplicationController
   def index
     # Nur Daten die Zur Rolle passen anzeigen
     if current_user 
-      if current_user.is_admin?
-        @costumers = Costumer.all
-      elsif current_user.is_planer?
-        company = current_user.company
-        @costumers = Costumer.where(company_id: company.id)
+      if current_user.is_admin? || current_user.is_planer?
+        @costumers = Costumer.where(company_id: current_user.company_id)
       else
         @costumers = []
       end
