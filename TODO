@@ -1,15 +1,10 @@
 TODO
 
-DB antwortet nicht mehr schnell genug -> server time outs und abbrüche
-
 validation für address in order.rb - zu oft falsche adressen
 
 Funktion
 dropdowns nur eigene Drivers, vehicles etc.
 .csv inport für testdaten -> über rails c ausführen -> lädt alles aus dem angegeben Ordner tmp/csv ->
-Google API blockt einen wegen zu vielen Anfragen -> Wird der API Schlüssel genutzt???
-https://github.com/joshcrews/google-directions-ruby
-https://console.developers.google.com/project/eternal-skyline-106615/apiui/credential/key/0
 
 Form
 Sprache in show and _form anpassen

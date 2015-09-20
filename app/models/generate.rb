@@ -14,7 +14,7 @@ class Generate
     #Methoden
     #TESTED
     # generiete die Touren für alle driver und orders entsprechend der company.restriction
-    def generate_tours()
+    def generate_tours
         # Prüfen ob Prioritätsstufen bestehen
         if company.restriction.priorities
             # orders ändern zu array von arrays, für jede priority eine array
@@ -22,7 +22,7 @@ class Generate
             # Die Order nach prio zuteilen
             orders_array.each do |prio_orders|
                 # leere PrioGruppen ignorieren
-                unless prio_orders.empty?
+                if prio_orders.present?
                     order_count = prio_orders.length
                     # Matrix für jede Prioritässtufe
                     matrix = build_matrix(prio_orders)
@@ -94,8 +94,10 @@ class Generate
                 if (duration_shortest_tour/shortest_tour[2].length) > (duration_tour/shortest_tour[2].length) 
                     shortest_tour = possible_tour # ...dann ist die possible_tour die neue shortest_tour
                 end
-            end   
+            end
+            # FIXME shortest_tour von order 14 ist die time falsch
             # Driver die Tour (samt neuer Order) zuteilen
+            #shortest_tour[0] = driver ; [1] = order ; [2] tour
             commit_order(shortest_tour[0], shortest_tour[1], shortest_tour[2])
             #update matrix - Löschen aller Einträge mit der Order und die Zeiten vom Fahrer updaten
             matrix = update_matrix(matrix, shortest_tour[0], shortest_tour[1])
@@ -106,6 +108,10 @@ class Generate
     # getested
     # Nach einer Zuteilung die matrix erneuern
     def update_matrix(matrix, driver, order)
+        if order.id == 14
+            ente()
+        end
+        
         # Alle Einträge in matrix mit order löschen
         length = matrix.length
         while length > 0
@@ -115,8 +121,7 @@ class Generate
             end
             length -= 1
         end
-        
-        # Einträge mit der Order löschen
+        # Alle Fahrzeiten von Driver updaten
         matrix.each_with_index do |tour, index|
             # Alle Einträge von Driver updaten
             if tour[0].id == driver.id # Driver steht in tour[0]
@@ -127,10 +132,10 @@ class Generate
         matrix # return
     end # end update_matrix()
     
-    # Tested
+    # DONE
     # Erstellt die OrderTour objekte und speichert die neue Tour und OrderTour in der DB
-    def commit_order(driver, order, tour) # tour kommt mit richtigen .place
-        # driver.tour kopieren, um neue OrderTour einzufügen
+    def commit_order(driver, order, tour)
+    # driver.tour kopieren, um neue OrderTour einzufügen
         driver_tour = Tour.where(driver_id: driver.id).take
         # Tour erstellen, falls keine existiert
         if driver_tour.nil?
@@ -146,6 +151,8 @@ class Generate
                 end
                 OrderTour.create(user_id: user.id, order_id: order_tour.id, tour_id: driver_tour.id, company_id: company.id, place: order_tour.place, location: order_tour.location, comment: order_tour.comment, capacity: order_tour.capacity, capacity_status: order_tour.capacity_status, time: order_tour.time, duration: order_tour.duration, kind: order_tour.kind)
             end
+            # Änderungen (wie place und time speichern)
+            order_tour.save
             # .place anpassen
             unless order_tour.id.nil?
                 if order_tour.place != OrderTour.where(id: order_tour.id) && OrderTour.find(order_tour.id)
@@ -163,7 +170,7 @@ class Generate
         # FIXME - wieder einkommentieren für echten Betrieb, bzw testen mehrere Daten
         #order.activ = false
         #order.save
-    end # end commit_order()
+    end # end commit_order
     
     #DONE
     # liefert die neue Tour (aufbauend auf der alten) von Drivers inklusive Order
@@ -176,6 +183,7 @@ class Generate
         elsif company.restriction.problem == "PP"
             tour = insertion_pp(order, driver)
         end
+        
         tour # return tour
     end # end build_tour()
     
@@ -236,6 +244,7 @@ class Generate
             new_tour.insert(index_first+1, order_tour_pickup)
             # OrderTour.time updaten
             new_tour = update_time(new_tour, index_first)
+        
             # Wenn eine Capacity_restriction besteht...
             if restriction.capacity_restriction
                 # ...Order.capacity_status updaten
@@ -371,6 +380,9 @@ class Generate
                 end
             end
         end
+        
+        # Tour von driver 5 und order 14 ist richtig
+        
         # Wenn keine zulässige Tour gebildet werden konnte
         if best_tour.empty?
             # Tour zurückmelden mit langer Fahrzeit, um anzuzeigen, dass keine zulässige gebildet werden konnte
@@ -576,12 +588,11 @@ class Generate
     def create_home(vehicle_position, driver)
         # home = company.address
         home = OrderTour.new
-        # user_id wird in commit gesetzt
+        home.user_id = user.id 
         home.order_id = nil
         # tour_id wird in commit gesetzt
         # company_id wird im algo gesetzt
-        driver_vehicle = Vehicle.where(driver_id: driver.id).take
-        home.location = driver_vehicle.position
+        home.location = company.address 
         # place (Platzierung) wird im commit gesetzt
         home.comment = "Ende der Tour"
         home.kind = "home"
@@ -598,7 +609,7 @@ class Generate
     def create_depot(location)
         # depot = company.depot
         depot = OrderTour.new
-        # user_id wird in commit gesetzt
+        depot.user_id = user.id
         depot.order_id = nil
         # tour_id wird in commit gesetzt
         # company_id wird in commit gesetzt
@@ -619,15 +630,9 @@ class Generate
     # Berechnet die Zeit für die Fahrt von order_tour1 nach order_tour2
     def time_for_distance(ot1, ot2)
         # Google Maps
-        # FIXME - blockiert häufig und liefert dann 0
-        # FIXME - bei rand() funktioniert alles, bei directions setzt er orders mehrmals ein
-        #directions = GoogleDirections.new(ot1.location, ot2.location)
-        #time = directions.drive_time_in_minutes
-        # Wenn API nicht mehr ragiert, kein sleep, damit schnell beendet wird
-        #if time > 0
-        #    sleep(1)
-        #end
-        #time # return
+        dt = DriveTimeBetweenAddresses.new(ot1.location, ot2.location)
+        time = dt.cached_drive_time_in_minutes()
+        time # return
         # Geocoder - Distanze in km
         #if ot1.latitude.nil?
         #    geocords = Geocoder.search(ot1.location) 
@@ -641,7 +646,7 @@ class Generate
         #end
         #time = Geocoder::Calculations.distance_between([ot1.latitude,ot1.longitude], [ot2.latitude,ot2.longitude])
         # for testing
-        rand(20...100)
+        # rand(20...100)
     end# end time_for_distance()
     
     # DONE
@@ -740,7 +745,6 @@ class Generate
         tour[index].time = time_for_distance(tour[index-1], tour[index])
         #... und das nächste Element
         tour[index+1].time = time_for_distance(tour[index], tour[index+1])
-        
         tour # return
     end
     
@@ -754,8 +758,7 @@ class Generate
             if index2 > index
                 order_tour.capacity_status = new_tour(index2-1).capacity_status + new_tour(index2).capacity
             end
-        end 
-        
+        end
         tour # return
     end
     
@@ -795,4 +798,5 @@ class Generate
         end
         tour_time # return
     end# end calc_tour_time()
+    
 end
