@@ -1,18 +1,13 @@
 #Klasse zur Erstellung der Touren entsprechen der Konfiguration
 
-# eager loading association .includes
-
-#Ideas : durch OrderTour.time kann man herausfinden wie lange man von der vorherigen location zu dieser braucht. Dadruch weniger anfragen an Maps,
-# denn man muss für jede Einsetzung nur die time vom eignen und nächsten location updaten und die nummerirung aller nachfolgenden orderTour +1
-
 class Generate
     
     #Variablen
-    attr_accessor :drivers, :orders, :company, :user
-    # Depot und home können aus dem Kontext abgeleitet werden
     
-    #Methoden
-    #TESTED
+    attr_accessor :drivers, :orders, :company, :user
+    
+    # Methoden
+    
     # generiete die Touren für alle driver und orders entsprechend der company.restriction
     def generate_tours
         # Prüfen ob Prioritätsstufen bestehen
@@ -56,7 +51,6 @@ class Generate
         end
     end # end generate_tour()
     
-    #TESTED
     # Matrix für Drivers und Orders
     def build_matrix(current_orders)
         matrix = []
@@ -78,7 +72,6 @@ class Generate
         matrix #return - matrix ist ein langes Array (beachten!)
     end
     
-    # DONE
     # MMM durchführen
     def solve_matrix(matrix, order_count)
         # für jeder Order eine Tour finden
@@ -95,23 +88,29 @@ class Generate
                     shortest_tour = possible_tour # ...dann ist die possible_tour die neue shortest_tour
                 end
             end
-            # FIXME shortest_tour von order 14 ist die time falsch
             # Driver die Tour (samt neuer Order) zuteilen
             #shortest_tour[0] = driver ; [1] = order ; [2] tour
             commit_order(shortest_tour[0], shortest_tour[1], shortest_tour[2])
+            
+            # Workaround für .time problem
+            shortest_tour[2].each_with_index do |order_tour, index|
+                if index > 0 
+                    if order_tour.time != time_for_distance(shortest_tour[2][index-1], order_tour)
+                        order_tour.time = time_for_distance(shortest_tour[2][index-1], order_tour)
+                        order_tour.save
+                        order_tour.tour.duration = calc_tour_time(shortest_tour[2])
+                        order_tour.tour.save
+                    end
+                end
+            end
             #update matrix - Löschen aller Einträge mit der Order und die Zeiten vom Fahrer updaten
             matrix = update_matrix(matrix, shortest_tour[0], shortest_tour[1])
             i += 1
         end
     end# end solve_matrix
     
-    # getested
     # Nach einer Zuteilung die matrix erneuern
     def update_matrix(matrix, driver, order)
-        if order.id == 14
-            ente()
-        end
-        
         # Alle Einträge in matrix mit order löschen
         length = matrix.length
         while length > 0
@@ -132,7 +131,6 @@ class Generate
         matrix # return
     end # end update_matrix()
     
-    # DONE
     # Erstellt die OrderTour objekte und speichert die neue Tour und OrderTour in der DB
     def commit_order(driver, order, tour)
     # driver.tour kopieren, um neue OrderTour einzufügen
@@ -149,7 +147,9 @@ class Generate
                 if order_tour.duration.nil?
                     order_tour.duration = 0
                 end
-                OrderTour.create(user_id: user.id, order_id: order_tour.id, tour_id: driver_tour.id, company_id: company.id, place: order_tour.place, location: order_tour.location, comment: order_tour.comment, capacity: order_tour.capacity, capacity_status: order_tour.capacity_status, time: order_tour.time, duration: order_tour.duration, kind: order_tour.kind)
+                order_tour.user_id = user.id
+                order_tour.tour_id = driver_tour.id
+                order_tour.company_id = company.id
             end
             # Änderungen (wie place und time speichern)
             order_tour.save
@@ -164,15 +164,14 @@ class Generate
         end
         # Duration setzen
         driver_tour.duration = calc_tour_time(tour)
-        # Tour speichern und Faher zu ordnen
+        # Tour speichern und Faher zuordnen
         driver.tour = driver_tour
         # Order deaktivieren, damit sie in nächsten Planungen nicht versehentlich verplant wird
-        # FIXME - wieder einkommentieren für echten Betrieb, bzw testen mehrere Daten
+        # FIXME - Für Produkivbetrieb wieder einkommentieren
         #order.activ = false
         #order.save
     end # end commit_order
     
-    #DONE
     # liefert die neue Tour (aufbauend auf der alten) von Drivers inklusive Order
     def build_tour(order, driver)
         # Entsprechend dem Tourenplanungsproblem den Insertionalgorithmus aufrufen
@@ -183,11 +182,10 @@ class Generate
         elsif company.restriction.problem == "PP"
             tour = insertion_pp(order, driver)
         end
-        
         tour # return tour
     end # end build_tour()
     
-    # TESTEN
+    #nicht getestet
     # Insertionalgo für PDP
     def insertion_pdp(order, driver)
         # load tour vom driver (wenn eine besteht)
@@ -243,7 +241,7 @@ class Generate
             # Pickup einsetzen
             new_tour.insert(index_first+1, order_tour_pickup)
             # OrderTour.time updaten
-            new_tour = update_time(new_tour, index_first)
+            new_tour = update_time(new_tour, index_first+1)
         
             # Wenn eine Capacity_restriction besteht...
             if restriction.capacity_restriction
@@ -293,7 +291,6 @@ class Generate
         best_tour # return
     end # end insertion_pdp()
     
-    # Tested
     # Insertionalgo für DP
     def insertion_dp(order, driver)
         # load tour vom driver (wenn eine besteht)
@@ -381,8 +378,6 @@ class Generate
             end
         end
         
-        # Tour von driver 5 und order 14 ist richtig
-        
         # Wenn keine zulässige Tour gebildet werden konnte
         if best_tour.empty?
             # Tour zurückmelden mit langer Fahrzeit, um anzuzeigen, dass keine zulässige gebildet werden konnte
@@ -395,7 +390,7 @@ class Generate
         best_tour # return
     end # end insertion_dp()
     
-    # Testen !
+    #nicht getestet
     # Insertionalgo für PP
     def insertion_pp(order, driver)
         # load tour vom driver (wenn eine besteht)
@@ -462,11 +457,12 @@ class Generate
             
             # Depot als letztes vor home einsetzen, zum Entladen
             # Bestehendes Depot anpassen .capacity
-            # depot = create_depot()
+            # Depot einsetzen
             depot.capacity = old.tour[tour.length-2].capacity_status*-1 # Fahrzeug wird entladen
             old_tour.insert(old_tour.length-2 , depot)
-            update_time(old_tour, tour.length-2) # .time depot und home setzen
-            # FIXME -> capcity und time updaten
+            # Zeit und Kapazität updaten
+            update_time(old_tour, tour.length-2)
+            update_capacity(old_tour, tour.length-2)
             # best_tour mit ersten new_tour befüllen
             if best_tour.length < new_tour.length
                 best_tour = duplicate_tour_array(new_tour)
@@ -484,7 +480,6 @@ class Generate
         tour # return
     end # end insertion_pp()
     
-    #Tested
     #Orders in Gruppen nach den Priorities einteilen
     def by_priority()
         # Array für Sorteriung der Orders nach prio
@@ -516,7 +511,6 @@ class Generate
         prioArray # return
     end # end by_priority()
     
-    #DONE
     # erstellt zu order ein ordertour vom typ pickup
     def create_pickup(order)
         order_tour_pickup = OrderTour.new
@@ -536,7 +530,6 @@ class Generate
         order_tour_pickup # return
     end # end create_pickup
     
-    #DONE
     # erstellt zu order ein ordertour vom typ delivery
     def create_delivery(order)
         order_tour_delivery = OrderTour.new
@@ -561,7 +554,6 @@ class Generate
         order_tour_delivery # return
     end # end create_delivery
     
-    # DONE
     # erstellt OrderTour für vp driver
     def create_vehicle_position(driver)    
         # carrier.vehicle.position einsetzen als OrderTour
@@ -583,7 +575,6 @@ class Generate
         vehicle_position # return
     end # end create_vehicle_position
     
-    # DONE
     # erstellt OrderTour home für driver
     def create_home(vehicle_position, driver)
         # home = company.address
@@ -604,7 +595,6 @@ class Generate
         home # return
     end # end create_home
     
-    # DONE
     # erstellt OrderTour depot
     def create_depot(location)
         # depot = company.depot
@@ -626,30 +616,14 @@ class Generate
         depot # return
     end # end create_depot()
     
-    #Tested
     # Berechnet die Zeit für die Fahrt von order_tour1 nach order_tour2
     def time_for_distance(ot1, ot2)
         # Google Maps
         dt = DriveTimeBetweenAddresses.new(ot1.location, ot2.location)
         time = dt.cached_drive_time_in_minutes()
         time # return
-        # Geocoder - Distanze in km
-        #if ot1.latitude.nil?
-        #    geocords = Geocoder.search(ot1.location) 
-        #    ot1.latitude = geocords[1].boundingbox[0]
-        #    ot1.longitude = geocords[1].boundingbox[2]
-        #end
-        #if ot2.latitude.nil?
-        #    geocords = Geocoder.search(ot2.location) 
-        #    ot2.latitude = geocords[0].boundingbox[0]
-        #    ot2.longitude = geocords[0].boundingbox[2]
-        #end
-        #time = Geocoder::Calculations.distance_between([ot1.latitude,ot1.longitude], [ot2.latitude,ot2.longitude])
-        # for testing
-        # rand(20...100)
     end# end time_for_distance()
     
-    # DONE
     # Überprüft für die tour ob die Beschränkungen eingehalten werden
     def check_restriction(tour,order,driver)
         # Check
@@ -661,7 +635,7 @@ class Generate
         
         if company.restriction.capacity_restriction
             if capacity?(tour, driver)
-                    return true
+                return true
             end
         end
               
@@ -673,7 +647,7 @@ class Generate
         false # liefert true, wenn alle Beschränkungen eingehalten werden
     end # end check_restriction()
     
-    # Not tested
+    #nicht getestet
     # Überprüfen ob Capacity restricion eingehalten wird und setzt ggf. Depots ein
     def capacity?(tour, driver) # liefert true, wenn gegen restriction verstoßen wird
         tour.each_with_index do |order_tour, index|
@@ -710,23 +684,25 @@ class Generate
         return false
     end # end capacity?()
     
-    #FIXME - Warten um eine Order einsetzen zu können?
+    #nicht getestet
     # Überprüfen ob Time Windows eingehalten werden
     def time_window?(tour, order, driver) # liefert true, wenn gegen restriction verstoßen wird
-        # Uhrzeit von jetzt bis OrderTour von Order prüfen
-        # Wenn die Uhrzeit < order.start_time
-        # return true -> Pickup ist zu früh
-        # Wenn PDP
-        # Prüfen ob der Delivery nach order.end_time ist
-        # return true -> Delivery ist zu spät
-        
-                    
-        # wenn durch time_window keine zulässige Tour gebildet werden konnte
-        # dann an die matrix eintragen, dass es nicht geht durch sehr lange duration
-            
+        time_now = Time.now.to_time.to_i # Jetziger Zeitpunkt in Unixtime
+        # Jede Order_tour überprüfen, ob der Zeitpunkt im Zeitfenster von Order ist
+        tour.each_with_index do |order_tour, index|
+            # Zeit bis zu Order_tour
+            tour_until = tour[0..index]
+            time_until = calc_tour_time(tour_until)
+            # time_now plus Zeit bis Order_time
+            time_point = time_now + time_until
+            # time_point nach end_time oder vor starttime
+            if time_point > order_tour.order.end_time || time_point < order_tour.order.start_time
+                return true
+            end
+        end
+        return false 
     end
     
-    #Tested
     # Überprüfen ob working time eingehalten wird
     # Kann dazu führen, kann das keine Tour gebildet wird! Passiert vor allem bei nur einem Fahrer
     def working_time?(tour, driver) # liefert true, wenn gegen restriction verstoßen wird
@@ -738,7 +714,6 @@ class Generate
         false
     end # end working_time?()
     
-    #Tested
     # Berechnet OrderTour.time neu
     def update_time(tour, index)
         # OrderTour.time setzen
@@ -748,7 +723,7 @@ class Generate
         tour # return
     end
     
-    #DONE
+    #nicht getestet
     # Berechnet OrderTour.capacity_status neu für alle OrderTours ab index
     def update_capacity(tour, index)
         tour(index).capacity_status = tour(index-1).capacity_status + tour(index).capacity
@@ -762,7 +737,6 @@ class Generate
         tour # return
     end
     
-    #DONE
     # erzeugt echte Copy von Array
     def duplicate_tour_array (tour)
         new_tour = []
@@ -772,7 +746,6 @@ class Generate
         new_tour
     end# end duplicate_tour_array()
     
-    #DONE
     # gibt die Zeit für die gesamte Tour zurück
     def calc_tour_time(tour)
         tour_time = 0

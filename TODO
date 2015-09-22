@@ -1,10 +1,11 @@
 TODO
 
+Readme schreiben
+
 validation für address in order.rb - zu oft falsche adressen
 
 Funktion
 dropdowns nur eigene Drivers, vehicles etc.
-.csv inport für testdaten -> über rails c ausführen -> lädt alles aus dem angegeben Ordner tmp/csv ->
 
 Form
 Sprache in show and _form anpassen
@@ -14,3 +15,5 @@ f.association :user in allen _form ergänzen um , :include_blank => false, :labe
 Alle Einträge eines Planer seiner Firma zuteilen und gleiches für Driver
     - Create aller controller die company_id setzen
     - Update auch um sicher zugehen
+Drag and Drop um ggf manuelle die Reihenfolge in einer ORder wechseln zu können
+    - Manuelle Vergabe von orders?

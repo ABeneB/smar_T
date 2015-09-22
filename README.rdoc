@@ -1,28 +1,33 @@
 == README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
 Things you may want to cover:
 
-* Ruby version
+System Administrieren
 
-* System dependencies
+Der System Admin kan sich selbst einen Unternehmen zuteilen (unter Nutzer). 
+Anschließend kann er wie ein Planer auf Informationen zugreifen und Touren generieren.
 
-* Configuration
+Um eine Tourenplanung für ein Unternhemen/Planer zu ermöglichen muss ein Admin folgendes tun:
+* Unternehmen anlegen
+* Planer anlegen und mit Unternehmen verbinden
+* Depots und Beschränkung für Unternehmen anlegen
 
-* Database creation
+Tourenplanung
 
-* Database initialization
+Um eine Tour planen lassen zu können, muss der Planer folgende Schritte durchlaufen:
 
-* How to run the test suite
+* Fahrer anlegen
+* Fahrzeug anlegen und mit Fahrer verknüpfen
+* Aufträge anlegen
+* Ggf mit Kunden verbinden für die Priorität
+* Alle Aufträge und Fahrer aktivieren, für die eine Tour geplant werden soll
+* Tour generieren
 
-* Services (job queues, cache servers, search engines, etc.)
+Die für die Tourenplanung weiterhin benötigten Informationen werden vom Admin hinterlegt
 
-* Deployment instructions
+Tour bearbeiten
 
-* ...
+* Ein Fahrer kann seine Tour einsehen, mehr noch nicht
+- geplant ist es, dass er auch die erledigung von Tourenabschnitten bestätigen kann
+und die Position des Fahrzeuges live eingetragen wird. 
 
-
-Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.

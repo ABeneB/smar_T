@@ -1,3 +1,9 @@
+# über rails c ausführen
+# lädt alles aus dem angegeben Ordner tmp/csv/{parameter}
+# Im Moment angepasst auf Apotheke
+
+
+
 class CsvImport
     
     attr_accessor :file_path
@@ -7,7 +13,7 @@ class CsvImport
     end
     
     # import aus csv. vom typ delivery aus dem zuvor mitgegebenen folder
-    def import_delivery_orders(company)
+    def import_delivery_orders(company_name)
         # alle .csv files laden
         get_all_files().each do |file|
             # Trennen am Semikolon und zu array aufbereiten
