@@ -8,7 +8,7 @@ class VehiclesController < ApplicationController
       company = current_user.company
       @vehicles = Vehicle.where(driver_id: company.driver_ids)
     else
-      @orders = []
+      @vehicles = []
     end
   end
 
@@ -36,14 +36,17 @@ class VehiclesController < ApplicationController
     @vehicle = Vehicle.new(vehicle_params)
     @vehicle.user_id = current_user.id
     @vehicle.save
+    respond_with(@vehicle)
   end
 
   def update
     @vehicle.update(vehicle_params)
+    respond_with(@vehicle)
   end
 
   def destroy
     @vehicle.destroy
+    respond_with(@vehicle)
   end
 
   private

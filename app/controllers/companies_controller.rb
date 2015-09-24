@@ -29,14 +29,17 @@ class CompaniesController < ApplicationController
   def create
       @company = Company.new(company_params)
       @company.save
+      respond_with(@company)
   end
 
   def update
       @company.update(company_params)
+      respond_with(@company)
   end
 
   def destroy
       @company.destroy
+      respond_with(@company)
   end
 
   private
