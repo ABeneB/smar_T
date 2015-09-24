@@ -168,8 +168,8 @@ class Generate
         driver.tour = driver_tour
         # Order deaktivieren, damit sie in nächsten Planungen nicht versehentlich verplant wird
         # FIXME - Für Produkivbetrieb wieder einkommentieren
-        #order.activ = false
-        #order.save
+        order.activ = false
+        order.save
     end # end commit_order
     
     # liefert die neue Tour (aufbauend auf der alten) von Drivers inklusive Order
