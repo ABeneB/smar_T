@@ -80,6 +80,9 @@ group :development do
   # Remove the following if your server does not use RVM
   gem 'capistrano-rvm'
 
+  # Pry debugger
+  gem 'pry-rails'
+
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
