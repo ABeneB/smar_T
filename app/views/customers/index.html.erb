@@ -1,0 +1,58 @@
+<%- model_class = Customer -%>
+<% if current_user %>
+    <% if current_user.is_admin? || current_user.is_planer?%>
+      <div class="page-header">
+        <h1>Kunden</h1>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <% if current_user.is_admin? %>
+              <th>ID</th>
+              <th>Benutzer</th>
+              <th>Unternehmen</th>
+            <% end %>
+            <th>Name</th>
+            <th>Adresse</th>
+            <th>Telefonnummer</th>
+            <th>Priorität</th>
+            <th><%=t '.actions', :default => t("helpers.actions") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @customers.each do |customer| %>
+            <tr>
+              <% if current_user.is_admin? %>
+                <td><%= customer.id %></td>
+                <% if !customer.user.nil? %>
+                  <td><%= customer.user.username %></td>
+                <% else %>
+                  <td></td>
+                <% end %>
+                <% if !customer.company.nil? %>
+                  <td><%= customer.company.name %></td>
+                <% else %>
+                  <td></td>
+                <% end %>
+              <% end %>
+              <td><%= customer.name %></td>
+              <td><%= customer.address %></td>
+              <td><%= customer.telefon %></td>
+              <td><%= customer.priority %></td>
+              <td><%= link_to 'Anzeigen', customer, :class => 'btn btn-info btn-xs' %></td>
+              <td><%= link_to 'Bearbeiten', edit_customer_path(customer), :class => 'btn btn-warning btn-xs' %></td>
+              <td><%= link_to 'Löschen', customer, method: :delete, data: { confirm: 'Möchten Sie den Kunden wirklich löschen?' }, :class => 'btn btn-danger btn-xs' %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <%= link_to t('.new', :default => t("helpers.links.new")),
+                  new_customer_path,
+                  :class => 'btn btn-primary' %>
+    <% else %>
+    ZUGANG VERWEIGERT
+    <% end %>
+<% else %>
+ZUGANG VERWEIGERT
+<% end %>

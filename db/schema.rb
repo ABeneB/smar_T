@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20150922133703) do
     t.float    "longitude"
   end
 
-  create_table "costumers", force: true do |t|
+  create_table "customers", force: true do |t|
     t.integer  "user_id"
     t.integer  "company_id"
     t.string   "address"
@@ -36,8 +36,8 @@ ActiveRecord::Schema.define(version: 20150922133703) do
     t.float    "longitude"
   end
 
-  add_index "costumers", ["company_id"], name: "index_costumers_on_company_id"
-  add_index "costumers", ["user_id"], name: "index_costumers_on_user_id"
+  add_index "customers", ["company_id"], name: "index_customers_on_company_id"
+  add_index "customers", ["user_id"], name: "index_customers_on_user_id"
 
   create_table "depots", force: true do |t|
     t.integer  "user_id"
@@ -95,7 +95,7 @@ ActiveRecord::Schema.define(version: 20150922133703) do
 
   create_table "orders", force: true do |t|
     t.integer  "user_id"
-    t.integer  "costumer_id"
+    t.integer  "customer_id"
     t.integer  "company_id"
     t.string   "pickup_location"
     t.string   "delivery_location"
@@ -113,7 +113,7 @@ ActiveRecord::Schema.define(version: 20150922133703) do
   end
 
   add_index "orders", ["company_id"], name: "index_orders_on_company_id"
-  add_index "orders", ["costumer_id"], name: "index_orders_on_costumer_id"
+  add_index "orders", ["customer_id"], name: "index_orders_on_customer_id"
   add_index "orders", ["user_id"], name: "index_orders_on_user_id"
 
   create_table "restrictions", force: true do |t|
