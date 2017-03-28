@@ -5,7 +5,7 @@ class ToursController < ApplicationController
 
   def index
     # Nur Daten die Zur Rolle passen anzeigen
-    if current_user.is_admin? || current_user.is_planer?
+    if (current_user.is_admin? || current_user.is_planer?) && !current_user.company.nil?
       company = current_user.company
       @tours = Tour.where(company_id: company.id)
     elsif current_user.is_driver?
@@ -18,7 +18,7 @@ class ToursController < ApplicationController
 
   def show
     if current_user
-      if current_user.is_admin? 
+      if current_user.is_admin?
         @order_tours = @tour.order_tours.sort_by &:place
         @hash = @order_tours.map do | order_tour|
           place = order_tour.place+1

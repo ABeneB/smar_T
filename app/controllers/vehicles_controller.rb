@@ -4,7 +4,7 @@ class VehiclesController < ApplicationController
   respond_to :html
 
   def index
-    if current_user.is_admin? || current_user.is_planer?
+    if (current_user.is_admin? || current_user.is_planer?) && !current_user.company.nil?
       company = current_user.company
       @vehicles = Vehicle.where(driver_id: company.driver_ids)
     else
@@ -18,7 +18,7 @@ class VehiclesController < ApplicationController
 
   def new
     if current_user
-      if current_user.is_admin? 
+      if current_user.is_admin?
         @vehicle = Vehicle.new
       elsif current_user.is_planer?
         if @vehcle.company_id == current_user.company_id

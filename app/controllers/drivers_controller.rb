@@ -4,7 +4,7 @@ class DriversController < ApplicationController
   respond_to :html
 
   def index
-    if current_user.is_admin? || current_user.is_planer?
+    if (current_user.is_admin? || current_user.is_planer?) && !current_user.company.nil?
       company = current_user.company
       @drivers = company.drivers
     else
@@ -14,7 +14,7 @@ class DriversController < ApplicationController
 
   def show
     if current_user
-      if current_user.is_admin? 
+      if current_user.is_admin?
         @driver
       elsif current_user.is_planer?
         if @driver.company_id == current_user.company_id
@@ -41,7 +41,7 @@ class DriversController < ApplicationController
     @driver.user_id = current_user.id # automatisches setzen der user_id
     @driver.company_id = current_user.company.id # automatisches setzen der user_id
     @driver.save
-    if @driver.save 
+    if @driver.save
       redirect_to drivers_path, notice: "saved"
     else
       render 'new'

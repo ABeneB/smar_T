@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   respond_to :html
 
   def index
-    if current_user.is_admin? || current_user.is_planer?
+    if (current_user.is_admin? || current_user.is_planer?) && !current_user.company.nil?
       company = current_user.company
       @orders = Order.where(company_id: company.id)
     else
@@ -14,7 +14,7 @@ class OrdersController < ApplicationController
 
   def show
     if current_user
-      if current_user.is_admin? 
+      if current_user.is_admin?
         @order
       elsif current_user.is_planer?
         if @driver.company_id == current_user.company_id
