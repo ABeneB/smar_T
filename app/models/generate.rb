@@ -490,15 +490,15 @@ class Generate
         prioE=[]
         orders.each do |order|
             # Prüfen ob es priorities gibt
-            unless order.costumer.nil?
+            unless order.customer.nil?
             # wenn ja, dann nach der priority sortieren
-                if order.costumer.priority == "A"
+                if order.customer.priority == "A"
                     prioA.push(order)
-                elsif order.costumer.priority == "B"
+                elsif order.customer.priority == "B"
                     prioB.push(order)
-                elsif order.costumer.priority == "C"
+                elsif order.customer.priority == "C"
                     prioC.push(order)
-                elsif order.costumer.priority == "D"
+                elsif order.customer.priority == "D"
                     prioD.push(order)
                 else
                     prioE.push(order)

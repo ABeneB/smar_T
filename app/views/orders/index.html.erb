@@ -22,8 +22,8 @@
           <% @orders.each do |order| %>
             <tr>
               <td><%= order.id %></td>
-              <% if order.costumer %>
-              <td><%= order.costumer.priority %></td>
+              <% if order.customer %>
+              <td><%= order.customer.priority %></td>
               <% else %>
               <td>keine</td>
               <% end %>
@@ -35,13 +35,13 @@
               <td><%= order.activ%></td>
               <td><%= link_to 'Show', order, :class => 'btn btn-info btn-xs' %></td>
               <td><%= link_to 'Edit', edit_order_path(order), :class => 'btn btn-warning btn-xs' %></td>
-              <td><%= link_to 'Destroy', order, method: :delete, 
+              <td><%= link_to 'Destroy', order, method: :delete,
               data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
             </tr>
           <% end %>
         </tbody>
       </table>
-      
+
       <%= link_to t('.new', :default => t("helpers.links.new")),
                   new_order_path,
                   :class => 'btn btn-primary' %>

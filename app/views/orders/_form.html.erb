@@ -16,7 +16,7 @@
   <% end %>
 <% elsif current_user.role == "planer" %>
   <%= simple_form_for @order do |f| %>
-    <%= f.association :costumer %>
+    <%= f.association :customer %>
     <%= f.input :pickup_location %>
     <%= f.input :duration_pickup %>
     <%= f.input :delivery_location %>
