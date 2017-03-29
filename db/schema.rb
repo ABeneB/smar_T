@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170329090330) do
+ActiveRecord::Schema.define(version: 20170329120344) do
 
   create_table "companies", force: true do |t|
     t.string   "name"
@@ -24,7 +24,6 @@ ActiveRecord::Schema.define(version: 20170329090330) do
   end
 
   create_table "customers", force: true do |t|
-    t.integer  "user_id"
     t.integer  "company_id"
     t.string   "address"
     t.string   "telefon"
@@ -37,10 +36,8 @@ ActiveRecord::Schema.define(version: 20170329090330) do
   end
 
   add_index "customers", ["company_id"], name: "index_customers_on_company_id"
-  add_index "customers", ["user_id"], name: "index_customers_on_user_id"
 
   create_table "depots", force: true do |t|
-    t.integer  "user_id"
     t.integer  "company_id"
     t.string   "address"
     t.integer  "duration"
@@ -52,11 +49,9 @@ ActiveRecord::Schema.define(version: 20170329090330) do
   end
 
   add_index "depots", ["company_id"], name: "index_depots_on_company_id"
-  add_index "depots", ["user_id"], name: "index_depots_on_user_id"
 
   create_table "drivers", force: true do |t|
     t.integer  "user_id"
-    t.integer  "company_id"
     t.datetime "work_start_time"
     t.datetime "work_end_time"
     t.boolean  "activ"
@@ -66,14 +61,11 @@ ActiveRecord::Schema.define(version: 20170329090330) do
     t.string   "name"
   end
 
-  add_index "drivers", ["company_id"], name: "index_drivers_on_company_id"
   add_index "drivers", ["user_id"], name: "index_drivers_on_user_id"
 
   create_table "order_tours", force: true do |t|
-    t.integer  "user_id"
     t.integer  "order_id"
     t.integer  "tour_id"
-    t.integer  "company_id"
     t.string   "location"
     t.integer  "place"
     t.datetime "created_at"
@@ -88,15 +80,11 @@ ActiveRecord::Schema.define(version: 20170329090330) do
     t.string   "kind"
   end
 
-  add_index "order_tours", ["company_id"], name: "index_order_tours_on_company_id"
   add_index "order_tours", ["order_id"], name: "index_order_tours_on_order_id"
   add_index "order_tours", ["tour_id"], name: "index_order_tours_on_tour_id"
-  add_index "order_tours", ["user_id"], name: "index_order_tours_on_user_id"
 
   create_table "orders", force: true do |t|
-    t.integer  "user_id"
     t.integer  "customer_id"
-    t.integer  "company_id"
     t.string   "pickup_location"
     t.string   "delivery_location"
     t.integer  "capacity"
@@ -112,13 +100,10 @@ ActiveRecord::Schema.define(version: 20170329090330) do
     t.boolean  "activ"
   end
 
-  add_index "orders", ["company_id"], name: "index_orders_on_company_id"
   add_index "orders", ["customer_id"], name: "index_orders_on_customer_id"
-  add_index "orders", ["user_id"], name: "index_orders_on_user_id"
 
   create_table "restrictions", force: true do |t|
     t.integer  "company_id"
-    t.integer  "user_id"
     t.string   "problem"
     t.boolean  "dynamic"
     t.boolean  "multi_vehicle"
@@ -131,20 +116,15 @@ ActiveRecord::Schema.define(version: 20170329090330) do
   end
 
   add_index "restrictions", ["company_id"], name: "index_restrictions_on_company_id"
-  add_index "restrictions", ["user_id"], name: "index_restrictions_on_user_id"
 
   create_table "tours", force: true do |t|
-    t.integer  "user_id"
     t.integer  "driver_id"
-    t.integer  "company_id"
     t.integer  "duration"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "tours", ["company_id"], name: "index_tours_on_company_id"
   add_index "tours", ["driver_id"], name: "index_tours_on_driver_id"
-  add_index "tours", ["user_id"], name: "index_tours_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -169,7 +149,6 @@ ActiveRecord::Schema.define(version: 20170329090330) do
   add_index "users", ["username"], name: "index_users_on_username", unique: true
 
   create_table "vehicles", force: true do |t|
-    t.integer  "user_id"
     t.string   "position"
     t.integer  "capacity"
     t.integer  "duration"
@@ -181,6 +160,5 @@ ActiveRecord::Schema.define(version: 20170329090330) do
   end
 
   add_index "vehicles", ["driver_id"], name: "index_vehicles_on_driver_id"
-  add_index "vehicles", ["user_id"], name: "index_vehicles_on_user_id"
 
 end
