@@ -1,6 +1,5 @@
 <% if current_user.role == "admin" %>
   <%= simple_form_for @customer do |f| %>
-    <%= f.association :user, label_method: :username %>
     <%= f.association :company %>
     <%= f.input :name %>
     <%= f.input :address %>

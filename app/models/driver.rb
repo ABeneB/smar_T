@@ -3,6 +3,5 @@ class Driver < ActiveRecord::Base
   has_one :tour
   has_one :vehicle
 
-  validates :company, presence: true
-
+  delegate :company, to: :user
 end

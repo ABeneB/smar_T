@@ -9,7 +9,6 @@
           <tr>
             <% if current_user.is_admin? %>
               <th>ID</th>
-              <th>Benutzer</th>
               <th>Unternehmen</th>
             <% end %>
             <th>Name</th>
@@ -24,11 +23,6 @@
             <tr>
               <% if current_user.is_admin? %>
                 <td><%= customer.id %></td>
-                <% if !customer.user.nil? %>
-                  <td><%= customer.user.username %></td>
-                <% else %>
-                  <td></td>
-                <% end %>
                 <% if !customer.company.nil? %>
                   <td><%= customer.company.name %></td>
                 <% else %>

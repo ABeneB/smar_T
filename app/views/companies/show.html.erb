@@ -44,7 +44,7 @@
             <tr>
               <td><%= driver.id %></td>
               <td><%= driver.name %></td>
-              <td><%= driver.vehicle.position %></td>
+              <td><%= driver.vehicle.try(:position) %></td>
               <td><%= link_to 'Show', driver_path(driver), :class => 'btn btn-info btn-xs' %></td>
             </tr>
           <% end %>
