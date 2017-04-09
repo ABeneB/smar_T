@@ -21,6 +21,7 @@ class Generate
                     order_count = prio_orders.length
                     # Matrix für jede Prioritässtufe
                     matrix = build_matrix(prio_orders)
+
                     # jede Prioritätsstufe nacheinander bearbeiten
                     solve_matrix(matrix, order_count)
                 end
@@ -28,9 +29,9 @@ class Generate
         else # keine Prioritätsstufen
             # Matrix zwischen allen Drivern und allen Orders aufspannen
             matrix = build_matrix(orders)
-            order_count = orders.length
+
             # Alle Orders in Matrix zuteilen
-            solve_matrix(matrix, order_count)
+            solve_matrix(matrix, orders.length)
         end
         # Touren löschen, die nur aus 3 OrderTours bestehen (vp, depot, home), also keine Order bearbeiten
         ##touren = Tour.where(company_id: company.id)
@@ -77,9 +78,10 @@ class Generate
     # MMM durchführen
     def solve_matrix(matrix, order_count)
         # für jeder Order eine Tour finden
-        i = 0
+        tmp = 0
         if (matrix.present?)
-          while  i < order_count
+          while tmp < order_count
+
               shortest_tour = matrix[0] # erste tour als shortest_tour
               # schnellste Tour ermitteln
               matrix.each do |possible_tour|
@@ -108,7 +110,7 @@ class Generate
               end
               #update matrix - Löschen aller Einträge mit der Order und die Zeiten vom Fahrer updaten
               matrix = update_matrix(matrix, shortest_tour[0], shortest_tour[1])
-              i += 1
+              tmp += 1
           end
         end
     end# end solve_matrix
@@ -151,6 +153,9 @@ class Generate
                 if order_tour.duration.nil?
                     order_tour.duration = 0
                 end
+
+                order_tour.tour_id = driver_tour.id
+
             end
             # Änderungen (wie place und time speichern)
             order_tour.save
@@ -295,6 +300,7 @@ class Generate
 
     # Insertionalgo für DP
     def insertion_dp(order, driver)
+
         # load tour vom driver (wenn eine besteht)
         old_tour = []
         # Alle OrderTour Elemente laden und old_tour befüllen
@@ -348,10 +354,11 @@ class Generate
             # index+2 damit erst nach vehicle_position und erstem depot eingesetzt wird
 
             # Potenziell neue Tour erstellen
+
             new_tour = duplicate_tour_array(old_tour)
 
             # Delivery einsetzen
-            new_tour.insert(index+2, order_tour_delivery)
+            new_tour.insert(index + 2, order_tour_delivery)
 
             # OrderTour.time updaten
             new_tour = update_time(new_tour, index+2)
@@ -387,6 +394,7 @@ class Generate
         best_tour.each_with_index do |order_tour, index|
             order_tour.place = index
         end
+
         best_tour # return
     end # end insertion_dp()
 
