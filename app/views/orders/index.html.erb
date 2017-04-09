@@ -4,47 +4,51 @@
       <div class="page-header">
         <h1>Aufträge</h1>
       </div>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Priorität</th>
-            <th>Abholort</th>
-            <th>Einladedauer</th>
-            <th>Lieferort</th>
-            <th>Ausladedauer</th>
-            <th>Kapazität</th>
-            <th>Aktiv</th>
-            <th><%=t '.actions', :default => t("helpers.actions") %></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @orders.each do |order| %>
+      <% if current_user.company.try(:customers).blank? %>
+        <div class="alert alert-info">Ihrem Benutzeraccount wurden noch keine Kunden zugewiesen. Sie können daher kein Auftrag anlegen.</div>
+      <% else %>
+        <table class="table table-striped">
+          <thead>
             <tr>
-              <td><%= order.id %></td>
-              <% if order.customer %>
-              <td><%= order.customer.priority %></td>
-              <% else %>
-              <td>keine</td>
-              <% end %>
-              <td><%= order.pickup_location %></td>
-              <td><%= order.duration_pickup %></td>
-              <td><%= order.delivery_location %></td>
-              <td><%= order.duration_delivery %></td>
-              <td><%= order.capacity %></td>
-              <td><%= order.activ%></td>
-              <td><%= link_to 'Show', order, :class => 'btn btn-info btn-xs' %></td>
-              <td><%= link_to 'Edit', edit_order_path(order), :class => 'btn btn-warning btn-xs' %></td>
-              <td><%= link_to 'Destroy', order, method: :delete,
-              data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
+              <th>ID</th>
+              <th>Priorität</th>
+              <th>Abholort</th>
+              <th>Einladedauer</th>
+              <th>Lieferort</th>
+              <th>Ausladedauer</th>
+              <th>Kapazität</th>
+              <th>Aktiv</th>
+              <th><%=t '.actions', :default => t("helpers.actions") %></th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <% @orders.each do |order| %>
+              <tr>
+                <td><%= order.id %></td>
+                <% if order.customer %>
+                <td><%= order.customer.priority %></td>
+                <% else %>
+                <td>keine</td>
+                <% end %>
+                <td><%= order.pickup_location %></td>
+                <td><%= order.duration_pickup %></td>
+                <td><%= order.delivery_location %></td>
+                <td><%= order.duration_delivery %></td>
+                <td><%= order.capacity %></td>
+                <td><%= order.activ%></td>
+                <td><%= link_to 'Show', order, :class => 'btn btn-info btn-xs' %></td>
+                <td><%= link_to 'Edit', edit_order_path(order), :class => 'btn btn-warning btn-xs' %></td>
+                <td><%= link_to 'Destroy', order, method: :delete,
+                data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
 
-      <%= link_to t('.new', :default => t("helpers.links.new")),
-                  new_order_path,
-                  :class => 'btn btn-primary' %>
+        <%= link_to t('.new', :default => t("helpers.links.new")),
+                    new_order_path,
+                    :class => 'btn btn-primary' %>
+      <% end %>
     <% else %>
     ZUGANG VERWEIGERT
     <% end %>
