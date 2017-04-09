@@ -16,4 +16,9 @@ class Company < ActiveRecord::Base
     def orders
       Order.where(customer_id: self.customers.ids)
     end
+
+    # Gibt alle Tours zurück, die der Company indirekt über zugewiesene Customer angehören.
+    def tours
+      Tour.where(driver_id: self.drivers.ids)
+    end
 end
