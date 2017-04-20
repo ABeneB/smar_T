@@ -1,9 +1,9 @@
 GIT
-  remote: https://github.com/hendricius/google-directions-ruby.git
-  revision: 3510ec90e2768ccf48da385f92a57cf2c7f2c079
+  remote: git://github.com/liefery/google-directions-ruby.git
+  revision: 63e9626b8d4fe4c5a9b7c66595c5fd739d795b9a
   specs:
-    google_directions (1.6.6.2)
-      nokogiri (~> 1.6)
+    google_directions (0.1.6.7)
+      nokogiri (~> 1.4, >= 1.4.1)
 
 GEM
   remote: https://rubygems.org/
@@ -258,4 +258,4 @@ DEPENDENCIES
   validates_formatting_of
 
 BUNDLED WITH
-   1.13.7
+   1.14.6
