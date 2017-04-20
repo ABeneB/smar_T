@@ -55,7 +55,7 @@ gem 'better_errors'
 gem 'binding_of_caller'
 
 # Für Fahrzeit
-gem 'google_directions', git: "https://github.com/hendricius/google-directions-ruby.git"
+gem 'google_directions', github: "liefery/google-directions-ruby"
 
 gem 'pry'
 
