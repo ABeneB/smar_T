@@ -4,7 +4,7 @@ class DriversController < ApplicationController
   respond_to :html
 
   def index
-    if current_user.is_admin? || current_user.is_planer?
+    if (current_user.is_admin? || current_user.is_planer?) && !current_user.company.nil?
       company = current_user.company
       @drivers = company.drivers
     else
@@ -14,10 +14,10 @@ class DriversController < ApplicationController
 
   def show
     if current_user
-      if current_user.is_admin? 
+      if current_user.is_admin?
         @driver
       elsif current_user.is_planer?
-        if @driver.company_id == current_user.company_id
+        if @driver.user.company_id == current_user.company_id
           @driver
         end
       end
@@ -39,9 +39,8 @@ class DriversController < ApplicationController
   def create
     @driver = Driver.new(driver_params)
     @driver.user_id = current_user.id # automatisches setzen der user_id
-    @driver.company_id = current_user.company.id # automatisches setzen der user_id
     @driver.save
-    if @driver.save 
+    if @driver.save
       redirect_to drivers_path, notice: "saved"
     else
       render 'new'
@@ -64,6 +63,6 @@ class DriversController < ApplicationController
     end
 
     def driver_params
-      params.require(:driver).permit(:user_id, :name, :company_id, :work_start_time, :work_end_time, :activ, :working_time)
+      params.require(:driver).permit(:user_id, :name, :work_start_time, :work_end_time, :activ, :working_time)
     end
 end

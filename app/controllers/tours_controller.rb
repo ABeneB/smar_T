@@ -5,12 +5,10 @@ class ToursController < ApplicationController
 
   def index
     # Nur Daten die Zur Rolle passen anzeigen
-    if current_user.is_admin? || current_user.is_planer?
-      company = current_user.company
-      @tours = Tour.where(company_id: company.id)
+    if (current_user.is_admin? || current_user.is_planer?) && !current_user.company.nil?
+      @tours = current_user.company.tours
     elsif current_user.is_driver?
-      company = current_user.company
-      @tours = Tour.where(company_id: company.id)
+      @tours = current_user.company.tours
     else
       @tours = []
     end
@@ -18,7 +16,7 @@ class ToursController < ApplicationController
 
   def show
     if current_user
-      if current_user.is_admin? 
+      if current_user.is_admin?
         @order_tours = @tour.order_tours.sort_by &:place
         @hash = @order_tours.map do | order_tour|
           place = order_tour.place+1
@@ -49,7 +47,7 @@ class ToursController < ApplicationController
       g.user = user
       # Generate erzeugt und speichert die neuen Touren, OrderTour-Objekte
       g.generate_tours
-      @tours = Tour.where(company_id: current_user.company)
+      @tours = current_user.company.tours
     end
   end
 

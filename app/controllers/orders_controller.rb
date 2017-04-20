@@ -4,9 +4,9 @@ class OrdersController < ApplicationController
   respond_to :html
 
   def index
-    if current_user.is_admin? || current_user.is_planer?
+    if (current_user.is_admin? || current_user.is_planer?) && !current_user.company.nil?
       company = current_user.company
-      @orders = Order.where(company_id: company.id)
+      @orders = company.orders
     else
       @orders = []
     end
@@ -14,10 +14,10 @@ class OrdersController < ApplicationController
 
   def show
     if current_user
-      if current_user.is_admin? 
+      if current_user.is_admin?
         @order
       elsif current_user.is_planer?
-        if @driver.company_id == current_user.company_id
+        if @driver.company.id == current_user.company_id
           @driver
         end
       end
@@ -37,7 +37,6 @@ class OrdersController < ApplicationController
 
   def create
     @order = Order.new(order_params)
-    @order.user_id = current_user.id # automatisches setzen der user_id
     @order.save
     respond_with(@order)
   end
@@ -58,6 +57,6 @@ class OrdersController < ApplicationController
     end
 
     def order_params
-      params.require(:order).permit(:user_id, :address, :costumer_id, :company_id, :pickup_location, :delivery_location, :capacity, :start_time, :end_time, :comment, :duration_pickup, :duration_delivery, :activ)
+      params.require(:order).permit(:address, :customer_id, :pickup_location, :delivery_location, :capacity, :start_time, :end_time, :comment, :duration_pickup, :duration_delivery, :activ)
     end
 end

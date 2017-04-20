@@ -1,7 +1,6 @@
 <% if current_user.role == "admin" %>
   <%= simple_form_for @driver do |f| %>
-    <%= f.association :user %>
-    <%= f.association :company %>
+    <%= f.association :user, label_method: :username %>
     <%= f.input :name %>
     <%= f.input :working_time %>
     <%= f.input :activ %>

@@ -3,7 +3,6 @@
     <%= f.input :position %>
     <%= f.input :capacity %>
     <%= f.association :driver %>
-    <%= f.association :user %>
     <%= f.button :submit %>
   <% end %>
 <% elsif current_user.role =="planer" %>

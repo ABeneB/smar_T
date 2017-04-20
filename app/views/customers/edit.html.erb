@@ -1,8 +1,8 @@
-<%- model_class = Costumer -%>
+<%- model_class = Customer -%>
 <% if current_user %>
     <% if current_user.is_admin? || current_user.is_planer?%>
         <div class="page-header">
-          <h1><%=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => Costumer %></h1>
+          <h1><%=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => Customer %></h1>
         </div>
         <%= render :partial => 'form' %>
     <% else %>

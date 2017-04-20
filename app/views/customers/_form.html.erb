@@ -1,6 +1,5 @@
 <% if current_user.role == "admin" %>
-  <%= simple_form_for @costumer do |f| %>
-    <%= f.association :user %>
+  <%= simple_form_for @customer do |f| %>
     <%= f.association :company %>
     <%= f.input :name %>
     <%= f.input :address %>
@@ -9,7 +8,7 @@
     <%= f.button :submit %>
   <% end %>
 <% elsif %>
-  <%= simple_form_for @costumer do |f| %>
+  <%= simple_form_for @customer do |f| %>
     <%= f.input :name %>
     <%= f.input :address %>
     <%= f.input :telefon %>

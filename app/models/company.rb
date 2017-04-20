@@ -1,11 +1,24 @@
 class Company < ActiveRecord::Base
-    has_many :user
+    has_many :users
+    has_many :customers
     has_one :restriction
-    has_many :drivers
-    has_many :orders
-    
+
     # Koordinaten aus Adresse
-    geocoded_by :address   
+    geocoded_by :address
     after_validation :geocode
-    
+
+    # Gibt alle Driver zurück, die der Company indirekt über zugewiesene User angehören.
+    def drivers
+      Driver.where(user_id: self.users.ids)
+    end
+
+    # Gibt alle Orders zurück, die der Company indirekt über zugewiesene Customer angehören.
+    def orders
+      Order.where(customer_id: self.customers.ids)
+    end
+
+    # Gibt alle Tours zurück, die der Company indirekt über zugewiesene Customer angehören.
+    def tours
+      Tour.where(driver_id: self.drivers.ids)
+    end
 end

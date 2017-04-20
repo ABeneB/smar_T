@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
 
 
   private
-  
+
   #-> Prelang (user_login:devise)
   def require_user_signed_in
     unless user_signed_in?

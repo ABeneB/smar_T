@@ -63,7 +63,7 @@ gem 'bundler'
 
 gem 'bootstrap-sass', '3.3.5'
 gem 'bootstrap-sass-extras'
-gem 'devise', github: 'plataformatec/devise'
+gem 'devise', '3.5.2'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'tzinfo-data'
