@@ -17,14 +17,15 @@ class CsvImport
         # alle .csv files laden
         get_all_files().each do |file|
             # Trennen am Semikolon und zu array aufbereiten
-            CSV.foreach(file, col_sep: ";") do |row|
+            CSV.foreach(file, col_sep: ";", encoding: 'iso-8859-1:utf-8') do |row|
                 # neue Order anlegen
                 order = Order.new
-                # Mit company verknüpfen
-                order.company_id = Company.where(name: company).take.id
                 order.delivery_location = row[1] +', '+row[2]
                 order.duration_delivery = row[5]
                 order.capacity = 0
+                order.customer = Customer.where(name: "Customer Prio " + row[4]).first
+                order.start_time = DateTime.now
+                order.end_time = DateTime.now + 5.hours
                 order.comment = "Medikamente abliefern!"
                 order.activ = true
                 order.save!
