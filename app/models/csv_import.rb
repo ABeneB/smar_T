@@ -5,19 +5,19 @@
 
 
 class CsvImport
-    
+
     attr_accessor :file_path
-    
+
     def initialize(folder)
         self.file_path = "#{Rails.root}/tmp/csv/#{folder}"
     end
-    
+
     # import aus csv. vom typ delivery aus dem zuvor mitgegebenen folder
     def import_delivery_orders(company_name)
         # alle .csv files laden
         get_all_files().each do |file|
             # Trennen am Semikolon und zu array aufbereiten
-            CSV.foreach(file, col_sep: ";", encoding: 'iso-8859-1:utf-8') do |row|
+            CSV.foreach(file, col_sep: ";", encoding: 'utf-8') do |row|
                 # neue Order anlegen
                 order = Order.new
                 order.delivery_location = row[1] +', '+row[2]
