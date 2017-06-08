@@ -9,8 +9,7 @@ module Algorithm
         day_drivers = drivers
         while day_orders.any? do
           day_tours = init(day_orders, day_drivers)
-    
-          #optimize(day_tours)
+          optimize(day_tours)
           #saveTours(day_tours, day_orders, day_drivers)
         end
       end
@@ -24,8 +23,9 @@ module Algorithm
           tour = build_trivial_tour(first_order, driver)
           day_tours.push(tour)
           day_orders.each_with_index do |order, index|
+            #build trivial tour for every order
             trivial_tour = build_trivial_tour(order, driver)
-            if check_restriction(trivial_tour, order, driver)
+            if check_restriction(trivial_tour.order_tours, driver)
               day_tours.push(trivial_tour)
               day_orders.delete_at(index)
             end
@@ -51,7 +51,7 @@ module Algorithm
           compatible_trivial_tours = []
           drivers.each do |driver|
             trivial_tour = build_trivial_tour(order, driver)
-            if check_restriction(trivial_tour, order, driver)
+            if check_restriction(trivial_tour.order_tours, driver)
               compatible_trivial_tours.push(trivial_tour)
             end
           end

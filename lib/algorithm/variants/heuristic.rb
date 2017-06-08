@@ -12,8 +12,8 @@ module Algorithm
         raise NotImplementedError, "Subclasses must define `run`."
       end
 
-      def check_restriction(tour, order, driver)
-        tour_stops = tour.order_tours.to_a #further methods expect array as argument
+      def check_restriction(order_tours, driver)
+        tour_stops = order_tours.to_a
         if @company.restriction.time_window
             if time_window?(tour_stops, order, driver)
                 return false
@@ -37,19 +37,19 @@ module Algorithm
       def calc_tour_time(tour)
         tour_time = 0
         if tour.kind_of?(Array)
-            tour.each do |order_tour|
-                tour_time += order_tour.time # Fahrzeit
-                if order_tour.duration # Manche Aufträge haben ggf. keine Arbeitszeit
-                    tour_time += order_tour.duration # Arbeitszeit
-                end
+          tour.each do |order_tour|
+            tour_time += order_tour.time # Fahrzeit
+            if order_tour.duration # Manche Aufträge haben ggf. keine Arbeitszeit
+                tour_time += order_tour.duration # Arbeitszeit
             end
+          end
         else # gespeicherte Tour Relation
-            tour.order_tours.each do |order_tour|
-                tour_time += order_tour.time # Fahrzeit
-                if order_tour.duration # Manche Aufträge haben ggf. keine Arbeitszeit
-                    tour_time += order_tour.duration # Arbeitszeit
-                end
+          tour.order_tours.each do |order_tour|
+            tour_time += order_tour.time # Fahrzeit
+            if order_tour.duration # Manche Aufträge haben ggf. keine Arbeitszeit
+                tour_time += order_tour.duration # Arbeitszeit
             end
+          end
         end
         # damit nicht durch 0 geteilt wird
         if tour_time == 0
@@ -104,7 +104,7 @@ module Algorithm
 
 
         # Überprüfen ob Time Windows eingehalten werden
-        def time_window?(tour, order, driver) # liefert true, wenn gegen restriction verstoßen wird
+        def time_window?(tour, driver) # liefert true, wenn gegen restriction verstoßen wird
           time_now = Time.now.to_time.to_i # Jetziger Zeitpunkt in Unixtime
           # Jede Order_tour überprüfen, ob der Zeitpunkt im Zeitfenster von Order ist
           tour.each_with_index do |order_tour, index|
@@ -208,6 +208,10 @@ module Algorithm
           order_tour_delivery.duration = order.duration_delivery
           # latitude/longitude werden von Geocoder gesetzt
           order_tour_delivery
+        end
+
+        def update_time(tour, index)
+            tour[index].time = time_for_distance(tour[index-1], tour[index])
         end
     end
   end
