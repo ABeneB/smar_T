@@ -36,12 +36,13 @@ module Algorithm
         end
       end
 
-      def optimize
-
+      def optimize(day_tours)
+        compatible_combined_tours = compatible_tour_pairs(day_tours)
+        #savings = calc_savings(compatible_combined_tours)
       end
 
       def saveTours
-
+        # TODO
       end
 
       private
@@ -107,6 +108,43 @@ module Algorithm
           tour_container.push(home2)
 
           return trivial_tour
+        end
+
+        # returns compatible combinations of day tours as array with [combined_tour, tour1, tour2]
+        def compatible_tour_pairs(day_tours)
+          tour_pairs = build_tour_pairs(day_tours)
+
+          driver = day_tours[0].driver
+          compatible_combined_tours = []
+          tour_pairs.each do |tour1, tour2|
+            # combine order_tours from two tours and remove redundant home and depot
+            tour1_orders = tour1.order_tours
+            tour2_orders = tour2.order_tours
+            combined_tour = tour1_orders.values_at(0..(tour1_orders.length - 2)).concat(tour2_orders.values_at(2..(tour2_orders.length - 1)))
+            # update of times for recently combined tour
+            update_order_tour_times(combined_tour)
+            if check_restriction(combined_tour, driver)
+              compatible_combined_tours.push([combined_tour, tour1, tour2])
+            end
+          end
+          compatible_combined_tours
+        end
+
+        def build_tour_pairs(day_tours)
+          #cartesian product of all day_tours without product of same tour and nil objects
+          day_tours.product(day_tours).map { |x, y| [x, y] if x != y }.compact
+        end
+
+        def calc_savings(combined_tours)
+          # TODO
+        end
+
+        def update_order_tour_times(order_tours)
+          order_tours.each_with_index do |order, index|
+            unless index == (order_tours.length - 1)
+            update_time(order_tours, index + 1)
+            end
+          end
         end
     end
   end
