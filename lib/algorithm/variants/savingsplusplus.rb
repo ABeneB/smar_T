@@ -1,3 +1,5 @@
+require "algorithm/variants/combinedtourpair"
+
 module Algorithm
   module Variants
 
@@ -38,7 +40,11 @@ module Algorithm
 
       def optimize(day_tours)
         compatible_combined_tours = compatible_tour_pairs(day_tours)
-        #savings = calc_savings(compatible_combined_tours)
+        calc_and_add_savings(compatible_combined_tours)
+        binding.pry
+        while savings.any? do
+
+        end
       end
 
       def saveTours
@@ -124,7 +130,8 @@ module Algorithm
             # update of times for recently combined tour
             update_order_tour_times(combined_tour)
             if check_restriction(combined_tour, driver)
-              compatible_combined_tours.push([combined_tour, tour1, tour2])
+              combined_tour_pair = CombinedTourPair.new(tour1, tour2, combined_tour)
+              compatible_combined_tours.push(combined_tour_pair)
             end
           end
           compatible_combined_tours
@@ -135,8 +142,14 @@ module Algorithm
           day_tours.product(day_tours).map { |x, y| [x, y] if x != y }.compact
         end
 
-        def calc_savings(combined_tours)
-          # TODO
+        def calc_and_add_savings(combined_tours)
+          combined_tours.each_with_index do |combined_tour_pair, index|
+            combined_tour_duration = calc_tour_time(combined_tour_pair.combined_tour)
+            tour1_duration = calc_tour_time(combined_tour_pair.tour1)
+            tour2_duration = calc_tour_time(combined_tour_pair.tour2)
+            saving = (combined_tour_pair.tour1.duration + combined_tour_pair.tour2.duration) - combined_tour_duration
+            combined_tours[index].saving = saving
+          end
         end
 
         def update_order_tour_times(order_tours)
