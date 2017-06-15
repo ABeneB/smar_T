@@ -34,7 +34,7 @@ module Algorithm
         true # liefert true, wenn alle Beschränkungen eingehalten werden
       end
 
-      def calc_tour_time(tour)
+      def calc_tour_duration(tour)
         tour_time = 0
         if tour.kind_of?(Array)
           tour.each do |order_tour|
@@ -59,10 +59,10 @@ module Algorithm
       end
 
       # Berechnet die Zeit für die Fahrt von order_tour1 nach order_tour2
-      def time_for_distance(ot1, ot2)
+      def time_for_distance(order_tour1, order_tour2)
           # Google Maps
-          dt = DriveTimeBetweenAddresses.new(ot1.location, ot2.location)
-          time = dt.cached_drive_time_in_minutes()
+          driveTime = DriveTimeBetweenAddresses.new(order_tour1.location, order_tour2.location)
+          time = driveTime.cached_drive_time_in_minutes()
           time # return
       end
 
@@ -125,7 +125,7 @@ module Algorithm
         # Kann dazu führen, kann das keine Tour gebildet wird! Passiert vor allem bei nur einem Fahrer
         def working_time?(tour, driver) # liefert true, wenn gegen restriction verstoßen wird
           # Prüfen ob die Tourdauer > als working_time vom Driver
-          if calc_tour_time(tour) > driver.working_time
+          if calc_tour_duration(tour) > driver.working_time
               # true wenn tour zu lang ist
               return true
           end
@@ -210,8 +210,8 @@ module Algorithm
           order_tour_delivery
         end
 
-        def update_time(tour, index)
-            tour[index].time = time_for_distance(tour[index-1], tour[index])
+        def update_time(order_tours, index)
+          order_tours[index].time = time_for_distance(order_tours[index - 1], order_tours[index])
         end
     end
   end
