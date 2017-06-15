@@ -5,32 +5,32 @@ module Algorithm
 
     class SavingsPlusPlus < Heuristic
 
-      def run(orders = [], drivers = [])
-
-        day_orders = orders
-        day_drivers = drivers
+      def run(day_orders = [], day_drivers = [])
         while day_orders.any? && day_drivers.any? do
           day_tours = init(day_orders, day_drivers)
-          optimize(day_tours)
+          # optimize(day_tours)
           #saveTours(day_tours, day_orders, day_drivers)
         end
       end
 
       def init(day_orders, day_drivers)
         day_tours = []
-        if(day_orders.any)
+        if day_orders.any?
           first_order = day_orders[0]
-          driver = best_driver(first_order, day_drivers)
+          driver = best_driver(first_order, day_drivers) # restriction check in best_driver
           day_orders.delete_at(0)
           if driver
             tour = build_trivial_tour(first_order, driver)
             day_tours.push(tour)
-            day_orders.each_with_index do |order, index|
+
+            # reverse for-loop because we are deleting elements
+            for i in (day_orders.count - 1).downto(0)
+              order = day_orders[i]
               #build trivial tour for every order
               trivial_tour = build_trivial_tour(order, driver)
               if check_restriction(trivial_tour.order_tours, driver)
                 day_tours.push(trivial_tour)
-                day_orders.delete_at(index)
+                day_orders.delete(order)
               end
             end
             return day_tours
