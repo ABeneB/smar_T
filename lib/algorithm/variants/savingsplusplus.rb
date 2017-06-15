@@ -9,7 +9,7 @@ module Algorithm
 
         day_orders = orders
         day_drivers = drivers
-        while day_orders.any? do
+        while day_orders.any? && day_drivers.any? do
           day_tours = init(day_orders, day_drivers)
           optimize(day_tours)
           #saveTours(day_tours, day_orders, day_drivers)
@@ -18,32 +18,44 @@ module Algorithm
 
       def init(day_orders, day_drivers)
         day_tours = []
-        first_order = day_orders[0]
-        driver = best_driver(first_order, day_drivers)
-        day_orders.delete_at(0)
-        if driver
-          tour = build_trivial_tour(first_order, driver)
-          day_tours.push(tour)
-          day_orders.each_with_index do |order, index|
-            #build trivial tour for every order
-            trivial_tour = build_trivial_tour(order, driver)
-            if check_restriction(trivial_tour.order_tours, driver)
-              day_tours.push(trivial_tour)
-              day_orders.delete_at(index)
+        if(day_orders.any)
+          first_order = day_orders[0]
+          driver = best_driver(first_order, day_drivers)
+          day_orders.delete_at(0)
+          if driver
+            tour = build_trivial_tour(first_order, driver)
+            day_tours.push(tour)
+            day_orders.each_with_index do |order, index|
+              #build trivial tour for every order
+              trivial_tour = build_trivial_tour(order, driver)
+              if check_restriction(trivial_tour.order_tours, driver)
+                day_tours.push(trivial_tour)
+                day_orders.delete_at(index)
+              end
             end
+            return day_tours
+          else
+            init(day_orders, day_drivers) # recursive call
           end
-          return day_tours
-        else
-          init(day_orders, day_drivers) # recursive call
         end
+        return day_tours
       end
 
       def optimize(day_tours)
-        compatible_combined_tours = compatible_tour_pairs(day_tours)
-        calc_and_add_savings(compatible_combined_tours)
-        binding.pry
-        while savings.any? do
-
+        compatible_tour_pairs = compatible_tour_pairs(day_tours)
+        calc_and_add_savings(compatible_tour_pairs)
+        compatible_tour_pairs.sort_by.reverse! { |combined_tour| combined_tour.saving } # sort saving descending
+        while compatible_tour_pairs[0].saving >= 0 do
+          best_saving_tour_pair = compatible_tour_pairs[0]
+          update_day_tours(best_saving_tour_pair)
+          # remove all combinedtourpair object which contain tour2 (tj) of combined tour with highest saving
+          compatible_tour_pairs.map! { |combined_tour|
+            if combined_tour.tour1 == best_saving_tour_pair.tour1 || combined_tour.tour2 == best_saving_tour_pair.tour2
+              nil
+            end
+          }.compact!
+          # recalculate savings for new ti
+          recalculate_savings(compatible_tour_pairs, best_saving_tour_pair)
         end
       end
 
@@ -139,7 +151,7 @@ module Algorithm
 
         def build_tour_pairs(day_tours)
           #cartesian product of all day_tours without product of same tour and nil objects
-          day_tours.product(day_tours).map { |x, y| [x, y] if x != y }.compact
+          day_tours.product(day_tours).map { |x, y| [x, y] if x != y }.compact!
         end
 
         def calc_and_add_savings(combined_tours)
@@ -150,13 +162,34 @@ module Algorithm
             saving = (combined_tour_pair.tour1.duration + combined_tour_pair.tour2.duration) - combined_tour_duration
             combined_tours[index].saving = saving
           end
+          combined_tours
         end
 
         def update_order_tour_times(order_tours)
           order_tours.each_with_index do |order, index|
             unless index == (order_tours.length - 1)
-            update_time(order_tours, index + 1)
+              update_time(order_tours, index + 1)
             end
+          end
+        end
+
+        def update_day_tours(day_tours, combined_tour_pair)
+          #remove t2 from array
+          day_tours.delete(combined_tour_pair.tour2)
+          combined_tour = create_tour_by_order_tours(combined_tour_pair)
+
+          # replace tour1 with new concatenated tour
+          day_tours.map! { |tour| tour = combined_tour if tour.equal?(tour1) }
+        end
+
+        def create_tour_by_order_tours(order_tours)
+          # TODO Implementation missing
+        end
+
+        # ggf. Prüfung der Bedingungen
+        def recalculate_savings(compatible_tour_pairs, tour_pair)
+          compatible_tour_pairs.each do ||
+
           end
         end
     end
