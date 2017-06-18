@@ -96,6 +96,8 @@ GEM
     factory_girl_rails (4.8.0)
       factory_girl (~> 4.8.0)
       railties (>= 3.0.0)
+    faker (1.7.3)
+      i18n (~> 0.5)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
     geocoder (1.2.9)
@@ -261,6 +263,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   devise (= 3.5.2)
   factory_girl_rails (~> 4.8)
+  faker (~> 1.7, >= 1.7.3)
   geocoder
   gmaps4rails
   google_directions!
