@@ -94,4 +94,5 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.6'
   gem 'factory_girl_rails', '~> 4.8'
   gem 'faker', '~> 1.7', '>= 1.7.3'
+  gem 'webmock', '~> 3.0', '>= 3.0.1'
 end
