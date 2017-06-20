@@ -21,4 +21,19 @@ class Company < ActiveRecord::Base
     def tours
       Tour.where(driver_id: self.drivers.ids)
     end
+
+    # Returns true if time window restriction exists for this company
+    def time_window_restriction?
+      self.try(:restriction).try(:time_window) ? true : false
+    end
+
+    # Returns true if capacity restriction exists for this company
+    def capacity_restriction?
+      self.try(:restriction).try(:capacity) ? true : false
+    end
+
+    # Returns true if work time restriction exists for this company
+    def work_time_restriction?
+      self.try(:restriction).try(:work_time) ? true : false
+    end
 end

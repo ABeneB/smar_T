@@ -14,19 +14,19 @@ module Algorithm
 
       def check_restriction(order_tours, driver)
         tour_stops = order_tours.to_a
-        if @company.restriction.time_window
+        if @company.time_window_restriction?
             if time_window?(tour_stops, order, driver)
                 return false
             end
         end
 
-        if @company.restriction.capacity_restriction
+        if @company.capacity_restriction?
             if capacity?(tour_stops, driver)
                 return false
             end
         end
 
-        if @company.restriction.work_time
+        if @company.work_time_restriction?
             if working_time?(tour_stops, driver)
                 return false
             end
@@ -198,7 +198,7 @@ module Algorithm
           order_tour_delivery.comment = order.comment
           order_tour_delivery.kind = "delivery"
           # Nur bei Capacity Restriction wichtig
-          if @company.restriction.capacity_restriction
+          if @company.capacity_restriction?
               order_tour_delivery.capacity = order.capacity*-1 # negativ weil entladen wird
           else
               order_tour_delivery.capacity = 0
