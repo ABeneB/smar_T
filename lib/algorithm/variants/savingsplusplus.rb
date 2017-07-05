@@ -138,6 +138,9 @@ module Algorithm
             # tour1_orders.values_at(0..(tour1_orders.length - 2)) // ignore depot (last element)
             # tour2_orders.values_at(2..(tour2_orders.length - 1)) // ignore home, depot (first elements)
             combined_tour = tour1_orders.values_at(0..(tour1_orders.length - 2)).concat(tour2_orders.values_at(3..(tour2_orders.length - 1)))
+            combined_tour.each_with_index do |order_tour, index|
+              order_tour.place = index
+            end
             update_order_tour_times(combined_tour) # update of times for recently combined tour
 
             if check_restriction(combined_tour, driver)
