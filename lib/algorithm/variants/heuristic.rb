@@ -150,7 +150,7 @@ module Algorithm
           vehicle_position
         end
 
-        def create_home(vehicle_position, driver)
+        def create_home(vehicle_position)
           # home = @company.address
           home = OrderTour.new
           #home.user_id = user.id
