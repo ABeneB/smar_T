@@ -7,6 +7,8 @@ module Algorithm
 
       def run(day_orders = [], day_drivers = [])
         while day_orders.any? && day_drivers.any? do
+          # reset driver for new iteration
+          @driver = nil
           day_tours = init(day_orders, day_drivers)
           optimize(day_tours)
           #saveTours(day_tours, day_orders, day_drivers)
@@ -17,18 +19,18 @@ module Algorithm
         day_tours = []
         if day_orders.any?
           first_order = day_orders[0]
-          driver = best_driver(first_order, day_drivers) # restriction check in best_driver
+          @driver = best_driver(first_order, day_drivers) # restriction check in best_driver
           day_orders.delete_at(0)
-          if driver
-            tour = build_trivial_tour(first_order, driver)
+          if @driver
+            tour = build_trivial_tour(first_order, @driver)
             day_tours.push(tour)
 
             # reverse for-loop because we are deleting elements
             for i in (day_orders.count - 1).downto(0)
               order = day_orders[i]
               #build trivial tour for every order
-              trivial_tour = build_trivial_tour(order, driver)
-              if check_restriction(trivial_tour.order_tours, driver)
+              trivial_tour = build_trivial_tour(order, @driver)
+              if check_restriction(trivial_tour.order_tours, @driver)
                 day_tours.push(trivial_tour)
                 day_orders.delete(order)
               end
@@ -140,6 +142,7 @@ module Algorithm
 
             if check_restriction(combined_tour, driver)
               combined_tour_pair = CombinedTourPair.new(tour1, tour2, combined_tour)
+            if check_restriction(combined_tour, @driver)
               compatible_combined_tours.push(combined_tour_pair)
             end
           end
