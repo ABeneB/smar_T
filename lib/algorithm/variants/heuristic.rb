@@ -15,23 +15,23 @@ module Algorithm
       def check_restriction(order_tours, driver)
         tour_stops = order_tours.to_a
         if @company.time_window_restriction?
-            if time_window?(tour_stops, order, driver)
-                return false
-            end
+          if time_window?(tour_stops, order, driver)
+              return false
+          end
         end
 
         if @company.capacity_restriction?
-            if capacity?(tour_stops, driver)
-                return false
-            end
+          if capacity?(tour_stops, driver)
+              return false
+          end
         end
 
         if @company.work_time_restriction?
-            if working_time?(tour_stops, driver)
-                return false
-            end
+          if working_time?(tour_stops, driver)
+              return false
+          end
         end
-        true # liefert true, wenn alle Beschränkungen eingehalten werden
+        return true # liefert true, wenn alle Beschränkungen eingehalten werden
       end
 
       def calc_tour_duration(tour)
@@ -133,13 +133,12 @@ module Algorithm
         end
 
         def create_vehicle_position(driver)
+
+          driver_vehicle = Vehicle.where(driver: driver).first
           # carrier.vehicle.position einsetzen als OrderTour
-          vehicle_position = OrderTour.new
+          vehicle_position = OrderTour.create(location: driver_vehicle.position)
           vehicle_position.order_id = nil
-          # tour_id wird in commit gesetzt
-          # @company_id wird im algo gesetzt
-          driver_vehicle = Vehicle.where(driver_id: driver.id).take
-          vehicle_position.location = driver_vehicle.position
+
           # place (Platzierung) wird im commit gesetzt
           vehicle_position.comment = "Start der Tour"
           vehicle_position.kind = "position"
@@ -147,54 +146,43 @@ module Algorithm
           vehicle_position.capacity_status = 0
           vehicle_position.time = 0 # Keine Zeit vergangen
           vehicle_position.duration = 0 # Keine Zeit benötigt
-          vehicle_position
+
+          return vehicle_position
         end
 
         def create_home(vehicle_position)
           # home = @company.address
-          home = OrderTour.new
-          #home.user_id = user.id
+          home = OrderTour.create(location: @company.address)
           home.order_id = nil
-          # tour_id wird in commit gesetzt
-          # @company_id wird im algo gesetzt
-          home.location = @company.address
-          # place (Platzierung) wird im commit gesetzt
           home.comment = "Ende der Tour"
           home.kind = "home"
           home.capacity = 0
           # capacity_status (Ladestatus Fahrzeug) wird im algo gesetzt
           home.time = time_for_distance(vehicle_position, home)
           home.duration = 0 # Keine Zeit benötigt
-          home
+          home.save
+
+          return home
         end
 
         # erstellt OrderTour depot
         def create_depot(location)
-          # depot = @company.depot
-          depot = OrderTour.new
+          company_depot = Depot.where(company: @company).first
+          depot = OrderTour.create(location: company_depot.address)
           depot.order_id = nil
-          # tour_id wird in commit gesetzt
-          # @company_id wird in commit gesetzt
-          company_depot = Depot.where(company_id: @company.id).take
-          depot.location = company_depot.address
-          # place wird im algo gesetzt
+
           depot.comment = "Warenbestand auffüllen"
           depot.kind = "depot"
-          # Cpacity wird im Algo gesetzt - Fahrzeug soll voll beladen oder entladen werden
-          # capacity_status wird in algo gesetzt
           depot.time = time_for_distance(location, depot)
           depot.duration = company_depot.duration
-          depot
+          depot.save
+
+          return depot
         end
 
         def create_delivery(order)
-          order_tour_delivery = OrderTour.new
-          # user_id wird in commit gesetzt
+          order_tour_delivery = OrderTour.create(location: order.delivery_location)
           order_tour_delivery.order_id = order.id
-          # tour_id wird in commit gesetzt
-          # @company_id wird in commit gesetzt
-          order_tour_delivery.location = order.delivery_location
-          # place (Plazierung) wird im algo gesetzt
           order_tour_delivery.comment = order.comment
           order_tour_delivery.kind = "delivery"
           # Nur bei Capacity Restriction wichtig
@@ -203,11 +191,10 @@ module Algorithm
           else
               order_tour_delivery.capacity = 0
           end
-          # capacity_status (Ladestatus Fahrzeug) wird im algo gesetzt
-          # time wird im Algo gesetzt
           order_tour_delivery.duration = order.duration_delivery
-          # latitude/longitude werden von Geocoder gesetzt
-          order_tour_delivery
+          order_tour_delivery.save
+
+          return order_tour_delivery
         end
 
         def update_time(order_tours, index)

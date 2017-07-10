@@ -105,34 +105,40 @@ module Algorithm
         end
 
         def build_trivial_tour(order, driver)
-          trivial_tour = Tour.new(driver: driver, duration: 0)
+          trivial_tour = Tour.create(driver: driver, duration: 0)
           # startpostion einfügen
           vehicle_position = create_vehicle_position(driver)
           vehicle_position.tour = trivial_tour
           vehicle_position.place = 0
+          vehicle_position.save
 
           #depot einfügen
           depot = create_depot(vehicle_position)
           depot.tour = trivial_tour
           depot.capacity = driver.vehicle.capacity # Fahrzeug vollbeladen
           depot.place = 1
+          depot.save
 
           # home einfügen - entspricht unternehmensadresse
           home1 = create_home(depot)
           home1.tour = trivial_tour
           home1.place = 2
+          home1.save
 
           delivery = create_delivery(order)
           delivery.tour = trivial_tour
           delivery.time = time_for_distance(home1, delivery)
           delivery.duration = order.duration_delivery
           delivery.place = 3
+          delivery.save
 
           home2 = create_home(depot)
           home2.tour = trivial_tour
           home2.time = time_for_distance(delivery, home2)
           home2.place = 4
+          home2.save
 
+          trivial_tour.duration = calc_tour_duration(trivial_tour)
           return trivial_tour
         end
 
