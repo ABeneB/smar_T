@@ -105,7 +105,7 @@ module Algorithm
 
         # Überprüfen ob Time Windows eingehalten werden
         def time_window?(tour, driver) # liefert true, wenn gegen restriction verstoßen wird
-          time_now = Time.now.to_time.to_i # Jetziger Zeitpunkt in Unixtime
+          time_now = Time.now.to_i 
           # Jede Order_tour überprüfen, ob der Zeitpunkt im Zeitfenster von Order ist
           tour.each_with_index do |order_tour, index|
               # Zeit bis zu Order_tour
