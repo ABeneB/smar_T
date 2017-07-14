@@ -54,8 +54,8 @@ gem 'geocoder'
 gem 'better_errors'
 gem 'binding_of_caller'
 
-# Für Fahrzeit
-gem 'google_directions', github: "liefery/google-directions-ruby"
+# for calculation of drive time
+gem 'google_directions', git: "https://github.com/liefery/google-directions-ruby"
 
 gem 'pry'
 
@@ -83,9 +83,6 @@ group :development do
   # Pry debugger
   gem 'pry-rails'
 
-  # Byebug
-  gem 'byebug'
-
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
@@ -95,4 +92,5 @@ group :development, :test do
   gem 'factory_girl_rails', '~> 4.8'
   gem 'faker', '~> 1.7', '>= 1.7.3'
   gem 'webmock', '~> 3.0', '>= 3.0.1'
+  gem 'byebug'
 end
