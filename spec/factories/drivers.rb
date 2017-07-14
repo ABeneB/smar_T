@@ -5,7 +5,7 @@ FactoryGirl.define do
     activ true
   end
 
-  factory :inactive_driver, parent: :active_user do
+  factory :inactive_driver, parent: :active_driver do
     activ false
   end
 end
