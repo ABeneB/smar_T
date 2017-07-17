@@ -15,7 +15,7 @@ module Algorithm
       def check_restriction(order_tours, driver)
         tour_stops = order_tours.to_a
         if @company.time_window_restriction?
-          if time_window?(tour_stops, order, driver)
+          if time_window?(tour_stops, order)
               return false
           end
         end
@@ -105,7 +105,7 @@ module Algorithm
 
         # Überprüfen ob Time Windows eingehalten werden
         def time_window?(tour, driver) # liefert true, wenn gegen restriction verstoßen wird
-          time_now = Time.now.to_i 
+          time_now = Time.now.to_i
           # Jede Order_tour überprüfen, ob der Zeitpunkt im Zeitfenster von Order ist
           tour.each_with_index do |order_tour, index|
               # Zeit bis zu Order_tour
