@@ -42,9 +42,95 @@
   <div style='width: 800px;'>
     <div id="map" style='width: 900px; height: 400px;'></div>
   </div>
-  
+    <body>
+    <div id="map"></div>
+    <div id="right-panel">
+
+
+        <br>
+        <input type="submit" id="submit">
+
+      <div id="directions-panel"></div>
+    </div>
+    <script>
+        function initMap() {
+            var directionsService = new google.maps.DirectionsService;
+            var directionsDisplay = new google.maps.DirectionsRenderer({
+                    polylineOptions: {
+                        strokeColor: "red"
+                    }
+                });
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 6,
+                center: {lat: 41.85, lng: -87.65}
+            });
+            var image = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=B|FF0000|000000';
+            var beachMarker = new google.maps.Marker({
+                position: {lat: -33.890, lng: 151.274},
+                map: map,
+                icon: image
+            });
+            directionsDisplay.setMap(map);
+
+            document.getElementById('submit').addEventListener('click', function() {
+                calculateAndDisplayRoute(directionsService, directionsDisplay);
+            });
+        }
+
+        function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+            var waypts = [];
+            var summaryPanel = document.getElementById('directions-panel');
+
+            summaryPanel.innerHTML = '';
+            <% @order_tours.each do |order_tour| %>
+
+            waypts.push({
+                location: "<%= order_tour.location %>",
+                stopover: true
+            });
+            var test = "<%= order_tour.location %>";
+            //summaryPanel.innerHTML += test;
+            <% end %>
+
+            var waypts2 = [];
+            for (var i = 1; i < waypts.length-1; i++) {
+                waypts2.push({
+                    location: waypts[i].location,
+                    stopover: waypts[i].stopover
+
+                })
+                summaryPanel.innerHTML += waypts[i].location;
+            }
+
+            directionsService.route({
+                origin: waypts[0].location,
+                destination: waypts[waypts.length-1].location,
+                waypoints: waypts2,
+                optimizeWaypoints: true,
+                travelMode: 'DRIVING'
+            }, function(response, status) {
+                if (status === 'OK') {
+                    directionsDisplay.polylineOptions.strokeColor = "blue";
+                    directionsDisplay.setDirections(response);
+
+
+                }else {
+                    window.alert('Directions request failed due to ' + status);
+                }
+            });
+
+
+        }
+    </script>
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGri49KFy_LkR2nG4q0uZTPsNw_iIWx5A&callback=initMap">
+    </script>
+
+
+  <!--
   <script>
-  
+
   $(document).ready(function(){
         
         setInterval(function(){findMe(); }, 10000); //alle 10000 Milisekunden wird die Postion ausgelesen
@@ -90,7 +176,9 @@
       color = _.sample(colors);
       return color;
   }
-  </script>
+
+
+  </script> -->
 <% else %>
 ZUGANG VERWEIGERT
 <% end %>
