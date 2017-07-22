@@ -119,20 +119,14 @@ module Algorithm
           depot.place = 1
           depot.save
 
-          # home einfügen - entspricht unternehmensadresse
-          home1 = create_home()
-          home1.tour = trivial_tour
-          home1.place = 2
-          home1.save
-
           delivery = create_delivery(order)
           delivery.tour = trivial_tour
-          delivery.place = 3
+          delivery.place = 2
           delivery.save
 
           home2 = create_home()
           home2.tour = trivial_tour
-          home2.place = 4
+          home2.place = 3
           home2.save
 
           update_order_tour_times(trivial_tour.order_tours)
