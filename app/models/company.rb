@@ -29,7 +29,7 @@ class Company < ActiveRecord::Base
 
     # Returns true if capacity restriction exists for this company
     def capacity_restriction?
-      self.try(:restriction).try(:capacity) ? true : false
+      self.try(:restriction).try(:capacity_restriction) ? true : false
     end
 
     # Returns true if work time restriction exists for this company

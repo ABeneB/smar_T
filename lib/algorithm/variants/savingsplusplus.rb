@@ -113,31 +113,29 @@ module Algorithm
           vehicle_position.save
 
           #depot einfügen
-          depot = create_depot(vehicle_position)
+          depot = create_depot()
           depot.tour = trivial_tour
-          depot.capacity = driver.vehicle.capacity # Fahrzeug vollbeladen
+          #depot.capacity = driver.vehicle.capacity # Fahrzeug vollbeladen
           depot.place = 1
           depot.save
 
           # home einfügen - entspricht unternehmensadresse
-          home1 = create_home(depot)
+          home1 = create_home()
           home1.tour = trivial_tour
           home1.place = 2
           home1.save
 
           delivery = create_delivery(order)
           delivery.tour = trivial_tour
-          delivery.time = time_for_distance(home1, delivery)
-          delivery.duration = order.duration_delivery
           delivery.place = 3
           delivery.save
 
-          home2 = create_home(depot)
+          home2 = create_home()
           home2.tour = trivial_tour
-          home2.time = time_for_distance(delivery, home2)
           home2.place = 4
           home2.save
 
+          update_order_tour_times(trivial_tour.order_tours)
           trivial_tour.duration = calc_tour_duration(trivial_tour)
           return trivial_tour
         end
@@ -185,14 +183,6 @@ module Algorithm
           tour2_duration = calc_tour_duration(combined_tour_pair.tour2)
           # if > 0 means the combined tours offers saving
           combined_tour_pair.saving = (tour1_duration + tour2_duration) - combined_tour_duration
-        end
-
-        def update_order_tour_times(order_tours)
-          order_tours.each_with_index do |order, index|
-            if index > 0 # skip first element because it has no previous element
-              update_time(order_tours, index)
-            end
-          end
         end
 
         def update_day_tours(day_tours, combined_tour_pair)
