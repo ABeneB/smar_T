@@ -43,7 +43,7 @@ module Algorithm
                 tour_time += order_tour.duration # Arbeitszeit
             end
           end
-        else # gespeicherte Tour Relation
+        elsif tour.instance_of?(Tour) # gespeicherte Tour Relation
           tour.order_tours.each do |order_tour|
             tour_time += order_tour.time # Fahrzeit
             if order_tour.duration # Manche Aufträge haben ggf. keine Arbeitszeit
