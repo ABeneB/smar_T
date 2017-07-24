@@ -1,7 +1,7 @@
 module Algorithm
   module Variants
 
-    class DeltaMThreeTP < Heuristic
+    class DeltaMThreeTP < ClassicMThreeTP
 
       def run(orders = [], vehicles = [])
         raise NotImplementedError, "Subclasses must define `run`."
