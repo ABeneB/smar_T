@@ -44,7 +44,7 @@ module Algorithm
       end
 
       def optimize(day_tours)
-        compatible_tour_pairs = create_compatible_tour_pairs(day_tours)
+        compatible_tour_pairs = create_compatible_tour_pairs(day_tours) # also calculates duration of the tours
 
         if compatible_tour_pairs.any?
           calc_combined_tour_pair_savings(compatible_tour_pairs)
@@ -105,7 +105,7 @@ module Algorithm
         end
 
         def build_trivial_tour(order, driver)
-          trivial_tour = Tour.create(driver: driver, duration: 0)
+          trivial_tour = Tour.create(driver: driver)
           # startpostion einfügen
           vehicle_position = create_vehicle_position(driver)
           vehicle_position.tour = trivial_tour
@@ -130,13 +130,11 @@ module Algorithm
           home2.save
 
           update_order_tour_times(trivial_tour.order_tours)
-          trivial_tour.duration = calc_tour_duration(trivial_tour)
           return trivial_tour
         end
 
         # returns compatible combinations of given tours as array of CombinedTourPairs objects
         def create_compatible_tour_pairs(tours_1, tours_2 = nil)
-
           tour_pairs = []
           if tours_2.blank?
               # build cartesian product of all day_tours without product of same tour and nil objects
@@ -173,10 +171,8 @@ module Algorithm
 
         def calc_saving_for_combined_tour_pair(combined_tour_pair)
           combined_tour_duration = calc_tour_duration(combined_tour_pair.order_tours)
-          tour1_duration = calc_tour_duration(combined_tour_pair.tour1)
-          tour2_duration = calc_tour_duration(combined_tour_pair.tour2)
           # if > 0 means the combined tours offers saving
-          combined_tour_pair.saving = (tour1_duration + tour2_duration) - combined_tour_duration
+          combined_tour_pair.saving = (combined_tour_pair.tour1.duration + combined_tour_pair.tour2.duration) - combined_tour_duration
         end
 
         def update_day_tours(day_tours, combined_tour_pair)
@@ -199,7 +195,6 @@ module Algorithm
           order_tours.each do |order_tour|
             order_tour.update_attributes(tour: new_tour)
           end
-          new_tour.duration = calc_tour_duration(new_tour)
           new_tour
         end
 

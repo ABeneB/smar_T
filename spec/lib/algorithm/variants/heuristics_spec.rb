@@ -56,7 +56,6 @@ RSpec.describe "Heuristic Base class" do
       before do
         order.update_attribute(:duration_delivery, 480)
         heuristic.update_order_tour_times(tour.order_tours)
-        tour.duration = heuristic.calc_tour_duration(tour)
       end
 
       it "returns false" do

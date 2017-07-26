@@ -40,20 +40,13 @@ module Algorithm
           tour.each do |order_tour|
             tour_time += order_tour.time # Fahrzeit
             if order_tour.duration # Manche Aufträge haben ggf. keine Arbeitszeit
-                tour_time += order_tour.duration # Arbeitszeit
-            end
-          end
-        elsif tour.instance_of?(Tour) # gespeicherte Tour Relation
-          tour.order_tours.each do |order_tour|
-            tour_time += order_tour.time # Fahrzeit
-            if order_tour.duration # Manche Aufträge haben ggf. keine Arbeitszeit
-                tour_time += order_tour.duration # Arbeitszeit
+              tour_time += order_tour.duration # Arbeitszeit
             end
           end
         end
         # damit nicht durch 0 geteilt wird
         if tour_time == 0
-            tour_time = 1
+          tour_time = 1
         end
         tour_time
       end
@@ -147,9 +140,9 @@ module Algorithm
         # Kann dazu führen, kann das keine Tour gebildet wird! Passiert vor allem bei nur einem Fahrer
         def working_time?(tour, driver) # liefert true, wenn gegen restriction verstoßen wird
           # Prüfen ob die Tourdauer > als working_time vom Driver
-          if calc_tour_duration(tour) > driver.working_time
-              # true wenn tour zu lang ist
-              return true
+          if tour.duration > driver.working_time
+            # true wenn tour zu lang ist
+            return true
           end
           false
         end
