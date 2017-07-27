@@ -19,8 +19,9 @@ module Algorithm
         day_tours = []
         if day_orders.any?
           first_order = day_orders[0]
-          @driver = best_driver(first_order, day_drivers) # restriction check in best_driver
+          @driver = best_driver_for_order(first_order, day_drivers) # restriction check in best_driver
           day_orders.delete_at(0)
+          # check if compatbile driver / vehicle exists
           if @driver
             tour = build_trivial_tour(first_order, @driver)
             day_tours.push(tour)
@@ -74,19 +75,44 @@ module Algorithm
             if compatible_tour_pairs.any?
               compatible_tour_pairs.sort_by { |combined_tour| combined_tour.saving }.reverse!
             else
+              # break the execution of function if no more compatible_tour_pairs exist
               break
             end
           end
         end
       end
 
-      def saveTours
-        # TODO
+      def saveTours(day_tours, day_orders, day_drivers)
+        tours_with_quality = []
+        day_tours.each do |day_tour|
+          rating = quality_function(day_tour)
+          tours_with_quality.push([rating, day_tour])
+        end
+        tours_with_quality.sort_by! { |rating, day_tour| rating }.reverse!
+        best_tour = tours_with_quality.first
+        best_tour.save
+        day_drivers.delete(best_tour.driver)
+        day_tours.delete(best_tour)
+
+        # for remaining tours in day_tours search for best driver
+        day_tours.each do |tour|
+          driver = best_driver_for_tour(tour, day_drivers)
+          if driver
+            tour.driver = driver
+            tour.save
+            day_tours.delete(tour)
+          else
+            order_tours = tour.order_tours.map { |order_tour| order_tour if ["pickup", "delivery"].include?(order_tour.kind) }
+            order_tours.each do |order_tour|
+              day_orders.push(order_tour.order)
+            end
+          end
+        end
       end
 
       private
 
-        def best_driver(order, drivers)
+        def best_driver_for_order(order, drivers)
           #for identifying the best driver among possible drivers
           compatible_trivial_tours = []
           drivers.each do |driver|
@@ -102,6 +128,19 @@ module Algorithm
             return best_trivial_tour.driver
           end
           return nil
+        end
+
+        def best_driver_for_tour(tour, drivers)
+          compatible_tour_with_drivers = []
+          drivers.each do |driver|
+            #TODO  sollte lieber geclont werden bevor driver geändert wird / associations müssen erhalten sein
+            tour.driver = driver
+            if check_restriction(tour.order_tours, driver)
+              compatible_tour_with_drivers.push(tour)
+            end
+          end
+          #unless compatible_tour_with_drivers.empty?
+          #end
         end
 
         def build_trivial_tour(order, driver)
@@ -130,6 +169,7 @@ module Algorithm
           home2.save
 
           update_order_tour_times(trivial_tour.order_tours)
+          trivial_tour.save
           return trivial_tour
         end
 
@@ -175,12 +215,13 @@ module Algorithm
           combined_tour_pair.saving = (combined_tour_pair.tour1.duration + combined_tour_pair.tour2.duration) - combined_tour_duration
         end
 
+
         def update_day_tours(day_tours, combined_tour_pair)
           # replace tour 1 with combined tour
           combined_tour = create_tour_by_order_tours(combined_tour_pair.order_tours)
           day_tours.map! { |tour|
             if tour.equal?(combined_tour_pair.tour1)
-              tour = combined_tour
+              combined_tour
             else
               tour
             end
@@ -195,6 +236,7 @@ module Algorithm
           order_tours.each do |order_tour|
             order_tour.update_attributes(tour: new_tour)
           end
+          update_order_tour_times(order_tours)
           new_tour
         end
 
@@ -203,6 +245,24 @@ module Algorithm
           #updated_compatible_tour_pairs = create_compatible_tour_pairs(compatible_tour_pairs, [tour_pair])
           calc_combined_tour_pair_savings(updated_compatible_tour_pairs)
           compatible_tour_pairs.sort_by! { |combined_tour| combined_tour.saving }.reverse!
+        end
+
+        # cost function based on total duration of tour
+        def quality_function(tour)
+          driver = tour.driver
+          order_tours = tour.order_tours.map { |order_tour| order_tour if ["pickup", "delivery"].include?(order_tour.kind) }
+          accum_duration = 0
+          order_tours.each do |order_tour|
+            trivial_tour = build_trivial_tour(order_tour.order, driver)
+            accum_duration += trivial_tour.duration
+            trivial_tour.destroy
+          end
+
+          if accum_duration == 0
+            accum_duration = 1
+          end
+
+          return tour.duration / accum_duration
         end
     end
   end
