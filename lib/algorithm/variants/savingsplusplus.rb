@@ -31,7 +31,7 @@ module Algorithm
               order = day_orders[i]
               #build trivial tour for every order
               trivial_tour = build_trivial_tour(order, @driver)
-              if check_restriction(trivial_tour.order_tours, @driver)
+              if check_restriction(trivial_tour, @driver)
                 day_tours.push(trivial_tour)
                 day_orders.delete(order)
               end
@@ -117,7 +117,7 @@ module Algorithm
           compatible_trivial_tours = []
           drivers.each do |driver|
             trivial_tour = build_trivial_tour(order, driver)
-            if check_restriction(trivial_tour.order_tours, driver)
+            if check_restriction(trivial_tour, driver)
               compatible_trivial_tours.push(trivial_tour)
             end
           end
@@ -135,7 +135,7 @@ module Algorithm
           drivers.each do |driver|
             #TODO  sollte lieber geclont werden bevor driver geändert wird / associations müssen erhalten sein
             tour.driver = driver
-            if check_restriction(tour.order_tours, driver)
+            if check_restriction(tour, driver)
               compatible_tour_with_drivers.push(tour)
             end
           end
@@ -189,12 +189,13 @@ module Algorithm
             # combine tours
             # tour1_orders.values_at(0..(tour1_orders.length - 2)) // ignore depot (last element)
             # tour2_orders.values_at(2..(tour2_orders.length - 1)) // ignore home, depot (first elements)
-            combined_tour = tour1_orders.values_at(0..(tour1_orders.length - 2)).concat(tour2_orders.values_at(3..(tour2_orders.length - 1)))
-            combined_tour.each_with_index do |order_tour, index|
+            combined_tour_array = tour1_orders.values_at(0..(tour1_orders.length - 2)).concat(tour2_orders.values_at(3..(tour2_orders.length - 1)))
+            combined_tour_array.each_with_index do |order_tour, index|
               order_tour.place = index
             end
-            update_order_tour_times(combined_tour) # update of times for recently combined tour
+            update_order_tour_times(combined_tour_array) # update of times for recently combined tour
 
+            combined_tour = create_tour_by_order_tours(combined_tour_array)
             if check_restriction(combined_tour, @driver)
               combined_tour_pair = Models::CombinedTourPair.new(tour1, tour2, combined_tour)
               compatible_combined_tours.push(combined_tour_pair)

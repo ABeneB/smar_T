@@ -29,7 +29,7 @@ RSpec.describe "SavingsPlusPlus Heuristic" do
     it "builds return trivial tour for every due order" do
       expect(day_tours.count()).to eq(2)
       for tour in day_tours do
-        expect(tour.order_tours.count).to eq(5)
+        expect(tour.order_tours.count).to eq(4)
       end
     end
 

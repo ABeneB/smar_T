@@ -12,8 +12,8 @@ module Algorithm
         raise NotImplementedError, "Subclasses must define `run`."
       end
 
-      def check_restriction(order_tours, driver)
-        tour_stops = order_tours.to_a unless order_tours.instance_of?(Array)
+      def check_restriction(tour, driver)
+        tour_stops = tour.order_tours
         if @company.time_window_restriction?
           if time_window?(tour_stops)
             return false
@@ -27,7 +27,7 @@ module Algorithm
         end
 
         if @company.work_time_restriction?
-          if working_time?(tour_stops, driver)
+          if working_time?(tour, driver)
             return false
           end
         end

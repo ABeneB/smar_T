@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170726132259) do
+ActiveRecord::Schema.define(version: 20170727091101) do
 
   create_table "companies", force: true do |t|
     t.string   "name"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 20170726132259) do
   create_table "depots", force: true do |t|
     t.integer  "company_id"
     t.string   "address"
-    t.integer  "duration"
+    t.integer  "duration",   default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
@@ -82,14 +82,14 @@ ActiveRecord::Schema.define(version: 20170726132259) do
     t.integer  "customer_id"
     t.string   "pickup_location"
     t.string   "delivery_location"
-    t.integer  "capacity"
+    t.integer  "capacity",          default: 0
     t.datetime "start_time"
     t.datetime "end_time"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "comment"
-    t.integer  "duration_pickup"
-    t.integer  "duration_delivery"
+    t.integer  "duration_pickup",   default: 0
+    t.integer  "duration_delivery", default: 0
     t.boolean  "activ"
     t.float    "pickup_lat"
     t.float    "pickup_long"
@@ -118,6 +118,7 @@ ActiveRecord::Schema.define(version: 20170726132259) do
     t.integer  "driver_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "status"
   end
 
   add_index "tours", ["driver_id"], name: "index_tours_on_driver_id"

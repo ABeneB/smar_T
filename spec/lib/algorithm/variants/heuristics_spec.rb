@@ -25,7 +25,7 @@ RSpec.describe "Heuristic Base class" do
       before { heuristic.update_capacity(tour) }
 
       it "returns true" do
-        expect(heuristic.check_restriction(tour.order_tours, driver)).to be(true)
+        expect(heuristic.check_restriction(tour, driver)).to be(true)
       end
     end
 
@@ -37,7 +37,7 @@ RSpec.describe "Heuristic Base class" do
       end
 
       it "returns false" do
-        expect(heuristic.check_restriction(tour.order_tours, driver)).to eq(false)
+        expect(heuristic.check_restriction(tour, driver)).to eq(false)
       end
     end
 
@@ -48,7 +48,7 @@ RSpec.describe "Heuristic Base class" do
       end
 
       it "returns false" do
-        expect(heuristic.check_restriction(tour.order_tours, driver)).to eq(false)
+        expect(heuristic.check_restriction(tour, driver)).to eq(false)
       end
     end
 
@@ -59,7 +59,7 @@ RSpec.describe "Heuristic Base class" do
       end
 
       it "returns false" do
-        expect(heuristic.check_restriction(tour.order_tours, driver)).to eq(false)
+        expect(heuristic.check_restriction(tour, driver)).to eq(false)
       end
     end
   end
@@ -68,7 +68,7 @@ RSpec.describe "Heuristic Base class" do
     before { heuristic.update_order_tour_times(tour.order_tours) }
 
     it "return the duration of the complete tour" do
-      expect(heuristic.calc_tour_duration(tour)).to eq(60)
+      expect(tour.duration).to eq(60)
     end
   end
 end
