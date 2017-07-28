@@ -13,7 +13,7 @@ class CsvImport
     end
 
     # import aus csv. vom typ delivery aus dem zuvor mitgegebenen folder
-    def import_delivery_orders(company_name)
+    def import_delivery_orders()
         # alle .csv files laden
         get_all_files().each do |file|
             # Trennen am Semikolon und zu array aufbereiten
@@ -34,23 +34,23 @@ class CsvImport
         # laden aller csv im ordner
         # iterrieren über element und gleichzeitiges schreiben der order
         # überprüfen, das keine Order doppelt ist (manche Zeitfenster enthalten gleiche oder ähnliche orders)
-        
+
     end
-    
+
     # import aus csv. vom typ pickup aus dem zuvor mitgegebenen folder
     def import_pickup_orders(company)
-        
+
     end
-    
+
     # import aus csv. vom typ php aus dem zuvor mitgegebenen folder
     def import_php_orders(company)
-        
+
     end
-    
+
     # Alle files aus folder einlesen
     def get_all_files()
         Dir[file_path + "/*"]# return of array
     end
-    
-    
+
+
 end
