@@ -19,7 +19,7 @@ module Algorithm
     def self.preprocess(all_orders, all_drivers)
       orders = preprocess_orders(all_orders)
       #only active drivers
-      drivers = all_drivers.where(activ: true)
+      drivers = all_drivers.where(activ: true).to_a
       return orders, drivers
     end
 
