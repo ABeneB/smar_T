@@ -88,9 +88,10 @@ module Algorithm
           rating = quality_function(day_tour)
           tours_with_quality.push([rating, day_tour])
         end
-        tours_with_quality.sort_by! { |rating, day_tour| rating }.reverse!
-        best_tour = tours_with_quality.first
+        # retrieve tour with lowest rating / result of quality_function
+        best_tour = tours_with_quality.min_by { |rating, day_tour| rating }[1]
         best_tour.save
+        # single deployment of driver
         day_drivers.delete(best_tour.driver)
         day_tours.delete(best_tour)
 
@@ -100,9 +101,10 @@ module Algorithm
           if driver
             tour.driver = driver
             tour.save
+            day_drivers.delete(driver)
             day_tours.delete(tour)
           else
-            order_tours = tour.order_tours.map { |order_tour| order_tour if ["pickup", "delivery"].include?(order_tour.kind) }
+            order_tours = tour.order_tours.map { |order_tour| order_tour if ["pickup", "delivery"].include?(order_tour.kind) }.compact
             order_tours.each do |order_tour|
               day_orders.push(order_tour.order)
             end
@@ -123,7 +125,7 @@ module Algorithm
           end
 
           unless compatible_trivial_tours.empty?
-            #return tours with lowest tour duration
+            #return driver with lowest tour duration
             best_trivial_tour = compatible_trivial_tours.min_by { |tour| tour.duration } # return tours with lowest tour duration
             return best_trivial_tour.driver
           end
@@ -131,16 +133,20 @@ module Algorithm
         end
 
         def best_driver_for_tour(tour, drivers)
-          compatible_tour_with_drivers = []
+          compatible_drivers_for_tour = []
           drivers.each do |driver|
             #TODO  sollte lieber geclont werden bevor driver geändert wird / associations müssen erhalten sein
             tour.driver = driver
             if check_restriction(tour, driver)
-              compatible_tour_with_drivers.push(tour)
+              compatible_drivers_for_tour.push([driver, tour.duration])
             end
           end
-          #unless compatible_tour_with_drivers.empty?
-          #end
+
+          unless compatible_drivers_for_tour.empty?
+            best_driver = compatible_drivers_for_tour.min_by { |driver, duration| duration }[0]
+            return best_driver
+          end
+          return nil
         end
 
         def build_trivial_tour(order, driver)
@@ -163,10 +169,10 @@ module Algorithm
           delivery.place = 2
           delivery.save
 
-          home2 = create_home()
-          home2.tour = trivial_tour
-          home2.place = 3
-          home2.save
+          home = create_home()
+          home.tour = trivial_tour
+          home.place = 3
+          home.save
 
           update_order_tour_times(trivial_tour.order_tours)
           trivial_tour.save
@@ -197,7 +203,7 @@ module Algorithm
 
             combined_tour = create_tour_by_order_tours(combined_tour_array)
             if check_restriction(combined_tour, @driver)
-              combined_tour_pair = Models::CombinedTourPair.new(tour1, tour2, combined_tour)
+              combined_tour_pair = Models::CombinedTourPair.new(tour1, tour2, combined_tour_array)
               compatible_combined_tours.push(combined_tour_pair)
             end
           end
@@ -228,7 +234,7 @@ module Algorithm
             end
           }
 
-          # remove tour 2 from day tours
+          # remove tour 2  / tj from day tours
           day_tours.delete(combined_tour_pair.tour2)
         end
 
@@ -251,19 +257,23 @@ module Algorithm
         # cost function based on total duration of tour
         def quality_function(tour)
           driver = tour.driver
-          order_tours = tour.order_tours.map { |order_tour| order_tour if ["pickup", "delivery"].include?(order_tour.kind) }
+          order_tours = tour.order_tours.map { |order_tour| order_tour if ["pickup", "delivery"].include?(order_tour.kind) }.compact
           accum_duration = 0
-          order_tours.each do |order_tour|
-            trivial_tour = build_trivial_tour(order_tour.order, driver)
-            accum_duration += trivial_tour.duration
-            trivial_tour.destroy
-          end
+          if order_tours.any?
+            order_tours.each do |order_tour|
+              trivial_tour = build_trivial_tour(order_tour.order, driver)
+              accum_duration += trivial_tour.duration
+              trivial_tour.destroy
+            end
 
-          if accum_duration == 0
-            accum_duration = 1
-          end
+            if accum_duration == 0
+              accum_duration = 1
+            end
 
-          return tour.duration / accum_duration
+            return tour.duration / accum_duration
+          end
+        else
+          return 10000
         end
     end
   end
