@@ -55,7 +55,8 @@ module Algorithm
       def update_capacity(tour, index = 1)
         order_tours = tour.order_tours
         for i in index..(order_tours.length - 1)
-          order_tours[i].capacity_status = order_tours[(i-1)].capacity_status + order_tours[i].capacity
+          updated_capacity_status = order_tours[(i-1)].capacity_status + capacity_summand(order_tours[i])
+          order_tours[i].update(capacity_status: updated_capacity_status)
         end
       end
 
@@ -70,7 +71,7 @@ module Algorithm
         order_tours[index].time = time_for_distance(order_tours[index - 1], order_tours[index])
       end
 
-    #die Zeit für die Fahrt von order_tour1 nach order_tour2
+      #die Zeit für die Fahrt von order_tour1 nach order_tour2
       def time_for_distance(order_tour1, order_tour2)
         # Google Maps
         driveTime = DriveTimeBetweenAddresses.new(order_tour1.location, order_tour2.location)
@@ -85,29 +86,29 @@ module Algorithm
           #   # Wenn eine bei einem Punkt in Tour die Capacity überschritten wird
           #   if order_tour.capacity_status > driver.vehicle.capacity
           #     if @company.restriction.problem == "PP" # Und es ein PP ist,...
-          #         #... dann soll ein Depot davor eingesetzt werden
-          #         depot = create_depot()
-          #         # Fahrzeug komplett entleeren
-          #         depot.capacity = tour[index-1]*-1
-          #         # Vor Verstoß einsetzen
-          #         tour.insert(index-1, depot)
-          #         # update capacity_status
-          #         tour = update_capacity(tour, index)
+          #       #... dann soll ein Depot davor eingesetzt werden
+          #       depot = create_depot()
+          #       # Fahrzeug komplett entleeren
+          #       depot.capacity = tour[index-1]*-1
+          #       # Vor Verstoß einsetzen
+          #       tour.insert(index-1, depot)
+          #       # update capacity_status
+          #       tour = update_capacity(tour, index)
           #     else
-          #         return true # Wenn es PDP ist, dann Verstoß
+          #       return true # Wenn es PDP ist, dann Verstoß
           #     end
           #   elsif order_tour.capacity_status <= 0  # oder kleiner, gleich 0 ist
           #     if @company.restriction.problem == "DP" # Und es ein DP ist,...
-          #         #... dann soll ein Depot davor eingesetzt werden
-          #         depot = create_depot()
-          #         # Fahrzeug vollbeladen
-          #         depot.capacity = driver.capacity - tour[index-1]
-          #         # Vor Verstoß einsetzen
-          #         tour.insert(index-1, depot)
-          #         # Capacity_status updaten
-          #         tour = update_capacity(tour, index)
+          #       #... dann soll ein Depot davor eingesetzt werden
+          #       depot = create_depot()
+          #       # Fahrzeug vollbeladen
+          #       depot.capacity = driver.capacity - tour[index-1]
+          #       # Vor Verstoß einsetzen
+          #       tour.insert(index-1, depot)
+          #       # Capacity_status updaten
+          #       tour = update_capacity(tour, index)
           #     else
-          #         return true # Wenn es PDP ist, dann Verstoß
+          #       return true # Wenn es PDP ist, dann Verstoß
           #     end
           #   end
           # end
@@ -204,6 +205,18 @@ module Algorithm
 
           return order_tour_pickup
         end
+
+        # return positive capacity if order_tour increase loading, e.g. pickup
+        # return negative capacity if order_tour decrease loading, e.g. delivery
+        def capacity_summand(order_tour)
+        case order_tour.try(:kind)
+        when "pickup"
+          return order_tour.capacity
+        when "delivery"
+          return order_tour.capacity * (-1)
+        end
+        return 0
+      end
     end
   end
 end
