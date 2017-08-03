@@ -103,7 +103,7 @@ class Generate
                       if order_tour.time != time_for_distance(shortest_tour[2][index-1], order_tour)
                           order_tour.time = time_for_distance(shortest_tour[2][index-1], order_tour)
                           order_tour.save
-                          order_tour.tour.duration = calc_tour_time(shortest_tour[2])
+                          #order_tour.tour.duration = calc_tour_time(shortest_tour[2])
                           order_tour.tour.save
                       end
                   end
@@ -143,19 +143,14 @@ class Generate
         driver_tour = Tour.where(driver_id: driver.id).take
         # Tour erstellen, falls keine existiert
         if driver_tour.nil?
-            driver_tour = Tour.create(user_id: user.id, company_id: company.id, duration: 0)
+            driver_tour = Tour.create(user_id: user.id, company_id: company.id)
         end
         #Neue Order_Tours identifizieren und in DB anlegen
         tour.each do |order_tour|
             # Wenn OrderTour noch nicht existiert...
             if order_tour.id.nil?
                 # ...Element anlegen in DB speichern
-                if order_tour.duration.nil?
-                    order_tour.duration = 0
-                end
-
-                order_tour.tour_id = driver_tour.id
-
+              order_tour.tour_id = driver_tour.id
             end
             # Änderungen (wie place und time speichern)
             order_tour.save
@@ -168,8 +163,6 @@ class Generate
                 end
             end
         end
-        # Duration setzen
-        driver_tour.duration = calc_tour_time(tour)
         # Tour speichern und Faher zuordnen
         # Order deaktivieren, damit sie in nächsten Planungen nicht versehentlich verplant wird
         # FIXME - Für Produkivbetrieb wieder einkommentieren
@@ -210,7 +203,7 @@ class Generate
         #Wenn es keine alte Tour gab, neue Tour erzeugen
         if old_tour.empty?
             # Tour erzeugen
-            driver_tour = Tour.create(driver_id: driver, duration: 0)
+            driver_tour = Tour.create(driver_id: driver)
             # startpostion einfügen
             vehicle_position = create_vehicle_position(driver)
             vehicle_position.tour_id = driver_tour.id
@@ -316,7 +309,7 @@ class Generate
         #Wenn es keine alte Tour gab, neue Tour erzeugen
         if old_tour.empty?
             # Tour erzeugen
-            driver_tour = Tour.create(driver_id: driver.id, duration: 0)
+            driver_tour = Tour.create(driver_id: driver.id)
             # startpostion einfügen
             vehicle_position = create_vehicle_position(driver)
             vehicle_position.tour_id = driver_tour.id
@@ -417,7 +410,7 @@ class Generate
         #Wenn es keine alte Tour gab, neue Tour erzeugen
         if old_tour.empty?
             # Tour erzeugen
-            driver_tour = Tour.create(user_id: user.id, company_id: company.id, duration: 0)
+            driver_tour = Tour.create(user_id: user.id, company_id: company.id)
             # startpostion einfügen
             vehicle_position = create_vehicle_position(driver)
             vehicle_position.tour_id = driver_tour.id
