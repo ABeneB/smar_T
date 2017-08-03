@@ -38,6 +38,23 @@ class OrderToursController < ApplicationController
     @order_tour.destroy
   end
 
+  # updates the order of the order_tours inside a tour
+  # is called by the user (front-end, ajax)
+  # receives an array of order ids
+  def update_positions
+    orderTourIds = params[:orderTour]
+    index = 0
+    orderTourIds.each do |id|
+      orderTour = OrderTour.find(id)
+      unless orderTour.nil?
+        orderTour.place = index
+        orderTour.save
+        index = index + 1
+      end
+    end
+    redirect_to action: "index"
+  end
+
   private
     def set_order_tour
       @order_tour = OrderTour.find(params[:id])
