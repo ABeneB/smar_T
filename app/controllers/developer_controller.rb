@@ -14,7 +14,7 @@ class DeveloperController < ApplicationController
         # assign company to admin user
         current_user.company = Company.first
         current_user.save
-        
+
         # destroy orders + tours and import orders from csv
         Order.destroy_all
         Tour.destroy_all
@@ -24,15 +24,15 @@ class DeveloperController < ApplicationController
         Driver.destroy_all
         Vehicle.destroy_all
 
-        driver = Driver.new({'name' => 'Jobs', 'working_time' => '400', 'user_id' => current_user.id})
+        driver = Driver.new({'name' => 'Jobs', 'working_time' => '400', 'user_id' => current_user.id, 'activ' => true})
         driver.save
         Vehicle.new({'position' => current_user.company.address, 'capacity' => '100', 'driver_id' => driver.id}).save
 
-        driver = Driver.new({'name' => 'Gates', 'working_time' => '400', 'user_id' => current_user.id})
+        driver = Driver.new({'name' => 'Gates', 'working_time' => '400', 'user_id' => current_user.id, 'activ' => true})
         driver.save
         Vehicle.new({'position' => current_user.company.address, 'capacity' => '100', 'driver_id' => driver.id}).save
 
-        driver = Driver.new({'name' => 'Ballmer', 'working_time' => '400', 'user_id' => current_user.id})
+        driver = Driver.new({'name' => 'Ballmer', 'working_time' => '400', 'user_id' => current_user.id, 'activ' => true})
         driver.save
         Vehicle.new({'position' => current_user.company.address, 'capacity' => '100', 'driver_id' => driver.id}).save
 
