@@ -58,7 +58,9 @@
             var directionsDisplay = new google.maps.DirectionsRenderer({
                     polylineOptions: {
                         strokeColor: "red"
-                    }
+                    },
+                suppressMarkers : true,
+                icon: image
                 });
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 6,
@@ -96,23 +98,39 @@
             for (var i = 1; i < waypts.length-1; i++) {
                 waypts2.push({
                     location: waypts[i].location,
-                    stopover: waypts[i].stopover
+                    stopover: waypts[i].stopover,
+
 
                 })
+                var image = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=B|FF0000|000000';
+                var marker = new google.maps.Marker({
+                    location: waypts[i].location,
+                    map: map,
+                    icon: image
+                });
+                directionsDisplay.setMap(map);
                 summaryPanel.innerHTML += waypts[i].location;
             }
-
+            var image = {
+                url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+                // This marker is 20 pixels wide by 32 pixels high.
+                size: new google.maps.Size(20, 32),
+                // The origin for this image is (0, 0).
+                origin: new google.maps.Point(0, 0),
+                // The anchor for this image is the base of the flagpole at (0, 32).
+                anchor: new google.maps.Point(0, 32)
+            };
             directionsService.route({
                 origin: waypts[0].location,
                 destination: waypts[waypts.length-1].location,
                 waypoints: waypts2,
                 optimizeWaypoints: true,
-                travelMode: 'DRIVING'
+                travelMode: 'DRIVING',
+
             }, function(response, status) {
                 if (status === 'OK') {
                     directionsDisplay.polylineOptions.strokeColor = "blue";
                     directionsDisplay.setDirections(response);
-
 
                 }else {
                     window.alert('Directions request failed due to ' + status);
