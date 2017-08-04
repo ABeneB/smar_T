@@ -54,16 +54,14 @@
     </div>
 
     <script>
-        function initMap() {
-            var directionsService = new google.maps.DirectionsService;
-            var directionsDisplay = new google.maps.DirectionsRenderer({
-                    polylineOptions: {
-                        strokeColor: "red"
-                    },
-                suppressMarkers : true,
-                icon: image
-                });
 
+        function getRandomColor() {
+            var colors  = ["red", "darkred", "blue", "darkblue", "green", "darkgreen", "black", "darkgrey"];
+            color = _.sample(colors);
+            return color;
+        }
+
+        function initMap() {
             // creat the map
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 8,
@@ -71,13 +69,13 @@
             });
 
             //set Marker with number of place
-            var image = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=B|FF0000|000000';
+            var image = "";
             var summaryPanel = document.getElementById('directions-panel');
             var url_tmp="";
             summaryPanel.innerHTML = '';
             <% @order_tours.each do |order_tour| %>
             summaryPanel.innerHTML +=  "<%=order_tour.latitude%>" + " " + "<%=order_tour.longitude%>" + " ;; ";
-            url_tmp = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+"<%=order_tour.place+1%>"+"|FF0000|000000";
+            url_tmp = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+"<%=order_tour.place+1%>"+"|F55850|000000";
             image = url_tmp;
             var beachMarker = new google.maps.Marker({
                 position: {lat: parseFloat(<%= order_tour.latitude%>) , lng: parseFloat(<%= order_tour.longitude %>) },
@@ -86,14 +84,126 @@
             });
             <% end %>
 
-            directionsDisplay.setMap(map);
 
-            document.getElementById('submit').addEventListener('click', function() {
-                calculateAndDisplayRoute(directionsService, directionsDisplay);
+            // for each road a own color
+            // ------- start --------
+            /*
+                var waypts = [];
+                <% @order_tours.each do |order_tour| %>
+                waypts.push({
+                    location: "<%= order_tour.location %>",
+                    stopover: true
+                });
+                var test = "<%= order_tour.location %>";
+                //summaryPanel.innerHTML += test;
+                <% end %>
+
+            var cc = new Array[waypts.length];
+            var bb = new Array[waypts.length];
+            var request = new Array[waypts.length];
+                for (var i = 1; i < waypts.length; i++) {
+                    summaryPanel.innerHTML += "--- von "+ waypts[i-1].location + " nach "+ waypts[i].location + " ---- ";
+
+                    cc[i] = new google.maps.DirectionsService;
+                    bb[i] = new google.maps.DirectionsRenderer({
+                        polylineOptions: {
+                            strokeColor: getRandomColor(),
+                            strokeOpacity: 0.7
+                        },
+                        suppressMarkers : true,
+                    });
+
+
+                    request[i] = {
+                        origin: waypts[i-1].location,
+                        destination: waypts[i].location,
+                        travelMode: 'DRIVING'
+                    };
+
+
+                    cc[i].route(request[i], function(response, status) {
+                        if (status == 'OK') {
+                            bb[i].setDirections(response);
+                            bb[i].setMap(map);
+
+
+                        }
+                    });
+
+
+                }  */
+
+/*            var directionsService = new google.maps.DirectionsService;
+            var directionsDisplay = new google.maps.DirectionsRenderer({
+                polylineOptions: {
+                    strokeColor: "red",
+                    strokeOpacity: 0.6
+                },
+                suppressMarkers : true,
             });
-        }
+            var directionsService2 = new google.maps.DirectionsService;
+            var directionsDisplay2 = new google.maps.DirectionsRenderer({
+                polylineOptions: {
+                    strokeColor: "blue",
+                    strokeOpacity: 0.6
+                },
+                suppressMarkers : true,
+            });
 
-        function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+            function calcRoute() {
+                var start = "Rosentorstrasse 2, 38640 Goslar";
+                var end = "Christiantal 43, 38855 Wernigerode";
+                request = {
+                    origin: start,
+                    destination: end,
+                    travelMode: 'DRIVING'
+                };
+
+
+                directionsService.route(request, function(response, status) {
+                    if (status == 'OK') {
+                        directionsDisplay.setDirections(response);
+                        directionsDisplay.setMap(map);
+
+
+                    }
+                });
+                var start2 = "In den Lohbalken 1, 38165 Lehre Wendhausen";
+                var end2 = "Friedrich-Ebert-Straße 191 37520 Osterode am Harz";
+                request = {
+                    origin: start2,
+                    destination: end2,
+                    travelMode: 'DRIVING'
+                };
+
+
+                directionsService2.route(request, function(response, status) {
+                    if (status == 'OK') {
+                        directionsDisplay2.setDirections(response);
+                        directionsDisplay2.setMap(map);
+
+
+                    }
+                });
+             }
+
+            calcRoute();*/
+
+          // ------- End -------
+
+
+
+
+        // one color for the road
+        // ---- start_2 ------
+            var directionsService = new google.maps.DirectionsService;
+            var directionsDisplay = new google.maps.DirectionsRenderer({
+                polylineOptions: {
+                    strokeColor: "blue",
+                    strokeOpacity: 0.6
+                },
+                suppressMarkers : true,
+            });
             var waypts = [];
             var summaryPanel = document.getElementById('directions-panel');
 
@@ -115,7 +225,7 @@
 
 
                 })
-                var image = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=B|FF0000|000000';
+
                 var marker = new google.maps.Marker({
                     location: waypts[i].location,
                     map: map,
@@ -133,7 +243,6 @@
 
             }, function(response, status) {
                 if (status === 'OK') {
-                    directionsDisplay.polylineOptions.strokeColor = "blue";
                     directionsDisplay.setDirections(response);
 
                 }else {
@@ -143,6 +252,7 @@
 
 
         }
+        // ----- end_2 ------
     </script>
 
     <script async defer
