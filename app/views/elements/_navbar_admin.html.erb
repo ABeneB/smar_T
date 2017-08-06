@@ -46,23 +46,23 @@
       <ul class="nav navbar-nav">
 	<% if defined?(Devise) %>
         <% if user_signed_in? %>
-              <li><%= link_to "Touren", tours_path %></li>
+              <li><%= link_to image_tag('Tour.svg') + "Touren", tours_path %></li>
               <li class="divider"></li>
-              <li><%= link_to "Aufträge", orders_path %></li>
+              <li><%= link_to image_tag('Order.svg') + "Aufträge", orders_path %></li>
               <li class="divider"></li>
-              <li><%= link_to "Kunden", customers_path %></li>
+              <li><%= link_to image_tag('Customer.svg') + "Kunden", customers_path %></li>
               <li class="divider"></li>
-              <li><%= link_to "Fahrer", drivers_path %></li>
+              <li><%= link_to image_tag('Driver.svg') + "Fahrer", drivers_path %></li>
               <li class="divider"></li>
-              <li><%= link_to "Fahrzeuge", vehicles_path %></li>
+              <li><%= link_to image_tag('Vehicle.svg') + "Fahrzeuge", vehicles_path %></li>
               <li class="divider"></li>
-              <li><%= link_to "Benutzer", registered_users_path %></li>
+              <li><%= link_to image_tag('User.svg') + "Benutzer", registered_users_path %></li>
               <li class="divider"></li>
-              <li><%= link_to "Beschränkungen", restrictions_path %></li>
+              <li><%= link_to image_tag('Restrictions.svg') + "Beschränkungen", restrictions_path %></li>
               <li class="divider"></li>
-              <li><%= link_to "Unternehmen", companies_path %></li>
+              <li><%= link_to image_tag('Company.svg') + "Unternehmen", companies_path %></li>
               <li class="divider"></li>
-              <li><%= link_to "Depots", depots_path %></li>
+              <li><%= link_to image_tag('Depot.svg') + "Depots", depots_path %></li>
               <li class="divider"></li>
               <li><%= link_to "Entwickler", developer_index_path %></li>              
         <% else %>

@@ -73,7 +73,7 @@ body,html{
 
     nav.sidebar{
       width: 200px;
-      height: 100%;
+     min-height: calc(100% - 55px);
       margin-left: -160px;
       float: left;
       margin-bottom: 0px;
@@ -120,16 +120,36 @@ body,html{
   section{
     padding-left: 15px;
   }
-  
+
+/* Remove the space between Top-Bar and Sidebar, remove rounded edges from sidebar */
+
 .navbar{
 
 margin-bottom: 0px;
+border-radius: 0px;
+
 
 }
+
+/*Bold smar_T*/
 
 .navbar-brand{
 
 font-weight: bold;
 
+}
+
+/*Navbar icon properties*/
+
+.nav > li > a > img{
+margin-right: 15px;
+height: 30px;
+opacity: 0.5;
+}
+
+/*Bold navbar Text*/
+
+.nav > li > a{
+font-weight:bold;
 }
  
