@@ -73,7 +73,7 @@ body,html{
 
     nav.sidebar{
       width: 200px;
-     min-height: calc(100% - 55px);
+     min-height: calc(100%);
       margin-left: -160px;
       float: left;
       margin-bottom: 0px;
@@ -135,7 +135,19 @@ border-radius: 0px;
 
 .navbar-brand{
 
-font-weight: bold;
+background-color: gray;
+height: 100%;
+
+}
+
+/*Logo properties*/
+
+.navbar-brand > img{
+
+display: inline;
+max-width: none;
+width: 80px;
+filter:invert(100%);
 
 }
 
@@ -151,5 +163,18 @@ opacity: 0.5;
 
 .nav > li > a{
 font-weight:bold;
+}
+
+
+/*Adds space between logo and first list-element*/
+nav.sidebar .navbar-nav > li:first-child{
+      margin-top: 15px;
+}
+
+/*Move Top-Navigation next to logo*/
+.navbar-default.navbar-top{
+max-height: 50px;
+margin-left: 200px;
+
 }
  
