@@ -9,6 +9,11 @@
       <% elsif !current_user.company.drivers.any? %>
         <div class="alert alert-info">Es wurden noch keine Fahrer angelegt.</div>
       <% else %>
+
+      <%= link_to t('.new', :default => t("helpers.links.new")),
+                    new_vehicle_path,
+                    :class => 'btn btn-primary' %>
+
         <table class="table table-striped">
           <thead>
             <tr>
@@ -35,9 +40,6 @@
           </tbody>
         </table>
 
-        <%= link_to t('.new', :default => t("helpers.links.new")),
-                    new_vehicle_path,
-                    :class => 'btn btn-primary' %>
       <% end %>
     <% else %>
     ZUGANG VERWEIGERT

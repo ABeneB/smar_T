@@ -7,6 +7,9 @@
       <% if current_user.company.nil? %>
         <div class="alert alert-info">Ihrem Benutzeraccount wurde noch kein Unternehmen zugewiesen. Sie können daher keine Kunden anlegen.</div>
       <% else %>
+	<%= link_to t('.new', :default => t("helpers.links.new")),
+                  new_customer_path,
+                  :class => 'btn btn-primary' %>
         <table class="table table-striped">
           <thead>
             <tr>
@@ -44,9 +47,6 @@
           </tbody>
         </table>
 
-        <%= link_to t('.new', :default => t("helpers.links.new")),
-                  new_customer_path,
-                  :class => 'btn btn-primary' %>
       <% end %>
     <% else %>
     ZUGANG VERWEIGERT

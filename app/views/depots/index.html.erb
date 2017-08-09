@@ -7,6 +7,10 @@
       <% if current_user.company.nil? %>
         <div class="alert alert-info">Ihrem Benutzeraccount wurde noch kein Unternehmen zugewiesen. Sie können daher kein Depot anlegen.</div>
       <% else %>
+	<%= link_to t('.new', :default => t("helpers.links.new")),
+                    new_depot_path,
+                    :class => 'btn btn-primary' %>
+
         <table class="table table-striped">
           <thead>
             <tr>
@@ -37,9 +41,6 @@
           </tbody>
         </table>
 
-        <%= link_to t('.new', :default => t("helpers.links.new")),
-                    new_depot_path,
-                    :class => 'btn btn-primary' %>
       <% end %>
     <% else %>
     ZUGANG VERWEIGERT

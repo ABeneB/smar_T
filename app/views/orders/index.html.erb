@@ -7,6 +7,10 @@
       <% if current_user.company.try(:customers).blank? %>
         <div class="alert alert-info">Ihrem Benutzeraccount wurden noch keine Kunden zugewiesen. Sie können daher kein Auftrag anlegen.</div>
       <% else %>
+	<%= link_to t('.new', :default => t("helpers.links.new")),
+                    new_order_path,
+                    :class => 'btn btn-primary' %>
+
         <table class="table table-striped">
           <thead>
             <tr>
@@ -45,9 +49,6 @@
           </tbody>
         </table>
 
-        <%= link_to t('.new', :default => t("helpers.links.new")),
-                    new_order_path,
-                    :class => 'btn btn-primary' %>
       <% end %>
     <% else %>
     ZUGANG VERWEIGERT
