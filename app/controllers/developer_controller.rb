@@ -16,6 +16,7 @@ class DeveloperController < ApplicationController
         current_user.save
 
         # destroy orders + tours and import orders from csv
+        OrderTour.destroy_all
         Order.destroy_all
         Tour.destroy_all
         CsvImport.new('').import_delivery_orders()
