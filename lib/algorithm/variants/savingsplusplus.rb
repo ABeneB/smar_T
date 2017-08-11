@@ -64,11 +64,13 @@ module Algorithm
               elsif compatible_tour_pair.tour1 == best_saving_tour_pair.tour1
                 # replace ti by combined tour with highest saving
                 compatible_tour_pair.tour1 = best_saving_tour
+                compatible_tour_pair.order_tours = extract_order_tours(compatible_tour_pair.tour1, compatible_tour_pair.tour2)
                 calc_saving_for_combined_tour_pair(compatible_tour_pair)
                 compatible_tour_pair
               elsif compatible_tour_pair.tour2 == best_saving_tour_pair.tour1
                 # replace ti by combined tour with highest saving
                 compatible_tour_pair.tour2 = best_saving_tour
+                compatible_tour_pair.order_tours = extract_order_tours(compatible_tour_pair.tour1, compatible_tour_pair.tour2)
                 calc_saving_for_combined_tour_pair(compatible_tour_pair)
                 compatible_tour_pair
               end
@@ -198,16 +200,11 @@ module Algorithm
           end
           compatible_combined_tours = []
           tour_pairs.each do |tour1, tour2|
-            # combine tours
-            # tour1_orders.values_at(0..(tour1_orders.length - 2)) // ignore home (last element)
-            tour1_part = tour1.order_tours[0..(tour1.order_tours.length - 2)].map { |order_tour| order_tour.dup }
-            # tour2_orders.values_at(2..(tour2_orders.length - 1)) // ignore vehicle position and depot (first elements)
-            tour2_part = tour2.order_tours[2..(tour2.order_tours.length - 1)].map { |order_tour| order_tour.dup }
 
-            combined_order_tours_array = tour1_part.concat(tour2_part)
+            combined_order_tours_array = extract_order_tours(tour1, tour2)
+
             combined_tour = create_tour_by_order_tours(combined_order_tours_array)
             if check_restriction(combined_tour, @driver)
-              update_order_tour_times(combined_order_tours_array) # necessary because in create_tour_by_order_tours duplicated order tours are used
               combined_tour_pair = Models::CombinedTourPair.new(tour1, tour2, combined_order_tours_array)
               compatible_combined_tours.push(combined_tour_pair)
             end
@@ -265,6 +262,24 @@ module Algorithm
           #updated_compatible_tour_pairs = create_compatible_tour_pairs(compatible_tour_pairs, [tour_pair])
           calc_combined_tour_pair_savings(updated_compatible_tour_pairs)
           compatible_tour_pairs.sort_by! { |combined_tour| combined_tour.saving }.reverse!
+        end
+
+        # extract order tours from arguments for using in CombinedTourPair object
+        def extract_order_tours(tour1, tour2)
+          # combine tours
+          # tour1_orders.values_at(0..(tour1_orders.length - 2)) // ignore home (last element)
+          tour1_part = tour1.order_tours[0..(tour1.order_tours.length - 2)].map { |order_tour| order_tour.dup }
+          # tour2_orders.values_at(2..(tour2_orders.length - 1)) // ignore vehicle position and depot (first elements)
+          tour2_part = tour2.order_tours[2..(tour2.order_tours.length - 1)].map { |order_tour| order_tour.dup }
+
+          combined_order_tours_array = tour1_part.concat(tour2_part)
+          combined_order_tours_array.each_with_index do  |order_tour, index|
+            order_tour.place = index
+            order_tour.save
+          end
+
+          update_order_tour_times(combined_order_tours_array) # necessary because in create_tour_by_order_tours duplicated order tours are used
+          return combined_order_tours_array
         end
 
         # cost function based on total duration of tour
