@@ -199,14 +199,18 @@ module Algorithm
           tour_pairs.each do |tour1, tour2|
             # combine tours
             # tour1_orders.values_at(0..(tour1_orders.length - 2)) // ignore home (last element)
+            tour1_part = tour1.order_tours[0..(tour1.order_tours.length - 2)].map { |order_tour| order_tour.dup }
             # tour2_orders.values_at(2..(tour2_orders.length - 1)) // ignore vehicle position and depot (first elements)
-            combined_order_tours_array = tour1.order_tours.values_at(0..(tour1.order_tours.length - 2)).concat(tour2.order_tours.values_at(2..(tour2.order_tours.length - 1)))
-            combined_tour = create_tour_by_order_tours(combined_order_tours_array)
+            tour2_part = tour2.order_tours[2..(tour2.order_tours.length - 1)].map { |order_tour| order_tour.dup }
 
+            combined_order_tours_array = tour1_part.concat(tour2_part)
+            combined_tour = create_tour_by_order_tours(combined_order_tours_array)
             if check_restriction(combined_tour, @driver)
+              update_order_tour_times(combined_order_tours_array) # necessary because in create_tour_by_order_tours duplicated order tours are used
               combined_tour_pair = Models::CombinedTourPair.new(tour1, tour2, combined_order_tours_array)
               compatible_combined_tours.push(combined_tour_pair)
             end
+            # destroy temporary object for checking restriction
             combined_tour.destroy
           end
           compatible_combined_tours

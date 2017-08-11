@@ -68,7 +68,8 @@ module Algorithm
 
       # Berechnet OrderTour.time neu
       def update_time(order_tours, index = 1)
-        order_tours[index].time = time_for_distance(order_tours[index - 1], order_tours[index])
+        time = time_for_distance(order_tours[index - 1], order_tours[index])
+        order_tours[index].update_attributes(time: time)
       end
 
       #die Zeit für die Fahrt von order_tour1 nach order_tour2
