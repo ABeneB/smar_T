@@ -50,14 +50,12 @@ module Algorithm
         if compatible_tour_pairs.any?
           calc_combined_tour_pair_savings(compatible_tour_pairs)
           # sort saving descending to start with the biggest saving
-          compatible_tour_pairs.sort_by { | compatible_tour | compatible_tour.saving }.reverse!
+          compatible_tour_pairs.sort_by! { | compatible_tour | compatible_tour.saving }.reverse!
           while compatible_tour_pairs[0].saving >= 0 do
             # first tour pair (ti, tj) has highest saving
-            #best_saving_tour_pair = compatible_tour_pairs.slice!(0)
-            best_saving_tour_pair = compatible_tour_pairs[0]
+            best_saving_tour_pair = compatible_tour_pairs.slice!(0)
             best_saving_tour = create_tour_by_order_tours(best_saving_tour_pair.order_tours)
-            update_day_tours(day_tours, best_saving_tour_pair, best_saving_tour)
-            
+
             compatible_tour_pairs.map! { | compatible_tour_pair |
               if compatible_tour_pair.tour1 == best_saving_tour_pair.tour2 ||
                  compatible_tour_pair.tour2 == best_saving_tour_pair.tour2
@@ -75,6 +73,9 @@ module Algorithm
                 compatible_tour_pair
               end
             }.compact!
+
+            update_day_tours(day_tours, best_saving_tour_pair, best_saving_tour)
+            
             if compatible_tour_pairs.any?
               compatible_tour_pairs.sort_by { | compatible_tour_pair | compatible_tour_pair.saving }.reverse!
             else
