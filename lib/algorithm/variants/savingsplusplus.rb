@@ -79,7 +79,7 @@ module Algorithm
             update_day_tours(day_tours, best_saving_tour_pair, best_saving_tour)
             
             if compatible_tour_pairs.any?
-              compatible_tour_pairs.sort_by { | compatible_tour_pair | compatible_tour_pair.saving }.reverse!
+              compatible_tour_pairs.sort_by! { | compatible_tour_pair | compatible_tour_pair.saving }.reverse!
             else
               # break the execution of function if no more compatible_tour_pairs exist
               break
