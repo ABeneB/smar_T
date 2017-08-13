@@ -1,0 +1,42 @@
+<nav class="navbar navbar-default sidebar" role="navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+	<% if defined?(Devise) %>
+        <% if user_signed_in? %>
+	      <li class="divider"></li>
+              <li><%= link_to image_tag('Tour.svg') + "Touren", tours_path %></li>
+              <li class="divider"></li>
+              <li><%= link_to image_tag('Order.svg') + "Aufträge", orders_path %></li>
+              <li class="divider"></li>
+              <li><%= link_to image_tag('Customer.svg') + "Kunden", customers_path %></li>
+              <li class="divider"></li>
+              <li><%= link_to image_tag('Driver.svg') + "Fahrer", drivers_path %></li>
+              <li class="divider"></li>
+              <li><%= link_to image_tag('Vehicle.svg') + "Fahrzeuge", vehicles_path %></li>
+              <li class="divider"></li>
+              <li><%= link_to image_tag('User.svg') + "Benutzer", registered_users_path %></li>
+              <li class="divider"></li>
+              <li><%= link_to image_tag('Restrictions.svg') + "Beschränkungen", restrictions_path %></li>
+              <li class="divider"></li>
+              <li><%= link_to image_tag('Company.svg') + "Unternehmen", companies_path %></li>
+              <li class="divider"></li>
+              <li><%= link_to image_tag('Depot.svg') + "Depots", depots_path %></li>
+              <li class="divider"></li>
+              <li><%= link_to "Entwickler", developer_index_path %></li>              
+        <% else %>
+          <!-- Sollte nicht der Fall sein -->
+        <% end %>
+      <% end %>
+          </ul>
+        </li>          
+      </ul>
+    </div>
+</nav>
