@@ -5,103 +5,55 @@
   </div>
 
   <div class="fieldset">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th><%= model_class.human_attribute_name(:place) %></th>
-        <th>Art</th>
-        <th><%= model_class.human_attribute_name(:location) %></th>
-        <th><%= model_class.human_attribute_name(:time) %></th>
-        <th><%= model_class.human_attribute_name(:duration) %></th>
-        <th>Beschreibung</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @order_tours.each do |order_tour| %>
+    <table class="table table-striped">
+      <thead>
         <tr>
-          <td><%= order_tour.place+1 %></td>
-          <td><%= order_tour.kind %></td>
-          <td><%= order_tour.location %></td>
-          <td><%= order_tour.time %></td>
-          <td><%= order_tour.duration %></td>
-          <td><%= order_tour.comment %></td>
+          <th><%= model_class.human_attribute_name(:place) %></th>
+          <th>Art</th>
+          <th><%= model_class.human_attribute_name(:location) %></th>
+          <th><%= model_class.human_attribute_name(:time) %></th>
+          <th><%= model_class.human_attribute_name(:duration) %></th>
+          <th>Beschreibung</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% @order_tours.each do |order_tour| %>
+          <tr>
+            <td><%= order_tour.place+1 %></td>
+            <td><%= order_tour.kind %></td>
+            <td><%= order_tour.location %></td>
+            <td><%= order_tour.time %></td>
+            <td><%= order_tour.duration %></td>
+            <td><%= order_tour.comment %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   
-  <% if current_user.is_driver? %>
-    <td><%= link_to 'Start', edit_tour_path(@tour), :class => 'btn btn-info' %></td>
-    <td><%= link_to 'Pause', edit_tour_path(@tour), :class => 'btn btn-info' %></td>
-    <td><%= link_to 'Erledigt', edit_tour_path(@tour), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' %></td>
-    <input type="text" id="info" disabled>
-  <% end %>
+    <% if current_user.is_driver? %>
+      <td><%= link_to 'Start', edit_tour_path(@tour), :class => 'btn btn-info' %></td>
+      <td><%= link_to 'Pause', edit_tour_path(@tour), :class => 'btn btn-info' %></td>
+      <td><%= link_to 'Erledigt', edit_tour_path(@tour), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' %></td>
+      <input type="text" id="info" disabled>
+    <% end %>
   
-  <div style='width: 800px;'>
-    <div id="map" style='width: 900px; height: 400px;'></div>
+    <div style='width: 800px;'>
+      <div id="map" style='width: 900px; height: 400px;'></div>
+    </div>
+
   </div>
-
   <script>
-
-    // todo: exend array with useful colors
-    var colors  = ["red", "lime", "purple", "green", "blue"];
-    function getColor() {
-      if (colors.length == 0)
-          return "blue"; // default
-
-      var color = colors[0];
-      colors.shift();
-
-      return color;
-    }
-
     function initMap() {
-      var map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 51.7491 , lng: 10.29069},
-          disableDefaultUI: true,
-          zoomControl: true,
-
-      });
-
-
-      var directionsService = new google.maps.DirectionsService;
+      creatMap(document.getElementById('map'));
 
       <% @order_tours.each_with_index do | order_tour, index | %>
-        // set marker
-        //todo: markers with the same position should be displayed, too
-        new google.maps.Marker({
-            position: {lat: parseFloat(<%= order_tour.latitude%>) , lng: parseFloat(<%= order_tour.longitude %>) },
-            map: map,
-            icon: "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+"<%=order_tour.place+1%>"+"|F55850|000000"
-        });
-
-        // set route
+        setMarker(parseFloat(<%= order_tour.latitude%>), parseFloat(<%= order_tour.longitude %>),"<%=order_tour.place+1%>");
 
         <% if (index < @order_tours.length - 1) %>
-          request = {
-              origin: "<%= @order_tours[index].location %>",
-              destination: "<%= @order_tours[index + 1].location %>",
-              travelMode: google.maps.DirectionsTravelMode.DRIVING
-          };
-
-          directionsService.route(request, function(response, status) {
-            if (status == 'OK') {
-              var directionsRenderer = new google.maps.DirectionsRenderer({
-                  polylineOptions: {
-                      strokeColor: getColor(),
-                      strokeOpacity: 0.6
-                  },
-                  suppressMarkers : true,
-              });
-              directionsRenderer.setMap(map);
-              directionsRenderer.setDirections(response);
-            }
-          });
+          setRoute("<%= @order_tours[index].location %>","<%= @order_tours[index + 1].location %>");
         <% end %>
-      <% end %>
-        //mouse scrolling are disabled
-        map.setOptions({'scrollwheel': false});
 
+      <% end %>
     }
   </script>
 
