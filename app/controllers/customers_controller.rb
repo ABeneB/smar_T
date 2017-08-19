@@ -50,7 +50,7 @@ class CustomersController < ApplicationController
       flash[:success] = t('.success', customer_id: @customer.id)
       redirect_to customers_path, notice: "saved"
     else
-      flash[:alert] = t('.failure', customer_id: @customer.user_id)
+      flash[:alert] = t('.failure', customer_id: @customer.id)
       render 'new'
     end
   end
@@ -60,7 +60,7 @@ class CustomersController < ApplicationController
     flash[:success] = t('.success', customer_id: @customer.id)
     respond_with(@customer)
     else
-    flash[:alert] = t('.failure', customer_id: @customer.user_id)
+    flash[:alert] = t('.failure', customer_id: @customer.id)
    end
   end
 
@@ -69,7 +69,7 @@ class CustomersController < ApplicationController
     flash[:success] = t('.success', customer_id: @customer.id)
     respond_with(@customer)
     else
-    flash[:alert] = t('.failure', customer_id: @customer.user_id) 
+    flash[:alert] = t('.failure', customer_id: @customer.id) 
     end
   end
 
