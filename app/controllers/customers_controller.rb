@@ -47,20 +47,30 @@ class CustomersController < ApplicationController
     end
     @customer.save
     if @customer.save
+      flash[:success] = t('.success', customer_id: @customer.id)
       redirect_to customers_path, notice: "saved"
     else
+      flash[:alert] = t('.failure', customer_id: @customer.user_id)
       render 'new'
     end
   end
 
   def update
-    @customer.update(customer_params)
+    if @customer.update(customer_params)
+    flash[:success] = t('.success', customer_id: @customer.id)
     respond_with(@customer)
+    else
+    flash[:alert] = t('.failure', customer_id: @customer.user_id)
+   end
   end
 
   def destroy
-    @customer.destroy
+    if @customer.destroy
+    flash[:success] = t('.success', customer_id: @customer.id)
     respond_with(@customer)
+    else
+    flash[:alert] = t('.failure', customer_id: @customer.user_id) 
+    end
   end
 
   private

@@ -41,20 +41,30 @@ class DriversController < ApplicationController
     @driver.user_id = current_user.id # automatisches setzen der user_id
     @driver.save
     if @driver.save
+      flash[:success] = t('.success', driver_id: @driver.id)
       redirect_to drivers_path, notice: "saved"
     else
+      flash[:alert] = t('.failure')
       render 'new'
     end
   end
 
   def update
-    @driver.update(driver_params)
+    if @driver.update(driver_params)
+      flash[:success] = t('.success', driver_id: @driver.id)
     respond_with(@driver)
+    else
+      flash[:alert] = t('.failure', driver_id: @driver.id)
+    end
   end
 
   def destroy
-    @driver.destroy
+    if @driver.destroy
+      flash[:success] = t('.success', driver_id: @driver.id)
     respond_with(@driver)
+    else
+      flash[:alert] = t('.failure', driver_id: @driver.id)
+    end
   end
 
   private

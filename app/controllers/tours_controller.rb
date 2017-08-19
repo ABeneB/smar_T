@@ -57,13 +57,21 @@ class ToursController < ApplicationController
 
   def create
     @tour = Tour.new(tour_params)
-    @tour.save
+    if @tour.save
+        flash[:success] = t('.success', tour_id: @tour.id)
     respond_with(@tour)
+      else
+      flash[:alert] = t('.failure')
+    end
   end
 
   def update
-    @tour.update(tour_params)
+    if @tour.update(tour_params)
+        flash[:success] = t('.success', tour_id: @tour.id)
     respond_with(@tour)
+      else
+        flash[:alert] = t('.failure', tour_id: @tour.id)
+    end
   end
 
   def destroy
@@ -72,8 +80,12 @@ class ToursController < ApplicationController
     order_tours.each do |order_tour|
       order_tour.destroy
     end
-    @tour.destroy
+    if @tour.destroy
+      flash[:success] = t('.success', tour_id: @tour.id)
     respond_with(@tour)
+      else
+      flash[:alert] = t('.failure', tour_id: @tour.id)
+    end
   end
 
   private

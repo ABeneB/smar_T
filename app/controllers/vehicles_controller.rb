@@ -34,18 +34,30 @@ class VehiclesController < ApplicationController
 
   def create
     @vehicle = Vehicle.new(vehicle_params)
-    @vehicle.save
+    if @vehicle.save
+      flash[:success] = t('.success', vehicle_id: @vehicle.id)
     respond_with(@vehicle)
+      else
+      flash[:alert] = t('.failure')
+    end
   end
 
   def update
-    @vehicle.update(vehicle_params)
+    if @vehicle.update(vehicle_params)
+      flash[:success] = t('.success', vehicle_id: @vehicle.id)
     respond_with(@vehicle)
+      else
+      flash[:alert] = t('.failure', vehicle_id: @vehicle.id)
+    end
   end
 
   def destroy
-    @vehicle.destroy
+    if @vehicle.destroy
+      flash[:success] = t('.success', vehicle_id: @vehicle.id)
     respond_with(@vehicle)
+    else
+     flash[:alert] = t('.failure', vehicle_id: @vehicle.id)
+    end
   end
 
   private

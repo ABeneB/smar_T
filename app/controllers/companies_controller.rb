@@ -28,18 +28,30 @@ class CompaniesController < ApplicationController
 
   def create
       @company = Company.new(company_params)
-      @company.save
+      if @company.save
+      flash[:success] = t('.success', company_id: @company.id)
       respond_with(@company)
+      else
+     flash[:alert] = t('.failure')
+     end
   end
 
   def update
-      @company.update(company_params)
+      if @company.update(company_params)
+      flash[:success] = t('.success', company_id: @company.id)
       respond_with(@company)
+     else
+     flash[:alert] = t('.failure', company_id: @company.id) 
+     end
   end
 
   def destroy
-      @company.destroy
+      if @company.destroy
+      flash[:success] = t('.success', company_id: @company.id)
       respond_with(@company)
+     else
+	flash[:alert] = t('.failure', company_id: @company.id) 
+     end
   end
 
   private

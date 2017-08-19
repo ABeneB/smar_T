@@ -27,21 +27,32 @@ class RegisteredUsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    @user.save
+    if @user.save
+      flash[:success] = t('.success', user_id: @user.id)
     redirect_to(registered_user_path(@user))
+      else
+        flash[:alert] = t('.failure')
+        render 'new'
+    end
   end
 
   def update
     if @user.update_attributes(user_params)
+      flash[:success] = t('.success', user_id: @user.id)
       redirect_to(registered_user_path(@user))
     else
+      flash[:alert] = t('.failure', user_id: @user.id)
       render("edit")
     end
   end
 
   def destroy
-    @user.destroy
+    if @user.destroy
+      flash[:success] = t('.success', user_id: @user.id)
     redirect_to(registered_user_path)
+      else
+      flash[:alert] = t('.failure', user_id: @user.id)
+    end
   end
 
   private

@@ -27,18 +27,30 @@ class RestrictionsController < ApplicationController
 
   def create
     @restriction = Restriction.new(restriction_params)
-    @restriction.save
+    if @restriction.save
+      flash[:success] = t('.success', restriction_id: @restriction.id)
     respond_with(@restriction)
+      else
+      flash[:alert] = t('.failure')
+    end
   end
 
   def update
-    @restriction.update(restriction_params)
+    if @restriction.update(restriction_params)
+      flash[:success] = t('.success', restriction_id: @restriction.id)
     respond_with(@restriction)
+      else
+      flash[:alert] = t('.failure', restriction_id: @restriction.id)
+    end
   end
 
   def destroy
-    @restriction.destroy
+    if @restriction.destroy
+       flash[:success] = t('.success', restriction_id: @restriction.id)
     respond_with(@restriction)
+      else
+      flash[:alert] = t('.failure', restriction_id: @restriction.id)
+    end
   end
 
   private
