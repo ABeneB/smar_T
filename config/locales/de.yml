@@ -1,0 +1,116 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+de:
+ hello: "Hallo Welt"
+ customer: "Kunde"
+ company: "Unternehmen"
+ customers:
+  create:
+    success: "Kunde %{customer_id} wurde erfolgreich angelegt"
+    failure: "Kunde konnte nicht angelegt werden"
+  update:
+   success: "Kunde %{customer_id} wurde aktualisiert"
+   failure: "Kunde %{customer_id} konnte nicht aktualisiert werden"
+  destroy:
+   success: "Kunde %{customer_id} wurde gelöscht"
+   failure: "Kunde %{customer_id} konnte nicht gelöscht werden"
+ companies:
+  create:
+   success: "Unternehmen %{company_id} wurde erfolgreich angelegt"
+   failure: "Unternehmen konnte nicht angelegt werden"
+  update:
+   success: "Unternehmen %{company_id} wurde aktualisiert"
+   failure: "Unternehmen %{company_id} konnte nicht aktualisiert werden"
+  destroy:
+   success: "Unternehmen %{company_id} wurde gelöscht"
+   failure: "Unternehmen %{company_id} konnte nicht gelöscht werden"
+ depots:
+  create:
+   success: "Depot %{depot_id} wurde erfolgreich angelegt"
+   failure: "Depot konnte nicht angelegt werden"
+  update:
+   success: "Depot %{depot_id} wurde aktualisiert"
+   failure: "Depot %{depot_id} konnte nicht aktualisiert werden"
+  destroy:
+   success: "Depot %{depot_id} wurde gelöscht"
+   failure: "Depot %{depot_id} konnte nicht gelöscht werden"
+ drivers:
+  create:
+   success: "Fahrer %{driver_id} wurde erfolgreich angelegt"
+   failure: "Fahrer konnte nicht angelegt werden"
+  update:
+   success: "Fahrer %{driver_id} wurde aktualisiert"
+   failure: "Fahrer %{driver_id} konnte nicht aktualisiert werden"
+  destroy:
+   success: "Fahrer %{driver_id} wurde gelöscht"
+   failure: "Fahrer %{driver_id} konnte nicht gelöscht werden"
+ orders:
+  create:
+   success: "Auftrag %{order_id} wurde erfolgreich angelegt"
+   failure: "Auftrag konnte nicht angelegt werden"
+  update:
+   success: "Auftrag %{order_id} wurde aktualisiert"
+   failure: "Auftrag %{order_id} konnte nicht aktualisiert werden"
+  destroy:
+   success: "Auftrag %{order_id} wurde gelöscht"
+   failure: "Auftrag %{order_id} konnte nicht gelöscht werden"
+ registered_users:
+  create:
+   success: "Benutzer %{user_id} wurde erfolgreich angelegt"
+   failure: "Benutzer konnte nicht angelegt werden"
+  update:
+   success: "Benutzer %{user_id} wurde aktualisiert"
+   failure: "Benutzer %{user_id} konnte nicht aktualisiert werden"
+  destroy:
+   success: "Benutzer %{user_id} wurde gelöscht"
+   failure: "Benutzer %{user_id} konnte nicht gelöscht werden"
+ restrictions:
+  create:
+   success: "Beschränkung %{restriction_id} wurde erfolgreich angelegt"
+   failure: "Beschränkung konnte nicht angelegt werden"
+  update:
+   success: "Beschränkung %{restriction_id} wurde aktualisiert"
+   failure: "Beschränkung %{restriction_id} konnte nicht aktualisiert werden"
+  destroy:
+   success: "Beschränkung %{restriction_id} wurde gelöscht"
+   failure: "Beschränkung %{restriction_id} konnte nicht gelöscht werden"
+ tours:
+  create:
+   success: "Tour %{tour_id} wurde erfolgreich angelegt"
+   failure: "Tour konnte nicht angelegt werden"
+  update:
+   success: "Tour %{tour_id} wurde aktualisiert"
+   failure: "Tour %{tour_id} konnte nicht aktualisiert werden"
+  destroy:
+   success: "Tour %{tour_id} wurde gelöscht"
+   failure: "Tour %{tour_id} konnte nicht gelöscht werden"
+ vehicles:
+  create:
+   success: "Fahrzeug %{vehicle_id} wurde erfolgreich angelegt"
+   failure: "Fahrzeug konnte nicht angelegt werden"
+  update:
+   success: "Fahrzeug %{vehicle_id} wurde aktualisiert"
+   failure: "Fahrzeug %{vehicle_id} konnte nicht aktualisiert werden"
+  destroy:
+   success: "Fahrzeug %{vehicle_id} wurde gelöscht"
+   failure: "Fahrzeug %{vehicle_id} konnte nicht gelöscht werden"
+
