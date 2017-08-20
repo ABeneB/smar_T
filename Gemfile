@@ -73,6 +73,8 @@ gem 'validates_formatting_of'
 
 gem 'rails-i18n', github: 'svenfuchs/rails-i18n', branch: 'rails-4-x' # For 4.x
 gem 'devise-i18n'
+gem 'client_side_validations'
+gem 'client_side_validations-simple_form'
 
 group :development do
   gem 'capistrano'
