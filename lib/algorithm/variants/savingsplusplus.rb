@@ -65,19 +65,32 @@ module Algorithm
                 # replace ti by combined tour with highest saving
                 compatible_tour_pair.tour1 = best_saving_tour
                 compatible_tour_pair.order_tours = extract_order_tours(compatible_tour_pair.tour1, compatible_tour_pair.tour2)
-                calc_saving_for_combined_tour_pair(compatible_tour_pair)
-                compatible_tour_pair
+                combined_tour = create_tour_by_order_tours(compatible_tour_pair.order_tours)
+                if check_restriction(combined_tour, @driver)
+                  calc_saving_for_combined_tour_pair(compatible_tour_pair)
+                  compatible_tour_pair
+                else
+                  nil
+                end
               elsif compatible_tour_pair.tour2 == best_saving_tour_pair.tour1
                 # replace ti by combined tour with highest saving
                 compatible_tour_pair.tour2 = best_saving_tour
                 compatible_tour_pair.order_tours = extract_order_tours(compatible_tour_pair.tour1, compatible_tour_pair.tour2)
-                calc_saving_for_combined_tour_pair(compatible_tour_pair)
+                combined_tour = create_tour_by_order_tours(compatible_tour_pair.order_tours)
+                if check_restriction(combined_tour, @driver)
+                  calc_saving_for_combined_tour_pair(compatible_tour_pair)
+                  compatible_tour_pair
+                else
+                  nil
+                end
+              else
+                # if tour_pair does not partially contain best_saving_tour
                 compatible_tour_pair
               end
             }.compact!
 
             update_day_tours(day_tours, best_saving_tour_pair, best_saving_tour)
-            
+
             if compatible_tour_pairs.any?
               compatible_tour_pairs.sort_by! { | compatible_tour_pair | compatible_tour_pair.saving }.reverse!
             else
@@ -110,12 +123,18 @@ module Algorithm
             day_drivers.delete(driver)
             day_tours.delete(tour)
           else
-            order_tours = tour.order_tours.map { |order_tour| order_tour if ["pickup", "delivery"].include?(order_tour.kind) }.compact
+            order_tours = tour.order_tours.map! { |order_tour| order_tour if ["pickup", "delivery"].include?(order_tour.kind) }.compact!
             order_tours.each do |order_tour|
               day_orders.push(order_tour.order)
             end
           end
         end
+      end
+
+      # update the time attribute for order tour depending of prior order tour
+      def update_time(order_tours, index = 1)
+        time = time_for_distance(order_tours[index - 1], order_tours[index])
+        order_tours[index].time = time
       end
 
       private
@@ -127,15 +146,13 @@ module Algorithm
             trivial_tour = build_trivial_tour(order, driver)
             if check_restriction(trivial_tour, driver)
               compatible_trivial_tours.push(trivial_tour)
-            else
-              trivial_tour.destroy
             end
           end
 
           unless compatible_trivial_tours.empty?
             #return driver with lowest tour duration
             driver = compatible_trivial_tours.min_by { |tour| tour.duration }.driver # return tours with lowest tour duration
-            compatible_trivial_tours.each { |tour| tour.destroy }
+            compatible_trivial_tours.map! { |tour| nil } # to delete them from memory
 
             return driver
           end
@@ -160,32 +177,30 @@ module Algorithm
         end
 
         def build_trivial_tour(order, driver)
-          trivial_tour = Tour.create(driver: driver)
-          # startpostion einfügen
+          trivial_tour = TempTour.new(driver: driver, order_tours: [])
+          # starting position
           vehicle_position = create_vehicle_position(driver)
           vehicle_position.tour = trivial_tour
           vehicle_position.place = 0
-          vehicle_position.save
+          trivial_tour.order_tours.push(vehicle_position)
 
-          #depot einfügen
+          # add depot / storage
           depot = create_depot()
           depot.tour = trivial_tour
-          #depot.capacity = driver.vehicle.capacity # Fahrzeug vollbeladen
           depot.place = 1
-          depot.save
+          trivial_tour.order_tours.push(depot)
 
           delivery = create_delivery(order)
           delivery.tour = trivial_tour
           delivery.place = 2
-          delivery.save
+          trivial_tour.order_tours.push(delivery)
 
           home = create_home()
           home.tour = trivial_tour
           home.place = 3
-          home.save
+          trivial_tour.order_tours.push(home)
 
           update_order_tour_times(trivial_tour.order_tours)
-          trivial_tour.save
           return trivial_tour
         end
 
@@ -193,14 +208,13 @@ module Algorithm
         def create_compatible_tour_pairs(tours_1, tours_2 = nil)
           tour_pairs = []
           if tours_2.blank?
-              # build cartesian product of all day_tours without product of same tour and nil objects
+            # build cartesian product of all day_tours without product of same tour and nil objects
             tour_pairs = tours_1.product(tours_1).map { |x, y| [x, y] if x != y }.compact
           else
             tour_pairs = tours_1.product(tours_2)
           end
           compatible_combined_tours = []
           tour_pairs.each do |tour1, tour2|
-
             combined_order_tours_array = extract_order_tours(tour1, tour2)
 
             combined_tour = create_tour_by_order_tours(combined_order_tours_array)
@@ -209,7 +223,7 @@ module Algorithm
               compatible_combined_tours.push(combined_tour_pair)
             end
             # destroy temporary object for checking restriction
-            combined_tour.destroy
+            combined_tour = nil
           end
           compatible_combined_tours
         end
@@ -221,7 +235,8 @@ module Algorithm
         end
 
         def calc_saving_for_combined_tour_pair(combined_tour_pair)
-          combined_tour_duration = calc_tour_duration(combined_tour_pair.order_tours)
+          combined_tour = create_tour_by_order_tours(combined_tour_pair.order_tours)
+          combined_tour_duration = calc_tour_duration(combined_tour.order_tours)
           # if > 0 means the combined tours offers saving
           combined_tour_pair.saving = (combined_tour_pair.tour1.duration + combined_tour_pair.tour2.duration) - combined_tour_duration
         end
@@ -231,7 +246,6 @@ module Algorithm
           # replace tour 1 with combined tour
           day_tours.map! { |tour|
             if tour.equal?(combined_tour_pair.tour1)
-              tour.destroy
               combined_tour
             else
               tour
@@ -240,22 +254,69 @@ module Algorithm
 
           # remove tour 2  / tj from day tours
           day_tours.delete(combined_tour_pair.tour2)
-          combined_tour_pair.tour2.destroy
         end
 
         def create_tour_by_order_tours(order_tours)
-          new_tour = Tour.create(driver: @driver)
+          new_tour = TempTour.new(driver: @driver)
           new_order_tours = []
           order_tours.each_with_index do |order_tour, index|
             new_tour_order_tour = order_tour.dup
-            new_tour_order_tour.tour_id = new_tour.id
+            new_tour_order_tour.tour = new_tour
             new_tour_order_tour.place = index
-            new_tour_order_tour.save
             new_order_tours.push(new_tour_order_tour)
           end
+          new_tour.order_tours = new_order_tours
           update_order_tour_times(new_order_tours)
           new_tour
         end
+
+      def create_vehicle_position(driver)
+        vehicle_position = TempOrderTour.new()
+        vehicle_position.order = nil
+        vehicle_position.comment = "Start der Tour"
+        vehicle_position.kind = "vehicle_position"
+        vehicle_position.capacity_status = 0
+        vehicle_position.time = 0
+
+        return vehicle_position
+      end
+
+      def create_home()
+        home = TempOrderTour.new()
+        home.order = nil
+        home.comment = "Ende der Tour"
+        home.kind = "home"
+
+        return home
+      end
+
+        # erstellt OrderTour depot
+      def create_depot()
+        depot = TempOrderTour.new()
+        depot.order = nil
+        depot.comment = "Warenbestand auffüllen"
+        depot.kind = "depot"
+
+        return depot
+      end
+
+      def create_delivery(order)
+        order_tour_delivery = TempOrderTour.new()
+        order_tour_delivery.order = order
+        order_tour_delivery.comment = order.comment
+        order_tour_delivery.kind = "delivery"
+
+        return order_tour_delivery
+      end
+
+      def create_pickup(order)
+        order_tour_pickup = TempOrderTour.new
+        order_tour_pickup.order = order
+        order_tour_pickup.comment = order.comment
+        order_tour_pickup.kind = "pickup"
+
+        return order_tour_pickup
+      end
 
         # Recalculates savings for all tour pairs containing tour
         def recalculate_savings(compatible_tour_pairs, tour)
@@ -267,18 +328,17 @@ module Algorithm
         # extract order tours from arguments for using in CombinedTourPair object
         def extract_order_tours(tour1, tour2)
           # combine tours
-          # tour1_orders.values_at(0..(tour1_orders.length - 2)) // ignore home (last element)
-          tour1_part = tour1.order_tours[0..(tour1.order_tours.length - 2)].map { |order_tour| order_tour.dup }
-          # tour2_orders.values_at(2..(tour2_orders.length - 1)) // ignore vehicle position and depot (first elements)
-          tour2_part = tour2.order_tours[2..(tour2.order_tours.length - 1)].map { |order_tour| order_tour.dup }
+          # ignore home (last element)
+          tour1_part = tour1.order_tours[0..(tour1.order_tours.length - 2)].map { |tour| tour.dup }
+          # ignore vehicle position and depot (first elements)
+          tour2_part = tour2.order_tours[2..(tour2.order_tours.length - 1)].map { |tour| tour.dup }
 
           combined_order_tours_array = tour1_part.concat(tour2_part)
           combined_order_tours_array.each_with_index do  |order_tour, index|
+            order_tour.tour = nil
             order_tour.place = index
-            order_tour.save
           end
 
-          update_order_tour_times(combined_order_tours_array) # necessary because in create_tour_by_order_tours duplicated order tours are used
           return combined_order_tours_array
         end
 
