@@ -3,6 +3,17 @@ class TempOrderTour
 
   attr_accessor :tour, :order, :place, :comment, :capacity_status, :time, :kind
 
+
+  def save(tour)
+    OrderTour.create(order: self.order,
+                     tour: tour,
+                     place: self.place,
+                     comment: self.comment,
+                     capacity_status: self.capacity_status,
+                     time: self.time,
+                     kind: self.kind)
+  end
+
   def capacity
     if ["delivery", "pickup"].include?(self.kind) # one of them
       return self.order.capacity

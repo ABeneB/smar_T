@@ -11,7 +11,7 @@ module Algorithm
           @driver = nil
           day_tours = init(day_orders, day_drivers)
           optimize(day_tours)
-          # saveTours(day_tours, day_orders, day_drivers)
+          saveTours(day_tours, day_orders, day_drivers)
         end
       end
 
@@ -115,7 +115,8 @@ module Algorithm
         day_tours.delete(best_tour)
 
         # for remaining tours in day_tours search for best driver
-        day_tours.each do |tour|
+        for i in (day_tours.count - 1).downto(0)
+          tour = day_tours[i]
           driver = best_driver_for_tour(tour, day_drivers)
           if driver
             tour.driver = driver
@@ -162,7 +163,6 @@ module Algorithm
         def best_driver_for_tour(tour, drivers)
           compatible_drivers_for_tour = []
           drivers.each do |driver|
-            #TODO  sollte lieber geclont werden bevor driver geändert wird / associations müssen erhalten sein
             tour.driver = driver
             if check_restriction(tour, driver)
               compatible_drivers_for_tour.push([driver, tour.duration])
@@ -171,9 +171,10 @@ module Algorithm
 
           unless compatible_drivers_for_tour.empty?
             best_driver = compatible_drivers_for_tour.min_by { |driver, duration| duration }[0]
-            return best_driver
+            best_driver
+          else
+            nil
           end
-          return nil
         end
 
         def build_trivial_tour(order, driver)
@@ -351,7 +352,6 @@ module Algorithm
             order_tours.each do |order_tour|
               trivial_tour = build_trivial_tour(order_tour.order, driver)
               accum_duration += trivial_tour.duration
-              trivial_tour.destroy
             end
 
             if accum_duration == 0
