@@ -358,10 +358,10 @@ module Algorithm
               accum_duration = 1
             end
 
-            return tour.duration / accum_duration
+            return tour.duration / accum_duration.to_f
+          else
+            return 10000
           end
-        else
-          return 10000
         end
     end
   end
