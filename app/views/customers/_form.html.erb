@@ -4,7 +4,7 @@
     <%= f.input :name %>
     <%= f.input :address %>
     <%= f.input :telefon %>
-    <%= f.input :priority %>
+    <%= f.input :priority, collection: ['A', 'B', 'C', 'D', 'E'], prompt: :translate %>
     <%= f.button :submit %>
   <% end %>
 <% elsif %>

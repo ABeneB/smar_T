@@ -113,4 +113,9 @@ de:
   destroy:
    success: "Fahrzeug %{vehicle_id} wurde gelöscht"
    failure: "Fahrzeug %{vehicle_id} konnte nicht gelöscht werden"
-
+ simple_form:
+  prompts:
+   customers:
+    priority: "Bitte wählen Sie aus"
+ helpers:
+  actions: "Aktionen"
