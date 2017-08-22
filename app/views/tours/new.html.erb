@@ -23,9 +23,9 @@
           <td><%= tour.duration %></td>
           <td><%= tour.order_tours.count %></td>
           <td><%=l tour.created_at, format: :long %></td>
-          <td><%= link_to 'Show', tour, :class => 'btn btn-info btn-xs' %></td>
-          <td><%= link_to 'Destroy', tour, method: :delete, 
-          data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
+          <td><%= link_to t('helpers.links.show'), tour, :class => 'btn btn-info btn-xs' %></td>
+          <td><%= link_to t('helpers.links.destroy'), tour, method: :delete, 
+          data: { confirm: t('helpers.links.confirm') }, :class => 'btn btn-danger btn-xs' %></td>
         </tr>
       <% end %>
     </tbody>

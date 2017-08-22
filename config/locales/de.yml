@@ -23,6 +23,21 @@ de:
  hello: "Hallo Welt"
  customer: "Kunde"
  company: "Unternehmen"
+ driver: "Fahrer"
+ vehicle: "Fahrzeug"
+ user: "Benutzer"
+ restriction: "Beschränkung"
+ depot: "Depot"
+ edit: "bearbeiten"
+ new_customer: "Neuer Kunde"
+ new_customer: "Neue Tour"
+ new_customer: "Neuer Auftrag"
+ new_customer: "Neuer Fahrer"
+ new_customer: "Neues Fahrzeug"
+ new_customer: "Neuer Benutzer"
+ new_customer: "Neue Beschränkung"
+ new_customer: "Neues Unternehmen"
+ new_depot: "Neues Depot"
  customers:
   create:
     success: "Kunde %{customer_id} wurde erfolgreich angelegt"
@@ -119,3 +134,22 @@ de:
     priority: "Bitte wählen Sie aus"
  helpers:
   actions: "Aktionen"
+  links:
+   back: "Zurück"
+   cancel: "Abbrechen"
+   confirm: "Sind Sie sich sicher?"
+   destroy: "Löschen"
+   new: "Neu"
+   edit: "Bearbeiten"
+   show: "Anzeigen"
+  titles:
+   edit: "Bearbeiten"
+   save: "Speichern"
+   new: "Neu"
+   delete: "Löschen"
+
+ attributes:
+  name: "Name"
+  address: "Adresse"
+  telefon: "Telefonnummer"
+  created_at: "Erstellt am"
