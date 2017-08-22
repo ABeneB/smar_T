@@ -1,16 +1,16 @@
 <% if current_user.role == "admin" %>
   <%= simple_form_for @depot do |f| %>
-    <%= f.association :company %>
-    <%= f.input :name %>
-    <%= f.input :address %>
-    <%= f.input :duration %>
-    <%= f.button :submit %>
+    <%= f.association :company, prompt: :translate %>
+    <%= f.input :name, prompt: :translate %>
+    <%= f.input :address, prompt: :translate %>
+    <%= f.input :duration, prompt: :translate %>
+    <%= f.button :submit, prompt: :translate %>
   <% end %>
 <% elsif %>
   <%= simple_form_for @depot do |f| %>
-    <%= f.input :name %>
-    <%= f.input :address %>
-    <%= f.input :duration %>
-    <%= f.button :submit %>
+    <%= f.input :name, prompt: :translate %>
+    <%= f.input :address, prompt: :translate %>
+    <%= f.input :duration, prompt: :translate %>
+    <%= f.button :submit, prompt: :translate %>
   <% end %>
 <% end %>
