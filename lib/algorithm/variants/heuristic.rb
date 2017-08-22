@@ -1,3 +1,6 @@
+require 'algorithm/enums/algorithm_enum'
+require 'algorithm/enums/status_enum'
+
 module Algorithm
   module Variants
 
@@ -13,7 +16,7 @@ module Algorithm
       end
 
       def check_restriction(tour, driver)
-        tour_stops = tour.order_tours
+        tour_stops = tour.is_a?(Array) ? tour : tour.order_tours
         if @company.time_window_restriction?
           if time_window?(tour_stops)
             return false
@@ -27,7 +30,7 @@ module Algorithm
         end
 
         if @company.work_time_restriction?
-          if working_time?(tour, driver)
+          if working_time?(tour_stops, driver)
             return false
           end
         end
@@ -140,9 +143,9 @@ module Algorithm
 
         # Überprüfen ob working time eingehalten wird
         # Kann dazu führen, kann das keine Tour gebildet wird! Passiert vor allem bei nur einem Fahrer
-        def working_time?(tour, driver) # liefert true, wenn gegen restriction verstoßen wird
+        def working_time?(tour_stops, driver) # liefert true, wenn gegen restriction verstoßen wird
           # Prüfen ob die Tourdauer > als working_time vom Driver
-          if tour.duration > driver.working_time
+          if calc_tour_duration(tour_stops) > driver.working_time
             # true wenn tour zu lang ist
             return true
           end
@@ -150,7 +153,6 @@ module Algorithm
         end
 
         def create_vehicle_position(driver)
-          driver_vehicle = Vehicle.where(driver: driver).first
           # carrier.vehicle.position einsetzen als OrderTour
           vehicle_position = OrderTour.new()
           vehicle_position.order_id = nil

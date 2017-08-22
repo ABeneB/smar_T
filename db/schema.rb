@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170727091101) do
+ActiveRecord::Schema.define(version: 20170822140418) do
 
   create_table "companies", force: true do |t|
     t.string   "name"
@@ -119,6 +119,7 @@ ActiveRecord::Schema.define(version: 20170727091101) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "status"
+    t.integer  "algorithm"
   end
 
   add_index "tours", ["driver_id"], name: "index_tours_on_driver_id"
