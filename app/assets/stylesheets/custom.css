@@ -128,7 +128,7 @@ height: 100%;
 width: 200px;
 text-align: center;
 max-height: 50px;
-
+padding-top: 10px;
 }
 
 /*Logo properties*/
@@ -137,7 +137,7 @@ max-height: 50px;
 
 display: inline;
 max-width: none;
-width: 75px;
+width: 80px;
 filter:invert(100%);
 
 }
