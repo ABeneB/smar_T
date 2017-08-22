@@ -205,3 +205,19 @@ background-color: #494d55;
 .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
   background-color: #3792d5;
 }
+
+.btn.btn-xs{
+color: white;
+}
+
+.btn.btn-primary{
+color: #333333;
+background-color: white;
+border-color: #cccccc;
+}
+
+.btn.btn-primary:hover{
+color: #333333;
+background-color: #e6e6e6;
+border-color: #adadad;
+}
