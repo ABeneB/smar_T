@@ -37,6 +37,7 @@
             <td><%= restriction.capacity_restriction %></td>
             <td><%= restriction.priorities %></td>
             <td><%= restriction.work_time %></td>
+	    <td><%= restriction.created_at %></td>
             <td><%= link_to t('helpers.links.show'), restriction, :class => 'btn btn-info btn-xs' %></td>
             <td><%= link_to t('helpers.links.edit'), edit_restriction_path(restriction), :class => 'btn btn-warning btn-xs' %></td>
             <td><%= link_to t('helpers.links.destroy'), restriction, method: :delete,

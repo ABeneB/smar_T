@@ -29,16 +29,11 @@ de:
  restriction: "Beschränkung"
  depot: "Depot"
  edit: "bearbeiten"
- new_customer: "Neuer Kunde"
- new_customer: "Neue Tour"
- new_customer: "Neuer Auftrag"
- new_customer: "Neuer Fahrer"
- new_customer: "Neues Fahrzeug"
- new_customer: "Neuer Benutzer"
- new_customer: "Neue Beschränkung"
- new_customer: "Neues Unternehmen"
- new_depot: "Neues Depot"
  customers:
+  new:
+   title: "Neuer Kunde"
+  edit:
+   title: "Kunde bearbeiten"
   create:
     success: "Kunde %{customer_id} wurde erfolgreich angelegt"
     failure: "Kunde konnte nicht angelegt werden"
@@ -49,6 +44,10 @@ de:
    success: "Kunde %{customer_id} wurde gelöscht"
    failure: "Kunde %{customer_id} konnte nicht gelöscht werden"
  companies:
+  new:
+   title: "Neues Unternehmen"
+  edit:
+   title: "Unternehmen bearbeiten"
   create:
    success: "Unternehmen %{company_id} wurde erfolgreich angelegt"
    failure: "Unternehmen konnte nicht angelegt werden"
@@ -59,6 +58,10 @@ de:
    success: "Unternehmen %{company_id} wurde gelöscht"
    failure: "Unternehmen %{company_id} konnte nicht gelöscht werden"
  depots:
+  new:
+   title: "Neues Depot"
+  edit:
+   title: "Depot bearbeiten"
   create:
    success: "Depot %{depot_id} wurde erfolgreich angelegt"
    failure: "Depot konnte nicht angelegt werden"
@@ -69,6 +72,10 @@ de:
    success: "Depot %{depot_id} wurde gelöscht"
    failure: "Depot %{depot_id} konnte nicht gelöscht werden"
  drivers:
+  new:
+   title: "Neuer Fahrer"
+  edit:
+   title: "Fahrer bearbeiten"
   create:
    success: "Fahrer %{driver_id} wurde erfolgreich angelegt"
    failure: "Fahrer konnte nicht angelegt werden"
@@ -79,6 +86,10 @@ de:
    success: "Fahrer %{driver_id} wurde gelöscht"
    failure: "Fahrer %{driver_id} konnte nicht gelöscht werden"
  orders:
+  new:
+   title: "Neuer Auftrag"
+  edit:
+   title: "Auftrag bearbeiten"
   create:
    success: "Auftrag %{order_id} wurde erfolgreich angelegt"
    failure: "Auftrag konnte nicht angelegt werden"
@@ -89,6 +100,10 @@ de:
    success: "Auftrag %{order_id} wurde gelöscht"
    failure: "Auftrag %{order_id} konnte nicht gelöscht werden"
  registered_users:
+  new:
+   title: "Neuer Benutzer"
+  edit:
+   title: "Benutzer bearbeiten"
   create:
    success: "Benutzer %{user_id} wurde erfolgreich angelegt"
    failure: "Benutzer konnte nicht angelegt werden"
@@ -99,6 +114,10 @@ de:
    success: "Benutzer %{user_id} wurde gelöscht"
    failure: "Benutzer %{user_id} konnte nicht gelöscht werden"
  restrictions:
+  new:
+   title: "Neue Beschränkung"
+  edit:
+   title: "Beschränkung bearbeiten"
   create:
    success: "Beschränkung %{restriction_id} wurde erfolgreich angelegt"
    failure: "Beschränkung konnte nicht angelegt werden"
@@ -109,6 +128,10 @@ de:
    success: "Beschränkung %{restriction_id} wurde gelöscht"
    failure: "Beschränkung %{restriction_id} konnte nicht gelöscht werden"
  tours:
+  new:
+   title: "Neue Tour"
+  edit:
+   title: "Tour bearbeiten"
   create:
    success: "Tour %{tour_id} wurde erfolgreich angelegt"
    failure: "Tour konnte nicht angelegt werden"
@@ -119,6 +142,10 @@ de:
    success: "Tour %{tour_id} wurde gelöscht"
    failure: "Tour %{tour_id} konnte nicht gelöscht werden"
  vehicles:
+  new:
+   title: "Neues Fahrzeug"
+  edit:
+   title: "Fahrzeug bearbeiten"
   create:
    success: "Fahrzeug %{vehicle_id} wurde erfolgreich angelegt"
    failure: "Fahrzeug konnte nicht angelegt werden"
@@ -153,3 +180,10 @@ de:
   address: "Adresse"
   telefon: "Telefonnummer"
   created_at: "Erstellt am"
+  problem: "Problem"
+  dynamic: "Dynamisch"
+  multi_vehicle: "Mehrere Fahrzeuge"
+  time_window: "Zeitfenster"
+  capacity_restriction: "Kapazitätsbeschränkung"
+  priorities: "Prioritäten"
+  work_time: "Arbeitszeit"
