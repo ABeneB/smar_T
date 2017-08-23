@@ -25,15 +25,15 @@ class DeveloperController < ApplicationController
         Driver.destroy_all
         Vehicle.destroy_all
 
-        driver = Driver.new({'name' => 'Jobs', 'working_time' => '400', 'user_id' => current_user.id, 'activ' => true})
+        driver = Driver.new({'name' => 'Jobs', 'working_time' => '480', 'user_id' => current_user.id, 'activ' => true})
         driver.save
         Vehicle.new({'position' => current_user.company.address, 'capacity' => '100', 'driver_id' => driver.id}).save
 
-        driver = Driver.new({'name' => 'Gates', 'working_time' => '400', 'user_id' => current_user.id, 'activ' => true})
+        driver = Driver.new({'name' => 'Gates', 'working_time' => '480', 'user_id' => current_user.id, 'activ' => true})
         driver.save
         Vehicle.new({'position' => current_user.company.address, 'capacity' => '100', 'driver_id' => driver.id}).save
 
-        driver = Driver.new({'name' => 'Ballmer', 'working_time' => '400', 'user_id' => current_user.id, 'activ' => true})
+        driver = Driver.new({'name' => 'Ballmer', 'working_time' => '480', 'user_id' => current_user.id, 'activ' => true})
         driver.save
         Vehicle.new({'position' => current_user.company.address, 'capacity' => '100', 'driver_id' => driver.id}).save
 
