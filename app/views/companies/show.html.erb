@@ -22,7 +22,7 @@
     <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                 company_path(@company),
                 :method => 'delete',
-                :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => t('helpers.links.confirm'))) },
                 :class => 'btn btn-danger' %>
   </div>
 
@@ -45,7 +45,7 @@
               <td><%= driver.id %></td>
               <td><%= driver.name %></td>
               <td><%= driver.vehicle.try(:position) %></td>
-              <td><%= link_to 'Show', driver_path(driver), :class => 'btn btn-info btn-xs' %></td>
+              <td><%= link_to t('helpers.links.show'), driver_path(driver), :class => 'btn btn-info btn-xs' %></td>
             </tr>
           <% end %>
         </tbody>

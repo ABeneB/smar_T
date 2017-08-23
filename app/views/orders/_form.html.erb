@@ -1,29 +1,29 @@
 <% if current_user.role == "admin" %>
   <%= simple_form_for @order do |f| %>
-    <%= f.association :customer %>
-    <%= f.input :pickup_location %>
-    <%= f.input :duration_pickup %>
-    <%= f.input :delivery_location %>
-    <%= f.input :duration_delivery %>
-    <%= f.input :start_time %>
-    <%= f.input :end_time %>
-    <%= f.input :capacity %>
-    <%= f.input :comment %>
-    <%= f.input :activ %>
-    <%= f.button :submit %>
+    <%= f.association :customer, prompt: :translate %>
+    <%= f.input :pickup_location, prompt: :translate %>
+    <%= f.input :duration_pickup, prompt: :translate %>
+    <%= f.input :delivery_location, prompt: :translate %>
+    <%= f.input :duration_delivery, prompt: :translate %>
+    <%= f.input :start_time, prompt: :translate %>
+    <%= f.input :end_time, prompt: :translate %>
+    <%= f.input :capacity, prompt: :translate %>
+    <%= f.input :comment, prompt: :translate %>
+    <%= f.input :activ, prompt: :translate %>
+    <%= f.button :submit, prompt: :translate %>
   <% end %>
 <% elsif current_user.role == "planer" %>
   <%= simple_form_for @order do |f| %>
-    <%= f.association :customer %>
-    <%= f.input :pickup_location %>
-    <%= f.input :duration_pickup %>
-    <%= f.input :delivery_location %>
-    <%= f.input :duration_delivery %>
-    <%= f.input :start_time %>
-    <%= f.input :end_time %>
-    <%= f.input :capacity %>
-    <%= f.input :comment %>
-    <%= f.input :activ %>
-    <%= f.button :submit %>
+    <%= f.association :customer, prompt: :translate %>
+    <%= f.input :pickup_location, prompt: :translate %>
+    <%= f.input :duration_pickup, prompt: :translate %>
+    <%= f.input :delivery_location, prompt: :translate %>
+    <%= f.input :duration_delivery, prompt: :translate %>
+    <%= f.input :start_time, prompt: :translate %>
+    <%= f.input :end_time, prompt: :translate %>
+    <%= f.input :capacity, prompt: :translate %>
+    <%= f.input :comment, prompt: :translate %>
+    <%= f.input :activ, prompt: :translate %>
+    <%= f.button :submit, prompt: :translate %>
   <% end %>
 <% end %>

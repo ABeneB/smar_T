@@ -7,6 +7,9 @@
       <% if current_user.company.nil? %>
         <div class="alert alert-info">Ihrem Benutzeraccount wurde noch kein Unternehmen zugewiesen. Sie können daher keine Kunden anlegen.</div>
       <% else %>
+	<%= link_to t('.new', :default => t("helpers.links.new")),
+                  new_customer_path,
+                  :class => 'btn btn-primary' %>
         <table class="table table-striped">
           <thead>
             <tr>
@@ -36,17 +39,14 @@
                 <td><%= customer.address %></td>
                 <td><%= customer.telefon %></td>
                 <td><%= customer.priority %></td>
-                <td><%= link_to 'Anzeigen', customer, :class => 'btn btn-info btn-xs' %></td>
-                <td><%= link_to 'Bearbeiten', edit_customer_path(customer), :class => 'btn btn-warning btn-xs' %></td>
-                <td><%= link_to 'Löschen', customer, method: :delete, data: { confirm: 'Möchten Sie den Kunden wirklich löschen?' }, :class => 'btn btn-danger btn-xs' %></td>
+                <td><%= link_to t('helpers.links.show'), customer, :class => 'btn btn-info btn-xs' %></td>
+                <td><%= link_to t('helpers.links.edit'), edit_customer_path(customer), :class => 'btn btn-warning btn-xs' %></td>
+                <td><%= link_to t('helpers.links.destroy'), customer, method: :delete, data: { confirm: 'Möchten Sie den Kunden wirklich löschen?' }, :class => 'btn btn-danger btn-xs' %></td>
               </tr>
             <% end %>
           </tbody>
         </table>
 
-        <%= link_to t('.new', :default => t("helpers.links.new")),
-                  new_customer_path,
-                  :class => 'btn btn-primary' %>
       <% end %>
     <% else %>
     ZUGANG VERWEIGERT

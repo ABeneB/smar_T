@@ -24,7 +24,7 @@
         <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                     driver_path(@driver),
                     :method => 'delete',
-                    :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                    :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => t('helpers.links.confirm'))) },
                     :class => 'btn btn-danger' %>
       </div>
       <% if @driver.active_tour %>

@@ -1,15 +1,15 @@
 <% if current_user.role == "admin" %>
   <%= simple_form_for @vehicle do |f| %>
-    <%= f.input :position %>
-    <%= f.input :capacity %>
-    <%= f.association :driver %>
-    <%= f.button :submit %>
+    <%= f.input :position, prompt: :translate %>
+    <%= f.input :capacity, prompt: :translate %>
+    <%= f.association :driver, prompt: :translate %>
+    <%= f.button :submit, prompt: :translate %>
   <% end %>
 <% elsif current_user.role =="planer" %>
   <%= simple_form_for @vehicle do |f| %>
-    <%= f.input :position %>
-    <%= f.input :capacity %>
-    <%= f.association :driver %>
-    <%= f.button :submit %>
+    <%= f.input :position, prompt: :translate %>
+    <%= f.input :capacity, prompt: :translate %>
+    <%= f.association :driver, prompt: :translate %>
+    <%= f.button :submit, prompt: :translate %>
   <% end %>
 <% end %>

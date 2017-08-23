@@ -37,18 +37,30 @@ class OrdersController < ApplicationController
 
   def create
     @order = Order.new(order_params)
-    @order.save
+    if @order.save
+      flash[:success] = t('.success', order_id: @order.id)
     respond_with(@order)
+      else
+       flash[:alert] = t('.failure')
+    end
   end
 
   def update
-    @order.update(order_params)
+    if @order.update(order_params)
+      flash[:success] = t('.success', order_id: @order.id)
     respond_with(@order)
+      else
+      flash[:alert] = t('.failure', order_id: @order.id)
+    end
   end
 
   def destroy
-    @order.destroy
+    if @order.destroy
+      flash[:success] = t('.success', order_id: @order.id)
     respond_with(@order)
+      else
+      flash[:alert] = t('.failure', order_id: @order.id)
+    end
   end
 
   private

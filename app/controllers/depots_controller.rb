@@ -42,18 +42,30 @@ class DepotsController < ApplicationController
 
   def create
     @depot = Depot.new(depot_params)
-    @depot.save
-    respond_with(@depot)
+    if @depot.save
+      respond_with(@depot)
+      flash[:success] = t('.success', depot_id: @depot.id)
+    else
+      flash[:alert] = t('.failure')
+    end
   end
 
   def update
-    @depot.update(depot_params)
-    respond_with(@depot)
+    if @depot.update(depot_params)
+      flash[:success] = t('.success', depot_id: @depot.id)
+      respond_with(@depot)
+    else
+      flash[:alert] = t('.failure', depot_id: @depot.id)
+    end
   end
 
   def destroy
-    @depot.destroy
-    respond_with(@depot)
+    if @depot.destroy
+      flash[:success] = t('.success', depot_id: @depot.id)
+      respond_with(@depot)
+    else
+      flash[:alert] = t('.success', depot_id: @depot.id)
+    end
   end
 
   private

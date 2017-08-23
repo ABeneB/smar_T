@@ -7,6 +7,10 @@
       <% if current_user.company.nil? %>
         <div class="alert alert-info">Ihrem Benutzeraccount wurde noch kein Unternehmen zugewiesen. Sie können daher keinen Fahrer anlegen.</div>
       <% else %>
+       <%= link_to t('.new', :default => t("helpers.links.new")),
+                    new_driver_path,
+                    :class => 'btn btn-primary' %>
+
         <table class="table table-striped">
           <thead>
             <tr>
@@ -32,18 +36,15 @@
                 <td><%= driver.activ %></td>
                 <td><%= driver.working_time %></td>
                 <td><%=l driver.created_at, format: :long %></td>
-                <td><%= link_to 'Show', driver, :class => 'btn btn-info btn-xs' %></td>
-                <td><%= link_to 'Edit', edit_driver_path(driver), :class => 'btn btn-warning btn-xs' %></td>
-                <td><%= link_to 'Destroy', driver, method: :delete,
-                data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
+                <td><%= link_to t('helpers.links.show'), driver, :class => 'btn btn-info btn-xs' %></td>
+                <td><%= link_to t('helpers.links.edit'), edit_driver_path(driver), :class => 'btn btn-warning btn-xs' %></td>
+                <td><%= link_to t('helpers.links.destroy'), driver, method: :delete,
+                data: { confirm: t('helpers.links.confirm') }, :class => 'btn btn-danger btn-xs' %></td>
               </tr>
             <% end %>
           </tbody>
         </table>
 
-        <%= link_to t('.new', :default => t("helpers.links.new")),
-                    new_driver_path,
-                    :class => 'btn btn-primary' %>
       <% end %>
     <% else %>
     ZUGANG VERWEIGERT

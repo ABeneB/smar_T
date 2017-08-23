@@ -9,6 +9,11 @@
       <% elsif !current_user.company.drivers.any? %>
         <div class="alert alert-info">Es wurden noch keine Fahrer angelegt.</div>
       <% else %>
+
+      <%= link_to t('.new', :default => t("helpers.links.new")),
+                    new_vehicle_path,
+                    :class => 'btn btn-primary' %>
+
         <table class="table table-striped">
           <thead>
             <tr>
@@ -26,18 +31,15 @@
                 <td><%= vehicle.position %></td>
                 <td><%= vehicle.capacity %></td>
                 <td><%= vehicle.driver_id %></td>
-                <td><%= link_to 'Show', vehicle, :class => 'btn btn-info btn-xs' %></td>
-                <td><%= link_to 'Edit', edit_vehicle_path(vehicle), :class => 'btn btn-warning btn-xs' %></td>
-                <td><%= link_to 'Destroy', vehicle, method: :delete,
-                data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
+                <td><%= link_to t('helpers.links.show'), vehicle, :class => 'btn btn-info btn-xs' %></td>
+                <td><%= link_to t('helpers.links.edit'), edit_vehicle_path(vehicle), :class => 'btn btn-warning btn-xs' %></td>
+                <td><%= link_to t('helpers.links.destroy'), vehicle, method: :delete,
+                data: { confirm: t('helpers.links.confirm') }, :class => 'btn btn-danger btn-xs' %></td>
               </tr>
             <% end %>
           </tbody>
         </table>
 
-        <%= link_to t('.new', :default => t("helpers.links.new")),
-                    new_vehicle_path,
-                    :class => 'btn btn-primary' %>
       <% end %>
     <% else %>
     ZUGANG VERWEIGERT
