@@ -37,14 +37,14 @@
       <input type="text" id="info" disabled>
     <% end %>
   
-    <div style='width: 800px;'>
-      <div id="map" style='width: 900px; height: 400px;'></div>
+    <div style='width: 100%'>
+      <div id="map" style='width: 100%; height: 400px;'></div>
     </div>
 
   </div>
   <script>
     function initMap() {
-      creatMap(document.getElementById('map'));
+      createMap(document.getElementById('map'));
 
       <% @order_tours.each_with_index do | order_tour, index | %>
         setMarker(parseFloat(<%= order_tour.latitude%>), parseFloat(<%= order_tour.longitude %>),"<%=order_tour.place+1%>");
@@ -57,9 +57,9 @@
     }
   </script>
 
-  <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGri49KFy_LkR2nG4q0uZTPsNw_iIWx5A&callback=initMap">
-  </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGri49KFy_LkR2nG4q0uZTPsNw_iIWx5A&callback=initMap">
+    </script>
 
 <% else %>
 ZUGANG VERWEIGERT

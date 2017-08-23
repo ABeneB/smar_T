@@ -1,11 +1,7 @@
-/**
- * Created by Kopp on 12.08.17.
- */
-
 var map;
 var directionsService;
 
-function creatMap(document_map_ID) {
+function createMap(document_map_ID) {
     map = new google.maps.Map(document_map_ID, {
         center: {lat: 51.7491 , lng: 10.29069},
         disableDefaultUI: true,
