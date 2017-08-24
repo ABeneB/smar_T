@@ -130,6 +130,7 @@ de:
  tours:
   new:
    title: "Neue Tour"
+   no_company_assigned: "Ihr Benutzerkonto ist keinem Unternehmen zugeordnet. Bitte kontaktieren Sie den Administrator."
   edit:
    title: "Tour bearbeiten"
   create:

@@ -38,16 +38,13 @@ class ToursController < ApplicationController
   def new
     #Ausgabe nach Rolle filtern
     if current_user.is_admin? || current_user.is_planer?
-      # Orders, Drivers und Company filter/suchen
-      user = User.find(current_user.id)
-      g = Generate.new
-      g.drivers = user.company.drivers.where(activ: true)
-      g.orders = user.company.orders.where(activ: true)
-      g.company = user.company
-      g.user = user
-      # Generate erzeugt und speichert die neuen Touren, OrderTour-Objekte
-      g.generate_tours
-      @tours = current_user.company.tours
+      if current_user.company
+        Algorithm::TourGeneration.generate_tours(current_user.company)
+        @tours = current_user.company.tours
+      else
+        flash[:error] = t('.no_company_assigned')
+      end
+      redirect_to action: 'index'
     end
   end
 
