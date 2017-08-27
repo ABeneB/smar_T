@@ -174,7 +174,16 @@ padding-top: 50px;
 .navbar-right {
     float: right !important;
     margin-right: 0px;
-  }
+
+    .dropdown-toggle{
+        padding: 10px 15px;
+
+        .account-icon {
+            margin: 0px;
+            filter: none;
+        }
+    }
+}
 
 /*Set color of sidebar to gray*/
 
