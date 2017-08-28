@@ -23,7 +23,7 @@ class ToursController < ApplicationController
           {latitude: order_tour.latitude, longitude: order_tour.longitude, place: place.to_s}
         end
       elsif current_user.is_planer?
-        if @tour.company_id == current_user.company_id
+        if @tour.driver.company == current_user.company
           @order_tours = @tour.order_tours.sort_by &:place
           @hash = @order_tours.map do | order_tour|
             place = order_tour.place+1
