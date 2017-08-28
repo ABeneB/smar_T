@@ -29,6 +29,7 @@ de:
  restriction: "Beschränkung"
  depot: "Depot"
  edit: "bearbeiten"
+ welcome_admin: "Herzlich Willkommen, %{name}!"
  customers:
   new:
    title: "Neuer Kunde"
