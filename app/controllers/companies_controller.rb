@@ -60,6 +60,6 @@ class CompaniesController < ApplicationController
     end
 
     def company_params
-      params.require(:company).permit(:user_id, :name, :address, :telefon)
+      params.require(:company).permit(:user_id, :name, :address, :telefon, :google_maps_api_key)
     end
 end
