@@ -48,7 +48,7 @@ class CustomersController < ApplicationController
     @customer.save
     if @customer.save
       flash[:success] = t('.success', customer_id: @customer.id)
-      redirect_to customers_path, notice: "saved"
+      redirect_to customers_path
     else
       flash[:alert] = t('.failure', customer_id: @customer.id)
       render 'new'

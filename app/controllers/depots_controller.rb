@@ -43,8 +43,8 @@ class DepotsController < ApplicationController
   def create
     @depot = Depot.new(depot_params)
     if @depot.save
-      respond_with(@depot)
       flash[:success] = t('.success', depot_id: @depot.id)
+      respond_with(@depot)
     else
       flash[:alert] = t('.failure')
     end
