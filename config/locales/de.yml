@@ -131,6 +131,7 @@ de:
   new:
    title: "Neue Tour"
    no_company_assigned: "Ihr Benutzerkonto ist keinem Unternehmen zugeordnet. Bitte kontaktieren Sie den Administrator."
+   no_google_maps_api_key_assigned: "Ihrem Unternehmen wurde noch kein Google Maps API Key zugewiesen. Bitte kontaktieren Sie den Administrator."
   edit:
    title: "Tour bearbeiten"
   create:

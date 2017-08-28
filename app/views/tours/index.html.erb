@@ -4,6 +4,9 @@
       <div class="page-header">
         <h1><%=t '.title', :default => Tour %></h1>
       </div>
+      <% if current_user.company.google_maps_api_key.nil? || current_user.company.google_maps_api_key.empty? %>
+        <div class="alert alert-warning">Ihrem Unternehmen wurde noch kein Google Maps API Key zugewiesen.</div>
+      <% end %>
       <% if current_user.company.nil? %>
         <div class="alert alert-info">Ihrem Benutzeraccount wurde noch kein Unternehmen zugewiesen. Sie können daher keine Tour anlegen.</div>
       <% else %>
