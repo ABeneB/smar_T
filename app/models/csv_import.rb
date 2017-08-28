@@ -26,7 +26,7 @@ class CsvImport
                 order.customer = Customer.where(name: "Customer Prio " + row[4]).first
                 order.start_time = DateTime.now
                 order.end_time = DateTime.now + 5.hours
-                order.comment = "Medikamente abliefern!"
+                order.comment = "Kaffeebohne ausliefern!"
                 order.activ = true
                 order.save!
             end
