@@ -42,7 +42,7 @@ class DriversController < ApplicationController
     @driver.save
     if @driver.save
       flash[:success] = t('.success', driver_id: @driver.id)
-      redirect_to drivers_path, notice: "saved"
+      redirect_to drivers_path
     else
       flash[:alert] = t('.failure')
       render 'new'
