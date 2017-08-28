@@ -232,3 +232,8 @@ de:
   duration_delivery: "Ausladedauer"
   start_time: "Startzeit"
   end_time: "Endzeit"
+
+ devise:
+  sign_in: "Anmelden"
+  sign_out: "Abmelden"
+  edit_account: "Account bearbeiten"

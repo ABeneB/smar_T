@@ -1,12 +1,12 @@
 <div class="page-header">
-  <h1><%=t ".title", default: "Login" %></h1>
+  <h1><%=t ".sign_in", default: "Login" %></h1>
 </div>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: "form-horizontal form-user"}) do |f| %>
                                                                                                                                         
   
   <div class="form-group">
-    <%= f.label :login, "Username or Email", class: "control-label col-md-4" %>
+    <%= f.label :login, "Username / E-Mail", class: "control-label col-md-4" %>
     <div class="col-md-8">
       <%= f.text_field :login, class: "text-field form-control", html: {spellcheck: "false"} %>
     </div>
@@ -22,7 +22,7 @@
                                                                                                                                         
   <% if devise_mapping.rememberable? -%>
     <div class="form-group">
-      <%= f.label :remember_me, "Remember Me", class: "control-label col-md-4" %>
+      <%= f.label :remember_me, class: "control-label col-md-4" %>
       <div class="col-md-8">
         <%= f.check_box :remember_me %>
       </div>
@@ -31,7 +31,7 @@
                                                                                                                                         
   <div class="form-group">
     <div class="col-md-offset-4 col-md-8">
-      <%= f.submit "Login", class: "btn btn-primary" %>
+      <%= f.submit t('.sign_in'), class: "btn btn-primary" %>
     </div>
   </div>
 
