@@ -16,7 +16,6 @@
 //= require bootstrap
 //= require underscore
 //= require gmaps/google
-//= require gmaps.js
 //= require rails.validations
 //= require rails.validations.simple_form
 
