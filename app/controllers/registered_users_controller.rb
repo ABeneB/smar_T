@@ -52,6 +52,7 @@ class RegisteredUsersController < ApplicationController
     redirect_to(registered_user_path)
       else
       flash[:alert] = t('.failure', user_id: @user.id)
+      redirect_to(registered_user_path)
     end
   end
 

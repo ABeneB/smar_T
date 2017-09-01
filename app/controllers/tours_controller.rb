@@ -63,6 +63,7 @@ class ToursController < ApplicationController
     respond_with(@tour)
       else
       flash[:alert] = t('.failure')
+      render 'new'
     end
   end
 
@@ -72,6 +73,7 @@ class ToursController < ApplicationController
     respond_with(@tour)
       else
         flash[:alert] = t('.failure', tour_id: @tour.id)
+        render("edit")
     end
   end
 
@@ -86,6 +88,7 @@ class ToursController < ApplicationController
     respond_with(@tour)
       else
       flash[:alert] = t('.failure', tour_id: @tour.id)
+      respond_with(@tour)
     end
   end
 

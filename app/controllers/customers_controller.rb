@@ -61,6 +61,7 @@ class CustomersController < ApplicationController
     respond_with(@customer)
     else
     flash[:alert] = t('.failure', customer_id: @customer.id)
+    render("edit")
    end
   end
 
@@ -69,7 +70,8 @@ class CustomersController < ApplicationController
     flash[:success] = t('.success', customer_id: @customer.id)
     respond_with(@customer)
     else
-    flash[:alert] = t('.failure', customer_id: @customer.id) 
+    flash[:alert] = t('.failure', customer_id: @customer.id)
+    respond_with(@customer)
     end
   end
 

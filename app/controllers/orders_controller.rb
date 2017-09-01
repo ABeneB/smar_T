@@ -42,6 +42,7 @@ class OrdersController < ApplicationController
     respond_with(@order)
       else
        flash[:alert] = t('.failure')
+       render 'new'
     end
   end
 
@@ -51,6 +52,7 @@ class OrdersController < ApplicationController
     respond_with(@order)
       else
       flash[:alert] = t('.failure', order_id: @order.id)
+      render("edit")
     end
   end
 
@@ -60,6 +62,7 @@ class OrdersController < ApplicationController
     respond_with(@order)
       else
       flash[:alert] = t('.failure', order_id: @order.id)
+      respond_with(@order)
     end
   end
 

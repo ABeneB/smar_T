@@ -39,6 +39,7 @@ class VehiclesController < ApplicationController
     respond_with(@vehicle)
       else
       flash[:alert] = t('.failure')
+      render 'new'
     end
   end
 
@@ -48,6 +49,7 @@ class VehiclesController < ApplicationController
     respond_with(@vehicle)
       else
       flash[:alert] = t('.failure', vehicle_id: @vehicle.id)
+      render("edit")
     end
   end
 
@@ -57,6 +59,7 @@ class VehiclesController < ApplicationController
     respond_with(@vehicle)
     else
      flash[:alert] = t('.failure', vehicle_id: @vehicle.id)
+     respond_with(@vehicle)
     end
   end
 

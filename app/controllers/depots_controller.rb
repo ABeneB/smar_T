@@ -47,6 +47,7 @@ class DepotsController < ApplicationController
       respond_with(@depot)
     else
       flash[:alert] = t('.failure')
+      render 'new'
     end
   end
 
@@ -56,6 +57,7 @@ class DepotsController < ApplicationController
       respond_with(@depot)
     else
       flash[:alert] = t('.failure', depot_id: @depot.id)
+      render("edit")
     end
   end
 
@@ -65,6 +67,7 @@ class DepotsController < ApplicationController
       respond_with(@depot)
     else
       flash[:alert] = t('.success', depot_id: @depot.id)
+     respond_with(@depot)
     end
   end
 

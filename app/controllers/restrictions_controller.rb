@@ -32,6 +32,7 @@ class RestrictionsController < ApplicationController
     respond_with(@restriction)
       else
       flash[:alert] = t('.failure')
+      render 'new'
     end
   end
 
@@ -41,15 +42,17 @@ class RestrictionsController < ApplicationController
     respond_with(@restriction)
       else
       flash[:alert] = t('.failure', restriction_id: @restriction.id)
+      render("edit")
     end
   end
 
   def destroy
     if @restriction.destroy
        flash[:success] = t('.success', restriction_id: @restriction.id)
-    respond_with(@restriction)
+       respond_with(@restriction)
       else
       flash[:alert] = t('.failure', restriction_id: @restriction.id)
+      respond_with(@restriction)
     end
   end
 

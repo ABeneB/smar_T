@@ -55,6 +55,7 @@ class DriversController < ApplicationController
     respond_with(@driver)
     else
       flash[:alert] = t('.failure', driver_id: @driver.id)
+      render("edit")
     end
   end
 
@@ -64,6 +65,7 @@ class DriversController < ApplicationController
     respond_with(@driver)
     else
       flash[:alert] = t('.failure', driver_id: @driver.id)
+      respond_with(@driver)
     end
   end
 

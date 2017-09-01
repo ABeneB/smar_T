@@ -33,6 +33,7 @@ class CompaniesController < ApplicationController
       respond_with(@company)
       else
      flash[:alert] = t('.failure')
+     render 'new'
      end
   end
 
@@ -41,7 +42,8 @@ class CompaniesController < ApplicationController
       flash[:success] = t('.success', company_id: @company.id)
       respond_with(@company)
      else
-     flash[:alert] = t('.failure', company_id: @company.id) 
+     flash[:alert] = t('.failure', company_id: @company.id)
+     render("edit")
      end
   end
 
@@ -50,7 +52,8 @@ class CompaniesController < ApplicationController
       flash[:success] = t('.success', company_id: @company.id)
       respond_with(@company)
      else
-	flash[:alert] = t('.failure', company_id: @company.id) 
+	flash[:alert] = t('.failure', company_id: @company.id)
+        respond_with(@company)
      end
   end
 
