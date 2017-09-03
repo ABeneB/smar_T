@@ -230,3 +230,9 @@ color: #333333;
 background-color: #e6e6e6;
 border-color: #adadad;
 }
+
+/* Autocompletion fields */
+
+.twitter-typeahead {
+    width: 100%;
+}
