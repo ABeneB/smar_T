@@ -15,8 +15,8 @@ User.create!(username: "user", email: "user@test.de", password: "password", role
 Company.create(name: "My company", address: "Alexanderplatz 7, 10178 Berlin")
 
 # Create sample customers for all categorical priorities
-Customer.create(name: "Customer Prio A", company_id: Company.first.id, priority: "A")
-Customer.create(name: "Customer Prio B", company_id: Company.first.id, priority: "B")
-Customer.create(name: "Customer Prio C", company_id: Company.first.id, priority: "C")
-Customer.create(name: "Customer Prio D", company_id: Company.first.id, priority: "D")
-Customer.create(name: "Customer Prio E", company_id: Company.first.id, priority: "E")
+# Customer.create(name: "Customer Prio A", company_id: Company.first.id, priority: "A")
+# Customer.create(name: "Customer Prio B", company_id: Company.first.id, priority: "B")
+# Customer.create(name: "Customer Prio C", company_id: Company.first.id, priority: "C")
+# Customer.create(name: "Customer Prio D", company_id: Company.first.id, priority: "D")
+# Customer.create(name: "Customer Prio E", company_id: Company.first.id, priority: "E")
