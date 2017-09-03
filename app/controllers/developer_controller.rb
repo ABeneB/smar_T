@@ -19,21 +19,21 @@ class DeveloperController < ApplicationController
         OrderTour.destroy_all
         Order.destroy_all
         Tour.destroy_all
-        CsvImport.new('').import_delivery_orders()
+        CsvImport.new('').import_delivery_orders(current_user.company)
 
         # recreate drivers and vehicles
         Driver.destroy_all
         Vehicle.destroy_all
 
-        driver = Driver.new({'name' => 'Fritz', 'working_time' => '480', 'user_id' => current_user.id, 'activ' => true})
+        driver = Driver.new({'name' => 'Fritz', 'working_time' => '480', 'user_id' => current_user.id, 'active' => true})
         driver.save
         Vehicle.new({'position' => current_user.company.address, 'capacity' => '100', 'driver_id' => driver.id}).save
 
-        driver = Driver.new({'name' => 'Sabine', 'working_time' => '480', 'user_id' => current_user.id, 'activ' => true})
+        driver = Driver.new({'name' => 'Sabine', 'working_time' => '480', 'user_id' => current_user.id, 'active' => true})
         driver.save
         Vehicle.new({'position' => current_user.company.address, 'capacity' => '100', 'driver_id' => driver.id}).save
 
-        driver = Driver.new({'name' => 'Hans-Georg', 'working_time' => '480', 'user_id' => current_user.id, 'activ' => true})
+        driver = Driver.new({'name' => 'Hans-Georg', 'working_time' => '480', 'user_id' => current_user.id, 'active' => true})
         driver.save
         Vehicle.new({'position' => current_user.company.address, 'capacity' => '100', 'driver_id' => driver.id}).save
 

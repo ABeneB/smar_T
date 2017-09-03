@@ -12,8 +12,37 @@ class CsvImport
         self.file_path = "#{Rails.root}/tmp/csv/#{folder}"
     end
 
+    def is_number? string
+        true if Float(string) rescue false
+    end
+
+    def import_delivery_orders(company)
+        get_all_files().each do |file|
+            CSV.foreach(file, col_sep: ";", encoding: 'UTF-8') do |row|
+
+                if is_number?(row[0]) # ignore header and validate customer_reference
+                    order = Order.new
+                    order.customer = Customer.customer_by_customer_reference(row[0].to_i, company, row[1], row[3])
+                    order.delivery_location = row[2]
+                    order.duration_delivery = row[4]
+                    order.capacity = 0
+                    order.start_time = DateTime.now
+                    order.end_time = DateTime.now + 8.hours
+                    order.active = true
+                    order.comment = ""
+                    order.comment2 = ""
+                    order.save!
+                end
+            end
+        end
+        # laden aller csv im ordner
+        # iterrieren über element und gleichzeitiges schreiben der order
+        # überprüfen, das keine Order doppelt ist (manche Zeitfenster enthalten gleiche oder ähnliche orders)
+
+    end
+
     # import aus csv. vom typ delivery aus dem zuvor mitgegebenen folder
-    def import_delivery_orders()
+    def eol_import_delivery_orders()
         # alle .csv files laden
         get_all_files().each do |file|
             # Trennen am Semikolon und zu array aufbereiten
@@ -25,9 +54,9 @@ class CsvImport
                 order.capacity = 0
                 order.customer = Customer.where(name: "Customer Prio " + row[4]).first
                 order.start_time = DateTime.now
-                order.end_time = DateTime.now + 5.hours
+                order.end_time = DateTime.now + 8.hours
                 order.comment = "Kaffeebohne ausliefern!"
-                order.activ = true
+                order.active = true
                 order.save!
             end
         end
