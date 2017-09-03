@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170828092552) do
+ActiveRecord::Schema.define(version: 20170903143307) do
 
   create_table "companies", force: true do |t|
     t.string   "name"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20170828092552) do
     t.string   "name"
     t.float    "latitude"
     t.float    "longitude"
+    t.integer  "customer_reference"
   end
 
   add_index "customers", ["company_id"], name: "index_customers_on_company_id"
@@ -55,7 +56,7 @@ ActiveRecord::Schema.define(version: 20170828092552) do
     t.integer  "user_id"
     t.datetime "work_start_time"
     t.datetime "work_end_time"
-    t.boolean  "activ"
+    t.boolean  "active"
     t.integer  "working_time"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -91,11 +92,12 @@ ActiveRecord::Schema.define(version: 20170828092552) do
     t.string   "comment"
     t.integer  "duration_pickup",   default: 0
     t.integer  "duration_delivery", default: 0
-    t.boolean  "activ"
+    t.boolean  "active"
     t.float    "pickup_lat"
     t.float    "pickup_long"
     t.float    "delivery_lat"
     t.float    "delivery_long"
+    t.string   "comment2"
   end
 
   add_index "orders", ["customer_id"], name: "index_orders_on_customer_id"

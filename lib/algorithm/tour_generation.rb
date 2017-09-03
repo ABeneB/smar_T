@@ -27,12 +27,12 @@ module Algorithm
     def self.preprocess(all_orders, all_drivers)
       orders = preprocess_orders(all_orders)
       #only active drivers
-      drivers = all_drivers.where(activ: true).to_a
+      drivers = all_drivers.where(active: true).to_a
       return orders, drivers
     end
 
     def self.preprocess_orders(all_orders)
-      active_orders = all_orders.where(activ: true)
+      active_orders = all_orders.where(active: true)
       orders = []
       active_orders.each do |order|
         if !order.start_time || order.start_time.try(:today?)

@@ -66,12 +66,16 @@ class OrdersController < ApplicationController
     end
   end
 
+  def import
+    # todo: import orders from uploaded file
+  end
+
   private
     def set_order
       @order = Order.find(params[:id])
     end
 
     def order_params
-      params.require(:order).permit(:address, :customer_id, :pickup_location, :delivery_location, :capacity, :start_time, :end_time, :comment, :duration_pickup, :duration_delivery, :activ)
+      params.require(:order).permit(:address, :customer_id, :pickup_location, :delivery_location, :capacity, :start_time, :end_time, :comment, :duration_pickup, :duration_delivery, :active)
     end
 end

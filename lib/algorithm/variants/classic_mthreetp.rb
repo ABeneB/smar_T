@@ -178,7 +178,7 @@ module Algorithm
           # Order deaktivieren, damit sie in nächsten Planungen nicht versehentlich verplant wird
           # FIXME - Für Produkivbetrieb wieder einkommentieren
           # ToDo
-          order.activ = false
+          order.active = false
           order.save
       end
 

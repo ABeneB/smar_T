@@ -9,7 +9,7 @@
     <%= f.input :end_time, prompt: :translate %>
     <%= f.input :capacity, prompt: :translate %>
     <%= f.input :comment, prompt: :translate %>
-    <%= f.input :activ, prompt: :translate %>
+    <%= f.input :active, prompt: :translate %>
     <%= f.button :submit, prompt: :translate %>
   <% end %>
 <% elsif current_user.role == "planer" %>
@@ -23,7 +23,7 @@
     <%= f.input :end_time, prompt: :translate %>
     <%= f.input :capacity, prompt: :translate %>
     <%= f.input :comment, prompt: :translate %>
-    <%= f.input :activ, prompt: :translate %>
+    <%= f.input :active, prompt: :translate %>
     <%= f.button :submit, prompt: :translate %>
   <% end %>
 <% end %>

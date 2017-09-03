@@ -5,7 +5,7 @@ FactoryGirl.define do
     start_time { DateTime.now + 10.minutes }
     end_time { DateTime.now + 2.hours }
     duration_delivery 20
-    activ true
+    active true
   end
 
   factory :pickup_order, class: Order do
@@ -14,6 +14,6 @@ FactoryGirl.define do
     start_time { DateTime.now + 10.minutes }
     end_time { DateTime.now + 2.hours }
     duration_pickup 20
-    activ true
+    active true
   end
 end

@@ -172,6 +172,7 @@ de:
    new: "Neu"
    edit: "Bearbeiten"
    show: "Anzeigen"
+   import: "Importieren"
   titles:
    edit: "Bearbeiten"
    save: "Speichern"
@@ -221,7 +222,7 @@ de:
   duration: "Dauer"
   priority: "Priorität"
   working_time: "Arbeitszeit"
-  activ: "Aktiv"
+  active: "Aktiv"
   driver: "Fahrer"
   company: "Unternehmen"
   capacity: "Kapazität"
