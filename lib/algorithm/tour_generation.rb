@@ -9,16 +9,16 @@ module Algorithm
       orders, drivers  = preprocess(company.orders, company.drivers)
 
       # classic M3-PDP
-      #classic_m3pdp = Variants::ClassicMThreeTP.new(company, AlgorithmEnum::M3PDP)
-      #classic_m3pdp.run(orders, drivers)
+      classic_m3pdp = Variants::ClassicMThreeTP.new(company, AlgorithmEnum::M3PDP)
+      classic_m3pdp.run(orders, drivers)
 
       # delta M3-PDP
       #delta_m3pdp = Variants::ClassicMThreeTP.new(company, AlgorithmEnum::M3PDPDELTA)
       #delta_m3pdp.run(orders, drivers)
 
       # Savings++ Algorithm
-      savingsplusplus = Variants::SavingsPlusPlus.new(company)
-      savingsplusplus.run(orders, drivers)
+      # savingsplusplus = Variants::SavingsPlusPlus.new(company)
+      # savingsplusplus.run(orders, drivers)
 
       #compare_and_save_tours()
     end

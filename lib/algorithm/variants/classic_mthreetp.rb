@@ -185,14 +185,18 @@ module Algorithm
       # liefert die neue Tour (aufbauend auf der alten) von Drivers inklusive Order
       def build_tour(order, driver)
         # Entsprechend dem Tourenplanungsproblem den Insertionalgorithmus aufrufen
-        if @company.restriction.problem == "PDP"
-          tour = insertion_pdp(order, driver)
-        elsif @company.restriction.problem == "DP"
-          tour = insertion_dp(order, driver)
-        elsif @company.restriction.problem == "PP"
-          tour = insertion_pp(order, driver)
+        unless @company.restriction.nil?
+          if @company.restriction.problem == "PDP"
+            tour = insertion_pdp(order, driver)
+          elsif @company.restriction.problem == "DP"
+            tour = insertion_dp(order, driver)
+          elsif @company.restriction.problem == "PP"
+            tour = insertion_pp(order, driver)
+          end
+          tour # return tour
+        else
+          tour = insertion_dp(order, driver) # default if not restriction is set
         end
-        tour # return tour
       end # end build_tour()
 
       #nicht getestet
@@ -255,9 +259,11 @@ module Algorithm
           update_time(new_tour, index_first+1)
 
           # Wenn eine Capacity_restriction besteht...
-          if @company.restriction.capacity_restriction
-            # ...Order.capacity_status updaten
-            update_capacity(new_tour_index_first)
+          unless @company.restriction.nil?
+            if @company.restriction.capacity_restriction
+              # ...Order.capacity_status updaten
+              update_capacity(new_tour_index_first)
+            end
           end
 
           # Delivery in new_tour einsetzen
@@ -367,9 +373,11 @@ module Algorithm
           update_time(new_tour, index+2)
 
           # Wenn eine Capacity_restriction besteht...
-          if @company.restriction.capacity_restriction
-            # ...Order.capacity_status updaten
-            update_capacity(new_tour, index+2)
+          unless @company.restriction.nil?
+            if @company.restriction.capacity_restriction
+              # ...Order.capacity_status updaten
+              update_capacity(new_tour, index+2)
+            end
           end
 
           # Prüfen ob Beschränkungen eingehalten werden
