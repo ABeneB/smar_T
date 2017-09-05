@@ -1,7 +1,6 @@
 <script src="https://maps.googleapis.com/maps/api/js?v=3&key=<%= current_user.try(:company).try(:google_maps_api_key) %>&libraries=places&language=de"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/dist/typeahead.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead-addresspicker/0.1.4/typeahead-addresspicker.min.js"></script>
+<%= javascript_include_tag 'address_autocomplete' %>
+
 
 <% if current_user.role == "admin" %>
   <%= simple_form_for @vehicle do |f| %>
@@ -18,36 +17,3 @@
     <%= f.button :submit, prompt: :translate %>
   <% end %>
 <% end %>
-
-<script type="text/javascript">
-    var addressPicker = new AddressPicker({
-            language: 'de'
-        }
-    );
-
-    $('#address').typeahead(
-        {
-            highlight: true,
-            minLength: 1
-        },
-        {
-            displayKey: 'description',
-            source: addressPicker.ttAdapter(),
-            templates: {
-              empty: [
-                '<div class="empty-message">No Matches Found</div>'].join('\n')
-            }
-        }
-    );
-
-    var address = "";
-    addressPicker.bindDefaultTypeaheadEvent($('#address'));
-    $(addressPicker).on('addresspicker:selected', function (event, result) {
-        address = result.placeResult.formatted_address;
-        $('#address').val(address);
-    });
-
-    $('#address').on('blur', function (event, result) {
-        $('#address').val(address);
-    });
-</script>

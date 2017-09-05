@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>SmarT</title>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3&key=<%= current_user.try(:company).try(:google_maps_api_key) %>"></script>
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
