@@ -1,5 +1,5 @@
 require 'algorithm/variants/savingsplusplus'
-require 'algorithm/variants/classic_mthreetp'
+require 'algorithm/variants/mthreetp'
 
 module Algorithm
 
@@ -8,25 +8,21 @@ module Algorithm
     def self.generate_tours(company)
       orders, drivers  = preprocess(company.orders, company.drivers)
 
-      # classic M3-PDP
-      classic_m3pdp = Variants::ClassicMThreeTP.new(company, AlgorithmEnum::M3PDP)
-      classic_m3pdp.run(orders, drivers)
+      mthreetp_classic = Variants::MThreeTP.new(company, AlgorithmEnum::M3PDP)
+      mthreetp_classic.run(orders, drivers)
 
-      # delta M3-PDP
-      #delta_m3pdp = Variants::ClassicMThreeTP.new(company, AlgorithmEnum::M3PDPDELTA)
-      #delta_m3pdp.run(orders, drivers)
+      mthreetp_delta = Variants::MThreeTP.new(company, AlgorithmEnum::M3PDPDELTA)
+      mthreetp_delta.run(orders, drivers)
 
-      # Savings++ Algorithm
-      # savingsplusplus = Variants::SavingsPlusPlus.new(company)
-      # savingsplusplus.run(orders, drivers)
+      savingsplusplus = Variants::SavingsPlusPlus.new(company)
+      savingsplusplus.run(orders, drivers)
 
-      #compare_and_save_tours()
+      compare_and_destory_tours()
     end
 
 
     def self.preprocess(all_orders, all_drivers)
       orders = preprocess_orders(all_orders)
-      #only active drivers
       drivers = all_drivers.where(active: true).to_a
       return orders, drivers
     end
@@ -39,12 +35,11 @@ module Algorithm
           orders.push(order)
         end
       end
-      #sort orders by start_time ascending and put orders with nil start_time at the end
       orders.sort_by! { |order| [order.start_time ? 0 : 1, order.start_time] }
       orders
     end
 
-    def self.compare_and_save_tours()
+    def self.compare_and_destory_tours()
       tours_duration = Array.new(3)
 
       m3pdp_tours = Tour.where(status: StatusEnum::GENERATED, algorithm: AlgorithmEnum::M3PDP)
