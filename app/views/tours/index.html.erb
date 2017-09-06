@@ -18,10 +18,9 @@
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>ID</th>
               <th>Fahrer</th>
-              <th>Dauer</th>
-              <th>Anfahrpunkte</th>
+              <th class="center">Dauer in Std</th>
+              <th class="center">Anfahrpunkte</th>
               <th>Erstellt am</th>
               <th><%=t '.actions', :default => t("helpers.actions") %></th>
             </tr>
@@ -29,16 +28,19 @@
           <tbody>
             <% @tours.each do |tour| %>
               <tr>
-                <td><%= tour.id %></td>
-                <td><%= tour.driver_id %></td>
-                <td><%= tour.duration %></td>
-                <td><%= tour.order_tours.count %></td>
+                <td><%= (Driver.where(id: tour.driver_id).first).name %></td>
+                <td class="center"><%= Time.at(tour.duration).utc.strftime("%H:%M:%S") %></td>
+                <td class="center"><%= tour.order_tours.count %></td>
                 <td><%=l tour.created_at, format: :long %></td>
                 <td><%= link_to t('helpers.links.show'), tour, :class => 'btn btn-info btn-xs' %></td>
                 <td><%= link_to t('helpers.links.destroy'), tour, method: :delete,
                 data: { confirm: t('helpers.links.confirm') }, :class => 'btn btn-danger btn-xs' %></td>
               </tr>
             <% end %>
+            <tr>
+              <td><strong><%=t '.actions', :default => t("helpers.duration") %></strong></td>
+              <td class="center"><strong><%= Time.at(@tours.inject(0){ |sum, x| sum + x.duration }).utc.strftime("%H:%M:%S") %></strong></td>
+            </tr>
           </tbody>
         </table>
 

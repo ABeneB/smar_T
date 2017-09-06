@@ -2,14 +2,14 @@
 <% if current_user %>
     <% if current_user.is_admin? || current_user.is_planer?%>
       <div class="page-header">
-        <h1>Aufträge</h1>
+        <h1><%=t '.title', :default => Order %></h1>
       </div>
       <% if current_user.company.try(:customers).blank? %>
         <div class="alert alert-info">Ihrem Benutzeraccount wurden noch keine Kunden zugewiesen. Sie können daher kein Auftrag anlegen.</div>
       <% else %>
-	      <%= link_to t('.new', :default => t("helpers.links.new")), new_order_path, :class => 'btn btn-primary' %>
+	      <%= link_to t('.new', :default => t("orders.new.title")), new_order_path, :class => 'btn btn-primary' %>
         <input id="fileUpload" type="file" style="display:none;" />
-        <input id="import_button" type="button" class="btn btn-primary" value="Importieren" onclick="document.getElementById('fileUpload').click();" />
+        <input id="import_button" type="button" class="btn btn-primary" value="<%= t('.new', :default => t("orders.index.import")) %>" onclick="document.getElementById('fileUpload').click();" />
         <table class="table table-striped">
           <thead>
             <tr>

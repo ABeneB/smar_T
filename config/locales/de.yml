@@ -87,6 +87,9 @@ de:
    success: "Fahrer %{driver_id} wurde gelöscht"
    failure: "Fahrer %{driver_id} konnte nicht gelöscht werden"
  orders:
+  index:
+   title: "Aufträge"
+   import: "Aufträge Importieren"
   new:
    title: "Neuer Auftrag"
   edit:
@@ -129,6 +132,8 @@ de:
    success: "Beschränkung %{restriction_id} wurde gelöscht"
    failure: "Beschränkung %{restriction_id} konnte nicht gelöscht werden"
  tours:
+  index:
+   title: "Touren"
   new:
    title: "Neue Tour"
    no_company_assigned: "Ihr Benutzerkonto ist keinem Unternehmen zugeordnet. Bitte kontaktieren Sie den Administrator."
@@ -163,6 +168,7 @@ de:
    customers:
     priority: "Bitte wählen Sie aus"
  helpers:
+  duration: "Gesamtdauer"
   actions: "Aktionen"
   links:
    back: "Zurück"

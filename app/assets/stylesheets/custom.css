@@ -236,3 +236,7 @@ border-color: #adadad;
 .twitter-typeahead {
     width: 100%;
 }
+
+.table th.center, .table td.center {
+    text-align: center;
+}
