@@ -168,7 +168,7 @@ de:
    customers:
     priority: "Bitte wählen Sie aus"
  helpers:
-  duration: "Gesamtdauer"
+  duration: "Total"
   actions: "Aktionen"
   links:
    back: "Zurück"
