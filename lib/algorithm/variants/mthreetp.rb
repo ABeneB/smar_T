@@ -30,6 +30,12 @@ module Algorithm
         unassigned_tours.each do |tour|
           tour.destroy
         end
+
+        Tour.all.each do |tour|
+          if (tour.order_tours.length == 3)
+            tour.destroy
+          end
+        end
       end
 
       # Matrix für Drivers und Orders
