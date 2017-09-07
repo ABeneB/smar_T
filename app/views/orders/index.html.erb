@@ -7,44 +7,54 @@
       <% if current_user.company.try(:customers).blank? %>
         <div class="alert alert-info">Ihrem Benutzeraccount wurden noch keine Kunden zugewiesen. Sie können daher kein Auftrag anlegen.</div>
       <% else %>
-	      <%= link_to t('.new', :default => t("orders.new.title")), new_order_path, :class => 'btn btn-primary' %>
+	      <%= link_to t('.new', :default => t("orders.new.title")), new_order_path, :class => 'btn btn-primary btn-smart' %>
         <input id="fileUpload" type="file" style="display:none;" />
-        <input id="import_button" type="button" class="btn btn-primary" value="<%= t('.new', :default => t("orders.index.import")) %>" onclick="document.getElementById('fileUpload').click();" />
+        <input id="import_button" type="button" class="btn btn-primary btn-smart" value="<%= t('.new', :default => t("orders.index.import")) %>" onclick="document.getElementById('fileUpload').click();" />
+        <hr/>
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Priorität</th>
               <th>Abholort</th>
-              <th>Einladedauer</th>
+              <th class="center">Einladedauer<br/>[hh:mm:ss]</th>
               <th>Lieferort</th>
-              <th>Ausladedauer</th>
-              <th>Kapazität</th>
-              <th>Aktiv</th>
+              <th class="center">Ausladedauer<br/>[hh:mm:ss]</th>
+              <th class="center">Kapazität</th>
+              <th class="center">Priorität</th>
+              <th class="center">Aktiv</th>
               <th><%=t '.actions', :default => t("helpers.actions") %></th>
             </tr>
           </thead>
           <tbody>
             <% @orders.each do |order| %>
               <tr>
-                <td><%= order.id %></td>
-                <% if order.customer %>
-                <td><%= order.customer.priority %></td>
-                <% else %>
-                <td>keine</td>
-                <% end %>
                 <td><%= order.pickup_location %></td>
-                <td><%= order.duration_pickup %></td>
+                <td class="center"><%= Time.at(order.duration_pickup * 60).utc.strftime("%H:%M:%S") %></td>
                 <td><%= order.delivery_location %></td>
-                <td><%= order.duration_delivery %></td>
-                <td><%= order.capacity %></td>
-                <td><%= order.active%></td>
-                <td><%= link_to t('helpers.links.show'), order, :class => 'btn btn-info btn-xs' %></td>
-                <td><%= link_to t('helpers.links.edit'), edit_order_path(order), :class => 'btn btn-warning btn-xs' %></td>
-                <td><%= link_to t('helpers.links.destroy'), order, method: :delete,
-                data: { confirm: t('helpers.links.confirm') }, :class => 'btn btn-danger btn-xs' %></td>
+                <td class="center"><%= Time.at(order.duration_delivery * 60).utc.strftime("%H:%M:%S") %></td>
+                <td class="center"><%= order.capacity %></td>
+                <% if order.customer %>
+                    <td class="center"><%= order.customer.priority %></td>
+                <% else %>
+                    <td class="center">keine</td>
+                <% end %>
+                <td class="center"><div class="active_circle_<%= order.active %>"></div></td>
+                <td>
+                  <%= link_to t('helpers.links.show'), order, :class => 'btn btn-info btn-xs' %>
+                  <%= link_to t('helpers.links.edit'), edit_order_path(order), :class => 'btn btn-warning btn-xs' %>
+                  <%= link_to t('helpers.links.destroy'), order, method: :delete, data: { confirm: t('helpers.links.confirm') }, :class => 'btn btn-danger btn-xs' %>
+                </td>
               </tr>
             <% end %>
+            <tr>
+              <td></td>
+              <td class="center"><strong><%= Time.at(@orders.inject(0){ |sum, x| sum + x.duration_pickup * 60 }).utc.strftime("%H:%M:%S") %></strong></td>
+              <td></td>
+              <td class="center"><strong><%= Time.at(@orders.inject(0){ |sum, x| sum + x.duration_delivery * 60 }).utc.strftime("%H:%M:%S") %></strong></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
           </tbody>
         </table>
 

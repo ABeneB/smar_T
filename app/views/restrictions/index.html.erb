@@ -6,48 +6,43 @@
   <% if current_user.company.nil? %>
     <div class="alert alert-info">Ihrem Benutzeraccount wurde noch kein Unternehmen zugewiesen. Sie können daher keine Beschränkungen anlegen.</div>
   <% else %>
-    <%= link_to t('.new', :default => t("helpers.links.new")),
-                new_restriction_path,
-                :class => 'btn btn-primary' %>
+    <%= link_to t('.new', :default => t("helpers.links.new")), new_restriction_path, :class => 'btn btn-primary btn-smart' %>
+    <hr/>
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>ID</th>
           <th>Unternehmen</th>
-          <th><%= model_class.human_attribute_name(:problem) %></th>
-          <th><%= model_class.human_attribute_name(:dynamic) %></th>
-          <th><%= model_class.human_attribute_name(:multi_vehicle) %></th>
-          <th><%= model_class.human_attribute_name(:time_window) %></th>
-          <th><%= model_class.human_attribute_name(:capacity_restriction) %></th>
-          <th><%= model_class.human_attribute_name(:priorities) %></th>
-          <th><%= model_class.human_attribute_name(:work_time) %></th>
-          <th><%= model_class.human_attribute_name(:created_at) %></th>
+          <th class="center"><%= model_class.human_attribute_name(:problem) %></th>
+          <th class="center"><%= model_class.human_attribute_name(:dynamic) %></th>
+          <th class="center"><%= model_class.human_attribute_name(:multi_vehicle) %></th>
+          <th class="center"><%= model_class.human_attribute_name(:time_window) %></th>
+          <th class="center">Kapazität</th>
+          <th class="center"><%= model_class.human_attribute_name(:priorities) %></th>
+          <th class="center"><%= model_class.human_attribute_name(:work_time) %></th>
           <th><%=t '.actions', :default => t("helpers.actions") %></th>
         </tr>
       </thead>
       <tbody>
         <% @restrictions.each do |restriction| %>
           <tr>
-            <td><%= restriction.id %></td>
             <td><%= restriction.company.name %></td>
-            <td><%= restriction.problem %></td>
-            <td><%= restriction.dynamic %></td>
-            <td><%= restriction.multi_vehicle %></td>
-            <td><%= restriction.time_window %></td>
-            <td><%= restriction.capacity_restriction %></td>
-            <td><%= restriction.priorities %></td>
-            <td><%= restriction.work_time %></td>
-	    <td><%= restriction.created_at %></td>
-            <td><%= link_to t('helpers.links.show'), restriction, :class => 'btn btn-info btn-xs' %></td>
-            <td><%= link_to t('helpers.links.edit'), edit_restriction_path(restriction), :class => 'btn btn-warning btn-xs' %></td>
-            <td><%= link_to t('helpers.links.destroy'), restriction, method: :delete,
-            data: { confirm: t('helpers.links.confirm') }, :class => 'btn btn-danger btn-xs' %></td>
+            <td class="center"><%= restriction.problem %></td>
+            <td class="center"><div class="active_circle_<%= restriction.dynamic %>"></div></td>
+            <td class="center"><div class="active_circle_<%= restriction.multi_vehicle %>"></div></td>
+            <td class="center"><div class="active_circle_<%= restriction.time_window %>"></div></td>
+            <td class="center"><div class="active_circle_<%= restriction.capacity_restriction %>"></div></td>
+            <td class="center"><div class="active_circle_<%= restriction.priorities %>"></div></td>
+            <td class="center"><div class="active_circle_<%= restriction.work_time %>"></div></td>
+            <td>
+              <%= link_to t('helpers.links.show'), restriction, :class => 'btn btn-info btn-xs' %>
+              <%= link_to t('helpers.links.edit'), edit_restriction_path(restriction), :class => 'btn btn-warning btn-xs' %>
+              <%= link_to t('helpers.links.destroy'), restriction, method: :delete, data: { confirm: t('helpers.links.confirm') }, :class => 'btn btn-danger btn-xs' %>
+            </td>
           </tr>
         <% end %>
       </tbody>
     </table>
-
-                <% end %>
+  <% end %>
 <% else %>
 ZUGANG VERWEIGERT
 <% end %>

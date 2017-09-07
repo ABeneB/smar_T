@@ -7,35 +7,30 @@
       <% if current_user.company.nil? %>
         <div class="alert alert-info">Ihrem Benutzeraccount wurde noch kein Unternehmen zugewiesen. Sie können daher kein Depot anlegen.</div>
       <% else %>
-	<%= link_to t('.new', :default => t("helpers.links.new")),
-                    new_depot_path,
-                    :class => 'btn btn-primary' %>
-
+	      <%= link_to t('.new', :default => t("helpers.links.new")), new_depot_path, :class => 'btn btn-primary btn-smart' %>
+        <hr/>
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>ID</th>
               <th>Unternehmen</th>
               <th>Name</th>
               <th>Adresse</th>
-              <th>Einladedauer</th>
-              <th>Erstellt am</th>
+              <th>Einladedauer<br/>[hh:mm:ss]</th>
               <th><%=t '.actions', :default => t("helpers.actions") %></th>
             </tr>
           </thead>
           <tbody>
             <% @depots.each do |depot| %>
               <tr>
-                <td><%= depot.id %></td>
                 <td><%= depot.company.name %></td>
                 <td><%= depot.name %></td>
                 <td><%= depot.address %></td>
-                <td><%= depot.duration %></td>
-                <td><%=l depot.created_at, format: :long %></td>
-                <td><%= link_to t('helpers.links.show'), depot, :class => 'btn btn-info btn-xs' %></td>
-                <td><%= link_to t('helpers.links.edit'), edit_depot_path(depot), :class => 'btn btn-warning btn-xs' %></td>
-                <td><%= link_to t('helpers.links.destroy'), depot, method: :delete,
-                data: { confirm: t('helpers.links.confirm') }, :class => 'btn btn-danger btn-xs' %></td>
+                <td><%= Time.at(depot.duration * 60).utc.strftime("%H:%M:%S") %></td>
+                <td>
+                  <%= link_to t('helpers.links.show'), depot, :class => 'btn btn-info btn-xs' %>
+                  <%= link_to t('helpers.links.edit'), edit_depot_path(depot), :class => 'btn btn-warning btn-xs' %>
+                  <%= link_to t('helpers.links.destroy'), depot, method: :delete, data: { confirm: t('helpers.links.confirm') }, :class => 'btn btn-danger btn-xs' %>
+                </td>
               </tr>
             <% end %>
           </tbody>
