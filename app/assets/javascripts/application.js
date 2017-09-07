@@ -17,8 +17,8 @@
 //= require underscore
 //= require gmaps/google
 //= require gmaps.js
-//= require custom
 //= require maps
+//= require custom
 //= require position
 //= require rails.validations
 //= require rails.validations.simple_form

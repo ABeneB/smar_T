@@ -7,7 +7,7 @@ $(function() {
        data: data,
        type: 'POST',
        url: '/tours/positions/update'
-     });
+      });
      }
   });
 });

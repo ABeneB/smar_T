@@ -56,25 +56,21 @@
 
   </div>
   <script>
-    function initMap() {
-      createMap(document.getElementById('map'));
+  function initMap() {
+    createMap(document.getElementById('map'));
 
-      <% @order_tours.each_with_index do | order_tour, index | %>
-        setMarker(parseFloat(<%= order_tour.latitude%>), parseFloat(<%= order_tour.longitude %>),"<%=order_tour.place+1%>");
-        <% if (index < @order_tours.length - 1) %>
-          var origin = {lat:<%= @order_tours[index].latitude.blank? ? 0 : @order_tours[index].latitude %>, lng: <%= @order_tours[index].longitude.blank? ? 0 : @order_tours[index].longitude %>};
-          var destination = {lat: <%= @order_tours[index + 1].latitude.blank? ? 0 : @order_tours[index + 1].latitude %>, lng: <%= @order_tours[index + 1].longitude.blank? ? 0 : @order_tours[index + 1].longitude %>};
-          setRoute(origin, destination);
-        <% end %>
+    <% @order_tours.each_with_index do | order_tour, index | %>
+      setMarker(parseFloat(<%= order_tour.latitude %>), parseFloat(<%= order_tour.longitude %>),"<%= order_tour.place + 1 %>");
+      <% if (index < @order_tours.length - 1) %>
+        var origin = {lat:<%= @order_tours[index].latitude.blank? ? 0 : @order_tours[index].latitude %>, lng: <%= @order_tours[index].longitude.blank? ? 0 : @order_tours[index].longitude %>};
+        var destination = {lat: <%= @order_tours[index + 1].latitude.blank? ? 0 : @order_tours[index + 1].latitude %>, lng: <%= @order_tours[index + 1].longitude.blank? ? 0 : @order_tours[index + 1].longitude %>};
+        setRoute(origin, destination);
       <% end %>
-    }
+    <% end %>
+  }
+  initMap();
   </script>
 
-    <% if current_user.try(:company).try(:google_maps_api_key) %>
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=<%= current_user.company.google_maps_api_key %>&callback=initMap">
-    </script>
-    <% end %>
 
 <% else %>
 ZUGANG VERWEIGERT

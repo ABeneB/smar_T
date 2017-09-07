@@ -7,13 +7,12 @@ function createMap(document_map_ID) {
         disableDefaultUI: true,
         zoomControl: true,
     });
-    //mouse scrolling are disabled
     map.setOptions({'scrollwheel': false});
 
     directionsService = new google.maps.DirectionsService;
 }
 
-// todo: exend array with useful color
+// todo: exend array with useful colors
 var colors  = ["red", "lime", "purple", "green", "blue", "Aqua", "DeepPink", "SteelBlue", "LightPink"];
 function getColor() {
     if (colors.length == 0)
@@ -47,7 +46,7 @@ function setRoute(origin, destination) {
     });
 }
 
-//todo: markers with the same position should be displayed, too
+// todo: markers with the same position should be displayed, too
 function setMarker(latitude, longitude, order_place) {
     new google.maps.Marker({
         position: {lat: latitude, lng: longitude},
