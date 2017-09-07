@@ -11,6 +11,14 @@ module ToursHelper
     end
 
     display_text
+
+  end
+
+  def self.is_sortable_order_tour?(order_tour)
+
+    sortable_class = order_tour.kind != "delivery" ? false : true
+    sortable_class
+
   end
 
 end

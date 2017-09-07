@@ -11,7 +11,7 @@
         <div class="alert alert-info">Ihrem Benutzeraccount wurde noch kein Unternehmen zugewiesen. Sie können daher keine Tour anlegen.</div>
       <% else %>
         <%= link_to t('.new', :default => t("helpers.links.new")), new_tour_path,:class => 'btn btn-primary new_btn btn-smart' %>
-        <div class= "loader"><%= image_tag "ajax-loader.gif" %></div>
+        <div class="loader"><%= image_tag "ajax-loader.gif" %></div>
         <hr/>
         <table class="table table-striped">
           <thead>

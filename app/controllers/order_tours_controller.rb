@@ -43,7 +43,7 @@ class OrderToursController < ApplicationController
   # receives an array of order ids
   def update_positions
     orderTourIds = params[:orderTour]
-    index = 0
+    index = 2
     orderTourIds.each do |id|
       orderTour = OrderTour.find(id)
       unless orderTour.nil?

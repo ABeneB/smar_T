@@ -1,5 +1,6 @@
 $(function() {
   $("tbody.sortable").sortable({
+    items: "tr:not(.unsortable)",
     update: function (event, ui) {
       var data = $(this).sortable('serialize');
       $.ajax({

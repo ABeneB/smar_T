@@ -19,13 +19,19 @@
       </thead>
       <tbody class="sortable">
         <% @order_tours.each do |order_tour| %>
-          <tr id="orderTour-<%= order_tour.id %>">
-            <td class="center"><%= order_tour.place + 1 %></td>
-            <td><%= order_tour.location %></td>
-            <td class="center"><%= Time.at(order_tour.time * 60).utc.strftime("%H:%M:%S") %></td>
-            <td class="center"><%= Time.at(order_tour.duration * 60).utc.strftime("%H:%M:%S") %></td>
-            <td><%= order_tour.comment %></td>
-          </tr>
+          <% if ToursHelper.is_sortable_order_tour?(order_tour) %>
+            <tr id="orderTour-<%= order_tour.id %>">
+              <td class="center"><%= order_tour.place + 1 %></td>
+              <td><%= order_tour.location %></td>
+          <% else %>
+            <tr id="orderTour-<%= order_tour.id %>" class="unsortable">
+              <td class="center"><%= order_tour.place + 1 %></td>
+              <td><%= order_tour.location %><%= image_tag('Lock.png', size: "17x17", class: "locked_icon") %></td>
+          <% end %>
+              <td class="center"><%= Time.at(order_tour.time * 60).utc.strftime("%H:%M:%S") %></td>
+              <td class="center"><%= Time.at(order_tour.duration * 60).utc.strftime("%H:%M:%S") %></td>
+              <td><%= order_tour.comment %></td>
+            </tr>
         <% end %>
         <tr>
           <td></td>
