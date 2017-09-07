@@ -37,7 +37,7 @@
               <td><%= order_tour.comment %></td>
             </tr>
         <% end %>
-        <tr>
+        <tr class="unsortable">
           <td></td>
           <td></td>
           <td class="center"><strong><%= Time.at(@order_tours.inject(0){ |sum, x| sum + x.time * 60 }).utc.strftime("%H:%M:%S") %></strong></td>
