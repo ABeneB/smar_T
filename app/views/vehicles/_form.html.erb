@@ -1,6 +1,5 @@
-<script src="https://maps.googleapis.com/maps/api/js?v=3&key=<%= current_user.try(:company).try(:google_maps_api_key) %>&libraries=places&language=de"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 <%= javascript_include_tag 'address_autocomplete' %>
-
 
 <% if current_user.role == "admin" %>
   <%= simple_form_for @vehicle do |f| %>
