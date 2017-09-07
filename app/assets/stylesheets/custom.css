@@ -268,3 +268,7 @@ body{
    margin-left: 5px;
    margin-top: -4px;
 }
+
+.hidden {
+    display: none;
+}

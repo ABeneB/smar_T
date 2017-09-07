@@ -6,6 +6,10 @@
   <% if current_user.company.google_maps_api_key.nil? || current_user.company.google_maps_api_key.empty? %>
       <div class="alert alert-warning">Ihrem Unternehmen wurde noch kein Google Maps API Key zugewiesen.</div>
   <% end %>
+  <div class="map-info alert alert-info hidden">
+    Sie haben die Reihenfolge der Tour verändert. Bitte aktualisieren Sie diese Seite um die neue Karte anzuzeigen.
+    <input type="button" value="Aktualisieren" onClick="history.go(0)">
+  </div>
   <div class="fieldset">
     <table class="table table-striped">
       <thead>
