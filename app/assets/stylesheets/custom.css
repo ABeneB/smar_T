@@ -240,3 +240,26 @@ border-color: #adadad;
 .table th.center, .table td.center {
     text-align: center;
 }
+
+.table th {
+    vertical-align: top !important;
+}
+
+.btn-smart {
+    background-color: #3792d5 !important;
+    color: white !important;
+}
+
+.active_circle_true, .active_circle_false {
+    width: 20px;
+    height: 20px;
+    background: green;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    margin: auto;
+}
+
+.active_circle_false {
+    background: red;
+}
