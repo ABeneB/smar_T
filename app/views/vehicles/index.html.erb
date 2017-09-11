@@ -14,9 +14,9 @@
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>Position</th>
-              <th class="center">Kapazität</th>
-              <th>Fahrer</th>
+              <th><%= model_class.human_attribute_name(:position) %></th>
+              <th class="center"><%= model_class.human_attribute_name(:capacity) %></th>
+              <th><%= model_class.human_attribute_name(:driver) %></th>
               <th><%=t '.actions', :default => t("helpers.actions") %></th>
             </tr>
           </thead>

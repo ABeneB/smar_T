@@ -31,6 +31,8 @@ de:
  edit: "bearbeiten"
  welcome_admin: "Herzlich Willkommen, %{name}!"
  customers:
+  show:
+   title: "Kunde"
   new:
    title: "Neuer Kunde"
   edit:
@@ -45,6 +47,8 @@ de:
    success: "Kunde %{customer_id} wurde gelöscht"
    failure: "Kunde %{customer_id} konnte nicht gelöscht werden"
  companies:
+  show:
+   title: "Unternehmen"
   new:
    title: "Neues Unternehmen"
   edit:
@@ -59,6 +63,8 @@ de:
    success: "Unternehmen %{company_id} wurde gelöscht"
    failure: "Unternehmen %{company_id} konnte nicht gelöscht werden"
  depots:
+  show:
+   title: "Depot"
   new:
    title: "Neues Depot"
   edit:
@@ -73,6 +79,8 @@ de:
    success: "Depot %{depot_id} wurde gelöscht"
    failure: "Depot %{depot_id} konnte nicht gelöscht werden"
  drivers:
+  show:
+   title: "Fahrer"
   new:
    title: "Neuer Fahrer"
   edit:
@@ -87,6 +95,8 @@ de:
    success: "Fahrer %{driver_id} wurde gelöscht"
    failure: "Fahrer %{driver_id} konnte nicht gelöscht werden"
  orders:
+  show:
+   title: "Auftrag"
   index:
    title: "Aufträge"
    import: "Aufträge Importieren"
@@ -104,6 +114,8 @@ de:
    success: "Auftrag %{order_id} wurde gelöscht"
    failure: "Auftrag %{order_id} konnte nicht gelöscht werden"
  registered_users:
+  show:
+   title: "Benutzer"
   new:
    title: "Neuer Benutzer"
   edit:
@@ -118,6 +130,8 @@ de:
    success: "Benutzer %{user_id} wurde gelöscht"
    failure: "Benutzer %{user_id} konnte nicht gelöscht werden"
  restrictions:
+  show:
+   title: "Beschränkung"
   new:
    title: "Neue Beschränkung"
   edit:
@@ -132,6 +146,8 @@ de:
    success: "Beschränkung %{restriction_id} wurde gelöscht"
    failure: "Beschränkung %{restriction_id} konnte nicht gelöscht werden"
  tours:
+  show:
+   title: "Tour"
   index:
    title: "Touren"
   new:
@@ -150,6 +166,8 @@ de:
    success: "Tour %{tour_id} wurde gelöscht"
    failure: "Tour %{tour_id} konnte nicht gelöscht werden"
  vehicles:
+  show:
+   title: "Fahrzeug"
   new:
    title: "Neues Fahrzeug"
   edit:
@@ -241,6 +259,8 @@ de:
   duration_delivery: "Ausladedauer"
   start_time: "Startzeit"
   end_time: "Endzeit"
+  user: "Benutzer"
+  position: "Standort"
 
  devise:
   sign_in: "Anmelden"
