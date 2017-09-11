@@ -5,7 +5,11 @@ class Driver < ActiveRecord::Base
 
   delegate :company, to: :user
 
-  def active_tour(algorithm, status)
-    Tour.where(driver_id: self.id, algorithm: algorithm, status: status).last
+  def active_tour(algorithm = nil, status = nil)
+    options = {}
+    options[:driver_id] = self.id
+    if algorithm then options[:algorithm] = algorithm end
+    if status then options[:status] = status end
+    Tour.where(options).last
   end
 end
