@@ -7,6 +7,9 @@
     <%= f.input :address, prompt: :translate, input_html: { id: 'address' } %>
     <%= f.input :telefon, prompt: :translate %>
     <%= f.input :google_maps_api_key, prompt: :translate %>
+    <p class="form-text text-muted">
+      <%=  t '.google_maps_key_hint', :model => Company %>
+    </p>
     <%= f.button :submit, prompt: :translate %>
   <% end %>
 <% end %>

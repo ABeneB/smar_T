@@ -62,6 +62,8 @@ de:
   destroy:
    success: "Unternehmen %{company_id} wurde gelöscht"
    failure: "Unternehmen %{company_id} konnte nicht gelöscht werden"
+  form:
+   google_maps_key_hint: "Ein Google Maps API-Schlüssel ist für die Berechnung der Touren und Validierung der Adressen notwendig. Falls Sie noch keinen API-Schlüssel besitzen, können Sie unter https://developers.google.com/maps/?hl=de einen anfordern."
  depots:
   show:
    title: "Depot"
@@ -232,6 +234,7 @@ de:
   name: "Name"
   address: "Adresse"
   telefon: "Telefonnummer"
+  google_maps_api_key: "Google Maps API-Schlüssel (Key)"
   created_at: "Erstellt am"
   problem: "Problem"
   dynamic: "Dynamisch"
