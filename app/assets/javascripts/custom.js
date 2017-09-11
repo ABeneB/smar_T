@@ -13,3 +13,9 @@ $(function() {
      }
   });
 });
+
+var disableButton = function(button) {
+  if(!$(button).hasClass("disabled")) {
+    button.addClass("disabled");
+  }
+}

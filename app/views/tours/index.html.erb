@@ -6,11 +6,16 @@
       </div>
       <% if current_user.company.google_maps_api_key.nil? || current_user.company.google_maps_api_key.empty? %>
         <div class="alert alert-warning">Ihrem Unternehmen wurde noch kein Google Maps API Key zugewiesen.</div>
-      <% end %>
+        <script>
+            $( document ).ready(function() {
+              disableButton($('#btn_new_tour'));
+            });
+        </script>
+        <% end %>
       <% if current_user.company.nil? %>
         <div class="alert alert-info">Ihrem Benutzeraccount wurde noch kein Unternehmen zugewiesen. Sie können daher keine Tour anlegen.</div>
       <% else %>
-        <%= link_to t('.new', :default => t("helpers.links.new")), new_tour_path,:class => 'btn btn-primary new_btn btn-smart' %>
+        <%= link_to t('.new', :default => t("helpers.links.new")), new_tour_path, :id => 'btn_new_tour', :class => 'btn btn-primary new_btn btn-smart' %>
         <div class="loader"><%= image_tag "ajax-loader.gif" %></div>
         <hr/>
         <table class="table table-striped">
