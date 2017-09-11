@@ -88,14 +88,14 @@ de:
   edit:
    title: "Fahrer bearbeiten"
   create:
-   success: "Fahrer %{driver_id} wurde erfolgreich angelegt"
+   success: "Fahrer: %{name} (ID %{driver_id}) wurde erfolgreich angelegt"
    failure: "Fahrer konnte nicht angelegt werden"
   update:
-   success: "Fahrer %{driver_id} wurde aktualisiert"
-   failure: "Fahrer %{driver_id} konnte nicht aktualisiert werden"
+   success: "Fahrer: %{name} (ID %{driver_id})  wurde aktualisiert"
+   failure: "Fahrer: %{name} (ID %{driver_id})  konnte nicht aktualisiert werden"
   destroy:
-   success: "Fahrer %{driver_id} wurde gelöscht"
-   failure: "Fahrer %{driver_id} konnte nicht gelöscht werden"
+   success: "Fahrer: %{name} (ID %{driver_id})  wurde gelöscht"
+   failure: "Fahrer: %{name} (ID %{driver_id})  konnte nicht gelöscht werden"
  orders:
   show:
    title: "Auftrag"
