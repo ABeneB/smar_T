@@ -150,6 +150,7 @@ de:
  tours:
   show:
    title: "Tour"
+   print_tour: "Drucken"
   index:
    title: "Touren"
   new:

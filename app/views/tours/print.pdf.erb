@@ -1,0 +1,57 @@
+<%- model_class = Tour -%>
+<div class="fieldset">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th class="center">#</th>
+      <th>Adresse</th>
+      <th class="center">Fahrzeit<br/>[hh:mm:ss]</th>
+      <th class="center"><%= model_class.human_attribute_name(:duration) %><br/>[hh:mm:ss]</th>
+      <th>Beschreibung</th>
+    </tr>
+    </thead>
+    <tbody class="sortable">
+    <% @order_tours.each do |order_tour| %>
+        <% if ToursHelper.is_sortable_order_tour?(order_tour) %>
+            <tr id="orderTour-<%= order_tour.id %>">
+              <td class="center"><%= order_tour.place + 1 %></td>
+              <td><%= order_tour.location %></td>
+        <% else %>
+            <tr id="orderTour-<%= order_tour.id %>" class="unsortable">
+              <td class="center"><%= order_tour.place + 1 %></td>
+              <td><%= order_tour.location %><%= image_tag('Lock.png', size: "17x17", class: "locked_icon") %></td>
+        <% end %>
+        <td class="center"><%= Time.at(order_tour.time * 60).utc.strftime("%H:%M:%S") %></td>
+        <td class="center"><%= Time.at(order_tour.duration * 60).utc.strftime("%H:%M:%S") %></td>
+        <td><%= order_tour.comment %></td>
+        </tr>
+    <% end %>
+    <tr class="unsortable">
+      <td></td>
+      <td></td>
+      <td class="center"><strong><%= Time.at(@order_tours.inject(0){ |sum, x| sum + x.time * 60 }).utc.strftime("%H:%M:%S") %></strong></td>
+      <td class="center"><strong><%= Time.at(@order_tours.inject(0){ |sum, x| sum + x.duration * 60 }).utc.strftime("%H:%M:%S") %></strong></td>
+      <td></td>
+    </tr>
+    </tbody>
+  </table>
+  <div style='width: 100%'>
+    <div id="map" style='width: 100%; height: 400px;'></div>
+  </div>
+
+</div>
+<script>
+    function initMap() {
+        createMap(document.getElementById('map'));
+
+        <% @order_tours.each_with_index do | order_tour, index | %>
+        setMarker(parseFloat(<%= order_tour.latitude %>), parseFloat(<%= order_tour.longitude %>),"<%= order_tour.place + 1 %>");
+        <% if (index < @order_tours.length - 1) %>
+        var origin = {lat:<%= @order_tours[index].latitude.blank? ? 0 : @order_tours[index].latitude %>, lng: <%= @order_tours[index].longitude.blank? ? 0 : @order_tours[index].longitude %>};
+        var destination = {lat: <%= @order_tours[index + 1].latitude.blank? ? 0 : @order_tours[index + 1].latitude %>, lng: <%= @order_tours[index + 1].longitude.blank? ? 0 : @order_tours[index + 1].longitude %>};
+        setRoute(origin, destination);
+        <% end %>
+        <% end %>
+    }
+    initMap();
+</script>

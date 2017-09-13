@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   resources :tours
 
+  get 'tours/:id/print' => 'tours#print', as: 'print_tour'
+
   resources :restrictions
 
   resources :orders

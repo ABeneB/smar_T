@@ -1,5 +1,5 @@
 class ToursController < ApplicationController
-  before_action :set_tour, only: [:show, :edit, :update, :destroy]
+  before_action :set_tour, only: [:show, :edit, :update, :destroy, :print]
 
   respond_to :html
 
@@ -89,6 +89,22 @@ class ToursController < ApplicationController
       else
       flash[:alert] = t('.failure', tour_id: @tour.id)
       respond_with(@tour)
+    end
+  end
+
+  def print
+    if @tour
+      @order_tours = @tour.order_tours
+      respond_to do |format|
+        format.html
+        format.pdf do
+          render pdf: "tour_#{params[:id]}",
+                 template: 'tours/print.pdf.erb',
+                 layout: 'pdf.html'
+        end
+      end
+    else
+      redirect_to 'index'
     end
   end
 

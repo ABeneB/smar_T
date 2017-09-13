@@ -2,6 +2,7 @@
 <% if current_user %>
   <div class="page-header">
     <h1>Tour</h1>
+    <%= link_to t('.print_tour'), print_tour_path(:format => :pdf), class: 'btn btn-info', target: '_blank' %>
   </div>
   <% if current_user.company.google_maps_api_key.nil? || current_user.company.google_maps_api_key.empty? %>
       <div class="alert alert-warning">Ihrem Unternehmen wurde noch kein Google Maps API Key zugewiesen.</div>
