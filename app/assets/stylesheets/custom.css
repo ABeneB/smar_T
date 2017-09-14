@@ -268,7 +268,7 @@ body{
 }
 
 .active_circle_false {
-    background: red;
+    background: none;
 }
 
 .locked_icon {
