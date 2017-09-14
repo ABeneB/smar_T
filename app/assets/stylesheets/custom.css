@@ -209,6 +209,13 @@ body{
     opacity: 1;
 }
 
+/*Apply hover effect on navigation elements*/
+
+.navbar-default.sidebar .navbar-nav > li:hover { 
+    background-color: #3a3d44; 
+    border-right: 6px solid #3792d5; 
+} 
+
 /*Disabled logo hover effect*/
 
 .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
