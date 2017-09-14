@@ -20,7 +20,7 @@ nav.sidebar, .main{
 @media (min-width: 765px) {
 
     #page-wrapper{
-        margin: 0 0 0 200px;
+        margin: 0 0 0 210px;
         padding: 15px 30px;
 
     }
@@ -33,7 +33,7 @@ nav.sidebar, .main{
     }
 
     nav.sidebar:hover + .main{
-        margin-left: 200px;
+        margin-left: 210px;
     }
 
     nav.sidebar .navbar-brand, nav.sidebar .navbar-header{
@@ -63,7 +63,7 @@ nav.sidebar, .main{
     }
 
     nav.sidebar{
-        width: 200px;
+        width: 210px;
         min-height: calc(100%);
         float: left;
         margin-bottom: 0px;
@@ -81,8 +81,8 @@ nav.sidebar, .main{
 @media (min-width: 1330px) {
 
     .main{
-        width: calc(100% - 200px);
-        margin-left: 200px;
+        width: calc(100% - 210px);
+        margin-left: 210px;
     }
 
     nav.sidebar{
@@ -125,7 +125,7 @@ section{
 
     background-color: #3792d5;
     height: 100%;
-    width: 200px;
+    width: 210px;
     text-align: center;
     max-height: 50px;
     padding-top: 10px;
