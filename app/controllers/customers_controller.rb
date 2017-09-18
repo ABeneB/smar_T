@@ -31,6 +31,7 @@ class CustomersController < ApplicationController
     if current_user
       if current_user.is_admin? || current_user.is_planer?
         @customer = Customer.new
+        @customer.company_id = current_user.company_id
       end
     end
   end
@@ -42,7 +43,6 @@ class CustomersController < ApplicationController
   def create
     @customer = Customer.new(customer_params)
     if current_user.is_planer?
-      @customer.user_id = current_user.id # automatisches setzen der user_id
       @customer.company_id = current_user.company.id
     end
     @customer.save
