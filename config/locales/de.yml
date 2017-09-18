@@ -63,6 +63,7 @@ de:
    success: "Unternehmen %{company_id} wurde gelöscht"
    failure: "Unternehmen %{company_id} konnte nicht gelöscht werden"
   form:
+   address_hint: "Adresse bitte im Format 'Lietzenburger Straße 71, 29386 Dedelstorf' eingeben"
    google_maps_key_hint: "Ein Google Maps API-Schlüssel ist für die Berechnung der Touren und Validierung der Adressen notwendig. Falls Sie noch keinen API-Schlüssel besitzen, können Sie unter https://developers.google.com/maps/?hl=de einen anfordern."
  depots:
   show:
