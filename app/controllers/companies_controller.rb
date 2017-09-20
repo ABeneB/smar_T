@@ -4,8 +4,8 @@ class CompaniesController < ApplicationController
   respond_to :html
 
   def index
-    # Nur Daten die Zur Rolle passen anzeigen
-    if current_user && current_user.is_admin?
+    # Nur Daten die Zur Rolle passen anzeigen --> usually here .is_admin?
+    if current_user && current_user.is_superadmin?
         @companies = Company.all
     end
   end
@@ -17,7 +17,7 @@ class CompaniesController < ApplicationController
   end
 
   def new
-    if current_user && current_user.is_admin?
+    if current_user && current_user.is_superadmin?
       @company = Company.new
     end
   end
