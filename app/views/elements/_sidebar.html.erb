@@ -10,6 +10,8 @@
   <%= render "/elements/sidebar_driver" %>
 <% elsif current_user.is_planer? %>
   <%= render "/elements/sidebar_planer" %>
+<% elsif current_user.is_superadmin? %>
+    <%= render "/elements/sidebar_superadmin" %>
 <% else %>
   <%# This should not happen%>
   <%= render "/elements/sidebar_guest" %>
