@@ -4,6 +4,8 @@
 
     <% if current_user.role == "admin" %>
         <h4><%= t('welcome_admin', name: current_user.username) %></h4>
+    <% elsif current_user.role =="superadmin" %>
+        <h4><%= t('welcome_admin', name: current_user.username) %></h4>
     <% elsif current_user.role =="planer" %>
         <p>Jedes vom Planer angelegte Objekt wird automatisch mit ihm und dessen Company verbunden</p>
         <p>Im folgenden ist eine Übersicht über die Position jedes Fahrers zu sehen.</p>
