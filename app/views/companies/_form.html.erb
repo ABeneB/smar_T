@@ -4,7 +4,9 @@
 <% if current_user.role == "admin" %>
   <%= simple_form_for @company do |f| %>
     <%= f.input :name, prompt: :translate %>
-    <%= f.input :address, prompt: :translate, input_html: { id: 'address' } %>
+    <%= f.input :address, prompt: :translate, input_html: { id: 'address' } %><p class="form-text text-muted">
+      <%=  t '.address_hint', :model => Company %>
+    </p>
     <%= f.input :telefon, prompt: :translate %>
     <%= f.input :google_maps_api_key, prompt: :translate %>
     <p class="form-text text-muted">

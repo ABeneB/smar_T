@@ -2,7 +2,10 @@ class Company < ActiveRecord::Base
     has_many :users
     has_many :customers
     has_one :restriction
-
+    
+    validates :name, presence: {message: "Dieses Feld muss ausgefüllt werden"}
+   validates :address, presence: {message: "Dieses Feld muss ausgefüllt werden"}
+   
     # Koordinaten aus Adresse
     geocoded_by :address
     after_validation :geocode

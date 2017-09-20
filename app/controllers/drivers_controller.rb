@@ -28,6 +28,7 @@ class DriversController < ApplicationController
     if current_user
       if current_user.is_admin? || current_user.is_planer?
         @driver = Driver.new
+        @driver.active = true
       end
     end
   end
@@ -38,7 +39,6 @@ class DriversController < ApplicationController
 
   def create
     @driver = Driver.new(driver_params)
-    @driver.save
     if @driver.save
       flash[:success] = t('.success', name: @driver.name, driver_id: @driver.id)
       redirect_to drivers_path

@@ -7,8 +7,8 @@
       <% if current_user.company.nil? %>
         <div class="alert alert-info">Ihrem Benutzeraccount wurde noch kein Unternehmen zugewiesen. Sie können daher keinen Fahrer anlegen.</div>
       <% else %>
-        <%= link_to t('.new', :default => t("helpers.links.new")), new_driver_path, :class => 'btn btn-primary btn-smart' %>
-        <hr/>
+        <%= link_to t('.new', :default => t("helpers.links.new")), new_driver_form_path, :class => 'btn btn-primary btn-smart' %> 
+        <hr/> 
         <table class="table table-striped">
           <thead>
             <tr>
