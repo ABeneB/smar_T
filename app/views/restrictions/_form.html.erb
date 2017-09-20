@@ -1,6 +1,6 @@
 <% if current_user.role == "admin" %>
   <%= simple_form_for @restriction do |f| %>
-    <%= f.association :company, prompt: :translate %>
+    <!--<%= f.association :company, prompt: :translate %>-->
     <%= f.input :problem, prompt: :translate %>
     <%= f.input :dynamic, prompt: :translate %>
     <%= f.input :multi_vehicle, prompt: :translate %>
