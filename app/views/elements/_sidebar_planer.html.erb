@@ -11,6 +11,7 @@
       <ul class="nav navbar-nav">
 	<% if defined?(Devise) %>
         <% if user_signed_in? %>
+                <% if current_user.company_id? %>
 	      <li class="divider"></li>
               <li><%= link_to image_tag('Tour.svg') + "Touren", tours_path %></li>
               <li class="divider"></li>
@@ -20,7 +21,8 @@
               <li class="divider"></li>
               <li><%= link_to image_tag('Driver.svg') + "Fahrer", drivers_path %></li>
               <li class="divider"></li>
-              <li><%= link_to image_tag('Vehicle.svg') + "Fahrzeuge", vehicles_path %></li>      
+              <li><%= link_to image_tag('Vehicle.svg') + "Fahrzeuge", vehicles_path %></li>
+              <% end %>
         <% else %>
           <!-- Sollte nicht der Fall sein -->
         <% end %>
