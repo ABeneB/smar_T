@@ -6,13 +6,24 @@ class CompaniesController < ApplicationController
   def index
     # Nur Daten die Zur Rolle passen anzeigen --> usually here .is_admin?
     if current_user && current_user.is_superadmin?
+        # remove the company of the super admin
+        current_user.company = nil
+        current_user.save
         @companies = Company.all
     end
   end
 
   def show
-    if current_user && current_user.is_admin?
+    if current_user
+      if current_user.is_superadmin?
+        # set the selected company as the company of the super admin
+        current_user.company = @company
+        current_user.save
         @company
+      end
+      if current_user.is_admin?
+        @company
+      end
     end
   end
 
