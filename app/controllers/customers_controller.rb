@@ -5,13 +5,7 @@ class CustomersController < ApplicationController
 
   def index
     if current_user
-      if current_user.is_admin?
-        @customers = Customer.all
-      elsif current_user.is_planer?
-        @customers = Customer.where(company_id: current_user.company_id)
-      else
-        @customers = []
-      end
+      @customers = Customer.where(company_id: current_user.company_id)
     end
   end
 
