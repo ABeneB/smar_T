@@ -4,16 +4,8 @@ class DepotsController < ApplicationController
   respond_to :html
 
   def index
-    # Nur Daten die Zur Rolle passen anzeigen
-    if current_user 
-      if current_user.is_admin?
-        @depots = Depot.all
-      elsif current_user.is_planer?
-        company = current_user.company
-        @depots = Depot.where(company_id: company.id)
-      else
-        @depots = []
-      end
+    if current_user
+      @depots = Depot.where(company_id: current_user.company.id)
     end
   end
 
