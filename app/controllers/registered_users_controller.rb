@@ -27,6 +27,7 @@ class RegisteredUsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user.company_id = current_user.company_id
     if @user.save
       flash[:success] = t('.success', user_id: @user.id)
     redirect_to(registered_user_path(@user))
