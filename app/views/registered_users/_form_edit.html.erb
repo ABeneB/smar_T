@@ -1,9 +1,0 @@
-<% if current_user.role == "admin" %>
-  <%= simple_form_for @user, :url => registered_user_path(@user) do |f| %>
-    <%= f.input :username, prompt: :translate %>
-    <%= f.input :email, prompt: :translate %>
-    <%= f.input :role, prompt: :translate %>
-    <%= f.association :company, prompt: :translate %>
-    <%= f.button :submit, prompt: :translate %>
-  <% end %>
-<% end %>

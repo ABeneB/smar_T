@@ -21,6 +21,8 @@
 
 de:
  hello: "Hallo Welt"
+ admin: "Administrator"
+ planer: "Planer"
  customer: "Kunde"
  company: "Unternehmen"
  driver: "Fahrer"
