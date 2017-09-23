@@ -4,19 +4,19 @@ class RegisteredUsersController < ApplicationController
   respond_to :html
 
   def index
-    if current_user && current_user.is_admin?
+    if current_user && (current_user.is_admin? || current_user.is_superadmin?)
       @users = User.all
     end
   end
 
   def show
-    if current_user && current_user.is_admin?
+    if current_user && (current_user.is_admin? || current_user.is_superadmin?) 
       @user
     end
   end
 
   def new
-    if current_user && current_user.is_admin?
+    if current_user && (current_user.is_admin? || current_user.is_superadmin?) 
       @user = User.new
     end
   end
