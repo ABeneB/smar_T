@@ -2,6 +2,7 @@
   <%= simple_form_for @restriction do |f| %>
     <!--<%= f.association :company, prompt: :translate %>-->
     <%= f.input :problem, prompt: :translate %>
+    <%= f.input :problem, :collection => {t('dp')  => 'DP', t('pp')  => 'PP', t('pdp') => 'PDP'}, prompt: :translate %>
     <%= f.input :dynamic, prompt: :translate %>
     <%= f.input :multi_vehicle, prompt: :translate %>
     <%= f.input :time_window, prompt: :translate %>
