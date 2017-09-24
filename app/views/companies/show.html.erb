@@ -1,48 +1,29 @@
 <%- model_class = Company -%>
-<% if current_user && current_user.role == "admin" %>
-  <div class="page-header">
-    <h1><%=t '.title', :default => Company %></h1>
-  </div>
-  <div class="fieldset">
-    <dl>
-        <dt class="label label-default"><%= model_class.human_attribute_name(:name) %></dt>
-        <dd><pre class="prettyprint"><%= @company.name %></pre></dd>
-        <dt class="label label-default"><%= model_class.human_attribute_name(:address) %></dt>
-        <dd><pre class="prettyprint"><%= @company.address %></pre></dd>
-        <dt class="label label-default"><%= model_class.human_attribute_name(:telefon) %></dt>
-        <dd><pre class="prettyprint"><%= @company.telefon %></pre></dd>
-        <dt class="label label-default"><%= model_class.human_attribute_name(:google_maps_api_key) %></dt>
-        <dd><pre class="prettyprint"><%= @company.google_maps_api_key %></pre></dd>
-    </dl>
-  </div>
-
-    <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                edit_company_path(@company), :class => 'btn btn-default' %>
-  </div>
-
-<% elsif current_user.role == "superadmin" %>
-    <div class="page-header">
+<% if current_user && (current_user.role == "admin" || (current_user.role == "superadmin" && current_user.company_id?))%>
+  <% if current_user.company_id == @company.id%>
+          <div class="page-header">
       <h1><%=t '.title', :default => Company %></h1>
     </div>
     <div class="fieldset">
       <dl>
-        <dt class="label label-default"><%= model_class.human_attribute_name(:name) %></dt>
-        <dd><pre class="prettyprint"><%= @company.name %></pre></dd>
-        <dt class="label label-default"><%= model_class.human_attribute_name(:address) %></dt>
-        <dd><pre class="prettyprint"><%= @company.address %></pre></dd>
-        <dt class="label label-default"><%= model_class.human_attribute_name(:telefon) %></dt>
-        <dd><pre class="prettyprint"><%= @company.telefon %></pre></dd>
-        <dt class="label label-default"><%= model_class.human_attribute_name(:google_maps_api_key) %></dt>
-        <dd><pre class="prettyprint"><%= @company.google_maps_api_key %></pre></dd>
+          <dt class="label label-default"><%= model_class.human_attribute_name(:name) %></dt>
+          <dd><pre class="prettyprint"><%= @company.name %></pre></dd>
+          <dt class="label label-default"><%= model_class.human_attribute_name(:address) %></dt>
+          <dd><pre class="prettyprint"><%= @company.address %></pre></dd>
+          <dt class="label label-default"><%= model_class.human_attribute_name(:telefon) %></dt>
+          <dd><pre class="prettyprint"><%= @company.telefon %></pre></dd>
+          <dt class="label label-default"><%= model_class.human_attribute_name(:google_maps_api_key) %></dt>
+          <dd><pre class="prettyprint"><%= @company.google_maps_api_key %></pre></dd>
       </dl>
     </div>
 
-    <div class="form-group">
       <%= link_to t('.edit', :default => t("helpers.links.edit")),
                   edit_company_path(@company), :class => 'btn btn-default' %>
-
-    </div>
-
+  </div>
+  <% else %>
+        <div class="alert alert-danger">Falsches Unternehmen!</div>
+      ZUGANG VERWEIGERT
+  <% end %>
 <% else %>
   ZUGANG VERWEIGERT
 <% end %>

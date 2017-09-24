@@ -28,7 +28,7 @@ class CompaniesController < ApplicationController
   end
 
   def new
-    if current_user && current_user.is_superadmin?
+    if current_user && current_user.is_superadmin? && !current_user.company_id?
       @company = Company.new
     end
   end

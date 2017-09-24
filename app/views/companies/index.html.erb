@@ -1,5 +1,5 @@
 <%- model_class = Company -%>
-<% if current_user && current_user.role == "admin" %>
+<% if (current_user && current_user.role == "admin") %>
     <%controller.redirect_to :action => "show", :id => current_user.company_id %>
 <% elsif current_user && current_user.role == "superadmin" %>
     <div class="page-header">
