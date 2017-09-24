@@ -12,7 +12,6 @@
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>Unternehmen</th>
               <th>Name</th>
               <th>Adresse</th>
               <th>Einladedauer<br/>[hh:mm:ss]</th>
@@ -22,7 +21,6 @@
           <tbody>
             <% @depots.each do |depot| %>
               <tr>
-                <td><%= depot.company.name %></td>
                 <td><%= depot.name %></td>
                 <td><%= depot.address %></td>
                 <td><%= Time.at(depot.duration * 60).utc.strftime("%H:%M:%S") %></td>
