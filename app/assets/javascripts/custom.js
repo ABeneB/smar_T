@@ -37,3 +37,14 @@ $('select#problem').bind('change', function() {
 }).change();
 
 });
+
+$(function() { 
+$('select#user_form_role').bind('change', function() {
+  $('#driver').hide();
+  $('#driver input').attr('disabled', true);
+  var selection = $(this).val();
+  $('#' + selection).show();
+  $('#' + selection + ' input').attr('disabled', false);
+}).change();
+
+});

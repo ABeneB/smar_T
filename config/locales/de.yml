@@ -35,6 +35,12 @@ de:
  pp: "Pickup-Problem"
  dp: "Delivery-Problem"
  pdp: "Pickup- und Delivery-Problem"
+ driver_properties: "Fahrereigenschaften"
+ user_forms:
+  new:
+   title: "Neuer Benutzer"
+  edit:
+   title: "Benutzer bearbeiten"
  customers:
   show:
    title: "Kunde"
@@ -234,6 +240,9 @@ de:
     create: "Speichern"
     update: "Speichern"
    depot:
+    create: "Speichern"
+    update: "Speichern"
+   user_form:
     create: "Speichern"
     update: "Speichern"
 
