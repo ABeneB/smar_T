@@ -15,13 +15,13 @@ class CompaniesController < ApplicationController
 
   def show
     if current_user
-      if current_user.is_superadmin?
+      if current_user.is_superadmin? && !current_user.company_id?
         # set the selected company as the company of the super admin
         current_user.company = @company
         current_user.save
         @company
       end
-      if current_user.is_admin?
+      if (current_user.is_superadmin? && current_user.company_id?)  || current_user.is_admin?
         @company
       end
     end

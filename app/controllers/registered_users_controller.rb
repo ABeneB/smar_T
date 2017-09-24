@@ -4,22 +4,24 @@ class RegisteredUsersController < ApplicationController
   respond_to :html
 
   def index
-    if current_user && (current_user.is_admin? || current_user.is_superadmin?)
-      @users = User.all
+    if current_user && (current_user.is_admin?)
+      @users = User.where(company_id: current_user.company.id)
     end
-    if current_user && current_user.is_superadmin?
+    if current_user && current_user.is_superadmin? && current_user.company_id?
       @users = User.all
     end
   end
 
   def show
-    if current_user && (current_user.is_admin? || current_user.is_superadmin?) 
-      @user
+    if current_user && (current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?))
+      if @user.company_id == current_user.company_id
+        @user
+      end
     end
   end
 
   def new
-    if current_user && (current_user.is_admin? || current_user.is_superadmin?) 
+    if current_user && (current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?))
       @user = User.new
     end
   end
@@ -51,12 +53,14 @@ class RegisteredUsersController < ApplicationController
   end
 
   def destroy
-    if @user.destroy
-      flash[:success] = t('.success', user_id: @user.id)
-    redirect_to(registered_user_path)
-      else
-      flash[:alert] = t('.failure', user_id: @user.id)
-      redirect_to(registered_user_path)
+    if current_user && (current_user.is_admin? || current_user.is_superadmin?)
+      if @user.destroy
+        flash[:success] = t('.success', user_id: @user.id)
+        redirect_to(registered_user_path)
+        else
+        flash[:alert] = t('.failure', user_id: @user.id)
+        redirect_to(registered_user_path)
+      end
     end
   end
 
