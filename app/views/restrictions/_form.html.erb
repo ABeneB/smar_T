@@ -1,4 +1,4 @@
-<% if current_user && ( current_user.role == "admin" || (current_user.role == "superadmin" && current_user.company_id?)) %>
+<% if current_user && ( current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?)) %>
   <%= simple_form_for @restriction do |f| %>
     <%= f.input :problem, :collection => {t('dp')  => 'DP', t('pp')  => 'PP', t('pdp') => 'PDP'}, prompt: :translate %>
     <%= f.input :dynamic, prompt: :translate %>

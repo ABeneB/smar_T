@@ -2,7 +2,7 @@ class DeveloperController < ApplicationController
 
   def index
     if current_user
-      if current_user.is_admin?
+      if current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?)
 
       end
     end
@@ -10,7 +10,7 @@ class DeveloperController < ApplicationController
 
   def reset_database
     if current_user
-      if current_user.is_admin?
+      if current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?)
         # assign company to admin user
         current_user.company = Company.first
         current_user.save

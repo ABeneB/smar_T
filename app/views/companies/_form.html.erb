@@ -1,7 +1,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 <%= javascript_include_tag 'address_autocomplete' %>
 
-<% if current_user.role == "admin" || (current_user.role == "superadmin" && current_user.company_id?) %>
+<% if current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?) %>
   <%= simple_form_for @company do |f| %>
     <%= f.input :name, prompt: :translate %>
     <%= f.input :address, prompt: :translate, input_html: { id: 'address' } %><p class="form-text text-muted">
@@ -13,6 +13,19 @@
       <%=  t '.google_maps_key_hint', :model => Company %>
     </p>
     <%= f.button :submit, prompt: :translate %>
-  <% end %>
+    <% end %>
+<% elsif current_user.is_superadmin? && !current_user.company_id? %>
+    <%= simple_form_for @company do |f| %>
+        <%= f.input :name, prompt: :translate %>
+        <%= f.input :address, prompt: :translate, input_html: { id: 'address' } %><p class="form-text text-muted">
+        <%=  t '.address_hint', :model => Company %>
+        </p>
+        <%= f.input :telefon, prompt: :translate %>
+        <%= f.input :google_maps_api_key, prompt: :translate %>
+        <p class="form-text text-muted">
+          <%=  t '.google_maps_key_hint', :model => Company %>
+        </p>
+        <%= f.button :submit, prompt: :translate %>
+    <% end %>
 <% end %>
 

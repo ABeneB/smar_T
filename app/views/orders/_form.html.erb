@@ -1,4 +1,4 @@
-<% if current_user.role == "admin" || current_user.role == "planer" %>
+<% if current_user.role == "admin" || current_user.role == "planer" || (current_user.is_superadmin? && current_user.company_id?)%>
   <% if current_user.company.restriction.problem == "DP" %>
   	<%= simple_form_for @order do |f| %>
     	<%= f.input :problem, as: :fake_select, :collection => {t('dp')  => 'type_1'}, :selected => 'type_1', :disabled => true%>

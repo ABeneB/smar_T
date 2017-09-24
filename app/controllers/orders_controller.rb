@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   respond_to :html
 
   def index
-    if (current_user.is_admin? || current_user.is_planer?) && !current_user.company.nil?
+    if (current_user.is_admin? || current_user.is_planer? || (current_user.is_superadmin? && current_user.company_id?)) && !current_user.company.nil?
       company = current_user.company
       @orders = company.orders
     else
@@ -14,11 +14,12 @@ class OrdersController < ApplicationController
 
   def show
     if current_user
-      if current_user.is_admin?
+      if current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?)
         @order
       elsif current_user.is_planer?
-        if @driver.company.id == current_user.company_id
-          @driver
+### working
+        if @order.company.id == current_user.company_id
+          @order
         end
       end
     end
@@ -26,7 +27,7 @@ class OrdersController < ApplicationController
 
   def new
     if current_user
-      if current_user.is_admin? || current_user.is_planer?
+      if current_user.is_admin? || current_user.is_planer? || (current_user.is_superadmin? && current_user.company_id?)
         @order = Order.new
       end
     end

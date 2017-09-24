@@ -1,5 +1,6 @@
 <%- model_class = Tour -%>
 <% if current_user %>
+  <% if current_user.is_admin? || current_user.is_planer? || current_user.is_driver? || (current_user.is_superadmin? && current_user.company_id?)%>
   <div class="page-header">
     <h1>Tour</h1>
     <%= link_to t('.print_tour'), print_tour_path(:format => :pdf), class: 'btn btn-info', target: '_blank' %>
@@ -76,7 +77,9 @@
   initMap();
   </script>
 
-
+  <% else %>
+      ZUGANG VERWEIGERT
+  <% end %>
 <% else %>
 ZUGANG VERWEIGERT
 <% end %>

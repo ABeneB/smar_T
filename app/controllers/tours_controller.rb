@@ -5,7 +5,7 @@ class ToursController < ApplicationController
 
   def index
     # Nur Daten die Zur Rolle passen anzeigen
-    if (current_user.is_admin? || current_user.is_planer?) && !current_user.company.nil?
+    if (current_user.is_admin? || current_user.is_planer? || (current_user.is_superadmin? && current_user.company_id?)) && !current_user.company.nil?
       @tours = current_user.company.tours
     elsif current_user.is_driver?
       @tours = current_user.company.tours
@@ -16,7 +16,7 @@ class ToursController < ApplicationController
 
   def show
     if current_user
-      if current_user.is_admin?
+      if current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?)
         @order_tours = @tour.order_tours.sort_by &:place
         @hash = @order_tours.map do | order_tour|
           place = order_tour.place+1
@@ -37,7 +37,7 @@ class ToursController < ApplicationController
 
   def new
     #Ausgabe nach Rolle filtern
-    if current_user.is_admin? || current_user.is_planer?
+    if current_user.is_admin? || current_user.is_planer? || (current_user.is_superadmin? && current_user.company_id?)
       if current_user.company
         if current_user.company.google_maps_api_key.nil? || current_user.company.google_maps_api_key.empty?
           flash[:error] = t('.no_google_maps_api_key_assigned')
