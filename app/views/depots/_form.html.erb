@@ -1,7 +1,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 <%= javascript_include_tag 'address_autocomplete' %>
 
-<% if current_user.role == "admin" %>
+<% if current_user.role == "admin" || (current_user.role == "superadmin" && current_user.company_id?)%>
   <%= simple_form_for @depot do |f| %>
     <%= f.association :company, prompt: :translate %>
     <%= f.input :name, prompt: :translate %>

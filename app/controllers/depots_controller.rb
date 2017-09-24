@@ -11,9 +11,7 @@ class DepotsController < ApplicationController
 
   def show
     if current_user
-      if current_user.is_admin?
-        @depot
-      elsif current_user.is_planer?
+      if current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?)
         if @depot.company_id == current_user.company_id
           @depot
         end
@@ -22,10 +20,8 @@ class DepotsController < ApplicationController
   end
 
   def new
-    if current_user
-      if current_user.is_admin? || current_user.is_planer?
-        @depot = Depot.new
-      end
+    if current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?)
+      @depot = Depot.new
     end
   end
 
