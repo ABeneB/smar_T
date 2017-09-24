@@ -4,26 +4,22 @@ class CustomersController < ApplicationController
   respond_to :html
 
   def index
-    if current_user
+    if current_user.is_planer? || current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?)
       @customers = Customer.where(company_id: current_user.company_id)
     end
   end
 
   def show
     if current_user
-      if current_user.is_admin?
-        @customer
-      elsif current_user.is_planer?
-        if @customer.company_id == current_user.company_id
-          @customer
-        end
+      if @customer.company_id == current_user.company_id && (current_user.is_planer? || current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?))
+      @customer
       end
     end
   end
 
   def new
     if current_user
-      if current_user.is_admin? || current_user.is_planer?
+      if current_user.is_admin? || current_user.is_planer? || (current_user.is_superadmin? && current_user.company_id?)
         @customer = Customer.new
         @customer.company_id = current_user.company_id
       end

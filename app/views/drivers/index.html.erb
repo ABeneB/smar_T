@@ -1,14 +1,12 @@
 <%- model_class = Driver -%>
 <% if current_user %>
-    <% if current_user.is_admin? || current_user.is_planer? %>
+    <% if current_user.is_admin? || current_user.is_planer? || (current_user.is_superadmin? && current_user.company_id?)%>
       <div class="page-header">
         <h1>Fahrer</h1>
       </div>
       <% if current_user.company.nil? %>
         <div class="alert alert-info">Ihrem Benutzeraccount wurde noch kein Unternehmen zugewiesen. Sie können daher keinen Fahrer anlegen.</div>
       <% else %>
-        <%= link_to t('.new', :default => t("helpers.links.new")), new_driver_form_path, :class => 'btn btn-primary btn-smart' %> 
-        <hr/> 
         <table class="table table-striped">
           <thead>
             <tr>
@@ -35,7 +33,6 @@
                 <td>
                   <%= link_to t('helpers.links.show'), driver, :class => 'btn btn-info btn-xs' %>
                   <%= link_to t('helpers.links.edit'), edit_driver_path(driver), :class => 'btn btn-warning btn-xs' %>
-                  <%= link_to t('helpers.links.destroy'), driver, method: :delete, data: { confirm: t('helpers.links.confirm') }, :class => 'btn btn-danger btn-xs' %>
                 </td>
               </tr>
             <% end %>

@@ -1,61 +1,61 @@
 <%- model_class = Driver -%>
 <% if current_user %>
-    <% if current_user.is_admin? || current_user.is_planer?%>
-      <div class="page-header">
+    <% if current_user.is_admin? || current_user.is_planer? || (current_user.is_superadmin? && current_user.company_id?)%>
+      <% if current_user.company_id == @driver.user.company_id%>
+        <div class="page-header">
         <h1><%=t '.title', :default => Driver %></h1>
-      </div>
+        </div>
       
-      <div class="fieldset">
-        <dl>
-            <dt class="label label-default">Name</dt>
-            <dd><pre class="prettyprint"><%= @driver.name %></pre></dd>
-            <dt class="label label-default">Aktiv</dt>
-            <dd><pre class="prettyprint"><%= @driver.active %></pre></dd>
-            <dt class="label label-default">Arbeitszeit</dt>
-            <dd><pre class="prettyprint"><%= @driver.working_time %></pre></dd>
-        </dl>
-      </div>
-      
-      <div class="form-group">
-        <%= link_to t('.back', :default => t("helpers.links.back")),
-                    drivers_path, :class => 'btn btn-default'  %>
-        <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                    edit_driver_path(@driver), :class => 'btn btn-default' %>
-        <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                    driver_path(@driver),
-                    :method => 'delete',
-                    :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => t('helpers.links.confirm'))) },
-                    :class => 'btn btn-danger' %>
-      </div>
-      <% if @driver.active_tour %>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th><%= model_class.human_attribute_name(:place) %></th>
-              <th>Art</th>
-              <th><%= model_class.human_attribute_name(:location) %></th>
-              <th><%= model_class.human_attribute_name(:time) %></th>
-              <th><%= model_class.human_attribute_name(:duration) %></th>
-              <th>Beschreibung</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @driver.active_tour.order_tours.each do |order_tour| %>
+        <div class="fieldset">
+          <dl>
+              <dt class="label label-default">Name</dt>
+              <dd><pre class="prettyprint"><%= @driver.name %></pre></dd>
+              <dt class="label label-default">Aktiv</dt>
+              <dd><pre class="prettyprint"><%= @driver.active %></pre></dd>
+              <dt class="label label-default">Arbeitszeit</dt>
+              <dd><pre class="prettyprint"><%= @driver.working_time %></pre></dd>
+          </dl>
+        </div>
+
+        <div class="form-group">
+          <%= link_to t('.back', :default => t("helpers.links.back")),
+                      drivers_path, :class => 'btn btn-default'  %>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_driver_path(@driver), :class => 'btn btn-default' %>
+        </div>
+        <% if @driver.active_tour %>
+          <table class="table table-striped">
+            <thead>
               <tr>
-                <td><%= order_tour.place+1 %></td>
-                <td><%= order_tour.kind %></td>
-                <td><%= order_tour.location %></td>
-                <td><%= order_tour.time %></td>
-                <td><%= order_tour.duration %></td>
-                <td><%= order_tour.comment %></td>
+                <th><%= model_class.human_attribute_name(:place) %></th>
+                <th>Art</th>
+                <th><%= model_class.human_attribute_name(:location) %></th>
+                <th><%= model_class.human_attribute_name(:time) %></th>
+                <th><%= model_class.human_attribute_name(:duration) %></th>
+                <th>Beschreibung</th>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              <% @driver.active_tour.order_tours.each do |order_tour| %>
+                <tr>
+                  <td><%= order_tour.place+1 %></td>
+                  <td><%= order_tour.kind %></td>
+                  <td><%= order_tour.location %></td>
+                  <td><%= order_tour.time %></td>
+                  <td><%= order_tour.duration %></td>
+                  <td><%= order_tour.comment %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+      <% else %>
+          <div class="alert alert-danger">Falsches Unternehmen!</div>
+          ZUGANG VERWEIGERT
       <% end %>
-    <% else %>
-    ZUGANG VERWEIGERT
-    <% end %>
+  <% else %>
+  ZUGANG VERWEIGERT
+  <% end %>
 <% else %>
 ZUGANG VERWEIGERT
 <% end %>

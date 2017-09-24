@@ -4,7 +4,7 @@ class DriversController < ApplicationController
   respond_to :html
 
   def index
-    if (current_user.is_admin? || current_user.is_planer?) && !current_user.company.nil?
+    if (current_user.is_admin? || current_user.is_planer? || (current_user.is_superadmin? && current_user.company_id?)) && !current_user.company.nil?
       company = current_user.company
       @drivers = company.drivers
     else
@@ -13,20 +13,17 @@ class DriversController < ApplicationController
   end
 
   def show
-    if current_user
-      if current_user.is_admin?
-        @driver
-      elsif current_user.is_planer?
+      if current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?)
         if @driver.user.company_id == current_user.company_id
           @driver
         end
       end
-    end
   end
+
 
   def new
     if current_user
-      if current_user.is_admin? || current_user.is_planer?
+      if current_user.is_admin? || current_user.is_planer? || (current_user.is_superadmin? && current_user.company_id?)
         @driver = Driver.new
         @driver.active = true
       end

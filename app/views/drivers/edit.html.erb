@@ -1,13 +1,18 @@
 <%- model_class = Driver -%>
 <% if current_user %>
-    <% if current_user.is_admin? || current_user.is_planer?%>
+  <% if current_user.is_admin? || current_user.is_planer? || (current_user.is_superadmin? && current_user.company_id?)%>
+    <% if current_user.company_id == @driver.user.company_id%>
         <div class="page-header">
           <h1><%=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => Driver %></h1>
         </div>
         <%= render :partial => 'form' %>
     <% else %>
-    ZUGANG VERWEIGERT
+      <div class="alert alert-danger">Falsches Unternehmen!</div>
+      ZUGANG VERWEIGERT
     <% end %>
+  <% else %>
+    ZUGANG VERWEIGERT
+  <% end %>
 <% else %>
 ZUGANG VERWEIGERT
 <% end %>

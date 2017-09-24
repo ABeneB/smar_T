@@ -1,4 +1,4 @@
-<% if current_user.role == "admin" %>
+<% if current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?)%>
   <%= simple_form_for @driver do |f| %>
     <%= f.association :user, label_method: :username %>
     <%= f.input :name, prompt: :translate %>
@@ -6,7 +6,7 @@
     <%= f.input :active, prompt: :translate %>
     <%= f.button :submit, prompt: :translate %>
   <% end %>
-<% elsif %>
+<% elsif current_user.is_planer?%>
   <%= simple_form_for @driver do |f| %>
     <%= f.input :name, prompt: :translate %>
     <%= f.input :working_time, prompt: :translate %>
