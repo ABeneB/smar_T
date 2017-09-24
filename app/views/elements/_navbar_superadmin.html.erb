@@ -15,7 +15,7 @@
     <% if current_user.company_id? %>
       <ul class="navbar-text">
         <b>
-          <%= t('devise.navbar_text', name: current_user.username, unternehmen: current_user.company_id )%></b>
+          <%= t('devise.navbar_text', name: current_user.username, company_name: current_user.company.name, company_id: current_user.company_id )%></b>
       </ul>
     <% end %>
     <ul class="nav navbar-nav navbar-right"> 
