@@ -4,7 +4,7 @@ class DepotsController < ApplicationController
   respond_to :html
 
   def index
-    if current_user
+    if current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?)
       @depots = Depot.where(company_id: current_user.company.id)
     end
   end
