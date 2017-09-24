@@ -1,9 +1,14 @@
 <%- model_class = Restriction -%>
-<% if current_user &&  current_user.is_admin? %>
+<% if current_user && ( current_user.role == "admin" || (current_user.role == "superadmin" && current_user.company_id?)) %>
+  <% if current_user.company_id == @restriction.company_id%>
     <div class="page-header">
       <h1><%=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => Restriction %></h1>
     </div>
     <%= render :partial => 'form' %>
+  <% else %>
+    <div class="alert alert-danger">Falsches Unternehmen!</div>
+    ZUGANG VERWEIGERT
+  <% end %>
 <% else %>
 ZUGANG VERWEIGERT
 <% end %>
