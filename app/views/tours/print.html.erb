@@ -16,8 +16,8 @@
     <tbody>
     <% @order_tours.each do |order_tour| %>
       <tr id="orderTour-<%= order_tour.id %>" class="unsortable print">
-        <td class="center vertical-top"><b><%= order_tour.place + 1 %>.</b></td>
-        <td class="vertical-top">
+        <td class="center"><b><%= order_tour.place + 1 %>.</b></td>
+        <td>
           <% if ["pickup", "delivery"].include?(order_tour.kind) %>
               <b><%= order_tour.order.customer.name %></b><br>
           <% end %>
@@ -45,14 +45,13 @@
         createMap(document.getElementById('map'));
 
         <% @order_tours.each_with_index do | order_tour, index | %>
-          setMarker(parseFloat(<%= order_tour.latitude %>), parseFloat(<%= order_tour.longitude %>),"<%= order_tour.place + 1 %>");
-          <% if (index < @order_tours.length - 1) %>
-            var origin = {lat:<%= @order_tours[index].latitude.blank? ? 0 : @order_tours[index].latitude %>, lng: <%= @order_tours[index].longitude.blank? ? 0 : @order_tours[index].longitude %>};
-            var destination = {lat: <%= @order_tours[index + 1].latitude.blank? ? 0 : @order_tours[index + 1].latitude %>, lng: <%= @order_tours[index + 1].longitude.blank? ? 0 : @order_tours[index + 1].longitude %>};
-            setRoute(origin, destination);
-          <% end %>
+        setMarker(parseFloat(<%= order_tour.latitude %>), parseFloat(<%= order_tour.longitude %>),"<%= order_tour.place + 1 %>");
+        <% if (index < @order_tours.length - 1) %>
+        var origin = {lat:<%= @order_tours[index].latitude.blank? ? 0 : @order_tours[index].latitude %>, lng: <%= @order_tours[index].longitude.blank? ? 0 : @order_tours[index].longitude %>};
+        var destination = {lat: <%= @order_tours[index + 1].latitude.blank? ? 0 : @order_tours[index + 1].latitude %>, lng: <%= @order_tours[index + 1].longitude.blank? ? 0 : @order_tours[index + 1].longitude %>};
+        setRoute(origin, destination);
+        <% end %>
         <% end %>
     }
     initMap();
-    window.status = "GoogleMaps_loaded";
 </script>

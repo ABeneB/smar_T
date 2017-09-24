@@ -100,7 +100,8 @@ class ToursController < ApplicationController
         format.pdf do
           render pdf: "tour_#{params[:id]}",
                  template: 'tours/print.pdf.erb',
-                 layout: 'pdf.html'
+                 layout: 'pdf.html',
+                 window_status: "GoogleMaps_loaded"
         end
       end
     else
