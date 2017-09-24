@@ -7,6 +7,9 @@ class RegisteredUsersController < ApplicationController
     if current_user && current_user.is_admin?
       @users = User.all
     end
+    if current_user && current_user.is_superadmin?
+      @users = User.all
+    end
   end
 
   def show

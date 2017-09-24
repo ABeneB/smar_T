@@ -3,7 +3,7 @@
     <%controller.redirect_to :action => "show", :id => current_user.company_id %>
 <% elsif current_user && current_user.role == "superadmin" %>
     <div class="page-header">
-      <h1>Unternehmen</h1>
+      <h1>Übersicht: Unternehmen</h1>
     </div>
     <%= link_to t('.new', :default => t("helpers.links.new")), new_company_path, :class => 'btn btn-primary btn-smart' %>
     <hr/>
