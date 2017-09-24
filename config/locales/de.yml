@@ -272,3 +272,4 @@ de:
   sign_out: "Abmelden"
   edit_account: "Account bearbeiten"
   list_of_companies: "Liste aller Unternehmen"
+  navbar_text: "Sie sind eingeloggt als %{name} im Unternehmen: %{unternehmen}."
