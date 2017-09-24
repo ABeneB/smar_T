@@ -1,5 +1,5 @@
 <%- model_class = User -%>
-<% if (current_user && current_user.is_superadmin?) || (current_user && current_user.is_admin?) %>
+<% if current_user && (current_user.is_admin? || current_user.is_superadmin?) %>
   <div class="page-header">
     <h1>Benutzer</h1>
   </div>

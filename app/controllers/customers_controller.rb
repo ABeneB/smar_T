@@ -36,10 +36,7 @@ class CustomersController < ApplicationController
 
   def create
     @customer = Customer.new(customer_params)
-    if current_user.is_planer?
-      @customer.company_id = current_user.company.id
-    end
-    @customer.save
+    @customer.company_id = current_user.company.id
     if @customer.save
       flash[:success] = t('.success', customer_id: @customer.id)
       redirect_to customers_path

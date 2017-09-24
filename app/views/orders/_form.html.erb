@@ -1,29 +1,61 @@
-<% if current_user.role == "admin" %>
-  <%= simple_form_for @order do |f| %>
-    <%= f.association :customer, prompt: :translate %>
-    <%= f.input :pickup_location, prompt: :translate %>
-    <%= f.input :duration_pickup, prompt: :translate %>
-    <%= f.input :delivery_location, prompt: :translate %>
-    <%= f.input :duration_delivery, prompt: :translate %>
-    <%= f.input :start_time, prompt: :translate %>
-    <%= f.input :end_time, prompt: :translate %>
-    <%= f.input :capacity, prompt: :translate %>
-    <%= f.input :comment, prompt: :translate %>
-    <%= f.input :active, prompt: :translate %>
-    <%= f.button :submit, prompt: :translate %>
+<% if current_user.role == "admin" || current_user.role == "planer" %>
+  <% if current_user.company.restriction.problem == "DP" %>
+  	<%= simple_form_for @order do |f| %>
+    	<%= f.input :problem, as: :fake_select, :collection => {t('dp')  => 'type_1'}, :selected => 'type_1', :disabled => true%>
+    	<%= f.association :customer, prompt: :translate %>
+    	<div id="type_1" class="type_forms">
+    	<%= f.input :pickup_location, prompt: :translate %>
+    	<%= f.input :duration_pickup, prompt: :translate %>
+    	</div>
+    	<div id="type_2" class="type_forms">
+    	<%= f.input :delivery_location, prompt: :translate %>
+    	<%= f.input :duration_delivery, prompt: :translate %>
+    	</div>
+    	<%= f.input :start_time, prompt: :translate %>
+    	<%= f.input :end_time, prompt: :translate %>
+    	<%= f.input :capacity, prompt: :translate %>
+    	<%= f.input :comment, prompt: :translate %>
+    	<%= f.input :active, prompt: :translate %>
+    	<%= f.button :submit, prompt: :translate %>
+  	<% end %>
+  <% elsif current_user.company.restriction.problem == "PP" %>
+       <%= simple_form_for @order do |f| %>
+    	<%= f.input :problem, as: :fake_select, :collection => {t('pp') => 'type_2'}, :selected => 'type_2', :disabled => true%>
+    	<%= f.association :customer, prompt: :translate %>
+    	<div id="type_1" class="type_forms">
+    	<%= f.input :pickup_location, prompt: :translate %>
+    	<%= f.input :duration_pickup, prompt: :translate %>
+    	</div>
+    	<div id="type_2" class="type_forms">
+    	<%= f.input :delivery_location, prompt: :translate %>
+    	<%= f.input :duration_delivery, prompt: :translate %>
+    	</div>
+    	<%= f.input :start_time, prompt: :translate %>
+    	<%= f.input :end_time, prompt: :translate %>
+    	<%= f.input :capacity, prompt: :translate %>
+    	<%= f.input :comment, prompt: :translate %>
+    	<%= f.input :active, prompt: :translate %>
+    	<%= f.button :submit, prompt: :translate %>
+  	<% end %>
+  <% elsif current_user.company.restriction.problem == "PDP" %>
+        <%= simple_form_for @order do |f| %>
+    	<%= f.input :problem, as: :fake_select, :collection => {t('dp')  => 'type_1', t('pp') => 'type_2', t('pdp') => 'type_3'}, :selected => 'type_3'%>
+    	<%= f.association :customer, prompt: :translate %>
+    	<div id="type_1" class="type_forms">
+    	<%= f.input :pickup_location, prompt: :translate %>
+    	<%= f.input :duration_pickup, prompt: :translate %>
+    	</div>
+    	<div id="type_2" class="type_forms">
+    	<%= f.input :delivery_location, prompt: :translate %>
+    	<%= f.input :duration_delivery, prompt: :translate %>
+    	</div>
+    	<%= f.input :start_time, prompt: :translate %>
+    	<%= f.input :end_time, prompt: :translate %>
+    	<%= f.input :capacity, prompt: :translate %>
+    	<%= f.input :comment, prompt: :translate %>
+    	<%= f.input :active, prompt: :translate %>
+    	<%= f.button :submit, prompt: :translate %>
+  	<% end %>
   <% end %>
-<% elsif current_user.role == "planer" %>
-  <%= simple_form_for @order do |f| %>
-    <%= f.association :customer, prompt: :translate %>
-    <%= f.input :pickup_location, prompt: :translate %>
-    <%= f.input :duration_pickup, prompt: :translate %>
-    <%= f.input :delivery_location, prompt: :translate %>
-    <%= f.input :duration_delivery, prompt: :translate %>
-    <%= f.input :start_time, prompt: :translate %>
-    <%= f.input :end_time, prompt: :translate %>
-    <%= f.input :capacity, prompt: :translate %>
-    <%= f.input :comment, prompt: :translate %>
-    <%= f.input :active, prompt: :translate %>
-    <%= f.button :submit, prompt: :translate %>
-  <% end %>
+
 <% end %>

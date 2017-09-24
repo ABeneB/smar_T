@@ -21,6 +21,8 @@
 
 de:
  hello: "Hallo Welt"
+ admin: "Administrator"
+ planer: "Planer"
  customer: "Kunde"
  company: "Unternehmen"
  driver: "Fahrer"
@@ -30,6 +32,9 @@ de:
  depot: "Depot"
  edit: "bearbeiten"
  welcome_admin: "Herzlich Willkommen, %{name}!"
+ pp: "Pickup-Problem"
+ dp: "Delivery-Problem"
+ pdp: "Pickup- und Delivery-Problem"
  customers:
   show:
    title: "Kunde"

@@ -178,9 +178,14 @@ body{
 .dropdown-toggle{
     padding: 10px 15px;
 
+.caret{
+margin-left: 5px;
+}
+
 .account-icon {
     margin: 0px;
     filter: none;
+    margin-right: 5px;
 }
 }
 }

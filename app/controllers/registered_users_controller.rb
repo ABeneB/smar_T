@@ -4,7 +4,7 @@ class RegisteredUsersController < ApplicationController
   respond_to :html
 
   def index
-    if current_user && current_user.is_admin?
+    if current_user && (current_user.is_admin? || current_user.is_superadmin?)
       @users = User.all
     end
     if current_user && current_user.is_superadmin?
@@ -13,13 +13,13 @@ class RegisteredUsersController < ApplicationController
   end
 
   def show
-    if current_user && current_user.is_admin?
+    if current_user && (current_user.is_admin? || current_user.is_superadmin?) 
       @user
     end
   end
 
   def new
-    if current_user && current_user.is_admin?
+    if current_user && (current_user.is_admin? || current_user.is_superadmin?) 
       @user = User.new
     end
   end
@@ -30,6 +30,7 @@ class RegisteredUsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user.company_id = current_user.company_id
     if @user.save
       flash[:success] = t('.success', user_id: @user.id)
     redirect_to(registered_user_path(@user))
