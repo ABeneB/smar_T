@@ -1,7 +1,7 @@
 <%- model_class = Tour -%>
-<h2>Tourenplan</h2>
-
+<span><h2 style="display:inline;">Tourenplan</h2><%= wicked_pdf_image_tag @tour.driver.company.logo.try(:url, :thumb), style: 'float: right' %></span>
 <h3>Fahrer: <%= @tour.driver.name %> | Datum: <%= Date.today.strftime("%d.%m.%Y") %></h3>
+<div style="clear: both;"></div>
 
 <div class="fieldset">
   <table class="table table-striped">
