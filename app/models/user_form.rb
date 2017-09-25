@@ -6,7 +6,7 @@ class UserForm
   validates :username, :password, :email, presence: true
   validates :role, inclusion: { in: ["superadmin","admin", "planer", "driver", "user", "guest"],
     message: "%{value} is not a valid role." }, presence: true
-  validates :working_time, :inclusion => { :in => 0..1440 }, :if => :driver_selected?
+  validates :working_time, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 1440 }, :if => :driver_selected?
 
   def driver_selected?
      role ==  'driver'
