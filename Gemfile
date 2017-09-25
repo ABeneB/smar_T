@@ -55,7 +55,6 @@ gem 'gmaps4rails'
 # Für grobe Entfernung
 gem 'geocoder'
 
-gem 'better_errors'
 gem 'binding_of_caller'
 
 # for calculation of drive time
@@ -79,6 +78,9 @@ gem 'rails-i18n', github: 'svenfuchs/rails-i18n', branch: 'rails-4-x' # For 4.x
 gem 'devise-i18n'
 gem 'client_side_validations'
 gem 'client_side_validations-simple_form'
+
+# file management / upload
+gem 'paperclip', '~> 4.3', '>= 4.3.7'
 
 group :development do
   gem 'capistrano'
@@ -104,4 +106,5 @@ group :development, :test do
   gem 'faker', '~> 1.7', '>= 1.7.3'
   gem 'webmock', '~> 3.0', '>= 3.0.1'
   gem 'byebug'
+  gem 'better_errors'
 end

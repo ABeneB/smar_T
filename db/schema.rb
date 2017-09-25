@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170903143307) do
+ActiveRecord::Schema.define(version: 20170925131945) do
 
   create_table "companies", force: true do |t|
     t.string   "name"
@@ -22,6 +22,10 @@ ActiveRecord::Schema.define(version: 20170903143307) do
     t.float    "latitude"
     t.float    "longitude"
     t.string   "google_maps_api_key"
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+    t.datetime "logo_updated_at"
   end
 
   create_table "customers", force: true do |t|

@@ -2,9 +2,14 @@ class Company < ActiveRecord::Base
     has_many :users
     has_many :customers
     has_one :restriction
-    
+
+    has_attached_file :logo, styles: { medium: "300x300>", thumb: "100x100>" }
+    validates_attachment_content_type :logo, content_type: /\Aimage\/.*\z/
+    validates_attachment_file_name :logo, matches: [/png\z/, /jpe?g\z/]
+    validates_with AttachmentSizeValidator, attributes: :logo, less_than_or_equal_to: 3.megabytes
+
     validates :name, presence: {message: "Dieses Feld muss ausgefüllt werden"}
-   validates :address, presence: {message: "Dieses Feld muss ausgefüllt werden"}
+    validates :address, presence: {message: "Dieses Feld muss ausgefüllt werden"}
    
     # Koordinaten aus Adresse
     geocoded_by :address

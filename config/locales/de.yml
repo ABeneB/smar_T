@@ -76,6 +76,8 @@ de:
   form:
    address_hint: "Adresse bitte im Format 'Lietzenburger Straße 71, 29386 Dedelstorf' eingeben"
    google_maps_key_hint: "Ein Google Maps API-Schlüssel ist für die Berechnung der Touren und Validierung der Adressen notwendig. Falls Sie noch keinen API-Schlüssel besitzen, können Sie unter https://developers.google.com/maps/?hl=de einen anfordern."
+   company_logo_hint: "Erlaubte Dateiformate: .PNG und .JPEG, maximale Dateigröße 3 MB"
+   upload_logo: "Logo ändern"
  depots:
   show:
    title: "Depot"
@@ -251,6 +253,7 @@ de:
   address: "Adresse"
   telefon: "Telefonnummer"
   google_maps_api_key: "Google Maps API-Schlüssel (Key)"
+  logo: "Unternehmenslogo"
   created_at: "Erstellt am"
   problem: "Problem"
   dynamic: "Dynamisch"
@@ -286,4 +289,23 @@ de:
   sign_out: "Abmelden"
   edit_account: "Account bearbeiten"
   list_of_companies: "Liste aller Unternehmen"
-  navbar_text: "Sie sind eingeloggt als %{name} im Unternehmen: %{company_name} (ID: %{company_id})."
+  navbar_text: "Sie sind eingeloggt als %{name} im Unternehmen: %{company_name} (%{company_id})."
+
+
+errors:
+  messages:
+    in_between: "muss zwischen %{min} und %{max} sein"
+    spoofed_media_type: "trägt eine Dateiendung, die nicht mit dem Inhalt der Datei übereinstimmt"
+
+number:
+  human:
+    storage_units:
+      format: "%n %u"
+      units:
+        byte:
+          one:   "Byte"
+          other: "Bytes"
+        kb: "KB"
+        mb: "MB"
+        gb: "GB"
+        tb: "TB"
