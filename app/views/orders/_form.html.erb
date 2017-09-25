@@ -1,7 +1,7 @@
 <% if current_user.role == "admin" || current_user.role == "planer" || (current_user.is_superadmin? && current_user.company_id?)%>
   <% if  current_user.company.restriction.present? && current_user.company.restriction.problem == "DP" %>
   	<%= simple_form_for @order do |f| %>
-    	<%= f.input :problem, as: :fake_select, :collection => {t('dp')  => 'type_1'}, :selected => 'type_1', :disabled => true%>
+    	<%= f.input :problem, as: :fake_select, :collection => {t('dp')  => 'type_2'}, :selected => 'type_2', :disabled => true%>
     	<%= f.association :customer, prompt: :translate %>
     	<div id="type_1" class="type_forms">
     	<%= f.input :pickup_location, prompt: :translate %>
@@ -20,7 +20,7 @@
   	<% end %>
   <% elsif current_user.company.restriction.present? && current_user.company.restriction.problem == "PP" %>
        <%= simple_form_for @order do |f| %>
-    	<%= f.input :problem, as: :fake_select, :collection => {t('pp') => 'type_2'}, :selected => 'type_2', :disabled => true%>
+    	<%= f.input :problem, as: :fake_select, :collection => {t('pp') => 'type_1'}, :selected => 'type_1', :disabled => true%>
     	<%= f.association :customer, prompt: :translate %>
     	<div id="type_1" class="type_forms">
     	<%= f.input :pickup_location, prompt: :translate %>
@@ -39,7 +39,7 @@
   	<% end %>
   <% else %>
         <%= simple_form_for @order do |f| %>
-    	<%= f.input :problem, as: :fake_select, :collection => {t('dp')  => 'type_1', t('pp') => 'type_2', t('pdp') => 'type_3'}, :selected => 'type_3'%>
+    	<%= f.input :problem, as: :fake_select, :collection => {t('dp')  => 'type_2', t('pp') => 'type_1', t('pdp') => 'type_3'}, :selected => 'type_3'%>
     	<%= f.association :customer, prompt: :translate %>
     	<div id="type_1" class="type_forms">
     	<%= f.input :pickup_location, prompt: :translate %>
