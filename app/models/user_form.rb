@@ -4,7 +4,14 @@ class UserForm
   attr_accessor :user_id, :name, :work_start_time, :work_end_time, :active, :working_time, :id, :email, :company_id, :password, :last_sign_in_at, :created_at, :username, :role
 
   validates :username, :password, :email, presence: true
+  validates :role, inclusion: { in: ["superadmin","admin", "planer", "driver", "user", "guest"],
+    message: "%{value} is not a valid role." }, presence: true
+  validates :working_time, :inclusion => { :in => 0..1440 }, :if => :driver_selected?
 
+  def driver_selected?
+     role ==  'driver'
+  end
+  
   def register
     if valid?
       # Do something interesting here

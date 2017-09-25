@@ -4,7 +4,7 @@
     </div>
 
 
-  <%= simple_form_for @user_form do |f| %>
+  <%= simple_form_for @user_form, validate: true do |f| %>
     <%= f.input :username, prompt: :translate %>
     <%= f.input :email, prompt: :translate %>
     <%= f.input :password, prompt: :translate %>
