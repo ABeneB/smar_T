@@ -66,7 +66,7 @@ class OrderTour < ActiveRecord::Base
       if depot
         return depot.latitude
       else
-        return nil
+        return self.tour.driver.company.latitude
       end
     else
       return nil
@@ -88,7 +88,7 @@ class OrderTour < ActiveRecord::Base
       if depot
         return depot.longitude
       else
-        return nil
+        return self.tour.driver.company.longitude
       end
     else
       return nil
