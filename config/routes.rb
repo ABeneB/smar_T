@@ -21,7 +21,6 @@ Rails.application.routes.draw do
 
   resources :registered_users
 
-  resources :driver_forms, only: [:new, :create]
   resources :user_forms, only: [:new, :create]
 
   get 'developer/index'
