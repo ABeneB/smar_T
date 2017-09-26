@@ -68,7 +68,7 @@ gem 'rails-jquery-ui-sortable'
 
 gem 'bootstrap-sass', '3.3.5'
 gem 'bootstrap-sass-extras'
-gem 'devise', '3.5.2'
+gem 'devise', '~> 4.3'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'tzinfo-data'
