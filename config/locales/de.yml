@@ -167,6 +167,10 @@ de:
    print_tour: "Drucken"
   index:
    title: "Touren"
+   active_tours: "Aktuell"
+   completed_tours: "Abgeschlossen"
+   no_active_tours_available: "Keine aktiven Touren vorhanden"
+   no_completed_tours_available: "Keine abgeschlossenen Touren vorhanden"
   new:
    title: "Neue Tour"
    no_company_assigned: "Ihr Benutzerkonto ist keinem Unternehmen zugeordnet. Bitte kontaktieren Sie den Administrator."
@@ -250,6 +254,11 @@ de:
    user_form:
     create: "Speichern"
     update: "Speichern"
+  tours:
+    tour_generated: "Erstellt"
+    tour_approved: "Bereit"
+    tour_started: "Gestarted"
+    tour_completed: "Abgeschlossen"
 
  attributes:
   name: "Name"

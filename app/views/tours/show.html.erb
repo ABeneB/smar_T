@@ -25,7 +25,7 @@
       </thead>
       <tbody class="sortable">
         <% @order_tours.each do |order_tour| %>
-          <% if ToursHelper.is_sortable_order_tour?(order_tour) %>
+          <% if is_sortable_order_tour?(order_tour) %>
             <tr id="orderTour-<%= order_tour.id %>">
               <td class="center"><%= order_tour.place + 1 %></td>
               <td><%= order_tour.location %></td>
