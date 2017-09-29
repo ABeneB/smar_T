@@ -145,6 +145,22 @@ de:
   destroy:
    success: "Benutzer %{user_id} wurde gelöscht"
    failure: "Benutzer %{user_id} konnte nicht gelöscht werden"
+ user_forms:
+  show:
+   title: "Benutzer"
+  new:
+   title: "Neuer Benutzer"
+  edit:
+   title: "Benutzer bearbeiten"
+  create:
+   success: "Benutzer %{user_id} wurde erfolgreich angelegt"
+   failure: "Benutzer konnte nicht angelegt werden"
+  update:
+   success: "Benutzer %{user_id} wurde aktualisiert"
+   failure: "Benutzer %{user_id} konnte nicht aktualisiert werden"
+  destroy:
+   success: "Benutzer %{user_id} wurde gelöscht"
+   failure: "Benutzer %{user_id} konnte nicht gelöscht werden"
  restrictions:
   show:
    title: "Beschränkung"

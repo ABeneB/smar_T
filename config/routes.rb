@@ -21,7 +21,7 @@ Rails.application.routes.draw do
 
   resources :registered_users
 
-  resources :user_forms, only: [:new, :create]
+  resources :user_forms
 
   get 'developer/index'
   post 'developer/reset_database'
