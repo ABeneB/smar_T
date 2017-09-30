@@ -39,7 +39,7 @@ class ToursController < ApplicationController
     #Ausgabe nach Rolle filtern
     if current_user.is_admin? || current_user.is_planer? || (current_user.is_superadmin? && current_user.company_id?)
       if current_user.company
-        if current_user.company.google_maps_api_key.nil? || current_user.company.google_maps_api_key.empty?
+        if current_user.company.google_maps_api_key.blank?
           flash[:error] = t('.no_google_maps_api_key_assigned')
         else
           Algorithm::TourGeneration.generate_tours(current_user.company)

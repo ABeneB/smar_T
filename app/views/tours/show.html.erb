@@ -5,8 +5,8 @@
     <h1>Tour</h1>
     <%= link_to t('.print_tour'), print_tour_path(:format => :pdf), class: 'btn btn-info', target: '_blank' %>
   </div>
-  <% if current_user.company.google_maps_api_key.nil? || current_user.company.google_maps_api_key.empty? %>
-      <div class="alert alert-warning">Ihrem Unternehmen wurde noch kein Google Maps API Key zugewiesen.</div>
+  <% if current_user.company.google_maps_api_key.blank? %>
+      <div class="alert alert-warning"><%= t('tours.no_google_maps_api_key_assigned') %></div>
   <% end %>
   <div class="map-info alert alert-info hidden">
     Sie haben die Reihenfolge der Tour verändert. Bitte aktualisieren Sie diese Seite um die neue Karte anzuzeigen.

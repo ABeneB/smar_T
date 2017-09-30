@@ -178,6 +178,7 @@ de:
    success: "Beschränkung %{restriction_id} wurde gelöscht"
    failure: "Beschränkung %{restriction_id} konnte nicht gelöscht werden"
  tours:
+  no_google_maps_api_key_assigned: "Ihrem Unternehmen wurde noch kein Google Maps API Key zugewiesen. Bitte setzen Sie den API Schlüssel in den Unternehmenseinstellungen oder kontaktieren Sie den Administrator."
   show:
    title: "Tour"
    print_tour: "Drucken"
@@ -190,7 +191,6 @@ de:
   new:
    title: "Neue Tour"
    no_company_assigned: "Ihr Benutzerkonto ist keinem Unternehmen zugeordnet. Bitte kontaktieren Sie den Administrator."
-   no_google_maps_api_key_assigned: "Ihrem Unternehmen wurde noch kein Google Maps API Key zugewiesen. Bitte kontaktieren Sie den Administrator."
   edit:
    title: "Tour bearbeiten"
   create:
