@@ -64,9 +64,27 @@
   <script>
   function initMap() {
     createMap(document.getElementById('map'));
-
+      <% tmp_array_latidude = [] %>
+      <% tmp_array_longitude = [] %>
     <% @order_tours.each_with_index do | order_tour, index | %>
-      setMarker(parseFloat(<%= order_tour.latitude %>), parseFloat(<%= order_tour.longitude %>),"<%= order_tour.place + 1 %>");
+      // set Marker
+      <% marker_not_set = TRUE %>
+      <% tmp_array_latidude.each_with_index do |a, index_lat| %>
+        <% if (tmp_array_latidude[index_lat] == order_tour.latitude) && (tmp_array_longitude[index_lat] == order_tour.longitude) %>
+          setMarker(parseFloat(<%= order_tour.latitude + 0.001%>), parseFloat(<%= order_tour.longitude + 0.001%>),"<%= order_tour.place + 1 %>");
+          <% marker_not_set = FALSE %>
+          <% tmp_array_latidude << order_tour.latitude + 0.001 %>
+          <% tmp_array_longitude << order_tour.longitude + 0.001 %>
+          <% break %>
+        <% end %>
+      <% end %>
+      <% if marker_not_set %>
+        setMarker(parseFloat(<%= order_tour.latitude %>), parseFloat(<%= order_tour.longitude %>),"<%= order_tour.place + 1 %>");
+        <% tmp_array_latidude << order_tour.latitude %>
+        <% tmp_array_longitude << order_tour.longitude %>
+      <% end %>
+
+      // set Route
       <% if (index < @order_tours.length - 1) %>
         var origin = {lat:<%= @order_tours[index].latitude.blank? ? 0 : @order_tours[index].latitude %>, lng: <%= @order_tours[index].longitude.blank? ? 0 : @order_tours[index].longitude %>};
         var destination = {lat: <%= @order_tours[index + 1].latitude.blank? ? 0 : @order_tours[index + 1].latitude %>, lng: <%= @order_tours[index + 1].longitude.blank? ? 0 : @order_tours[index + 1].longitude %>};
