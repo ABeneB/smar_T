@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171006190920) do
+ActiveRecord::Schema.define(version: 20171006214026) do
 
   create_table "companies", force: true do |t|
     t.string   "name"
@@ -163,8 +163,9 @@ ActiveRecord::Schema.define(version: 20171006190920) do
     t.datetime "updated_at"
     t.float    "latitude"
     t.float    "longitude"
+    t.integer  "company_id"
   end
 
-  add_index "vehicles", ["driver_id"], name: "index_vehicles_on_driver_id"
+  add_index "vehicles", ["company_id"], name: "index_vehicles_on_company_id"
 
 end

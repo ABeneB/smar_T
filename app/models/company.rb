@@ -3,6 +3,7 @@ class Company < ActiveRecord::Base
     has_many :customers, dependent: :destroy
     has_one :restriction, dependent: :destroy
     has_many :depots, dependent: :destroy
+    has_many :vehicles, dependent: :destroy
 
     has_attached_file :logo, styles: { medium: "300x300>", thumb: "100x100>" }
     validates_attachment_content_type :logo, content_type: /\Aimage\/.*\z/
