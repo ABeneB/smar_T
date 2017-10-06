@@ -23,7 +23,6 @@
               <tr>
                 <td><%= vehicle.position %></td>
                 <td class="center"><%= vehicle.capacity %></td>
-                <td><%= (Driver.where(id: vehicle.driver_id).first).name %></td>
                 <% if vehicle.driver %>
                 <td><%= vehicle.driver.name %></td>
                 <% else %>
