@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170925131945) do
+ActiveRecord::Schema.define(version: 20171006190920) do
 
   create_table "companies", force: true do |t|
     t.string   "name"
@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 20170925131945) do
     t.float    "delivery_lat"
     t.float    "delivery_long"
     t.string   "comment2"
+    t.integer  "order_type",        default: 0
   end
 
   add_index "orders", ["customer_id"], name: "index_orders_on_customer_id"

@@ -36,6 +36,7 @@ de:
  dp: "Delivery-Problem"
  pdp: "Pickup- und Delivery-Problem"
  driver_properties: "Fahrereigenschaften"
+ save_ressource: "Speichern"
  user_forms:
   new:
    title: "Neuer Benutzer"
@@ -111,11 +112,15 @@ de:
    success: "Fahrer: %{name} (ID %{driver_id})  wurde gelöscht"
    failure: "Fahrer: %{name} (ID %{driver_id})  konnte nicht gelöscht werden"
  orders:
+  types:
+    delivery: "Lieferung"
+    pickup: "Abholung"
+    service: "Service"
   show:
    title: "Auftrag"
   index:
    title: "Aufträge"
-   import: "Aufträge Importieren"
+   order_import: "Aufträge importieren"
   new:
    title: "Neuer Auftrag"
   edit:
@@ -218,6 +223,12 @@ de:
   destroy:
    success: "Fahrzeug %{vehicle_id} wurde gelöscht"
    failure: "Fahrzeug %{vehicle_id} konnte nicht gelöscht werden"
+ order_import:
+  file:
+    upload_csv: "Hochladen"
+  complete:
+    success: "Die Aufträge wurden erfolgreich importiert."
+    failure: "Bei Import der Aufträge ist ein Fehler aufgetreten."
  simple_form:
   labels:
    depot:
@@ -273,7 +284,7 @@ de:
   tours:
     tour_generated: "Erstellt"
     tour_approved: "Bereit"
-    tour_started: "Gestarted"
+    tour_started: "Gestartet"
     tour_completed: "Abgeschlossen"
 
  attributes:
@@ -289,13 +300,13 @@ de:
   time_window: "Zeitfenster"
   capacity_restriction: "Kapazitätsbeschränkung"
   priorities: "Prioritäten"
-  work_time: "Arbeitszeit"
+  work_time: "Arbeitszeit in Minuten"
   place: "Reihenfolge"
   location: "Ort"
   time: "Zeit"
   duration: "Dauer"
   priority: "Priorität"
-  working_time: "Arbeitszeit"
+  working_time: "Arbeitszeit in Minuten"
   active: "Aktiv"
   driver: "Fahrer"
   company: "Unternehmen"

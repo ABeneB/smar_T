@@ -23,6 +23,10 @@ Rails.application.routes.draw do
 
   resources :user_forms
 
+  get'order_import/file', as:  'file_order_import'
+  post 'order_import/confirm', as: 'confirm_order_import'
+  post 'order_import/complete', as: 'complete_order_import'
+
   get 'developer/index'
   post 'developer/reset_database'
 
