@@ -22,7 +22,6 @@ class DepotsController < ApplicationController
   def new
     if current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?)
       @depot = Depot.new
-      @depot.company_id = current_user.company.id
     end
   end
 
@@ -31,6 +30,7 @@ class DepotsController < ApplicationController
 
   def create
     @depot = Depot.new(depot_params)
+    @depot.company_id = current_user.company.id
     if @depot.save
       flash[:success] = t('.success', depot_id: @depot.id)
       respond_with(@depot)
