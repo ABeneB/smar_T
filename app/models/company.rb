@@ -23,8 +23,9 @@ class Company < ActiveRecord::Base
     end
 
     # Gibt alle Orders zurück, die der Company indirekt über zugewiesene Customer angehören.
-    def orders
-      Order.where(customer_id: self.customers.ids)
+    def orders(select = {})
+      where_clause = {customer_id: self.customers.ids}.merge(select)
+      Order.where(where_clause)
     end
 
     # Gibt alle Tours zurück, die der Company indirekt über zugewiesene Customer angehören.

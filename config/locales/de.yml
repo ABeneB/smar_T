@@ -112,6 +112,11 @@ de:
    success: "Fahrer: %{name} (ID %{driver_id})  wurde gelöscht"
    failure: "Fahrer: %{name} (ID %{driver_id})  konnte nicht gelöscht werden"
  orders:
+  filter_order_type_default: "Alle Typen"
+  filter_order_status_default: "Auswählen"
+  status:
+    active: "Aktiv"
+    inactive: "Inaktiv"
   types:
     delivery: "Lieferung"
     pickup: "Abholung"
@@ -121,6 +126,9 @@ de:
   index:
    title: "Aufträge"
    order_import: "Aufträge importieren"
+   filter_order_type: "Nach Typ filtern:"
+   filter_by_order_type: "Filtern"
+   filter_order_status: "Nach Status filtern:"
   new:
    title: "Neuer Auftrag"
   edit:
@@ -322,6 +330,7 @@ de:
   end_time: "Endzeit"
   user: "Benutzer"
   position: "Standort"
+  order_type: "Typ"
 
  devise:
   sign_in: "Anmelden"
