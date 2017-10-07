@@ -5,8 +5,8 @@ module Algorithm
 
   class TourGeneration
 
-    def self.generate_tours(company)
-      orders, drivers  = preprocess(company.orders, company.drivers)
+    def self.generate_tours(company, order_type_filter = {})
+      orders, drivers  = preprocess(company.orders(order_type_filter), company.drivers)
 
       mthreetp_classic = Variants::MThreeTP.new(company, AlgorithmEnum::M3PDP)
       mthreetp_classic.run(orders, drivers)

@@ -192,6 +192,7 @@ de:
    failure: "Beschränkung %{restriction_id} konnte nicht gelöscht werden"
  tours:
   no_google_maps_api_key_assigned: "Ihrem Unternehmen wurde noch kein Google Maps API Key zugewiesen. Bitte setzen Sie den API Schlüssel in den Unternehmenseinstellungen oder kontaktieren Sie den Administrator."
+  generate_new_tours: "Generieren"
   show:
    title: "Tour"
    print_tour: "Drucken"
@@ -201,6 +202,7 @@ de:
    completed_tours: "Abgeschlossen"
    no_active_tours_available: "Keine aktiven Touren vorhanden"
    no_completed_tours_available: "Keine abgeschlossenen Touren vorhanden"
+   generate_new_tours_hint: "Neue Touren generieren:"
   new:
    title: "Neue Tour"
    no_company_assigned: "Ihr Benutzerkonto ist keinem Unternehmen zugeordnet. Bitte kontaktieren Sie den Administrator."

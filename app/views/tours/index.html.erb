@@ -15,7 +15,16 @@
                 });
             </script>
         <% end %>
-        <%= link_to t('.new', :default => t("helpers.links.new")), new_tour_path, :id => 'btn_new_tour', :class => 'btn btn-primary new_btn btn-smart' %>
+        <%= form_tag new_tour_path, method: :get do %>
+          <b style="font-size: 15px;"><%= t('.generate_new_tours_hint') %></b>
+          <%= label_tag :order_type_delivery, t('orders.types.delivery') %>
+          <%= check_box_tag :order_type_delivery, 1, true %>
+          <%= label_tag :order_type_pickup, t('orders.types.pickup') %>
+          <%= check_box_tag :order_type_pickup, 1, true %>
+          <%= label_tag :order_type_service, t('orders.types.service') %>
+          <%= check_box_tag :order_type_service, 1, true %>
+          <%= submit_tag t('tours.generate_new_tours'), name: nil, id: 'btn_new_tour', class: 'btn btn-primary btn-smart' %>
+        <% end %>
         <div class="loader"><%= image_tag "ajax-loader.gif" %></div>
         <hr>
         <ul class="nav nav-tabs">
