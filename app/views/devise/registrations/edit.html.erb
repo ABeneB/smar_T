@@ -1,4 +1,6 @@
-<h2><%= t('.title', resource: resource_class.model_name.human) %></h2>
+<div class="page-header">
+          <h1><%=t '.title', resource: resource_class.model_name.human, :default => "Edit User" %></h1>
+        </div>
 
 <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= f.error_notification %>
