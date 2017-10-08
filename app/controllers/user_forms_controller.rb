@@ -3,6 +3,7 @@ class UserFormsController < ApplicationController
 
   def new
     @user_form = UserForm.new
+    @user_form.active = true
   end
 
   def edit
