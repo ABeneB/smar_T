@@ -233,6 +233,8 @@ de:
   destroy:
    success: "Fahrzeug %{vehicle_id} wurde gelöscht"
    failure: "Fahrzeug %{vehicle_id} konnte nicht gelöscht werden"
+  form:
+   driver_empty: "Ohne Fahrer"
  order_import:
   file:
     upload_csv: "Hochladen"
