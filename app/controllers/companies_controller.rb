@@ -38,38 +38,42 @@ class CompaniesController < ApplicationController
   end
 
   def create
-      @company = Company.new(company_params)
-      if @company.save
-        restriction = Restriction.new
-        restriction.company = @company
-        restriction.problem = "DP"
-        restriction.save
-        flash[:success] = t('.success', company_id: @company.id)
-        respond_with(@company)
-      else
-       flash[:alert] = t('.failure')
-       render 'new'
-     end
+    @company = Company.new(company_params)
+    if @company.save
+      restriction = Restriction.new
+      restriction.company = @company
+      restriction.problem = "DP"
+      restriction.save
+      User.create!(company: @company, username: "Administrator @ " + @company.name, email: "admin@" + @company.domain, password: "password", role: "admin")
+      User.create!(company: @company, username: "Planer @ " + @company.name, email: "planer@" + @company.domain, password: "password", role: "planer")
+      User.create!(company: @company, username: "Fahrer @ " + @company.name, email: "driver@" + @company.domain, password: "password", role: "driver")
+
+      flash[:success] = t('.success', company_id: @company.id)
+      respond_with(@company)
+    else
+      flash[:alert] = t('.failure')
+      render 'new'
+    end
   end
 
   def update
-      if @company.update(company_params)
-        flash[:success] = t('.success', company_id: @company.id)
-        respond_with(@company)
-     else
-       flash[:alert] = t('.failure', company_id: @company.id)
-       render("edit")
-     end
+    if @company.update(company_params)
+      flash[:success] = t('.success', company_id: @company.id)
+      respond_with(@company)
+    else
+      flash[:alert] = t('.failure', company_id: @company.id)
+      render("edit")
+    end
   end
 
   def destroy
-      if @company.destroy
-        flash[:success] = t('.success', company_id: @company.id)
-        respond_with(@company)
-     else
-	      flash[:alert] = t('.failure', company_id: @company.id)
-        respond_with(@company)
-     end
+    if @company.destroy
+      flash[:success] = t('.success', company_id: @company.id)
+      respond_with(@company)
+    else
+      flash[:alert] = t('.failure', company_id: @company.id)
+      respond_with(@company)
+    end
   end
 
   private
@@ -78,6 +82,6 @@ class CompaniesController < ApplicationController
     end
 
     def company_params
-      params.require(:company).permit(:user_id, :name, :address, :telefon, :google_maps_api_key, :logo)
+      params.require(:company).permit(:user_id, :name, :address, :domain, :telefon, :google_maps_api_key, :logo)
     end
 end
