@@ -8,12 +8,20 @@
         <div class="alert alert-info">Ihrem Benutzeraccount wurde noch kein Unternehmen zugewiesen. Sie können daher keine Tour anlegen.</div>
       <% else %>
         <% if current_user.company.google_maps_api_key.blank? %>
-            <div class="alert alert-warning"><%= t('tours.no_google_maps_api_key_assigned') %></div>
-            <script>
-                $( document ).ready(function() {
-                    disableButton($('#btn_new_tour'));
-                });
-            </script>
+          <div class="alert alert-warning"><%= t('tours.no_google_maps_api_key_assigned') %></div>
+          <script>
+              $( document ).ready(function() {
+                  disableButton($('#btn_new_tour'));
+              });
+          </script>
+        <% end %>
+        <% if current_user.company.available_drivers.blank? %>
+          <div class="alert alert-warning"><%= t('tours.no_available_drivers') %></div>
+          <script>
+              $( document ).ready(function() {
+                  disableButton($('#btn_new_tour'));
+              });
+          </script>
         <% end %>
         <%= form_tag new_tour_path, method: :get do %>
           <b style="font-size: 15px;"><%= t('.generate_new_tours_hint') %></b>

@@ -22,6 +22,18 @@ class Company < ActiveRecord::Base
       Driver.where(user_id: self.users.ids)
     end
 
+    def available_drivers
+      # retrieve array of all active drivers for company
+      active_drivers = Driver.where(user_id: self.users.ids, active: true).to_a
+      active_drivers.each do |driver|
+        if !Vehicle.exists?(driver: driver)
+          # remove driver without vehicle
+          active_drivers.delete(driver)
+        end
+      end
+      active_drivers
+    end
+
     # Gibt alle Orders zurück, die der Company indirekt über zugewiesene Customer angehören.
     def orders(select = {})
       where_clause = {customer_id: self.customers.ids}.merge(select)
