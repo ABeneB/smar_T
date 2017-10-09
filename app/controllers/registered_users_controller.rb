@@ -4,7 +4,7 @@ class RegisteredUsersController < ApplicationController
   respond_to :html
 
   def index
-    if current_user && (current_user.is_admin?)
+    if current_user && current_user.is_admin? && current_user.company_id?
       @users = User.where(company_id: current_user.company.id)
     end
     if current_user && current_user.is_superadmin? && current_user.company_id?
