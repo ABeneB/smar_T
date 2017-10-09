@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171009094411) do
+ActiveRecord::Schema.define(version: 20171009135738) do
 
   create_table "companies", force: true do |t|
     t.string   "name"
@@ -26,10 +26,10 @@ ActiveRecord::Schema.define(version: 20171009094411) do
     t.string   "logo_content_type"
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
-    t.string   "domain"
+    t.string   "email"
   end
 
-  add_index "companies", ["domain"], name: "index_companies_on_domain", unique: true
+  add_index "companies", ["email"], name: "index_companies_on_email", unique: true
 
   create_table "customers", force: true do |t|
     t.integer  "company_id"
@@ -151,6 +151,7 @@ ActiveRecord::Schema.define(version: 20171009094411) do
     t.string   "username"
     t.string   "role"
     t.integer  "company_id"
+    t.string   "nickname"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

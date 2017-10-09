@@ -11,7 +11,7 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>Benutzername</th>
+            <th>Nickname</th>
             <th>Rolle</th>
             <th>E-Mail</th>
             <th>Unternehmen</th>
@@ -22,7 +22,7 @@
           <% @users.each do |registered_user| %>
             <% if !registered_user.is_superadmin? %>
               <tr>
-                <td><%= registered_user.username %></td>
+                <td><%= registered_user.nickname %></td>
                 <td><%= registered_user.role %></td>
                 <td><%= registered_user.email %></td>
                 <% if registered_user.company %>

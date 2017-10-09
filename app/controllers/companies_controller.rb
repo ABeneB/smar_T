@@ -44,10 +44,7 @@ class CompaniesController < ApplicationController
       restriction.company = @company
       restriction.problem = "DP"
       restriction.save
-      User.create!(company: @company, username: "Administrator @ " + @company.name, email: "admin@" + @company.domain, password: "password", role: "admin")
-      User.create!(company: @company, username: "Planer @ " + @company.name, email: "planer@" + @company.domain, password: "password", role: "planer")
-      user = User.create!(company: @company, username: "Fahrer @ " + @company.name, email: "driver@" + @company.domain, password: "password", role: "driver")
-      Driver.create!(user_id: user.id, name: user.username, active: true, working_time: 480)
+      User.create!(company: @company, nickname: "Administrator @ " + @company.name, email: @company.email, password: "password", role: "admin")
 
       flash[:success] = t('.success', company_id: @company.id)
       respond_with(@company)
@@ -83,6 +80,6 @@ class CompaniesController < ApplicationController
     end
 
     def company_params
-      params.require(:company).permit(:user_id, :name, :address, :domain, :telefon, :google_maps_api_key, :logo)
+      params.require(:company).permit(:user_id, :name, :address, :email, :telefon, :google_maps_api_key, :logo)
     end
 end

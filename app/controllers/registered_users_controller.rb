@@ -35,7 +35,7 @@ class RegisteredUsersController < ApplicationController
     @user.company_id = current_user.company_id
     if @user.save
       flash[:success] = t('.success', user_id: @user.id)
-    redirect_to(registered_user_path(@user))
+      redirect_to(registered_user_path(@user))
       else
         flash[:alert] = t('.failure')
         render 'new'
@@ -57,7 +57,7 @@ class RegisteredUsersController < ApplicationController
       if @user.destroy
         flash[:success] = t('.success', user_id: @user.id)
         redirect_to(registered_user_path)
-        else
+      else
         flash[:alert] = t('.failure', user_id: @user.id)
         redirect_to(registered_user_path)
       end
@@ -70,6 +70,6 @@ class RegisteredUsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:id, :email, :company_id, :password, :last_sign_in_at, :created_at, :username, :role)
+      params.require(:user).permit(:id, :email, :company_id, :password, :last_sign_in_at, :created_at, :nickname, :role)
     end
 end
