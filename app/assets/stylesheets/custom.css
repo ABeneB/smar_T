@@ -273,7 +273,7 @@ margin-left: 5px;
 }
 
 .active_circle_false {
-    background: none;
+    background: gray;
 }
 
 .locked_icon {
