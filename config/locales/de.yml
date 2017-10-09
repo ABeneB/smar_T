@@ -153,7 +153,7 @@ de:
    success: "Benutzer %{user_id} wurde erfolgreich angelegt"
    failure: "Benutzer konnte nicht angelegt werden"
   update:
-   success: "Benutzer %{user_id} wurde aktualisiert"
+   success: "Benutzer %{user_nickname} wurde aktualisiert"
    failure: "Benutzer %{user_id} konnte nicht aktualisiert werden"
   destroy:
    success: "Benutzer %{user_id} wurde gelöscht"
@@ -166,14 +166,14 @@ de:
   edit:
    title: "Benutzer bearbeiten"
   create:
-   success: "Benutzer %{user_id} wurde erfolgreich angelegt"
+   success: "Benutzer %{user_nickname} wurde erfolgreich angelegt"
    failure: "Benutzer konnte nicht angelegt werden"
   update:
-   success: "Benutzer %{user_id} wurde aktualisiert"
-   failure: "Benutzer %{user_id} konnte nicht aktualisiert werden"
+   success: "Benutzer %{user_nickname} wurde aktualisiert"
+   failure: "Benutzer %{user_nickname} konnte nicht aktualisiert werden"
   destroy:
-   success: "Benutzer %{user_id} wurde gelöscht"
-   failure: "Benutzer %{user_id} konnte nicht gelöscht werden"
+   success: "Benutzer %{user_nickname} wurde gelöscht"
+   failure: "Benutzer %{user_nickname} konnte nicht gelöscht werden"
  restrictions:
   show:
    title: "Beschränkung"

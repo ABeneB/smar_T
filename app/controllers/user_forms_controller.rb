@@ -14,7 +14,7 @@ class UserFormsController < ApplicationController
     @user_form = UserForm.new(user_form_params)
     @user_form.company_id = current_user.company_id
     if @user_form.save
-      flash[:success] = t('.success', user_id: @user_form.id)
+      flash[:success] = t('.success', user_nickname: @user_form.nickname)
       redirect_to registered_users_path
     else
       flash[:alert] = t('.failure')
@@ -25,10 +25,10 @@ class UserFormsController < ApplicationController
   def update
     @user_form = UserForm.new(user_form_params.merge("id" => params[:id]))
     if @user_form.update
-      flash[:success] = t('.success', user_id: @user_form.id)
+      flash[:success] = t('.success', user_nickname: @user_form.nickname)
       redirect_to registered_users_path
     else
-      flash[:alert] = t('.failure', user_id: @user_form.id)
+      flash[:alert] = t('.failure', user_nickname: @user_form.nickname)
       render :edit
     end
   end
