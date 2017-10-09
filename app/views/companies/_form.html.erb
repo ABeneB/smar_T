@@ -6,8 +6,7 @@
     <%= f.input :name, prompt: :translate %>
     <%= f.input :address, prompt: :translate, input_html: { id: 'address' } %>
     <%= f.hint  t('.address_hint', :model => Company) %>
-    <%= f.input :domain, prompt: :translate %>
-    <%= f.hint  t('.domain_hint', :model => Company) %>
+    <%= f.input :email, prompt: :translate %>
     <%= f.input :telefon, prompt: :translate %>
     <%= f.input :google_maps_api_key, prompt: :translate %>
     <%= f.hint t('.google_maps_key_hint', :model => Company) %>
@@ -24,8 +23,7 @@
         <%= f.input :name, prompt: :translate %>
         <%= f.input :address, prompt: :translate, input_html: { id: 'address' } %>
         <%= f.hint t('.address_hint', :model => Company) %>
-        <%= f.input :domain, prompt: :translate %>
-        <%= f.hint  t('.domain_hint', :model => Company) %>
+        <%= f.input :email, prompt: :translate %>
         <%= f.input :telefon, prompt: :translate %>
         <%= f.input :google_maps_api_key, prompt: :translate %>
         <%= f.hint t('.google_maps_key_hint', :model => Company) %>

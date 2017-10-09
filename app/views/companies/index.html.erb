@@ -17,7 +17,7 @@
         <th><%= model_class.human_attribute_name(:name) %></th>
         <th><%= model_class.human_attribute_name(:address) %></th>
         <th><%= model_class.human_attribute_name(:telefon) %></th>
-        <th><%= model_class.human_attribute_name(:domain) %></th>
+        <th><%= model_class.human_attribute_name(:email) %></th>
         <th><%=t '.actions', :default => t("helpers.actions") %></th>
       </tr>
       </thead>
@@ -27,7 +27,7 @@
             <td><%= company.name %></td>
             <td><%= company.address %></td>
             <td><%= company.telefon %></td>
-            <td><%= company.domain %></td>
+            <td><%= company.email %></td>
             <td>
               <%= link_to t('helpers.links.show'), company, :class => 'btn btn-info btn-xs' %>
               <!--<%= link_to t('helpers.links.edit'), edit_company_path(company), :class => 'btn btn-warning btn-xs' %>-->

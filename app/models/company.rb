@@ -12,8 +12,8 @@ class Company < ActiveRecord::Base
 
     validates :name, presence: {message: "Dieses Feld muss ausgefüllt werden."}
     validates :address, presence: {message: "Dieses Feld muss ausgefüllt werden."}
-    validates :domain, presence: {message: "Dieses Feld muss ausgefüllt werden."}
-    validates :domain, uniqueness: {message: "Diese Domain ist bereits vergeben."}
+    validates :email, presence: {message: "Dieses Feld muss ausgefüllt werden."}
+    validates :email, uniqueness: {message: "Diese E-Mail ist bereits vergeben."}
    
     # Koordinaten aus Adresse
     geocoded_by :address
