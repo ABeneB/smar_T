@@ -43,8 +43,9 @@ class Company < ActiveRecord::Base
     end
 
     # Gibt alle Tours zurück, die der Company indirekt über zugewiesene Customer angehören.
-    def tours
-      Tour.where(driver_id: self.drivers.ids)
+    def tours(select = {})
+      where_clause = {driver_id: self.drivers.ids}.merge(select)
+      Tour.where(where_clause)
     end
 
     # Returns true if time window restriction exists for this company
