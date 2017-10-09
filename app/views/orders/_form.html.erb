@@ -15,7 +15,7 @@
     	<%= f.input :end_time, prompt: :translate %>
     	<%= f.input :capacity, prompt: :translate %>
     	<%= f.input :comment, prompt: :translate %>
-    	<%= f.input :active, prompt: :translate %>
+    	<%= f.input :status, :collection => { t('orders.status.inactive') => 0, t('orders.status.active') => 1, t('orders.status.completed') => 3 }, selected: @order.status %>
     	<%= f.button :submit, prompt: :translate %>
   	<% end %>
   <% elsif current_user.company.restriction.present? && current_user.company.restriction.problem == "PP" %>
@@ -34,7 +34,7 @@
     	<%= f.input :end_time, prompt: :translate %>
     	<%= f.input :capacity, prompt: :translate %>
     	<%= f.input :comment, prompt: :translate %>
-    	<%= f.input :active, prompt: :translate %>
+      <%= f.input :status, :collection => { t('orders.status.inactive') => 0, t('orders.status.active') => 1, t('orders.status.completed') => 3 }, selected: @order.status %>
     	<%= f.button :submit, prompt: :translate %>
   	<% end %>
   <% else %>
@@ -53,7 +53,7 @@
     	<%= f.input :end_time, prompt: :translate %>
     	<%= f.input :capacity, prompt: :translate %>
     	<%= f.input :comment, prompt: :translate %>
-    	<%= f.input :active, prompt: :translate %>
+      <%= f.input :status, :collection => { t('orders.status.inactive') => 0, t('orders.status.active') => 1, t('orders.status.completed') => 3 }, selected: @order.status %>
     	<%= f.button :submit, prompt: :translate %>
   	<% end %>
   <% end %>
