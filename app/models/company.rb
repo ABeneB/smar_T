@@ -10,8 +10,10 @@ class Company < ActiveRecord::Base
     validates_attachment_file_name :logo, matches: [/png\z/, /jpe?g\z/]
     validates_with AttachmentSizeValidator, attributes: :logo, less_than_or_equal_to: 3.megabytes
 
-    validates :name, presence: {message: "Dieses Feld muss ausgefüllt werden"}
-    validates :address, presence: {message: "Dieses Feld muss ausgefüllt werden"}
+    validates :name, presence: {message: "Dieses Feld muss ausgefüllt werden."}
+    validates :address, presence: {message: "Dieses Feld muss ausgefüllt werden."}
+    validates :domain, presence: {message: "Dieses Feld muss ausgefüllt werden."}
+    validates :domain, uniqueness: {message: "Diese Domain ist bereits vergeben."}
    
     # Koordinaten aus Adresse
     geocoded_by :address

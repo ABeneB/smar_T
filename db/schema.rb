@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171008143927) do
+ActiveRecord::Schema.define(version: 20171009094411) do
 
   create_table "companies", force: true do |t|
     t.string   "name"
@@ -26,7 +26,10 @@ ActiveRecord::Schema.define(version: 20171008143927) do
     t.string   "logo_content_type"
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
+    t.string   "domain"
   end
+
+  add_index "companies", ["domain"], name: "index_companies_on_domain", unique: true
 
   create_table "customers", force: true do |t|
     t.integer  "company_id"
