@@ -3,8 +3,8 @@ class UserForm
 
   attr_accessor :user_id, :name, :work_start_time, :work_end_time, :active, :working_time, :id, :email, :company_id, :password, :last_sign_in_at, :created_at, :nickname, :role
 
-  validates :email, presence: true
-  validates :password, presence: true, :if => :id?
+  validates :email, presence: true, format: { with: /\A[^@\s]+@[^@\s]+\z/}
+  validates :password, presence: true, length: { in: 6..128 }, on: :create
   validates :role, inclusion: { in: ["superadmin","admin", "planer", "driver", "user", "guest"], message: "%{value} is not a valid role." }, presence: true
   validates :working_time, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 1440 }, :if => :driver_selected?
 
@@ -40,10 +40,6 @@ end
 
 def id
    @user.nil? ? nil : @user.id
-end
-
-def id?
-   id.nil?
 end
 
    def save

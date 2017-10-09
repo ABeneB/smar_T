@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171009135738) do
+ActiveRecord::Schema.define(version: 20171009152727) do
 
   create_table "companies", force: true do |t|
     t.string   "name"
@@ -99,7 +99,7 @@ ActiveRecord::Schema.define(version: 20171009135738) do
     t.string   "comment"
     t.integer  "duration_pickup",   default: 0
     t.integer  "duration_delivery", default: 0
-    t.boolean  "active"
+    t.integer  "status",            default: 1
     t.float    "pickup_lat"
     t.float    "pickup_long"
     t.float    "delivery_lat"

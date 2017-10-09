@@ -304,6 +304,6 @@ margin-right: -10px;
 padding-left: 10px;
 }
 
-.order_type_filter {
+.order_status_filter, .tour_status_filter {
     margin-right: 20px;
 }

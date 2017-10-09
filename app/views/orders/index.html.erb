@@ -12,8 +12,8 @@
         <%= link_to t('.order_import'), file_order_import_path, class: "btn btn-primary btn-smart" %>
         <div style="float: right;">
           <%= form_tag orders_path, method: :get do %>
-            <%= label_tag :active, t('.filter_order_status') %>
-            <%= select_tag :active, options_for_select([[t('orders.status.active'), 1], [t('orders.status.inactive'), 0]], params[:active]), prompt: t('orders.filter_order_status_default'), onchange: "this.form.submit();", class: "order_type_filter" %>
+            <%= label_tag :status, t('.filter_order_status') %>
+            <%= select_tag :status, options_for_select([[t('orders.status.active'), 1], [t('orders.status.assigned'), 2], [t('orders.status.completed'), 3], [t('orders.status.inactive'), 0]], params[:status]), prompt: t('orders.filter_order_status_default'), onchange: "this.form.submit();", class: "order_status_filter" %>
             <%= label_tag :order_type, t('.filter_order_type') %>
             <%= select_tag :order_type, options_for_select([[t('orders.types.delivery'), OrderTypeEnum::DELIVERY],
                                                             [t('orders.types.pickup'), OrderTypeEnum::PICKUP],
@@ -33,7 +33,7 @@
               <th class="center">Kapazität</th>
               <th class="center">Priorität</th>
               <th class="center"><%= t('attributes.order_type') %></th>
-              <th class="center">Aktiv</th>
+              <th class="center">Status</th>
               <th><%=t '.actions', :default => t("helpers.actions") %></th>
             </tr>
           </thead>
@@ -50,8 +50,8 @@
                 <% else %>
                     <td class="center">keine</td>
                 <% end %>
-                <td><%= order_type_as_string(order.order_type) %></td>
-                <td class="center"><div class="active_circle_<%= order.active %>"></div></td>
+                <td class="center"><%= order_type_as_string(order.order_type) %></td>
+                <td class="center"><%= order_status_as_string(order.status) %></td>
                 <td>
                   <%= link_to t('helpers.links.show'), order, :class => 'btn btn-info btn-xs' %>
                   <%= link_to t('helpers.links.edit'), edit_order_path(order), :class => 'btn btn-warning btn-xs' %>

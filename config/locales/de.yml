@@ -117,6 +117,8 @@ de:
   status:
     active: "Aktiv"
     inactive: "Inaktiv"
+    assigned: "Zugewiesen"
+    completed: "Abgeschlossen"
   types:
     delivery: "Lieferung"
     pickup: "Abholung"
@@ -194,6 +196,11 @@ de:
   no_google_maps_api_key_assigned: "Ihrem Unternehmen wurde noch kein Google Maps API Key zugewiesen. Bitte setzen Sie den API Schlüssel in den Unternehmenseinstellungen oder kontaktieren Sie den Administrator."
   generate_new_tours: "Generieren"
   no_available_drivers: "Es stehen keine Fahrer zur Verfügung. Bitte stellen Sie sicher, dass Ihrem Unternehmen Benutzer mit der Rolle: Fahrer zugewiesen und diese aktiv sind. Weiterhin werden nur Fahrer mit einem zugewiesenen Fahrzeug berücksichtigt."
+  filter_tour_status_default: "Alle"
+  status:
+   approved: "Bereit"
+   started: "Gestartet"
+   completed: "Abgeschlossen"
   show:
    title: "Tour"
    print_tour: "Drucken"
@@ -204,6 +211,7 @@ de:
    no_active_tours_available: "Keine aktiven Touren vorhanden"
    no_completed_tours_available: "Keine abgeschlossenen Touren vorhanden"
    generate_new_tours_hint: "Neue Touren generieren:"
+   filter_tour_status: "Nach Status filtern:"
   new:
    title: "Neue Tour"
    no_company_assigned: "Ihr Benutzerkonto ist keinem Unternehmen zugeordnet. Bitte kontaktieren Sie den Administrator."
@@ -294,11 +302,6 @@ de:
    user_form:
     create: "Speichern"
     update: "Speichern"
-  tours:
-    tour_generated: "Erstellt"
-    tour_approved: "Bereit"
-    tour_started: "Gestartet"
-    tour_completed: "Abgeschlossen"
 
  attributes:
   name: "Name"
@@ -320,7 +323,7 @@ de:
   duration: "Dauer"
   priority: "Priorität"
   working_time: "Arbeitszeit in Minuten"
-  active: "Aktiv"
+  status: "Status"
   driver: "Fahrer"
   company: "Unternehmen"
   capacity: "Kapazität"
