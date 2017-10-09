@@ -46,7 +46,8 @@ class CompaniesController < ApplicationController
       restriction.save
       User.create!(company: @company, username: "Administrator @ " + @company.name, email: "admin@" + @company.domain, password: "password", role: "admin")
       User.create!(company: @company, username: "Planer @ " + @company.name, email: "planer@" + @company.domain, password: "password", role: "planer")
-      User.create!(company: @company, username: "Fahrer @ " + @company.name, email: "driver@" + @company.domain, password: "password", role: "driver")
+      user = User.create!(company: @company, username: "Fahrer @ " + @company.name, email: "driver@" + @company.domain, password: "password", role: "driver")
+      Driver.create!(user_id: user.id, name: user.username, active: true, working_time: 480)
 
       flash[:success] = t('.success', company_id: @company.id)
       respond_with(@company)
