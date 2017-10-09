@@ -8,7 +8,9 @@ class SessionsController < Devise::SessionsController
 
   def unassign_superadmin
     user = User.where(role: "superadmin").first
-    user.company = nil
-    user.save
+    if !user.nil?
+      user.company = nil
+      user.save
+    end
   end
 end
