@@ -46,7 +46,7 @@ class CompaniesController < ApplicationController
       restriction.save
       User.create!(company: @company, nickname: "Administrator @ " + @company.name, email: @company.email, password: "password", role: "admin")
 
-      flash[:success] = t('.success', company_id: @company.id)
+      flash[:success] = t('.success', company_name: @company.name)
       redirect_to companies_path
     else
       flash[:alert] = t('.failure')
@@ -56,20 +56,20 @@ class CompaniesController < ApplicationController
 
   def update
     if @company.update(company_params)
-      flash[:success] = t('.success', company_id: @company.id)
+      flash[:success] = t('.success', company_name: @company.name)
       respond_with(@company)
     else
-      flash[:alert] = t('.failure', company_id: @company.id)
+      flash[:alert] = t('.failure', company_name: @company.name)
       render("edit")
     end
   end
 
   def destroy
     if @company.destroy
-      flash[:success] = t('.success', company_id: @company.id)
+      flash[:success] = t('.success', company_name: @company.name)
       respond_with(@company)
     else
-      flash[:alert] = t('.failure', company_id: @company.id)
+      flash[:alert] = t('.failure', company_name: @company.name)
       respond_with(@company)
     end
   end
