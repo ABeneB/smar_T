@@ -47,7 +47,7 @@ class CompaniesController < ApplicationController
       User.create!(company: @company, nickname: "Administrator @ " + @company.name, email: @company.email, password: "password", role: "admin")
 
       flash[:success] = t('.success', company_id: @company.id)
-      respond_with(@company)
+      redirect_to companies_path
     else
       flash[:alert] = t('.failure')
       render 'new'
