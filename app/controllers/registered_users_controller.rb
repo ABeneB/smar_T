@@ -8,7 +8,7 @@ class RegisteredUsersController < ApplicationController
       @users = User.where(company_id: current_user.company.id)
     end
     if current_user && current_user.is_superadmin? && current_user.company_id?
-      @users = User.all
+      @users = User.where(company_id: current_user.company.id)
     end
   end
 
