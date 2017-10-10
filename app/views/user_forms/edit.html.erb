@@ -8,6 +8,8 @@
     <%= f.input :email, prompt: :translate %>
     <% if current_user.role == "admin" && (@user_form.role =="driver" || @user_form.role == "planer") %>
       <%= f.input :role, :collection => {t('planer')  => 'planer', t('driver') => 'driver'}, prompt: :translate %>
+    <% elsif current_user.role == "admin" && (@user_form.role =="admin") %>
+      <%= f.input :role, :collection => {t('admin')  => 'admin'}, prompt: :translate, :disabled => true %>
     <% elsif current_user.role == "superadmin" && (@user_form.role =="driver" || @user_form.role == "planer"|| @user_form.role == "admin")%>
       <%= f.input :role, :collection => {t('admin')  => 'admin', t('planer')  => 'planer', t('driver') => 'driver'}, prompt: :translate %>
     <% end %>
