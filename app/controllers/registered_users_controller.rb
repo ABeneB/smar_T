@@ -54,12 +54,14 @@ class RegisteredUsersController < ApplicationController
 
   def destroy
     if current_user && (current_user.is_admin? || current_user.is_superadmin?)
+      nickname = @user.nickname
+      user_id = @user.id
       if @user.destroy
-        flash[:success] = t('.success', user_id: @user.id)
-        redirect_to(registered_user_path)
+        flash[:success] = t('.success', nick_name: nickname, user_id: user_id)
+        redirect_to(registered_users_path)
       else
-        flash[:alert] = t('.failure', user_id: @user.id)
-        redirect_to(registered_user_path)
+        flash[:alert] = t('.failure', nick_name: nickname, user_id: user_id)
+        redirect_to(registered_users_path)
       end
     end
   end

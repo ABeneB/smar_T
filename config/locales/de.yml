@@ -158,8 +158,8 @@ de:
    success: "Benutzer %{user_nickname} wurde aktualisiert"
    failure: "Benutzer %{user_id} konnte nicht aktualisiert werden"
   destroy:
-   success: "Benutzer %{user_id} wurde gelöscht"
-   failure: "Benutzer %{user_id} konnte nicht gelöscht werden"
+   success: "Benutzer %{nick_name} (%{user_id}) wurde gelöscht"
+   failure: "Benutzer %{nick_name} (%{user_id}) konnte nicht gelöscht werden"
  user_forms:
   show:
    title: "Benutzer"
