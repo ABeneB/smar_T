@@ -39,7 +39,7 @@
   	<% end %>
   <% else %>
         <%= simple_form_for @order do |f| %>
-    	<%= f.input :problem, as: :fake_select, :collection => {t('dp')  => 'type_2', t('pp') => 'type_1', t('pdp') => 'type_3'}, :selected => 'type_3'%>
+    	<%= f.input :problem, as: :fake_select, :collection => {t('dp')  => 'type_2', t('pp') => 'type_1', t('pdp') => 'type_3'}, :selected => 'type_3', :disabled => true%>
     	<%= f.association :customer, prompt: :translate %>
     	<div id="type_1" class="type_forms">
     	<%= f.input :pickup_location, prompt: :translate %>
