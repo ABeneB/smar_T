@@ -307,3 +307,8 @@ padding-left: 10px;
 .order_status_filter, .tour_status_filter {
     margin-right: 20px;
 }
+
+/*Make font awesome icons larger*/
+.fa.fa-search-plus, .fa.fa-pencil, .fa.fa-trash{
+  font-size: 15px;
+}

@@ -6,7 +6,7 @@
     <% if current_user.company.nil? %>
         <div class="alert alert-info">Ihrem Benutzeraccount wurde noch kein Unternehmen zugewiesen. Die Benutzerliste ist daher leer.</div>
     <% else %>
-      <%= link_to t('.new', :default => t("helpers.links.new")), new_user_form_path, :class => 'btn btn-primary btn-smart' %>
+      <%= link_to (fa_icon "plus 1x") + " " + t('.new', :default => t("helpers.links.new")), new_user_form_path, :class => 'btn btn-primary btn-smart' %>
       <hr/>
       <table class="table table-striped">
         <thead>
@@ -31,12 +31,12 @@
                   <td>-</td>
                 <% end %>
                 <td>
-                  <%= link_to 'Anzeigen', registered_user_path(registered_user), :class => 'btn btn-info btn-xs' %>
+                  <%= link_to (fa_icon "search-plus 1x"), registered_user_path(registered_user), :title =>  t('helpers.links.show'), :class => 'btn btn-info btn-xs' %>
                   <% if (current_user.is_admin?  && !(registered_user.role == "superadmin")) || (current_user.is_superadmin?) %>
-                    <%= link_to 'Bearbeiten', edit_user_form_path(registered_user), :class => 'btn btn-warning btn-xs' %>
+                    <%= link_to (fa_icon "pencil 1x"), edit_user_form_path(registered_user), :title => t('helpers.links.edit'), :class => 'btn btn-warning btn-xs' %>
                   <% end %>
                   <% if (current_user.is_admin? && !(registered_user.role == "admin") && !(registered_user.role == "superadmin")) || (current_user.is_superadmin? && !(registered_user.role == "superadmin"))   %>
-                    <%= link_to 'Löschen', registered_user_path(registered_user), method: :delete, data: { confirm: t('helpers.links.confirm') }, :class => 'btn btn-danger btn-xs' %>
+                    <%= link_to (fa_icon "trash 1x"), registered_user_path(registered_user), method: :delete, data: { confirm: t('helpers.links.confirm') }, :title => t('helpers.links.destroy'), :class => 'btn btn-danger btn-xs' %>
                   <% end %>
                 </td>
               </tr>

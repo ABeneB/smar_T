@@ -30,7 +30,7 @@
               <td class="center"><div class="active_circle_<%= restriction.priorities %>"></div></td>
               <td class="center"><div class="active_circle_<%= restriction.work_time %>"></div></td>
               <td>
-                <%= link_to t('helpers.links.edit'), edit_restriction_path(restriction), :class => 'btn btn-warning btn-xs' %>
+                <%= link_to (fa_icon "pencil 1x"), edit_restriction_path(restriction), :title => t('helpers.links.edit'), :class => 'btn btn-warning btn-xs' %>
               </td>
             </tr>
 

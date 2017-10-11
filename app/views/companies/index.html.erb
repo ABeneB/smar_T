@@ -9,7 +9,7 @@
     <div class="page-header">
       <h1>Übersicht: Unternehmen</h1>
     </div>
-    <%= link_to t('.new', :default => t("helpers.links.new")), new_company_path, :class => 'btn btn-primary btn-smart' %>
+    <%= link_to (fa_icon "plus 1x") + " " + t('.new', :default => t("helpers.links.new")), new_company_path, :class => 'btn btn-primary btn-smart' %>
     <hr/>
     <table class="table table-striped">
       <thead>
@@ -29,9 +29,9 @@
             <td><%= company.telefon %></td>
             <td><%= company.email %></td>
             <td>
-              <%= link_to t('helpers.links.show'), company, :class => 'btn btn-info btn-xs' %>
-              <!--<%= link_to t('helpers.links.edit'), edit_company_path(company), :class => 'btn btn-warning btn-xs' %>-->
-              <%= link_to t('helpers.links.destroy'), company, method: :delete, data: { confirm: t('helpers.links.confirm') }, :class => 'btn btn-danger btn-xs' %>
+              <%= link_to (fa_icon "search-plus 1x"), company, :title =>  t('helpers.links.show'), :class => 'btn btn-info btn-xs' %>
+              <!--<%= link_to (fa_icon "pencil 1x"), edit_company_path(company), :title => t('helpers.links.edit'), :class => 'btn btn-warning btn-xs' %>-->
+              <%= link_to (fa_icon "trash 1x"), company, method: :delete, data: { confirm: t('helpers.links.confirm') }, :title => t('helpers.links.destroy'), :class => 'btn btn-danger btn-xs' %>
             </td>
           </tr>
       <% end %>

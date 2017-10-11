@@ -8,7 +8,7 @@
         <div class="alert alert-info">Ihrem Benutzeraccount wurden noch keine Kunden zugewiesen. Sie können daher nur Aufträge importieren und nicht direkt anlegen.</div>
         <%= link_to t('.order_import'), file_order_import_path, class: "btn btn-primary btn-smart" %>
         <% else %>
-	      <%= link_to t('.new', :default => t("orders.new.title")), new_order_path, :class => 'btn btn-primary btn-smart' %>
+	      <%= link_to (fa_icon "plus 1x") + " " + t('.new', :default => t("orders.new.title")), new_order_path, :class => 'btn btn-primary btn-smart' %>
         <%= link_to t('.order_import'), file_order_import_path, class: "btn btn-primary btn-smart" %>
         <div style="float: right;">
           <%= form_tag orders_path, method: :get do %>
@@ -53,9 +53,9 @@
                 <td class="center"><%= order_type_as_string(order.order_type) %></td>
                 <td class="center"><%= order_status_as_string(order.status) %></td>
                 <td>
-                  <%= link_to t('helpers.links.show'), order, :class => 'btn btn-info btn-xs' %>
-                  <%= link_to t('helpers.links.edit'), edit_order_path(order), :class => 'btn btn-warning btn-xs' %>
-                  <%= link_to t('helpers.links.destroy'), order, method: :delete, data: { confirm: t('helpers.links.confirm') }, :class => 'btn btn-danger btn-xs' %>
+                  <%= link_to (fa_icon "search-plus 1x"), order, :title =>  t('helpers.links.show'), :class => 'btn btn-info btn-xs' %>
+                  <%= link_to (fa_icon "pencil 1x"), edit_order_path(order), :title => t('helpers.links.edit'), :class => 'btn btn-warning btn-xs' %>
+                  <%= link_to (fa_icon "trash 1x"), order, method: :delete, data: { confirm: t('helpers.links.confirm') }, :title => t('helpers.links.destroy'), :class => 'btn btn-danger btn-xs' %>
                 </td>
               </tr>
             <% end %>
