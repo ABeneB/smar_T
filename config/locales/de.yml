@@ -343,7 +343,7 @@ de:
  devise:
   sign_in: "Anmelden"
   sign_out: "Abmelden"
-  edit_account: "Account bearbeiten"
+  edit_account: "Benutzer bearbeiten"
   list_of_companies: "Liste aller Unternehmen"
   navbar_text: "Sie sind eingeloggt als %{name} im Unternehmen: %{company_name} (%{company_id})."
 
