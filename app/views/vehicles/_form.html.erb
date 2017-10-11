@@ -5,5 +5,4 @@
     <%= f.association :driver, collection: current_user.company.drivers, :include_blank => t('.driver_empty'),prompt: :translate %>
     <%= f.button :submit, prompt: :translate %>
   <% end %>
-  <% end %>
 <% end %>
