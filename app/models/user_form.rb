@@ -3,6 +3,7 @@ class UserForm
 
   attr_accessor :user_id, :name, :work_start_time, :work_end_time, :active, :working_time, :id, :email, :company_id, :password, :last_sign_in_at, :created_at, :nickname, :role
 
+  validate :email_is_unique
   validates :email, presence: true, format: { with: /\A[^@\s]+@[^@\s]+\z/}
   validates :password, presence: true, length: { in: 6..128 }, on: :create
   validates :role, inclusion: { in: ["superadmin","admin", "planer", "driver", "user", "guest"], message: "%{value} is not a valid role." }, presence: true
@@ -107,6 +108,10 @@ private
         )
    end
 
-
+   def email_is_unique
+    unless User.where(email: email).count == 0 || (id.nil? ? false :User.find(id).email == email)
+      errors.add(:email, I18n.t('errors.messages.taken'))
+    end
 end
 
+end
