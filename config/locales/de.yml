@@ -339,6 +339,9 @@ de:
   user: "Benutzer"
   position: "Standort"
   order_type: "Typ"
+  model: "Modell"
+  manufacturer: "Hersteller"
+  registration_number: "Kennzeichen"
 
  devise:
   sign_in: "Anmelden"

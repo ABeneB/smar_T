@@ -12,6 +12,9 @@
         <table class="table table-striped">
           <thead>
             <tr>
+              <th><%= model_class.human_attribute_name(:registration_number) %></th>
+              <th><%= model_class.human_attribute_name(:manufacturer) %></th>
+              <th><%= model_class.human_attribute_name(:model) %></th>
               <th><%= model_class.human_attribute_name(:position) %></th>
               <th class="center"><%= model_class.human_attribute_name(:capacity) %></th>
               <th><%= model_class.human_attribute_name(:driver) %></th>
@@ -21,6 +24,9 @@
           <tbody>
             <% @vehicles.each do |vehicle| %>
               <tr>
+                <td><%= vehicle.registration_number %></td>
+                <td><%= vehicle.manufacturer %></td>
+                <td><%= vehicle.model %></td>
                 <td><%= vehicle.position %></td>
                 <td class="center"><%= vehicle.capacity %></td>
                 <% if vehicle.driver %>
