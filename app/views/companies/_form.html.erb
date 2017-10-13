@@ -9,7 +9,10 @@
     <%= f.hint t('.google_maps_key_hint', :model => Company) %>
     <%= f.label :logo %> <br/>
     <% if @company.logo.exists? %>
-        <%= image_tag @company.logo.url %>
+      <%= image_tag @company.logo.url, id: 'current_company_logo' %>
+      <%= button_tag type: 'button', id: 'delete_company_logo', class: 'btn btn-danger btn-xs', onclick: 'deleteCompanyLogo()' do %>
+          <%= (fa_icon "trash 1x") %>
+      <% end %>
     <% end %>
     <%= f.input :logo, as: :file, title: t('.upload_logo'), label: false %>
     <%= f.hint t('.company_logo_hint', :model => Company) %>
@@ -26,7 +29,10 @@
         <%= f.hint t('.google_maps_key_hint', :model => Company) %>
         <%= f.label :logo %> </br>
         <% if @company.logo.exists? %>
-            <%= image_tag @company.logo.url  %>
+          <%= image_tag @company.logo.url, id: 'current_company_logo' %>
+          <%= button_tag type: 'button', id: 'delete_company_logo', class: 'btn btn-danger btn-xs', onclick: 'deleteCompanyLogo()' do %>
+              <%= (fa_icon "trash 1x") %>
+          <% end %>
         <% end %>
         <%= f.input :logo, as: :file, prompt: :translate, label: false %>
         <%= f.hint t('.company_logo_hint', :model => Company) %>

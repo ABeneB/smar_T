@@ -56,6 +56,9 @@ class CompaniesController < ApplicationController
 
   def update
     if @company.update(company_params)
+      if company_params[:logo].blank?
+        @company.logo.destroy
+      end
       flash[:success] = t('.success', company_name: @company.name)
       respond_with(@company)
     else
