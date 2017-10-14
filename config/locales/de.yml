@@ -327,7 +327,7 @@ de:
   time: "Zeit"
   duration: "Dauer"
   priority: "Priorität"
-  working_time: "Arbeitszeit in Minuten"
+  working_time: "Arbeitszeit"
   status: "Status"
   driver: "Fahrer"
   company: "Unternehmen"
@@ -348,6 +348,8 @@ de:
   manufacturer: "Hersteller"
   registration_number: "Kennzeichen"
   active: "Aktiv"
+  hour: "Stunde"
+  minute: "Minute"
 
  devise:
   sign_in: "Anmelden"
