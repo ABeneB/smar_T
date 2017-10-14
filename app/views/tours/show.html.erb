@@ -3,6 +3,7 @@
   <% if current_user.is_admin? || current_user.is_planer? || current_user.is_driver? || (current_user.is_superadmin? && current_user.company_id?)%>
   <div class="page-header">
     <h1>Tour</h1>
+    <%= link_to 'Tour abschließen', complete_tour_path(), class: 'btn btn-info' unless @tour.completed? %>
     <%= link_to t('.print_tour'), print_tour_path(:format => :pdf), class: 'btn btn-info', target: '_blank' %>
   </div>
   <% if current_user.company.google_maps_api_key.blank? %>

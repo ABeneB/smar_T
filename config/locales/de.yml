@@ -226,6 +226,11 @@ de:
   destroy:
    success: "Tour %{tour_id} wurde gelöscht"
    failure: "Tour %{tour_id} konnte nicht gelöscht werden"
+  complete:
+   finish_tour: "Tour abschließen"
+  finish:
+   success: "Die Tour (ID %{tour_id}) wurde erfolgreich abgeschlossen."
+   failure: "Es ist ein Fehler aufgetreten. Die Tour und die dazugehörigen Aufträge konnte nicht abgeschlossen werden."
  vehicles:
   show:
    title: "Fahrzeug"
