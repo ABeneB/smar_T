@@ -55,7 +55,7 @@
                 <td>
                   <%= link_to (fa_icon "search-plus 1x"), order, :title =>  t('helpers.links.show'), :class => 'btn btn-info btn-xs' %>
                   <%= link_to (fa_icon "pencil 1x"), edit_order_path(order), :title => t('helpers.links.edit'), :class => 'btn btn-warning btn-xs' %>
-                  <%= link_to (fa_icon "trash 1x"), order, method: :delete, data: { confirm: t('helpers.links.confirm') }, :title => t('helpers.links.destroy'), :class => 'btn btn-danger btn-xs' %>
+                  <%= link_to (fa_icon "trash 1x"), order, method: :delete, data: { confirm: t('.confirm', name: order.id) }, :title => t('helpers.links.destroy'), :class => 'btn btn-danger btn-xs' %>
                 </td>
               </tr>
             <% end %>
