@@ -362,6 +362,7 @@ de:
   active: "Aktiv"
   hour: "Stunde"
   minute: "Minute"
+  password: "Passwort"
 
  devise:
   sign_in: "Anmelden"
