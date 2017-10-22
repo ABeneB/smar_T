@@ -48,6 +48,7 @@ nav.sidebar, .main{
 
     nav.sidebar .navbar-nav > li:first-child{
         border-top: 0px #e5e5e5 solid;
+        width: 210px;
     }
 
     nav.sidebar .navbar-nav > li{
