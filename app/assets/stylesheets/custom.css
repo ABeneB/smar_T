@@ -207,16 +207,20 @@ margin-left: 5px;
     opacity: 0.75;
 }
 
-.navbar-default.sidebar .navbar-nav > li > a:hover {
-    opacity: 1;
-}
-
 /*Apply hover effect on navigation elements*/
 
-.navbar-default.sidebar .navbar-nav > li:hover { 
+.navbar-default.sidebar .navbar-nav > li > a:hover {
+    opacity: 1;
+    border-right: 6px solid #3792d5;
+    background-color: #3a3d44;
+}
+
+
+.navbar-default.sidebar .navbar-nav > li > a.active {
+    opacity: 1;
+    border-right: 6px solid #3792d5;
     background-color: #3a3d44; 
-    border-right: 6px solid #3792d5; 
-} 
+}
 
 /*Disabled logo hover effect*/
 

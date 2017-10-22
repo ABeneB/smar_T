@@ -73,7 +73,8 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'tzinfo-data'
 gem 'validates_formatting_of'
-gem 'font-awesome-rails' 
+gem 'font-awesome-rails'
+gem 'active_link_to'
 
 gem 'rails-i18n', github: 'svenfuchs/rails-i18n', branch: 'rails-4-x' # For 4.x
 gem 'devise-i18n'
