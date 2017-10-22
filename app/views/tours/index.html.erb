@@ -23,6 +23,7 @@
           });
       </script>
     <% end %>
+    <% if current_user.is_admin? || current_user.is_planer? || (current_user.is_superadmin? && current_user.company_id?)%>
     <%= form_tag new_tour_path, method: :get do %>
       <b style="font-size: 15px;"><%= t('.generate_new_tours_hint') %></b>
       <%= label_tag :order_type_delivery, t('orders.types.delivery') %>
@@ -32,6 +33,7 @@
       <%= label_tag :order_type_service, t('orders.types.service') %>
       <%= check_box_tag :order_type_service, 1, true %>
       <%= submit_tag t('tours.generate_new_tours'), name: nil, id: 'btn_new_tour', class: 'btn btn-primary btn-smart' %>
+    <% end %>
     <% end %>
     <div style="float: right;">
     <%= form_tag tours_path, method: :get do %>
