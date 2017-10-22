@@ -68,6 +68,8 @@ nav.sidebar, .main{
         min-height: calc(100%);
         float: left;
         margin-bottom: 0px;
+        position:fixed;
+        margin-left: 0px;
     }
 
     nav.sidebar li {
@@ -84,12 +86,6 @@ nav.sidebar, .main{
     .main{
         width: calc(100% - 210px);
         margin-left: 210px;
-    }
-
-    nav.sidebar{
-        position:fixed;
-        margin-left: 0px;
-        float: left;
     }
 
     nav.sidebar .forAnimate{
