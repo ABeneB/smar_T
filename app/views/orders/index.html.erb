@@ -6,7 +6,7 @@
       </div>
       <% if current_user.company.try(:customers).blank? %>
         <div class="alert alert-info">Ihrem Benutzeraccount wurden noch keine Kunden zugewiesen. Sie können daher nur Aufträge importieren und nicht direkt anlegen.</div>
-        <%= link_to t('.order_import'), file_order_import_path, class: "btn btn-primary btn-smart" %>
+        <%= link_to (fa_icon "upload 1x") + " " + t('.order_import'), file_order_import_path, class: "btn btn-primary btn-smart" %>
         <% else %>
 	      <%= link_to (fa_icon "plus 1x") + " " + t('.new', :default => t("orders.new.title")), new_order_path, :class => 'btn btn-primary btn-smart' %>
         <%= link_to (fa_icon "upload 1x") + " " + t('.order_import'), file_order_import_path, class: "btn btn-primary btn-smart" %>
