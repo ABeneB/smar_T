@@ -12,17 +12,8 @@
         <% end %>
 
         <%=f.association :customer, :as => :collection_select, collection: Customer.where(company_id: current_user.company_id),  prompt: :translate %>
-
-        <div id="type_1" class="type_forms">
-          <%= f.input :pickup_location, prompt: :translate,  input_html: { id: 'address' } %>
-          <%= f.input :duration_pickup, prompt: :translate %>
-        </div>
-
-        <div id="type_2" class="type_forms">
-          <%= f.input :delivery_location, prompt: :translate,  input_html: { id: 'order_delivery_location' } %>
-          <%= f.input :duration_delivery, prompt: :translate %>
-        </div>
-
+        <%= f.input :location, prompt: :translate,  input_html: { id: 'address' } %>
+        <%= f.input :duration, prompt: :translate %>
         <%= f.input :start_time, prompt: :translate %>
         <%= f.input :end_time, prompt: :translate %>
         <%= f.input :capacity, prompt: :translate %>

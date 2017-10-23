@@ -5,10 +5,8 @@
 <table class="table table-striped">
   <thead>
   <tr>
-    <th>Abholort</th>
-    <th class="center">Einladedauer<br/>[hh:mm:ss]</th>
-    <th>Lieferort</th>
-    <th class="center">Ausladedauer<br/>[hh:mm:ss]</th>
+    <th>Adresse</th>
+    <th class="center">Dauer<br/>[hh:mm:ss]</th>
     <th class="center">Kapazität</th>
     <th class="center">Priorität</th>
     <th class="center">Typ</th>
@@ -21,10 +19,8 @@
       <% @imported_orders.each do |order| %>
       <%= fields_for "orders[]", order do  |f| %>
         <tr>
-        <td><%= f.text_field :pickup_location %></td>
-        <td class="center"><%= Time.at(order.duration_pickup * 60).utc.strftime("%H:%M:%S") %></td>
-        <td><%= f.text_field :delivery_location %></td>
-        <td class="center"><%= Time.at(order.duration_delivery * 60).utc.strftime("%H:%M:%S") %></td>
+        <td><%= f.text_field :location %></td>
+        <td class="center"><%= Time.at(order.duration * 60).utc.strftime("%H:%M:%S") %></td>
         <td class="center"><%= f.number_field :capacity, in: 0...400 %></td>
         <% if order.customer %>
             <td class="center"><%= order.customer.priority %></td>

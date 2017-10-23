@@ -7,19 +7,15 @@
       
       <div class="fieldset">
         <dl>
-            <dt class="label label-default">Abholort</dt>
-            <dd><pre class="prettyprint"><%= @order.pickup_location %></pre></dd>
-            <dt class="label label-default">Einladedauer</dt>
-            <dd><pre class="prettyprint"><%= @order.duration_pickup %></pre></dd>
-            <dt class="label label-default">Lieferort</dt>
-            <dd><pre class="prettyprint"><%= @order.delivery_location %></pre></dd>
-            <dt class="label label-default">Ausladedauer</dt>
-            <dd><pre class="prettyprint"><%= @order.duration_delivery %></pre></dd>
+            <dt class="label label-default">Adresse</dt>
+            <dd><pre class="prettyprint"><%= @order.location %></pre></dd>
+            <dt class="label label-default">Dauer</dt>
+            <dd><pre class="prettyprint"><%= @order.duration %></pre></dd>
             <dt class="label label-default">Startzeit</dt>
             <dd><pre class="prettyprint"><%= @order.start_time %></pre></dd>
             <dt class="label label-default">Endzeit</dt>
             <dd><pre class="prettyprint"><%= @order.end_time %></pre></dd>
-            <dt class="label label-default">Kapzität</dt>
+            <dt class="label label-default">Kapazität</dt>
             <dd><pre class="prettyprint"><%= @order.capacity %></pre></dd>
             <dt class="label label-default">Beschreibung</dt>
             <dd><pre class="prettyprint"><%= @order.comment %></pre></dd>

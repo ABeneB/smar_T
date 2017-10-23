@@ -12,8 +12,8 @@ class OrderImportController < ApplicationController
         if is_number?(row[0].squish) # ignore header and validate customer_reference
           order = Order.new
           order.customer = Customer.customer_by_customer_reference(row[0].squish.to_i, current_user.company, row[1].squish, row[3].squish)
-          order.delivery_location = row[2].squish
-          order.duration_delivery = row[4].squish
+          order.location = row[2].squish
+          order.duration = row[4].squish
           order.capacity = 0
           order.start_time = DateTime.now
           order.end_time = DateTime.now + 8.hours
