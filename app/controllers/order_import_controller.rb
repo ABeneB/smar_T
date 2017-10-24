@@ -15,8 +15,6 @@ class OrderImportController < ApplicationController
           order.location = row[2].squish
           order.duration = row[4].squish
           order.capacity = 0
-          order.start_time = DateTime.now
-          order.end_time = DateTime.now + 8.hours
           order.status = OrderStatusEnum::ACTIVE
           order.comment = ""
           order.comment2 = ""
