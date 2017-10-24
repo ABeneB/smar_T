@@ -32,7 +32,9 @@
       <%= check_box_tag :order_type_pickup, 1, true %>
       <%= label_tag :order_type_service, t('orders.types.service') %>
       <%= check_box_tag :order_type_service, 1, true %>
-      <%= submit_tag t('tours.generate_new_tours'), name: nil, id: 'btn_new_tour', class: 'btn btn-primary btn-smart' %>
+      <%= button_tag type: 'submit', name: nil, id: 'btn_new_tour', class: 'btn btn-primary btn-smart' do %>
+        <%= ((fa_icon "calculator 1x") + " " + t('tours.generate_new_tours')) %>
+      <% end %>
     <% end %>
     <% end %>
     <div style="float: right;">
