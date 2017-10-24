@@ -100,6 +100,8 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  gem 'better_errors', '~> 2.4'
 end
 
 group :development, :test do
@@ -108,5 +110,4 @@ group :development, :test do
   gem 'faker', '~> 1.7', '>= 1.7.3'
   gem 'webmock', '~> 3.0', '>= 3.0.1'
   gem 'byebug'
-  gem 'better_errors'
 end
