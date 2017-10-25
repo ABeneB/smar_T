@@ -11,4 +11,12 @@ class Order < ActiveRecord::Base
       self.long = coords[1]
     end
   end
+
+  # returns assigned tour if exists
+  def get_assigned_tour
+    order_tour = OrderTour.find_by_order_id(self.id)
+    unless order_tour.blank?
+      order_tour.tour
+    end
+  end
 end

@@ -132,6 +132,7 @@ de:
     service: "Service"
   show:
    title: "Auftrag"
+   belongs_to_tour: "gehört zu "
   index:
    confirm: "Möchten Sie den Auftrag '%{name}' wirklich löschen?"
    title: "Aufträge"
