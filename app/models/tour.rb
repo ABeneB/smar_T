@@ -1,4 +1,7 @@
 class Tour < ActiveRecord::Base
+  include OrderToursHelper
+  before_destroy :update_order_status
+
   belongs_to :driver
   has_many :order_tours, -> { order(place: :asc) }, dependent: :delete_all
 
@@ -29,4 +32,17 @@ class Tour < ActiveRecord::Base
   def completed?
     self.status == StatusEnum::COMPLETED
   end
+
+  private
+
+    def update_order_status
+      if self.approved? || self.started?
+        self.order_tours.each do |order_tour|
+          if ((available_order_tour_types).include? order_tour.kind) & order_tour.order
+            assigned_order = order_tour.order
+            assigned_order.update_attributes(status: OrderStatusEnum::ACTIVE)
+          end
+        end
+      end
+    end
 end
