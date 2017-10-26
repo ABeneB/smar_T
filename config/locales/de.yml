@@ -367,6 +367,7 @@ de:
   hour: "Stunde"
   minute: "Minute"
   password: "Passwort"
+  default_tour_start: "normale Startzeit für Touren"
 
  devise:
   sign_in: "Anmelden"

@@ -5,6 +5,15 @@
     <%= f.hint  t('.address_hint', :model => Company) %>
     <%= f.input :email, prompt: :translate %>
     <%= f.input :telefon, prompt: :translate %>
+    <div class="form-group">
+      <%= f.label :default_tour_start %>
+      <div class="form-inline">
+        <%= f.input :default_tour_start_hour, collection: (0..23), as: :fake_select,  selected: 9, label: false, input_html: { name: 'company[default_tour_start_hour]', maxlength: 2 } %>
+        <b>:</b>
+        <%= f.input :default_tour_start_minute, collection: (0..59), as: :fake_select, selected: 15, label: false, input_html: { name: 'company[default_tour_start_minute]', maxlength: 2 } %>
+        <b>Uhr</b><br />
+      </div>
+    </div>
     <%= f.input :google_maps_api_key, prompt: :translate %>
     <%= f.hint t('.google_maps_key_hint', :model => Company) %>
     <%= f.label :logo %> <br/>
@@ -25,6 +34,15 @@
         <%= f.hint t('.address_hint', :model => Company) %>
         <%= f.input :email, prompt: :translate %>
         <%= f.input :telefon, prompt: :translate %>
+        <div class="form-group">
+          <%= f.label :default_tour_start %>
+          <div class="form-inline">
+            <%= f.input :default_tour_start_hour, collection: (0..23), as: :fake_select, selected: 9, label: false, input_html: {  name: 'company[default_tour_start_hour]', maxlength: 2 } %>
+            <b>:</b>
+            <%= f.input :default_tour_start_minute, collection: (0..59), as: :fake_select, selected: 15, label: false, input_html: { name: 'company[default_tour_start_minute]' ,maxlength: 2 } %>
+            <b>Uhr</b><br />
+          </div>
+        </div>
         <%= f.input :google_maps_api_key, prompt: :translate %>
         <%= f.hint t('.google_maps_key_hint', :model => Company) %>
         <%= f.label :logo %> </br>
