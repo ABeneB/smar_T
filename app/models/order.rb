@@ -1,5 +1,7 @@
 class Order < ActiveRecord::Base
   belongs_to :customer
+ 
+  validates :location, :customer, presence: true  
 
   after_validation :geocode_locations
 
