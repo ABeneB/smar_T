@@ -30,13 +30,14 @@
       <tr>
         <th class="center">#</th>
         <th>Adresse</th>
-        <th class="center">Fahrzeit<br/>[hh:mm]</th>
+        <th class="center"><%= t('.expected_time_of_arrival') %><br/>[hh:mm]</th>
         <th class="center"><%= model_class.human_attribute_name(:duration) %><br/>[hh:mm]</th>
         <th>Beschreibung</th>
       </tr>
     </thead>
     <tbody class="sortable">
-      <% @order_tours.each do |order_tour| %>
+      <% time_of_arrivals = calculate_eta(@tour, @order_tours) %>
+      <% @order_tours.each_with_index do |order_tour, index| %>
         <% if is_sortable_order_tour?(order_tour) %>
           <tr id="orderTour-<%= order_tour.id %>">
             <td class="center"><%= order_tour.place + 1 %></td>
@@ -46,7 +47,7 @@
             <td class="center"><%= order_tour.place + 1 %></td>
             <td><%= order_tour.location %><%= image_tag('Lock.png', size: "17x17", class: "locked_icon") %></td>
         <% end %>
-            <td class="center"><%= Time.at(order_tour.time * 60).utc.strftime("%H:%M") %></td>
+            <td class="center"><%= time_of_arrivals[index].strftime("%H:%M") %></td>
             <td class="center"><%= Time.at(order_tour.duration * 60).utc.strftime("%H:%M") %></td>
             <td><%= order_tour.comment %></td>
           </tr>
@@ -54,7 +55,7 @@
       <tr class="unsortable">
         <td></td>
         <td></td>
-        <td class="center"><strong><%= Time.at(@order_tours.inject(0){ |sum, x| sum + x.time * 60 }).utc.strftime("%H:%M") %></strong></td>
+        <td></td>
         <td class="center"><strong><%= Time.at(@order_tours.inject(0){ |sum, x| sum + x.duration * 60 }).utc.strftime("%H:%M") %></strong></td>
         <td></td>
       </tr>

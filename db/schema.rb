@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171023190526) do
+ActiveRecord::Schema.define(version: 20171026061227) do
 
   create_table "companies", force: true do |t|
     t.string   "name"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20171023190526) do
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
     t.string   "email"
+    t.string   "default_tour_start",  default: "9:00"
   end
 
   add_index "companies", ["email"], name: "index_companies_on_email", unique: true
@@ -68,7 +69,6 @@ ActiveRecord::Schema.define(version: 20171023190526) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
-    t.datetime "working_time_picker"
   end
 
   add_index "drivers", ["user_id"], name: "index_drivers_on_user_id"
@@ -90,19 +90,19 @@ ActiveRecord::Schema.define(version: 20171023190526) do
 
   create_table "orders", force: true do |t|
     t.integer  "customer_id"
-    t.integer  "capacity",       default: 0
+    t.integer  "capacity",    default: 0
     t.datetime "start_time"
     t.datetime "end_time"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "comment"
-    t.integer  "status",         default: 1
+    t.integer  "status",      default: 1
     t.string   "comment2"
-    t.integer  "order_type",     default: 0
+    t.integer  "order_type",  default: 0
     t.string   "location"
     t.float    "lat"
     t.float    "long"
-    t.integer  "duration",       default: 0
+    t.integer  "duration",    default: 0
   end
 
   add_index "orders", ["customer_id"], name: "index_orders_on_customer_id"

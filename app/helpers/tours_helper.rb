@@ -29,4 +29,19 @@ module ToursHelper
         t('tours.status.completed')
     end
   end
+
+  # calculates the expected time of arrival for order tours of tour
+  def calculate_eta(tour, order_tours)
+    results = []
+    if order_tours
+      eta = Time.parse(tour.driver.company.default_tour_start)
+      results.push(eta)
+      for i in 1..(order_tours.length-1)
+        mean_time = (order_tours[i-1].duration + order_tours[i].time) * 60 # in minutes
+        eta  = eta + mean_time
+        results.push(eta)
+      end
+    end
+    results
+  end
 end

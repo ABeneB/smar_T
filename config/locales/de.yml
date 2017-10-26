@@ -216,6 +216,7 @@ de:
    title: "Tour"
    print_tour: "Drucken"
    complete_tour: "Tour abschliessen"
+   expected_time_of_arrival: "gesch. Ankunftszeit"
   index:
    confirm: "Möchten Sie die Tour '%{name}' wirklich löschen?"
    title: "Touren"
