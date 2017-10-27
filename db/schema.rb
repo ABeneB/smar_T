@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171026061227) do
+ActiveRecord::Schema.define(version: 20171027221712) do
 
   create_table "companies", force: true do |t|
     t.string   "name"
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20171026061227) do
     t.integer  "company_id"
     t.string   "address"
     t.string   "telefon"
-    t.string   "priority"
+    t.string   "priority",           default: "A"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
@@ -65,10 +65,11 @@ ActiveRecord::Schema.define(version: 20171026061227) do
     t.datetime "work_start_time"
     t.datetime "work_end_time"
     t.boolean  "active"
-    t.integer  "working_time"
+    t.integer  "working_time",        default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.datetime "working_time_picker"
   end
 
   add_index "drivers", ["user_id"], name: "index_drivers_on_user_id"
@@ -91,8 +92,8 @@ ActiveRecord::Schema.define(version: 20171026061227) do
   create_table "orders", force: true do |t|
     t.integer  "customer_id"
     t.integer  "capacity",    default: 0
-    t.datetime "start_time"
-    t.datetime "end_time"
+    t.datetime "start_time",  default: '2012-01-01 00:00:00'
+    t.datetime "end_time",    default: '2099-01-01 00:00:00'
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "comment"
@@ -157,7 +158,7 @@ ActiveRecord::Schema.define(version: 20171026061227) do
 
   create_table "vehicles", force: true do |t|
     t.string   "position"
-    t.integer  "capacity"
+    t.integer  "capacity",            default: 0
     t.integer  "duration"
     t.datetime "created_at"
     t.datetime "updated_at"
