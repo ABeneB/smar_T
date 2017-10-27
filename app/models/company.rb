@@ -5,6 +5,8 @@ class Company < ActiveRecord::Base
     has_many :depots, dependent: :destroy
     has_many :vehicles, dependent: :destroy
 
+    attr_accessor :default_tour_start_hour, :default_tour_start_minute
+
     has_attached_file :logo, styles: { medium: "300x300>", thumb: "100x100>" }
     validates_attachment_content_type :logo, content_type: /\Aimage\/.*\z/
     validates_attachment_file_name :logo, matches: [/png\z/, /jpe?g\z/]
