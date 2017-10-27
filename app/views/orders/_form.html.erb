@@ -14,9 +14,13 @@
         <%=f.association :customer, :as => :collection_select, collection: Customer.where(company_id: current_user.company_id),  prompt: :translate %>
         <%= f.input :location, prompt: :translate,  input_html: { id: 'address' } %>
         <%= f.input :duration, prompt: :translate %>
+        <% if  current_user.company.time_window_restriction? %>
         <%= f.input :start_time, prompt: :translate %>
         <%= f.input :end_time, prompt: :translate %>
+        <% end %>
+        <% if  current_user.company.capacity_restriction? %>
         <%= f.input :capacity, prompt: :translate %>
+        <% end %>
         <%= f.input :comment, prompt: :translate %>
         <%= f.input :status, :collection => { t('orders.status.inactive') => 0, t('orders.status.active') => 1, t('orders.status.completed') => 3 }, selected: @order.status %>
         <%= f.button :submit, prompt: :translate %>

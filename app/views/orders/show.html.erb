@@ -15,12 +15,16 @@
             <dd><pre class="prettyprint"><%= @order.location %></pre></dd>
             <dt class="label label-default">Dauer</dt>
             <dd><pre class="prettyprint"><%= @order.duration %></pre></dd>
+           <% if  current_user.company.time_window_restriction? %>
             <dt class="label label-default">Startzeit</dt>
             <dd><pre class="prettyprint"><%= @order.start_time %></pre></dd>
             <dt class="label label-default">Endzeit</dt>
             <dd><pre class="prettyprint"><%= @order.end_time %></pre></dd>
+             <% end %>
+            <% if  current_user.company.capacity_restriction? %>
             <dt class="label label-default">Kapazität</dt>
             <dd><pre class="prettyprint"><%= @order.capacity %></pre></dd>
+            <% end %>
             <dt class="label label-default">Beschreibung</dt>
             <dd><pre class="prettyprint"><%= @order.comment %></pre></dd>
             <dt class="label label-default">Status</dt>
