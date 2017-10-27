@@ -38,7 +38,8 @@ class CompaniesController < ApplicationController
   end
 
   def create
-    @company = Company.new(company_params)
+    company_parameter = extract_tour_start(company_params)
+    @company = Company.new(company_parameter)
     if @company.save
       restriction = Restriction.new
       restriction.company = @company
