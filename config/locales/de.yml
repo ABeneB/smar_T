@@ -126,6 +126,7 @@ de:
     inactive: "Inaktiv"
     assigned: "Zugewiesen"
     completed: "Abgeschlossen"
+    invalid: "Ungültig"
   types:
     delivery: "Lieferung"
     pickup: "Abholung"
