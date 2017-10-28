@@ -15,12 +15,19 @@ class OrderImportController < ApplicationController
           order.location = row[2].squish
           order.duration = row[4].squish
           order.capacity = 0
-          order.status = OrderStatusEnum::ACTIVE
+          order.status = OrderStatusEnum::INVALID
           order.comment = ""
           order.comment2 = ""
           order.save!
           new_order_ids.push(order.id)
         end
+      end
+    end
+    @check_orders = Order.where(id: new_order_ids)
+    @check_orders.each do |order|
+      if order.lat && order.long
+      order.status = OrderStatusEnum::ACTIVE
+      order.save!
       end
     end
     @imported_orders = Order.where(id: new_order_ids)
