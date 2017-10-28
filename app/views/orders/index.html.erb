@@ -13,7 +13,7 @@
         <div style="float: right;">
           <%= form_tag orders_path, method: :get do %>
             <%= label_tag :status, t('.filter_order_status') %>
-            <%= select_tag :status, options_for_select([[t('orders.status.active'), 1], [t('orders.status.assigned'), 2], [t('orders.status.completed'), 3], [t('orders.status.inactive'), 0]], params[:status]), prompt: t('orders.filter_order_status_default'), onchange: "this.form.submit();", class: "order_status_filter" %>
+            <%= select_tag :status, options_for_select([[t('orders.status.active'), 1], [t('orders.status.assigned'), 2], [t('orders.status.completed'), 3], [t('orders.status.inactive'), 0], [t('orders.status.invalid'), 4]], params[:status]), prompt: t('orders.filter_order_status_default'), onchange: "this.form.submit();", class: "order_status_filter" %>
             <%= label_tag :order_type, t('.filter_order_type') %>
             <%= select_tag :order_type, options_for_select([[t('orders.types.delivery'), OrderTypeEnum::DELIVERY],
                                                             [t('orders.types.pickup'), OrderTypeEnum::PICKUP],
@@ -37,7 +37,11 @@
           </thead>
           <tbody>
             <% @orders.each do |order| %>
+             <% if order.status == 4 %>
+              <tr class="bg-danger">
+             <% else %>
               <tr>
+             <% end %>
                 <td><%= order.location %></td>
                 <td class="center"><%= Time.at(order.duration * 60).utc.strftime("%H:%M") %></td>
                 <td class="center"><%= order.capacity %></td>

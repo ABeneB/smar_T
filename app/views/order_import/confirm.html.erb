@@ -19,7 +19,10 @@
       <% @imported_orders.each do |order| %>
       <%= fields_for "orders[]", order do  |f| %>
         <tr>
-        <td><%= f.text_field :location %></td>
+        <% if order.status == 4 %>
+        <% order.errors.add(:location, "") %>
+        <% end %>
+        <td><%= f.text_field :location, :size=>"50" %></td>
         <td class="center"><%= Time.at(order.duration * 60).utc.strftime("%H:%M:%S") %></td>
         <td class="center"><%= f.number_field :capacity, in: 0...400 %></td>
         <% if order.customer %>
@@ -31,7 +34,11 @@
                                                           [t('orders.types.delivery'), OrderTypeEnum::DELIVERY],
                                                           [t('orders.types.pickup'), OrderTypeEnum::PICKUP],
                                                           [t('orders.types.service'), OrderTypeEnum::SERVICE]]) %></td>
-        <td class="center"><%= f.select :status, options_for_select([[t('orders.status.active'), 1], [t('orders.status.completed'), 3], [t('orders.status.inactive'), 0], [t('orders.status.invalid'), 4]]) %></td>
+         <% if order.status == 4 %>
+         <td class="center"><%= f.select :status, options_for_select([[t('orders.status.active'), 1], [t('orders.status.completed'), 3], [t('orders.status.inactive'), 0], [t('orders.status.invalid'), 4]], order.status), {}, {:disabled => true} %></td>
+         <% else %>
+        <td class="center"><%= f.select :status, options_for_select([[t('orders.status.active'), 1], [t('orders.status.completed'), 3], [t('orders.status.inactive'), 0], [t('orders.status.invalid'), 4]], order.status) %></td>
+        <% end %>
         </tr>
       <% end %>
     <% end %>
