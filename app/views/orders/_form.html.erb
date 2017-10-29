@@ -22,7 +22,11 @@
         <%= f.input :capacity, prompt: :translate %>
         <% end %>
         <%= f.input :comment, prompt: :translate %>
+        <% if @order.status == 4 %>
+        <%= f.input :status, :collection => { t('orders.status.inactive') => 0, t('orders.status.active') => 1, t('orders.status.completed') => 3, t('orders.status.invalid') => 4 }, selected: @order.status %>
+        <% else %>
         <%= f.input :status, :collection => { t('orders.status.inactive') => 0, t('orders.status.active') => 1, t('orders.status.completed') => 3 }, selected: @order.status %>
+        <% end %>
         <%= f.button :submit, prompt: :translate %>
     <% end %>
 <% end %>
