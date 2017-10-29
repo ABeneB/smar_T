@@ -30,7 +30,8 @@ class OrderImportController < ApplicationController
       order.save!
       end
     end
-    @imported_orders = Order.where(id: new_order_ids)
+    @imported_orders = Order.where(id: new_order_ids).where.not(status: 4)
+    @invalid_orders = Order.where(id: new_order_ids).where(status: 4)
   end
 
   def complete
