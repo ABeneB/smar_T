@@ -1,4 +1,5 @@
 <% if current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?) %>
+  <% tour_start_time = @company.default_tour_start.split(':') %>
   <%= simple_form_for @company, validate: true do |f| %>
     <%= f.input :name, prompt: :translate %>
     <%= f.input :address, prompt: :translate, input_html: { id: 'address' } %>
@@ -8,10 +9,10 @@
     <div class="form-group">
       <%= f.label :default_tour_start %>
       <div class="form-inline">
-        <%= f.input :default_tour_start_hour, collection: (0..23), as: :fake_select,  selected: 9, label: false, input_html: { name: 'company[default_tour_start_hour]', maxlength: 2 } %>
+        <%= f.input :default_tour_start_hour, collection: (0..23), as: :fake_select,  selected: tour_start_time[0], label: false, input_html: { name: 'company[default_tour_start_hour]', maxlength: 2 } %>
         <b>:</b>
-        <%= f.input :default_tour_start_minute, collection: (0..59), as: :fake_select, selected: 15, label: false, input_html: { name: 'company[default_tour_start_minute]', maxlength: 2 } %>
-        <b>Uhr</b><br />
+        <%= f.input :default_tour_start_minute, collection: (0..59), as: :fake_select, selected: tour_start_time[1], label: false, input_html: { name: 'company[default_tour_start_minute]', maxlength: 2 } %>
+        <b><%= t('companies.tour_start.time') %></b><br />
       </div>
     </div>
     <%= f.input :google_maps_api_key, prompt: :translate %>
@@ -37,9 +38,9 @@
         <div class="form-group">
           <%= f.label :default_tour_start %>
           <div class="form-inline">
-            <%= f.input :default_tour_start_hour, collection: (0..23), as: :fake_select, selected: 9, label: false, input_html: {  name: 'company[default_tour_start_hour]', maxlength: 2 } %>
+            <%= f.input :default_tour_start_hour, collection: (0..23), as: :fake_select, selected: tour_start_time[0], label: false, input_html: {  name: 'company[default_tour_start_hour]', maxlength: 2 } %>
             <b>:</b>
-            <%= f.input :default_tour_start_minute, collection: (0..59), as: :fake_select, selected: 15, label: false, input_html: { name: 'company[default_tour_start_minute]' ,maxlength: 2 } %>
+            <%= f.input :default_tour_start_minute, collection: (0..59), as: :fake_select, selected: tour_start_time[1], label: false, input_html: { name: 'company[default_tour_start_minute]' ,maxlength: 2 } %>
             <b>Uhr</b><br />
           </div>
         </div>

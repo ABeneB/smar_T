@@ -61,6 +61,8 @@ de:
    success: "Kunde %{customer_id} wurde gelöscht"
    failure: "Kunde %{customer_id} konnte nicht gelöscht werden"
  companies:
+  tour_start:
+   time: "Uhr"
   index:
    confirm: "Möchten Sie das Unternehmen '%{name}' wirklich löschen?"
   show:
