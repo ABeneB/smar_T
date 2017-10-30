@@ -211,6 +211,8 @@ de:
   generate_new_tours: "Generieren"
   no_available_drivers: "Es stehen keine Fahrer zur Verfügung. Bitte stellen Sie sicher, dass Ihrem Unternehmen Benutzer mit der Rolle: Fahrer zugewiesen und diese aktiv sind. Weiterhin werden nur Fahrer mit einem zugewiesenen Fahrzeug berücksichtigt."
   filter_tour_status_default: "Alle"
+  started_at_timestamp: "Gestartet am: "
+  completed_at_timestamp: "Abgeschlossen am: "
   status:
    approved: "Bereit"
    started: "Gestartet"

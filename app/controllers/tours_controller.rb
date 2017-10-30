@@ -19,25 +19,22 @@ class ToursController < ApplicationController
   end
 
   def show
-    if current_user
-
-      if current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?)
+    if current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?)
+      @order_tours = @tour.order_tours.sort_by &:place
+      @hash = @order_tours.map do | order_tour|
+        place = order_tour.place+1
+        {latitude: order_tour.latitude, longitude: order_tour.longitude, place: place.to_s}
+      end
+    elsif current_user.is_planer? || current_user.is_driver?
+      if @tour.driver.company == current_user.company
         @order_tours = @tour.order_tours.sort_by &:place
         @hash = @order_tours.map do | order_tour|
           place = order_tour.place+1
           {latitude: order_tour.latitude, longitude: order_tour.longitude, place: place.to_s}
         end
-      elsif current_user.is_planer? || current_user.is_driver?
-        if @tour.driver.company == current_user.company
-          @order_tours = @tour.order_tours.sort_by &:place
-          @hash = @order_tours.map do | order_tour|
-            place = order_tour.place+1
-            {latitude: order_tour.latitude, longitude: order_tour.longitude, place: place.to_s}
-          end
-        end
       end
-      respond_with(@tour, @hash)
     end
+    respond_with(@tour, @hash)
   end
 
   def new
@@ -118,7 +115,7 @@ class ToursController < ApplicationController
     unless @tour
       redirect_to action: 'index'
     end
-    @tour.update_attributes(status: StatusEnum::STARTED)
+    @tour.update_attributes(status: StatusEnum::STARTED, started_at: DateTime.now)
     redirect_to action: 'show'
   end
 
@@ -137,7 +134,7 @@ class ToursController < ApplicationController
     tour_complete_params = finish_tour_params.reject{|_, v| v.blank? }
 
     begin
-      @tour.update_attributes!(status: StatusEnum::COMPLETED)
+      @tour.update_attributes!(status: StatusEnum::COMPLETED, completed_at: DateTime.now)
       order_tours = @tour.order_tours.where(kind: available_order_tour_types())
       order_tours.each do |order_tour|
         if tour_complete_params[:order_ids].include? order_tour.order_id.to_s

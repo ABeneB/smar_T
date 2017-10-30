@@ -317,3 +317,7 @@ margin-bottom: 10px;
 .fa.fa-search-plus, .fa.fa-pencil, .fa.fa-trash{
   font-size: 15px;
 }
+
+.tour-details {
+    margin: 5px;
+}

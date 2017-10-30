@@ -1,8 +1,12 @@
 <%- model_class = Tour -%>
 <% if current_user.is_admin? || current_user.is_planer? || current_user.is_driver? || (current_user.is_superadmin? && current_user.company_id?)%>
 <div class="page-header">
-  <h1>Tour</h1>
-  <h4>#<%= @tour.id %> | Fahrer: <%= @tour.driver.name %> | Status: <%= get_tour_status_as_string(@tour.status) %></h4>
+  <div class="tour-details">
+    <h1>Tour</h1>
+    <h4>#<%= @tour.id %> | Fahrer: <%= @tour.driver.name %> | Status: <%= get_tour_status_as_string(@tour.status) %></h4>
+    <b><%= t('tours.started_at_timestamp') + "" + (@tour.started_at ? @tour.started_at.strftime("%d.%m.%Y, %H:%M") + " " + t('companies.tour_start.time') : "-")  %> |
+      <%= t('tours.completed_at_timestamp') + "" + (@tour.completed_at ? @tour.completed_at.strftime("%d.%m.%Y, %H:%M") + " " + t('companies.tour_start.time') : "-" ) %></b>
+  </div>
   <% if @tour.approved? %>
     <%= link_to start_tour_path(), class: 'btn btn-primary btn-smart' do %>
       <%= ((fa_icon "play 1x") + " " + t('drivers.start_tour')) %>
