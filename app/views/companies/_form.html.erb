@@ -29,6 +29,7 @@
     <%= f.button :submit, prompt: :translate %>
     <% end %>
 <% elsif current_user.is_superadmin? && !current_user.company_id? %>
+    <% tour_start_time = @company.default_tour_start.split(':') %>
     <%= simple_form_for @company, validate: true do |f| %>
         <%= f.input :name, prompt: :translate %>
         <%= f.input :address, prompt: :translate, input_html: { id: 'address' } %>
