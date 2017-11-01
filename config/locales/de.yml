@@ -245,6 +245,8 @@ de:
   destroy:
    success: "Tour %{tour_id} wurde gelöscht"
    failure: "Tour %{tour_id} konnte nicht gelöscht werden"
+  print:
+   expected_time_of_arrival: "gesch. Ankunftszeit"
   complete:
    finish_tour: "Tour abschließen"
   finish:
