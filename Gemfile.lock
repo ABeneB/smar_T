@@ -1,17 +1,9 @@
 GIT
-  remote: git://github.com/svenfuchs/rails-i18n.git
-  revision: f8c83ec753439d7286b9168bbb246e354866cb9e
-  branch: rails-4-x
+  remote: git://github.com/liefery/google-directions-ruby.git
+  revision: 69c7caa3ace974372c9f3a7f134d044864b4dd7f
+  ref: 69c7caa3ace974372c9f3a7f134d044864b4dd7f
   specs:
-    rails-i18n (4.0.9)
-      i18n (~> 0.7)
-      railties (~> 4.0)
-
-GIT
-  remote: https://github.com/liefery/google-directions-ruby
-  revision: b038b24b71246cad184d1f7aad1f1b4b3ae28f2b
-  specs:
-    google_directions (0.1.6.7)
+    google_directions (0.1.6.5)
       nokogiri (~> 1.4, >= 1.4.1)
 
 GEM
@@ -149,7 +141,7 @@ GEM
     method_source (0.8.2)
     mime-types (1.25.1)
     mimemagic (0.3.0)
-    mini_portile2 (2.2.0)
+    mini_portile2 (2.3.0)
     minitest (5.10.3)
     multi_json (1.12.1)
     multi_xml (0.6.0)
@@ -157,8 +149,8 @@ GEM
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (4.1.0)
-    nokogiri (1.8.0)
-      mini_portile2 (~> 2.2.0)
+    nokogiri (1.8.1)
+      mini_portile2 (~> 2.3.0)
     oauth2 (1.4.0)
       faraday (>= 0.8, < 0.13)
       jwt (~> 1.0)
@@ -201,6 +193,9 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.1.4)
       sprockets-rails (~> 2.0)
+    rails-i18n (4.0.9)
+      i18n (~> 0.7)
+      railties (~> 4.0)
     rails-jquery-ui-sortable (1.11.4)
     railties (4.1.4)
       actionpack (= 4.1.4)
@@ -325,7 +320,7 @@ DEPENDENCIES
   pry
   pry-rails
   rails (= 4.1.4)
-  rails-i18n!
+  rails-i18n (~> 4.0.0)
   rails-jquery-ui-sortable
   rspec-rails (~> 3.6)
   sass-rails (~> 4.0.3)
@@ -344,4 +339,4 @@ DEPENDENCIES
   wkhtmltopdf-binary (~> 0.12.3.1)
 
 BUNDLED WITH
-   1.16.0.pre.2
+   1.16.0

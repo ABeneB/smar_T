@@ -58,7 +58,7 @@ gem 'geocoder'
 gem 'binding_of_caller'
 
 # for calculation of drive time
-gem 'google_directions', git: "https://github.com/liefery/google-directions-ruby"
+gem 'google_directions', github: 'liefery/google-directions-ruby', ref: '69c7caa3ace974372c9f3a7f134d044864b4dd7f'
 
 gem 'pry'
 
@@ -76,7 +76,7 @@ gem 'validates_formatting_of'
 gem 'font-awesome-rails'
 gem 'active_link_to'
 
-gem 'rails-i18n', github: 'svenfuchs/rails-i18n', branch: 'rails-4-x' # For 4.x
+gem 'rails-i18n', '~> 4.0.0'
 gem 'devise-i18n'
 gem 'client_side_validations'
 gem 'client_side_validations-simple_form'
