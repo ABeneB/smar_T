@@ -5,10 +5,10 @@ class RegisteredUsersController < ApplicationController
 
   def index
     if current_user && current_user.is_admin? && current_user.company_id?
-      @users = User.where(company_id: current_user.company.id)
+      @users = User.where(company_id: current_user.company.id).page params[:page]
     end
     if current_user && current_user.is_superadmin? && current_user.company_id?
-      @users = User.where(company_id: current_user.company.id)
+      @users = User.where(company_id: current_user.company.id).page params[:page]
     end
   end
 

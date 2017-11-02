@@ -6,7 +6,7 @@ class VehiclesController < ApplicationController
   def index
     if (current_user.is_admin? || current_user.is_planer? || (current_user.is_superadmin? && current_user.company_id?)) && !current_user.company.nil?
       company = current_user.company
-      @vehicles = company.vehicles
+      @vehicles = company.vehicles.page params[:page]
     else
       @vehicles = []
     end
@@ -34,7 +34,7 @@ class VehiclesController < ApplicationController
     if @vehicle.save
       flash[:success] = t('.success', vehicle_id: @vehicle.id)
     respond_with(@vehicle)
-      else
+    else
       flash[:alert] = t('.failure')
       render 'new'
     end

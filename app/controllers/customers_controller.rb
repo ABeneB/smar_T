@@ -5,7 +5,7 @@ class CustomersController < ApplicationController
 
   def index
     if current_user.is_planer? || current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?)
-      @customers = Customer.where(company_id: current_user.company_id)
+      @customers = Customer.where(company_id: current_user.company_id).page params[:page]
     end
   end
 

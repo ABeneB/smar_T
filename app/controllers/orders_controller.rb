@@ -10,7 +10,7 @@ class OrdersController < ApplicationController
       # remove parameters with blank values (e.g. prompt options)
       order_filter = filter_order_params.reject{|_, v| v.blank?}
       # convert active param to boolean value
-      @orders = company.orders(order_filter)
+      @orders = company.orders(order_filter).page params[:page]
     else
       @orders = []
     end

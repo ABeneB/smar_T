@@ -278,6 +278,13 @@ de:
   complete:
     success: "Die Aufträge wurden erfolgreich importiert."
     failure: "Bei Import der Aufträge ist ein Fehler aufgetreten."
+ views:
+  pagination:
+   first: "&laquo; Erste Seite"
+   last: "Letzte Seite &raquo;"
+   previous: "&lsaquo; Vorige"
+   next: "Nächste &rsaquo;"
+   truncate: "&hellip;"
  simple_form:
   labels:
    depot:
@@ -330,6 +337,14 @@ de:
    user_form:
     create: "Speichern"
     update: "Speichern"
+   page_entries_info:
+    one_page:
+     display_entries:
+      zero: "%{entry_name} nicht gefunden"
+      one: "Zeige <b>1</b> %{entry_name}"
+      other: "Zeige <b>alle %{count}</b> %{entry_name} an"
+    more_pages:
+     display_entries: "Zeige an %{entry_name} <b>%{first}&nbsp;-&nbsp;%{last}</b> of <b>%{total}</b> in total"
 
  attributes:
   name: "Name"
@@ -405,3 +420,4 @@ number:
         mb: "MB"
         gb: "GB"
         tb: "TB"
+

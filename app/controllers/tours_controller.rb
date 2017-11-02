@@ -9,10 +9,10 @@ class ToursController < ApplicationController
     @tours = []
     tour_filter = filter_tour_params.reject{|_, v| v.blank?}
     if (current_user.is_admin? || current_user.is_planer? || (current_user.is_superadmin? && current_user.company_id?)) && !current_user.company.nil?
-      @tours = current_user.company.tours(tour_filter)
+      @tours = current_user.company.tours(tour_filter).page params[:page]
     elsif current_user.is_driver?
       if current_user.try(:driver).try(:has_tours?)
-        @tours = current_user.driver.tours(tour_filter)
+        @tours = current_user.driver.tours(tour_filter).page params[:page]
       end
     end
     @tours
