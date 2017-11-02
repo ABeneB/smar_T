@@ -58,7 +58,7 @@ gem 'geocoder'
 gem 'binding_of_caller'
 
 # for calculation of drive time
-gem 'google_directions', github: 'liefery/google-directions-ruby', ref: '69c7caa3ace974372c9f3a7f134d044864b4dd7f'
+gem 'google_directions', git: 'https://github.com/hendricius/google-directions-ruby.git'
 
 gem 'pry'
 
