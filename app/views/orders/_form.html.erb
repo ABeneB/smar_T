@@ -1,14 +1,14 @@
 <% if current_user.role == "admin" || current_user.role == "planer" || (current_user.is_superadmin? && current_user.company_id?)%>
     <%= simple_form_for @order, validate: true do |f| %>
         <% if  current_user.company.restriction.present? && current_user.company.restriction.problem == "DP" %>
-            <%= f.input :problem, as: :fake_select, :collection => {t('dp')  => 'type_2'}, :selected => 'type_2', :disabled => true%>
+              <%= f.input :order_type, :collection => { t('orders.types.delivery') => OrderTypeEnum::DELIVERY, t('orders.types.service') => OrderTypeEnum::SERVICE}, selected: @order.order_type %>
 
         <% elsif current_user.company.restriction.present? && current_user.company.restriction.problem == "PP" %>
-            <%= f.input :problem, as: :fake_select, :collection => {t('pp') => 'type_1'}, :selected => 'type_1', :disabled => true%>
+              <%= f.input :order_type, :collection => { t('orders.types.pickup') => OrderTypeEnum::PICKUP, t('orders.types.service') => OrderTypeEnum::SERVICE}, selected: @order.order_type %>
 
         <% else %>
-            <%= f.input :problem, as: :fake_select, :collection => {t('dp')  => 'type_2', t('pp') => 'type_1', t('pdp') => 'type_3'}, :selected => 'type_3'%>
-
+              <%= f.input :order_type, :collection => { t('orders.types.delivery') => OrderTypeEnum::DELIVERY, t('orders.types.pickup') => OrderTypeEnum::PICKUP, t('orders.types.service') => OrderTypeEnum::SERVICE}, selected: @order.order_type %>
+            
         <% end %>
 
         <%=f.association :customer, :as => :collection_select, collection: Customer.where(company_id: current_user.company_id),  prompt: :translate %>
