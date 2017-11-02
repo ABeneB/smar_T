@@ -26,10 +26,14 @@
     <% if current_user.is_admin? || current_user.is_planer? || (current_user.is_superadmin? && current_user.company_id?)%>
     <%= form_tag new_tour_path, method: :get do %>
       <b style="font-size: 15px;"><%= t('.generate_new_tours_hint') %></b>
+      <% if  current_user.company.restriction.present? && (current_user.company.restriction.problem == "DP" || current_user.company.restriction.problem == "PDP" ) %>
       <%= label_tag :order_type_delivery, t('orders.types.delivery') %>
       <%= check_box_tag :order_type_delivery, 1, true %>
+      <% end %>
+      <% if  current_user.company.restriction.present? && (current_user.company.restriction.problem == "PP" || current_user.company.restriction.problem == "PDP" ) %>
       <%= label_tag :order_type_pickup, t('orders.types.pickup') %>
       <%= check_box_tag :order_type_pickup, 1, true %>
+      <% end %>
       <%= label_tag :order_type_service, t('orders.types.service') %>
       <%= check_box_tag :order_type_service, 1, true %>
       <%= button_tag type: 'submit', name: nil, id: 'btn_new_tour', class: 'btn btn-primary btn-smart' do %>
