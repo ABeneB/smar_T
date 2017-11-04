@@ -136,6 +136,7 @@ de:
   show:
    title: "Auftrag"
    belongs_to_tour: "gehört zu "
+   order_owner: "Auftraggeber"
   index:
    confirm: "Möchten Sie den Auftrag '%{name}' wirklich löschen?"
    title: "Aufträge"

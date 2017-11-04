@@ -328,3 +328,18 @@ body{
   font-weight: bold;
   font-size: 1.1em;
 }
+
+.order-details {
+  a {
+    cursor: auto;
+  }
+  a:link {
+    color: #0000EE;
+  }
+  a:hover {
+    background-color: #ffffff;
+  }
+  a:visited {
+    color: #551A8B;
+  }
+}

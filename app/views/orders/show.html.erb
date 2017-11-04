@@ -3,10 +3,13 @@
     <% if current_user.is_admin? || current_user.is_planer? || (current_user.is_superadmin? && current_user.company_id?)%>
       <div class="page-header">
         <h1>Auftrag</h1>
-        <% tour =  @order.get_assigned_tour %>
-        <% if tour %>
-          <b><%= t('.belongs_to_tour') + ' ' %><%= link_to('Tour #' + tour.id.to_s, tour_path(tour))  %></b>
-        <% end %>
+        <div class="order-details">
+          <b><%= t('.order_owner') + ': ' %><%= link_to(@order.customer.name, customer_path(@order.customer)) %></b><br />
+          <% tour =  @order.get_assigned_tour %>
+          <% if tour %>
+            <b><%= t('.belongs_to_tour') + ' ' %><%= link_to('Tour #' + tour.id.to_s, tour_path(tour))  %></b>
+          <% end %>
+        </div>
       </div>
       
       <div class="fieldset">
