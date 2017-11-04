@@ -19,6 +19,9 @@ class OrdersController < ApplicationController
   def show
     if current_user
       if current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?) || current_user.is_planer?
+        if @order.status == OrderStatusEnum::COMPLETED && !@order.get_assigned_tour
+          flash.now[:warning] = t('orders.show.assigned_tour_does_not_exist_html')
+        end
         @order
       end
     end

@@ -137,6 +137,7 @@ de:
    title: "Auftrag"
    belongs_to_tour: "gehört zu "
    order_owner: "Auftraggeber"
+   assigned_tour_does_not_exist_html: "<b>Achtung</b>: Die zugewiesene Tour existiert nicht. Möglicherweise wurde die Tour zwischenzeitlich gelöscht oder der Status dieses Auftrag manuell geändert."
   index:
    confirm: "Möchten Sie den Auftrag '%{name}' wirklich löschen?"
    title: "Aufträge"
