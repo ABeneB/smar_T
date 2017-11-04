@@ -23,6 +23,7 @@
         <% order.errors.add(:location, "") %>
         <% end %>
         <td><%= f.text_field :location, :size=>"50" %></td>
+        <%=  f.hidden_field :location, :id => ("address_" + (order.id).to_s) %>
         <td class="center"><%= Time.at(order.duration * 60).utc.strftime("%H:%M:%S") %></td>
         <td class="center"><%= f.number_field :capacity, in: 0...400 %></td>
         <% if order.customer %>
@@ -66,6 +67,7 @@
         <% order.errors.add(:location, "") %>
         <% end %>
         <td><%= f.text_field :location, :size=>"50" %></td>
+        <%=  f.hidden_field :location, :id => ("address_" + (order.id).to_s) %>
         <td class="center"><%= Time.at(order.duration * 60).utc.strftime("%H:%M:%S") %></td>
         <td class="center"><%= f.number_field :capacity, in: 0...400 %></td>
         <% if order.customer %>
