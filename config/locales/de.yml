@@ -249,7 +249,9 @@ de:
   print:
    expected_time_of_arrival: "gesch. Ankunftszeit"
   complete:
-   finish_tour: "Tour abschließen"
+   title: "Tour abschließen"
+   finish_tour: "Speichern"
+   choose_complete_orders_hint: "Bitte wählen Sie die bearbeiteten Aufträge aus. Nicht ausgewählte Aufträge werden aus der Tour entfernt und bei der Generierung zukünftiger Touren berücksichtigt."
   finish:
    success: "Die Tour (ID %{tour_id}) wurde erfolgreich abgeschlossen."
    failure: "Es ist ein Fehler aufgetreten. Die Tour und die dazugehörigen Aufträge konnte nicht abgeschlossen werden."
