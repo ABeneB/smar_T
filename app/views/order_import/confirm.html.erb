@@ -62,7 +62,7 @@
     <tbody>
       <% @invalid_orders.each do |order| %>
       <%= fields_for "orders[]", order do  |f| %>
-        <tr>
+        <tr class="highlight">
         <% if order.status == 4 %>
         <% order.errors.add(:location, "") %>
         <% end %>

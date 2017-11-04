@@ -343,3 +343,7 @@ body{
     color: #551A8B;
   }
 }
+
+.table-striped > tbody > .highlight > td {
+    background-color: #f2dede;
+}
