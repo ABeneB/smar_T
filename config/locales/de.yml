@@ -37,6 +37,13 @@ de:
  pdp: "Pickup- und Delivery-Problem"
  driver_properties: "Fahrereigenschaften"
  save_ressource: "Speichern"
+ about: "Über smar_T"
+ about:
+  index:
+   title: "Über smar_T"
+   hint: "smar_T benutzt folgende externen Softwarebibliotheken:"
+   name: "Name"
+   website: "Webseite"
  user_forms:
   new:
    title: "Neuer Benutzer"
