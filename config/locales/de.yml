@@ -52,14 +52,14 @@ de:
   edit:
    title: "Kunde bearbeiten"
   create:
-    success: "Kunde %{customer_id} wurde erfolgreich angelegt"
+    success: "Kunde wurde erfolgreich angelegt"
     failure: "Kunde konnte nicht angelegt werden"
   update:
-   success: "Kunde %{customer_id} wurde aktualisiert"
-   failure: "Kunde %{customer_id} konnte nicht aktualisiert werden"
+   success: "Kunde wurde aktualisiert"
+   failure: "Kunde konnte nicht aktualisiert werden"
   destroy:
-   success: "Kunde %{customer_id} wurde gelöscht"
-   failure: "Kunde %{customer_id} konnte nicht gelöscht werden"
+   success: "Kunde wurde gelöscht"
+   failure: "Kunde konnte nicht gelöscht werden"
  companies:
   tour_start:
    time: "Uhr"
@@ -75,8 +75,8 @@ de:
    success: "Unternehmen %{company_name} wurde erfolgreich angelegt"
    failure: "Unternehmen konnte nicht angelegt werden"
   update:
-   success: "Unternehmen %{company_name} wurde aktualisiert"
-   failure: "Unternehmen %{company_name} konnte nicht aktualisiert werden"
+   success: "Unternehmen wurde aktualisiert"
+   failure: "Unternehmen konnte nicht aktualisiert werden"
   destroy:
    success: "Unternehmen %{company_name} wurde gelöscht"
    failure: "Unternehmen %{company_name} konnte nicht gelöscht werden"
@@ -95,14 +95,14 @@ de:
   edit:
    title: "Depot bearbeiten"
   create:
-   success: "Depot %{depot_id} wurde erfolgreich angelegt"
+   success: "Depot wurde erfolgreich angelegt"
    failure: "Depot konnte nicht angelegt werden"
   update:
-   success: "Depot %{depot_id} wurde aktualisiert"
-   failure: "Depot %{depot_id} konnte nicht aktualisiert werden"
+   success: "Depot wurde aktualisiert"
+   failure: "Depot konnte nicht aktualisiert werden"
   destroy:
-   success: "Depot %{depot_id} wurde gelöscht"
-   failure: "Depot %{depot_id} konnte nicht gelöscht werden"
+   success: "Depot wurde gelöscht"
+   failure: "Depot konnte nicht gelöscht werden"
  drivers:
   start_tour: "Starten"
   show:
@@ -112,14 +112,14 @@ de:
   edit:
    title: "Fahrer bearbeiten"
   create:
-   success: "Fahrer: %{name} (ID %{driver_id}) wurde erfolgreich angelegt"
+   success: "Fahrer: %{name} wurde erfolgreich angelegt"
    failure: "Fahrer konnte nicht angelegt werden"
   update:
-   success: "Fahrer: %{name} (ID %{driver_id})  wurde aktualisiert"
-   failure: "Fahrer: %{name} (ID %{driver_id})  konnte nicht aktualisiert werden"
+   success: "Fahrer: %{name} wurde aktualisiert"
+   failure: "Fahrer: %{name} konnte nicht aktualisiert werden"
   destroy:
-   success: "Fahrer: %{name} (ID %{driver_id})  wurde gelöscht"
-   failure: "Fahrer: %{name} (ID %{driver_id})  konnte nicht gelöscht werden"
+   success: "Fahrer: %{name} wurde gelöscht"
+   failure: "Fahrer: %{name} konnte nicht gelöscht werden"
  orders:
   filter_order_type_default: "Alle Typen"
   filter_order_status_default: "Alle"
@@ -139,7 +139,7 @@ de:
    order_owner: "Auftraggeber"
    assigned_tour_does_not_exist_html: "<b>Achtung</b>: Die zugewiesene Tour existiert nicht. Möglicherweise wurde die Tour zwischenzeitlich gelöscht oder der Status dieses Auftrag manuell geändert."
   index:
-   confirm: "Möchten Sie den Auftrag '%{name}' wirklich löschen?"
+   confirm: "Möchten Sie den Auftrag wirklich löschen?"
    title: "Aufträge"
    order_import: "Aufträge importieren"
    filter_order_type: "Nach Typ filtern:"
@@ -150,14 +150,14 @@ de:
   edit:
    title: "Auftrag bearbeiten"
   create:
-   success: "Auftrag %{order_id} wurde erfolgreich angelegt"
+   success: "Auftrag wurde erfolgreich angelegt"
    failure: "Auftrag konnte nicht angelegt werden"
   update:
-   success: "Auftrag %{order_id} wurde aktualisiert"
-   failure: "Auftrag %{order_id} konnte nicht aktualisiert werden"
+   success: "Auftrag wurde aktualisiert"
+   failure: "Auftrag konnte nicht aktualisiert werden"
   destroy:
-   success: "Auftrag %{order_id} wurde gelöscht"
-   failure: "Auftrag %{order_id} konnte nicht gelöscht werden"
+   success: "Auftrag wurde gelöscht"
+   failure: "Auftrag konnte nicht gelöscht werden"
  registered_users:
   index:
    confirm: "Möchten Sie den Benutzer '%{name}' wirklich löschen?"
@@ -168,14 +168,14 @@ de:
   edit:
    title: "Benutzer bearbeiten"
   create:
-   success: "Benutzer %{user_id} wurde erfolgreich angelegt"
+   success: "Benutzer wurde erfolgreich angelegt"
    failure: "Benutzer konnte nicht angelegt werden"
   update:
    success: "Benutzer %{user_nickname} wurde aktualisiert"
-   failure: "Benutzer %{user_id} konnte nicht aktualisiert werden"
+   failure: "Benutzer konnte nicht aktualisiert werden"
   destroy:
-   success: "Benutzer %{nick_name} (%{user_id}) wurde gelöscht"
-   failure: "Benutzer %{nick_name} (%{user_id}) konnte nicht gelöscht werden"
+   success: "Benutzer %{nick_name} wurde gelöscht"
+   failure: "Benutzer %{nick_name} konnte nicht gelöscht werden"
  user_forms:
   show:
    title: "Benutzer"
@@ -200,14 +200,14 @@ de:
   edit:
    title: "Beschränkung bearbeiten"
   create:
-   success: "Beschränkung %{restriction_id} wurde erfolgreich angelegt"
+   success: "Beschränkung wurde erfolgreich angelegt"
    failure: "Beschränkung konnte nicht angelegt werden"
   update:
-   success: "Beschränkung %{restriction_id} wurde aktualisiert"
-   failure: "Beschränkung %{restriction_id} konnte nicht aktualisiert werden"
+   success: "Beschränkung wurde aktualisiert"
+   failure: "Beschränkung konnte nicht aktualisiert werden"
   destroy:
-   success: "Beschränkung %{restriction_id} wurde gelöscht"
-   failure: "Beschränkung %{restriction_id} konnte nicht gelöscht werden"
+   success: "Beschränkung wurde gelöscht"
+   failure: "Beschränkung konnte nicht gelöscht werden"
  tours:
   no_google_maps_api_key_assigned: "Ihrem Unternehmen wurde noch kein Google Maps API Key zugewiesen. Bitte setzen Sie den API Schlüssel in den Unternehmenseinstellungen oder kontaktieren Sie den Administrator."
   generate_new_tours: "Generieren"
@@ -225,7 +225,7 @@ de:
    complete_tour: "Tour abschliessen"
    expected_time_of_arrival: "gesch. Ankunftszeit"
   index:
-   confirm: "Möchten Sie die Tour '%{name}' wirklich löschen?"
+   confirm: "Möchten Sie die Tour wirklich löschen?"
    title: "Touren"
    active_tours: "Aktuell"
    completed_tours: "Abgeschlossen"
@@ -239,14 +239,14 @@ de:
   edit:
    title: "Tour bearbeiten"
   create:
-   success: "Tour %{tour_id} wurde erfolgreich angelegt"
+   success: "Tour wurde erfolgreich angelegt"
    failure: "Tour konnte nicht angelegt werden"
   update:
-   success: "Tour %{tour_id} wurde aktualisiert"
-   failure: "Tour %{tour_id} konnte nicht aktualisiert werden"
+   success: "Tour wurde aktualisiert"
+   failure: "Tour konnte nicht aktualisiert werden"
   destroy:
-   success: "Tour %{tour_id} wurde gelöscht"
-   failure: "Tour %{tour_id} konnte nicht gelöscht werden"
+   success: "Tour wurde gelöscht"
+   failure: "Tour konnte nicht gelöscht werden"
   print:
    expected_time_of_arrival: "gesch. Ankunftszeit"
   complete:
@@ -254,11 +254,11 @@ de:
    finish_tour: "Speichern"
    choose_complete_orders_hint: "Bitte wählen Sie die bearbeiteten Aufträge aus. Nicht ausgewählte Aufträge werden aus der Tour entfernt und bei der Generierung zukünftiger Touren berücksichtigt."
   finish:
-   success: "Die Tour (ID %{tour_id}) wurde erfolgreich abgeschlossen."
+   success: "Die Tour wurde erfolgreich abgeschlossen."
    failure: "Es ist ein Fehler aufgetreten. Die Tour und die dazugehörigen Aufträge konnte nicht abgeschlossen werden."
  vehicles:
   index:
-   confirm: "Möchten Sie das Fahrzeug '%{name}' wirklich löschen?"
+   confirm: "Möchten Sie das Fahrzeug wirklich löschen?"
   show:
    title: "Fahrzeug"
   new:
@@ -266,14 +266,14 @@ de:
   edit:
    title: "Fahrzeug bearbeiten"
   create:
-   success: "Fahrzeug %{vehicle_id} wurde erfolgreich angelegt"
+   success: "Fahrzeug wurde erfolgreich angelegt"
    failure: "Fahrzeug konnte nicht angelegt werden"
   update:
-   success: "Fahrzeug %{vehicle_id} wurde aktualisiert"
-   failure: "Fahrzeug %{vehicle_id} konnte nicht aktualisiert werden"
+   success: "Fahrzeug wurde aktualisiert"
+   failure: "Fahrzeug konnte nicht aktualisiert werden"
   destroy:
-   success: "Fahrzeug %{vehicle_id} wurde gelöscht"
-   failure: "Fahrzeug %{vehicle_id} konnte nicht gelöscht werden"
+   success: "Fahrzeug wurde gelöscht"
+   failure: "Fahrzeug konnte nicht gelöscht werden"
   form:
    driver_empty: "Ohne Fahrer"
  order_import:

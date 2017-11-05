@@ -34,7 +34,7 @@ class RegisteredUsersController < ApplicationController
     @user = User.new(user_params)
     @user.company_id = current_user.company_id
     if @user.save
-      flash[:success] = t('.success', user_id: @user.id)
+      flash[:success] = t('.success')
       redirect_to(registered_user_path(@user))
       else
         flash[:alert] = t('.failure')
@@ -44,10 +44,10 @@ class RegisteredUsersController < ApplicationController
 
   def update
     if @user.update_attributes(user_params)
-      flash[:success] = t('.success', user_id: @user.id)
+      flash[:success] = t('.success')
       redirect_to(registered_user_path(@user))
     else
-      flash[:alert] = t('.failure', user_id: @user.id)
+      flash[:alert] = t('.failure')
       render("edit")
     end
   end
@@ -57,10 +57,10 @@ class RegisteredUsersController < ApplicationController
       nickname = @user.nickname
       user_id = @user.id
       if @user.destroy
-        flash[:success] = t('.success', nick_name: nickname, user_id: user_id)
+        flash[:success] = t('.success', nick_name: nickname)
         redirect_to(registered_users_path)
       else
-        flash[:alert] = t('.failure', nick_name: nickname, user_id: user_id)
+        flash[:alert] = t('.failure', nick_name: nickname)
         redirect_to(registered_users_path)
       end
     end

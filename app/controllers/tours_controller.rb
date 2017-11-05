@@ -62,7 +62,7 @@ class ToursController < ApplicationController
   def create
     @tour = Tour.new(tour_params)
     if @tour.save
-        flash[:success] = t('.success', tour_id: @tour.id)
+        flash[:success] = t('.success')
     respond_with(@tour)
       else
       flash[:alert] = t('.failure')
@@ -72,10 +72,10 @@ class ToursController < ApplicationController
 
   def update
     if @tour.update(tour_params)
-        flash[:success] = t('.success', tour_id: @tour.id)
+        flash[:success] = t('.success')
     respond_with(@tour)
       else
-        flash[:alert] = t('.failure', tour_id: @tour.id)
+        flash[:alert] = t('.failure')
         render("edit")
     end
   end
@@ -87,10 +87,10 @@ class ToursController < ApplicationController
       order_tour.destroy
     end
     if @tour.destroy
-      flash[:success] = t('.success', tour_id: @tour.id)
+      flash[:success] = t('.success')
     respond_with(@tour)
       else
-      flash[:alert] = t('.failure', tour_id: @tour.id)
+      flash[:alert] = t('.failure')
       respond_with(@tour)
     end
   end

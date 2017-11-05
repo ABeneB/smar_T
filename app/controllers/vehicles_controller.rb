@@ -32,7 +32,7 @@ class VehiclesController < ApplicationController
     @vehicle = Vehicle.new(vehicle_params)
     @vehicle.company_id = current_user.company.id
     if @vehicle.save
-      flash[:success] = t('.success', vehicle_id: @vehicle.id)
+      flash[:success] = t('.success')
     respond_with(@vehicle)
     else
       flash[:alert] = t('.failure')
@@ -42,20 +42,20 @@ class VehiclesController < ApplicationController
 
   def update
     if @vehicle.update(vehicle_params)
-      flash[:success] = t('.success', vehicle_id: @vehicle.id)
+      flash[:success] = t('.success')
     respond_with(@vehicle)
       else
-      flash[:alert] = t('.failure', vehicle_id: @vehicle.id)
+      flash[:alert] = t('.failure')
       render("edit")
     end
   end
 
   def destroy
     if @vehicle.destroy
-      flash[:success] = t('.success', vehicle_id: @vehicle.id)
+      flash[:success] = t('.success')
     respond_with(@vehicle)
     else
-     flash[:alert] = t('.failure', vehicle_id: @vehicle.id)
+     flash[:alert] = t('.failure')
      respond_with(@vehicle)
     end
   end

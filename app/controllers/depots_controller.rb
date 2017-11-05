@@ -30,7 +30,7 @@ class DepotsController < ApplicationController
     @depot = Depot.new(depot_params)
     @depot.company_id = current_user.company.id
     if @depot.save
-      flash[:success] = t('.success', depot_id: @depot.id)
+      flash[:success] = t('.success')
       respond_with(@depot)
     else
       flash[:alert] = t('.failure')
@@ -40,20 +40,20 @@ class DepotsController < ApplicationController
 
   def update
     if @depot.update(depot_params)
-      flash[:success] = t('.success', depot_id: @depot.id)
+      flash[:success] = t('.success')
       respond_with(@depot)
     else
-      flash[:alert] = t('.failure', depot_id: @depot.id)
+      flash[:alert] = t('.failure')
       render("edit")
     end
   end
 
   def destroy
     if @depot.destroy
-      flash[:success] = t('.success', depot_id: @depot.id)
+      flash[:success] = t('.success')
       respond_with(@depot)
     else
-      flash[:alert] = t('.success', depot_id: @depot.id)
+      flash[:alert] = t('.success')
      respond_with(@depot)
     end
   end
