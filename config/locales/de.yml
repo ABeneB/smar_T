@@ -293,7 +293,7 @@ de:
   pagination:
    first: "&laquo; Erste Seite"
    last: "Letzte Seite &raquo;"
-   previous: "&lsaquo; Vorige"
+   previous: "&lsaquo; Vorherige"
    next: "Nächste &rsaquo;"
    truncate: "&hellip;"
  simple_form:
