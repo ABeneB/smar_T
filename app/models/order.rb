@@ -7,7 +7,7 @@ class Order < ActiveRecord::Base
 
   validates :location, :customer, presence: true  
   validate :end_date_after_start_date?
-  validate :start_time_in_past?
+  validate :start_time_in_past?, on: :create
 
   after_validation :geocode_locations
 
