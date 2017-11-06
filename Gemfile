@@ -18,8 +18,6 @@ gem 'therubyracer',  platforms: :ruby
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
 
@@ -63,8 +61,6 @@ gem 'binding_of_caller'
 # for calculation of drive time
 gem 'google_directions', git: 'https://github.com/hendricius/google-directions-ruby.git'
 
-gem 'pry'
-
 gem 'bundler'
 
 gem 'rails-jquery-ui-sortable'
@@ -72,8 +68,6 @@ gem 'rails-jquery-ui-sortable'
 gem 'bootstrap-sass', '3.3.5'
 gem 'bootstrap-sass-extras'
 gem 'devise', '~> 4.3'
-gem 'omniauth'
-gem 'omniauth-facebook'
 gem 'tzinfo-data'
 gem 'validates_formatting_of'
 gem 'font-awesome-rails'
@@ -99,6 +93,7 @@ group :development do
   gem 'capistrano-rvm'
 
   # Pry debugger
+  gem 'pry'
   gem 'pry-rails'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
