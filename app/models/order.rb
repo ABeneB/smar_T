@@ -6,8 +6,23 @@ class Order < ActiveRecord::Base
  attr_accessor :hour, :minute
 
   validates :location, :customer, presence: true  
+  validate :end_date_after_start_date?
+  validate :start_time_in_past?
 
   after_validation :geocode_locations
+
+def start_time_in_past?
+if start_time < Time.now
+  errors.add(:start_time, I18n.t('start_time_in_past'))
+end
+
+end
+
+def end_date_after_start_date?
+  if end_time< start_time
+    errors.add(:end_time, I18n.t('end_time_after_start_time'))
+  end
+end
 
   # update geo coordiantes for pickup and delivery location
   def geocode_locations

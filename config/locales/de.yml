@@ -37,6 +37,8 @@ de:
  pdp: "Pickup- und Delivery-Problem"
  driver_properties: "Fahrereigenschaften"
  save_ressource: "Speichern"
+ end_time_after_start_time: "muss größer oder gleich der Startzeit sein"
+ start_time_in_past: "liegt in der Vergangenheit"
  about: "Über smar_T"
  about:
   index:
