@@ -5,6 +5,7 @@ module Algorithm
   module Variants
 
     class Heuristic
+      include OrderToursHelper
 
       #Override of ruby built in object initialization
       def initialize(company)
@@ -117,8 +118,8 @@ module Algorithm
           #       return true # Wenn es PDP ist, dann Verstoß
           #     end
           #   end
-          # end
-          return false
+          #  end
+          # return false
         end
 
 
@@ -128,7 +129,7 @@ module Algorithm
           # Jede Order_tour überprüfen, ob der Zeitpunkt im Zeitfenster von Order ist
           tour.each_with_index do |order_tour, index|
             # only order tours with associated order have to fullfill time_window
-            if ["delivery", "pickup"].include?(order_tour.kind)
+            if available_order_tour_types.include?(order_tour.kind)
               # Zeit bis zu Order_tour
               tour_until = tour[0..index]
               time_until = calc_tour_duration(tour_until)
