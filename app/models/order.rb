@@ -1,6 +1,10 @@
 class Order < ActiveRecord::Base
   belongs_to :customer
  
+ before_validation :timeToInt
+  
+ attr_accessor :hour, :minute
+
   validates :location, :customer, presence: true  
 
   after_validation :geocode_locations
@@ -21,4 +25,22 @@ class Order < ActiveRecord::Base
       order_tour.tour
     end
   end
+
+def timeToInt
+    if self.hour || self.minute
+    	if hour.nil?
+     		self.hour = 0
+    	end
+    	if minute.nil?
+      	self.minute = 0
+    	end
+    	self.duration = 60 * Integer(hour) + Integer(minute)
+    end
+  end
+  
+  def intToTime
+    self.hour = Integer(duration) / 60
+    self.minute = Integer(duration) % 60
+  end
+
 end

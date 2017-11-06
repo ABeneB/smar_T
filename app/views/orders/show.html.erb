@@ -16,8 +16,8 @@
         <dl>
             <dt class="label label-default">Adresse</dt>
             <dd><pre class="prettyprint"><%= @order.location %></pre></dd>
-            <dt class="label label-default">Dauer</dt>
-            <dd><pre class="prettyprint"><%= @order.duration %></pre></dd>
+            <dt class="label label-default"><%= model_class.human_attribute_name(:duration) %> [hh:mm]</dt> 
+            <dd><pre class="prettyprint"><%=  Time.at(@order.duration * 60).utc.strftime("%H:%M") %></pre></dd> 
            <% if  current_user.company.time_window_restriction? %>
             <dt class="label label-default">Startzeit</dt>
             <dd><pre class="prettyprint"><%= @order.start_time %></pre></dd>

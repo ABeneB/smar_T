@@ -299,7 +299,7 @@ de:
  simple_form:
   labels:
    depot:
-    duration: "Einladedauer"
+    duration: "Dauer"
   prompts:
    customers:
     priority: "Bitte wählen Sie aus"
@@ -397,8 +397,8 @@ de:
   manufacturer: "Hersteller"
   registration_number: "Kennzeichen"
   active: "Aktiv"
-  hour: "Stunde"
-  minute: "Minute"
+  hours: "Stunden"
+  minutes: "Minuten"
   password: "Passwort"
   default_tour_start: "normale Startzeit für Touren"
  activerecord:

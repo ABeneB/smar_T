@@ -24,6 +24,7 @@ class DepotsController < ApplicationController
   end
 
   def edit
+  @depot.intToTime
   end
 
   def create
@@ -64,6 +65,6 @@ class DepotsController < ApplicationController
     end
 
     def depot_params
-      params.require(:depot).permit(:user_id, :name, :company_id, :address, :duration)
+      params.require(:depot).permit(:user_id, :name, :company_id, :address, :duration, :hour, :minute)
     end
 end
