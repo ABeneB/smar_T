@@ -347,3 +347,18 @@ body{
 .table-striped > tbody > .highlight > td {
     background-color: #f2dede;
 }
+
+.pagination {
+  a:link, a:visited, a:hover, a:focus, a:active, a:active:hover {
+    background-color: white;
+    font-weight: normal;
+    font-size: 1.0em;
+    color: #333;
+  }
+}
+
+.pagination .page.current {
+  font-weight: bold;
+  font-size: 1.3em;
+  color: black;
+}
