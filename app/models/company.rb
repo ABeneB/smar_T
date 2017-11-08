@@ -27,13 +27,14 @@ class Company < ActiveRecord::Base
     def available_drivers
       # retrieve array of all active drivers for company
       active_drivers = Driver.where(user_id: self.users.ids, active: true).to_a
+      available_drivers = []
       active_drivers.each do |driver|
-        if !Vehicle.exists?(driver: driver)
-          # remove driver without vehicle
-          active_drivers.delete(driver)
+        if !Vehicle.exists?(driver: driver) || driver.active_tour(nil, [StatusEnum::APPROVED, StatusEnum::STARTED]).blank?
+          # only add drivers with vehicle and not conflicting / active tour
+          available_drivers.push(driver)
         end
       end
-      active_drivers
+      available_drivers
     end
 
     # Gibt alle Orders zurück, die der Company indirekt über zugewiesene Customer angehören.

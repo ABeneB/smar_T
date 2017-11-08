@@ -39,7 +39,7 @@ module Algorithm
     end
 
     def self.compare_and_destory_tours()
-      tours_duration = Array.new(3)
+      tours_duration = Array.new([AlgorithmEnum::M3PDP, AlgorithmEnum::M3PDPDELTA, AlgorithmEnum::SAVINGSPP].length)
 
       m3pdp_tours = Tour.where(status: StatusEnum::GENERATED, algorithm: AlgorithmEnum::M3PDP)
       m3pdp_delta_tours = Tour.where(status: StatusEnum::GENERATED, algorithm: AlgorithmEnum::M3PDPDELTA)

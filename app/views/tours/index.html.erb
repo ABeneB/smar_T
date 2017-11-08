@@ -16,7 +16,7 @@
       </script>
     <% end %>
     <% if current_user.company.available_drivers.blank? %>
-      <div class="alert alert-warning"><%= t('tours.no_available_drivers') %></div>
+      <div class="alert alert-warning"><%= t('tours.no_available_drivers_html') %></div>
       <script>
           $( document ).ready(function() {
               disableButton($('#btn_new_tour'));
