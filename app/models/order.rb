@@ -11,18 +11,21 @@ class Order < ActiveRecord::Base
 
   after_validation :geocode_locations
 
-def start_time_in_past?
-if start_time < Time.now
-  errors.add(:start_time, I18n.t('start_time_in_past'))
-end
-
-end
-
-def end_date_after_start_date?
-  if end_time< start_time
-    errors.add(:end_time, I18n.t('end_time_after_start_time'))
+  def start_time_in_past?
+    if self.start_time
+      if self.start_time < Time.now
+        errors.add(:start_time, I18n.t('start_time_in_past'))
+      end
+    end
   end
-end
+
+  def end_date_after_start_date?
+    if self.start_time && self.end_time
+      if self.end_time < self.start_time
+        errors.add(:end_time, I18n.t('end_time_after_start_time'))
+      end
+    end
+  end
 
   # update geo coordiantes for pickup and delivery location
   def geocode_locations
