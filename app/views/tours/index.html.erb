@@ -1,5 +1,4 @@
 <%- model_class = Tour -%>
-
 <% if current_user.is_admin? || current_user.is_planer? || current_user.is_driver? || (current_user.is_superadmin? && current_user.company_id?)%>
   <div class="page-header">
     <h1><%=t '.title', :default => Tour %></h1>
@@ -47,7 +46,6 @@
       <%= select_tag :status, options_for_select([[t('tours.status.approved'), StatusEnum::APPROVED], [t('tours.status.started'), StatusEnum::STARTED], [t('orders.status.completed'), StatusEnum::COMPLETED]], params[:status]), prompt: t('tours.filter_tour_status_default'), onchange: "this.form.submit();", class: 'tour_status_filter' %>
     <% end %>
     </div>
-    <div class="loader"><%= image_tag "ajax-loader.gif" %></div>
     <div class="tab-content">
       <table class="table table-striped">
         <thead>
@@ -91,15 +89,6 @@
     <div class="page-nav">
       <%= paginate @tours %>
     </div>
-
-    <script>
-      $(function(){
-        $('.loader').hide();
-        $('.new_btn').on('click', function(){
-          $('.loader').show();
-        })
-      })
-    </script>
   <% end %>
 <% else %>
 ZUGANG VERWEIGERT
