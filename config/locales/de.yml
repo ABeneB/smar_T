@@ -262,6 +262,7 @@ de:
    failure: "Tour konnte nicht gelöscht werden"
   print:
    expected_time_of_arrival: "gesch. Ankunftszeit"
+   order_ref: "Auftr.Ref"
   complete:
    title: "Tour abschließen"
    finish_tour: "Speichern"
@@ -390,10 +391,7 @@ de:
   role: "Rolle"
   comment: "Kommentar"
   customer: "Kunde"
-  pickup_location: "Abholort"
-  duration_pickup: "Einladedauer"
-  delivery_location: "Lieferort"
-  duration_delivery: "Ausladedauer"
+  order_ref: "Auftragsreferenz"
   start_time: "Startzeit"
   end_time: "Endzeit"
   user: "Benutzer"

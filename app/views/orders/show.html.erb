@@ -14,24 +14,26 @@
       
       <div class="fieldset">
         <dl>
-            <dt class="label label-default">Adresse</dt>
-            <dd><pre class="prettyprint"><%= @order.location %></pre></dd>
-            <dt class="label label-default"><%= model_class.human_attribute_name(:duration) %> [hh:mm]</dt> 
-            <dd><pre class="prettyprint"><%=  Time.at(@order.duration * 60).utc.strftime("%H:%M") %></pre></dd> 
-           <% if  current_user.company.time_window_restriction? %>
-            <dt class="label label-default">Startzeit</dt>
-            <dd><pre class="prettyprint"><%= @order.start_time %></pre></dd>
-            <dt class="label label-default">Endzeit</dt>
-            <dd><pre class="prettyprint"><%= @order.end_time %></pre></dd>
-             <% end %>
-            <% if  current_user.company.capacity_restriction? %>
-            <dt class="label label-default">Kapazität</dt>
-            <dd><pre class="prettyprint"><%= @order.capacity %></pre></dd>
-            <% end %>
-            <dt class="label label-default">Beschreibung</dt>
-            <dd><pre class="prettyprint"><%= @order.comment %></pre></dd>
-            <dt class="label label-default">Status</dt>
-            <dd><pre class="prettyprint"><%= order_status_as_string(@order.status) %></pre></dd>
+          <dt class="label label-default">Auftragsreferenz</dt>
+          <dd><pre class="prettyprint"><%= @order.order_ref %></pre></dd>
+          <dt class="label label-default">Adresse</dt>
+          <dd><pre class="prettyprint"><%= @order.location %></pre></dd>
+          <dt class="label label-default"><%= model_class.human_attribute_name(:duration) %> [hh:mm]</dt>
+          <dd><pre class="prettyprint"><%=  Time.at(@order.duration * 60).utc.strftime("%H:%M") %></pre></dd>
+         <% if  current_user.company.time_window_restriction? %>
+          <dt class="label label-default">Startzeit</dt>
+          <dd><pre class="prettyprint"><%= @order.start_time %></pre></dd>
+          <dt class="label label-default">Endzeit</dt>
+          <dd><pre class="prettyprint"><%= @order.end_time %></pre></dd>
+           <% end %>
+          <% if  current_user.company.capacity_restriction? %>
+          <dt class="label label-default">Kapazität</dt>
+          <dd><pre class="prettyprint"><%= @order.capacity %></pre></dd>
+          <% end %>
+          <dt class="label label-default">Beschreibung</dt>
+          <dd><pre class="prettyprint"><%= @order.comment %></pre></dd>
+          <dt class="label label-default">Status</dt>
+          <dd><pre class="prettyprint"><%= order_status_as_string(@order.status) %></pre></dd>
         </dl>
       </div>
       

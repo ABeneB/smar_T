@@ -25,6 +25,7 @@
       <table class="table table-striped">
       <thead>
         <tr>
+          <th>Auftragsref.</th>
           <th>Adresse</th>
           <th class="center">Dauer<br/>[hh:mm]</th>
           <th class="center">Kapazität</th>
@@ -41,6 +42,7 @@
          <% else %>
           <tr>
          <% end %>
+            <td><%= order.order_ref %></td>
             <td><%= order.location %></td>
             <td class="center"><%= Time.at(order.duration * 60).utc.strftime("%H:%M") %></td>
             <td class="center"><%= order.capacity %></td>
@@ -59,6 +61,7 @@
           </tr>
         <% end %>
         <tr>
+          <td></td>
           <td></td>
           <td class="center"><strong><%= Time.at(@orders.inject(0){ |sum, x| sum + x.duration * 60 }).utc.strftime("%H:%M") %></strong></td>
           <td></td>

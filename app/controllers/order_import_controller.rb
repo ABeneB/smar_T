@@ -9,12 +9,13 @@ class OrderImportController < ApplicationController
     new_order_ids = []
     if import_file
       CSV.foreach(import_file.path, col_sep: ";", encoding: 'UTF-8') do |row|
-        if is_number?(row[0].squish) # ignore header and validate customer_reference
+        if is_number?(row[0].try(:squish)) # ignore header and validate customer_reference
           order = Order.new
-          order.customer = Customer.customer_by_customer_reference(row[0].squish.to_i, current_user.company, row[1].squish, row[3].squish)
-          order.location = row[2].squish
-          order.duration = row[4].squish
+          order.customer = Customer.customer_by_customer_reference(row[0].try(:squish).try(:to_i), current_user.company, row[1].try(:squish), row[3].try(:squish))
+          order.location = row[2].try(:squish)
+          order.duration = row[4].try(:squish)
           order.capacity = 0
+          order.order_ref = row[5].try(:squish)
           order.status = OrderStatusEnum::INVALID
           order.comment = ""
           order.comment2 = ""

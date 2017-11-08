@@ -12,6 +12,7 @@
         <% end %>
 
         <%=f.association :customer, :as => :collection_select, collection: Customer.where(company_id: current_user.company_id),  prompt: :translate %>
+        <%= f.input :order_ref, prompt: :translate %>
         <%= f.input :location, prompt: :translate,  input_html: { id: 'location' } %>
         <div id="working_time_heading"><b><%=t('attributes.duration') %></b></div>
     	<%= f.hidden_field :duration, as: :integer, prompt: :translate %>

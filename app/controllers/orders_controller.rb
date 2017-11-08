@@ -80,7 +80,7 @@ class OrdersController < ApplicationController
     end
 
     def order_params
-      params.require(:order).permit(:address, :customer_id, :location, :capacity, :start_time, :end_time, :comment, :duration, :status, :order_type, :hour, :minute)
+      params.require(:order).permit(:address, :customer_id, :order_ref, :location, :capacity, :start_time, :end_time, :comment, :duration, :status, :order_type, :hour, :minute)
     end
 
     def filter_order_params
