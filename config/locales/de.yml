@@ -296,6 +296,7 @@ de:
   complete:
     success: "Die Aufträge wurden erfolgreich importiert."
     failure: "Bei Import der Aufträge ist ein Fehler aufgetreten."
+    no_file_provided: "Es wurde keine Datei ausgewählt. Bitte wählen Sie eine Datei zum Hochladen aus."
  views:
   pagination:
    first: "&laquo; Erste Seite"
