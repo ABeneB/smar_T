@@ -255,6 +255,7 @@ de:
   new:
    title: "Neue Tour"
    no_company_assigned: "Ihr Benutzerkonto ist keinem Unternehmen zugeordnet. Bitte kontaktieren Sie den Administrator."
+   no_order_type_selected: "Es konnten keine Touren generiert werden, weil kein einziger Auftragstyp (z.B. Lieferung, Service, etc.) ausgewählt wurde."
   edit:
    title: "Tour bearbeiten"
   create:
