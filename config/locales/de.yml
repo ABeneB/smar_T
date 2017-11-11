@@ -187,6 +187,12 @@ de:
   destroy:
    success: "Benutzer %{nick_name} wurde gelöscht"
    failure: "Benutzer %{nick_name} konnte nicht gelöscht werden"
+ users:
+  roles:
+   superadmin: "Super-Admin"
+   admin: "Administrator"
+   planer: "Planer"
+   driver: "Fahrer"
  user_forms:
   show:
    title: "Benutzer"
