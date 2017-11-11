@@ -252,6 +252,7 @@ de:
    no_completed_tours_available: "Keine abgeschlossenen Touren vorhanden"
    generate_new_tours_hint: "Neue Touren generieren:"
    filter_tour_status: "Nach Status filtern:"
+   please_wait_while_generating: "Bitte warten..."
   new:
    title: "Neue Tour"
    no_company_assigned: "Ihr Benutzerkonto ist keinem Unternehmen zugeordnet. Bitte kontaktieren Sie den Administrator."
