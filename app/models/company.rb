@@ -49,6 +49,11 @@ class Company < ActiveRecord::Base
       Tour.where(where_clause)
     end
 
+    def approved_tours(select = {})
+      tours = self.tours(select = {})
+      tours.where.not(status: StatusEnum::GENERATED)
+    end
+
     # Returns true if time window restriction exists for this company
     def time_window_restriction?
       self.try(:restriction).try(:time_window) ? true : false

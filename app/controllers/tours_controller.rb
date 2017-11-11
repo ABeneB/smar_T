@@ -9,10 +9,10 @@ class ToursController < ApplicationController
     @tours = []
     tour_filter = filter_tour_params.reject{|_, v| v.blank?}
     if (current_user.is_admin? || current_user.is_planer? || (current_user.is_superadmin? && current_user.company_id?)) && !current_user.company.nil?
-      @tours = current_user.company.tours(tour_filter).page params[:page]
+      @tours = current_user.company.approved_tours(tour_filter).page params[:page]
     elsif current_user.is_driver?
       if current_user.try(:driver).try(:has_tours?)
-        @tours = current_user.driver.tours(tour_filter).page params[:page]
+        @tours = current_user.driver.approved_tours(tour_filter).page params[:page]
       end
     end
     @tours
@@ -45,12 +45,16 @@ class ToursController < ApplicationController
           flash[:error] = t('.no_google_maps_api_key_assigned')
         else
           order_type_filter = preprocess_order_type_params(new_tour_params)
-          Algorithm::TourGeneration.generate_tours(current_user.company, order_type_filter)
-          @tours = current_user.company.tours
+          if order_type_filter
+            Algorithm::TourGeneration.generate_tours(current_user.company, order_type_filter)
+          else
+            flash[:warning] = t('.no_order_type_selected')
+          end
         end
       else
         flash[:error] = t('.no_company_assigned')
       end
+      @tours = current_user.company.approved_tours
       redirect_to action: 'index'
     end
   end
@@ -88,8 +92,8 @@ class ToursController < ApplicationController
     end
     if @tour.destroy
       flash[:success] = t('.success')
-    respond_with(@tour)
-      else
+      respond_with(@tour)
+    else
       flash[:alert] = t('.failure')
       respond_with(@tour)
     end
