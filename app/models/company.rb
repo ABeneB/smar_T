@@ -29,8 +29,8 @@ class Company < ActiveRecord::Base
       active_drivers = Driver.where(user_id: self.users.ids, active: true).to_a
       available_drivers = []
       active_drivers.each do |driver|
-        if !Vehicle.exists?(driver: driver) || driver.active_tour(nil, [StatusEnum::APPROVED, StatusEnum::STARTED]).blank?
-          # only add drivers with vehicle and not conflicting / active tour
+        if Vehicle.exists?(driver: driver) && driver.active_tour(nil, [StatusEnum::APPROVED, StatusEnum::STARTED]).blank?
+          # only add drivers with vehicle and no conflicting / active tour
           available_drivers.push(driver)
         end
       end
