@@ -61,12 +61,28 @@ class OrdersController < ApplicationController
   end
 
   def destroy
-    if @order.destroy
-      flash[:success] = t('.success')
-    respond_with(@order)
+    tour = @order.get_assigned_tour
+    if tour
+      if !tour.started? && !tour.completed?
+        if @order.destroy
+          flash[:success] = t('.success')
+          respond_with(@order)
+        else
+          flash[:alert] = t('.failure')
+          respond_with(@order)
+        end
       else
-      flash[:alert] = t('.failure')
-      respond_with(@order)
+        flash[:alert] = t('.failure_due_tour_status')
+        respond_with(@order)
+      end
+    else
+      if @order.destroy
+        flash[:success] = t('.success')
+        respond_with(@order)
+      else
+        flash[:alert] = t('.failure')
+        respond_with(@order)
+      end
     end
   end
 

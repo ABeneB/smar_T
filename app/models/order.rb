@@ -1,15 +1,15 @@
 class Order < ActiveRecord::Base
   belongs_to :customer
- 
- before_validation :timeToInt
-  
- attr_accessor :hour, :minute
+  attr_accessor :hour, :minute
 
   validates :location, :customer, presence: true  
   validate :end_date_after_start_date?
   validate :start_time_in_past?, on: :create
 
+  before_validation :timeToInt
   after_validation :geocode_locations
+
+  before_destroy :destroy_associated_order_tour
 
   def start_time_in_past?
     if self.start_time
@@ -61,4 +61,15 @@ def timeToInt
     self.minute = Integer(duration) % 60
   end
 
+  # destroys order_tours which are associated with this order and updates places of corresponding tour
+  def destroy_associated_order_tour
+    order_tours = OrderTour.where(order: self)
+    order_tours.each do |order_tour|
+      tour = order_tour.tour
+      order_tour.destroy
+      if tour
+        tour.update_place_order_tours
+      end
+    end
+  end
 end

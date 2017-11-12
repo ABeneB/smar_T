@@ -169,6 +169,7 @@ de:
   destroy:
    success: "Auftrag wurde gelöscht"
    failure: "Auftrag konnte nicht gelöscht werden"
+   failure_due_tour_status: "Auftrag konnte nicht gelöscht werden, weil zugehörige Tour bereits abgeschlossen oder gestartet wurde."
  registered_users:
   index:
    confirm: "Möchten Sie den Benutzer '%{name}' wirklich löschen?"
