@@ -135,9 +135,20 @@ module Algorithm
               time_until = calc_tour_duration(tour_until)
               # time_now plus time of tour till order_tour
               time_point = time_now + (time_until * 60) # convert to seconds
-              # time_point nach end_time oder vor starttime
-              if time_point > order_tour.order.end_time.to_i  || time_point < order_tour.order.start_time.to_i
-                return true
+
+              # check if order has been planed not earlier than start time
+               if order_tour.order.start_time
+                # too early
+                if time_point < order_tour.order.start_time.to_i
+                  return true
+                end
+              end
+              # check if order has been planed not later than end time
+              if order_tour.order.end_time
+                # too late
+                if time_point > order_tour.order.end_time.to_i
+                  return true
+                end
               end
             end
           end
