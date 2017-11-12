@@ -29,8 +29,8 @@ class OrderImportController < ApplicationController
       @check_orders = Order.where(id: new_order_ids)
       @check_orders.each do |order|
         if order.lat && order.long
-        order.status = OrderStatusEnum::ACTIVE
-        order.save!
+          order.status = OrderStatusEnum::ACTIVE
+          order.save!
         end
       end
       @imported_orders = Order.where(id: new_order_ids).where.not(status: 4)

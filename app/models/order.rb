@@ -36,6 +36,21 @@ class Order < ActiveRecord::Base
     end
   end
 
+  # checks if geocoordinates for order exists and updates status accordingly
+  def process_validity_geocoords
+    unless self.status == OrderStatusEnum::COMPLETED
+      if self.lat && self.long
+        if self.get_assigned_tour
+          self.status = OrderStatusEnum::ASSIGNED
+        else
+          self.status = OrderStatusEnum::ACTIVE
+        end
+      else
+        self.status = OrderStatusEnum::INVALID
+      end
+    end
+  end
+
   # returns assigned tour if exists
   def get_assigned_tour
     order_tour = OrderTour.find_by_order_id(self.id)

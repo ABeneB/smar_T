@@ -36,18 +36,18 @@
     </div>
     <br>
         <% if  current_user.company.time_window_restriction? %>
-        <%= f.input :start_time, prompt: :translate %>
-        <%= f.input :end_time, prompt: :translate %>
+          <%= f.input :start_time, prompt: :translate %>
+          <%= f.input :end_time, prompt: :translate %>
         <% end %>
         <% if  current_user.company.capacity_restriction? %>
-        <%= f.input :capacity, prompt: :translate %>
+          <%= f.input :capacity, prompt: :translate %>
         <% end %>
         <%= f.input :comment, prompt: :translate %>
-        <% if @order.status == 4 %>
-        <%= f.input :status, :collection => { t('orders.status.inactive') => 0, t('orders.status.active') => 1, t('orders.status.completed') => 3, t('orders.status.invalid') => 4 }, selected: @order.status, :disabled => true %>
+        <% if @order.status == OrderStatusEnum::INVALID || @order.status == OrderStatusEnum::COMPLETED %>
+          <%= f.input :status, :collection => { t('orders.status.inactive') => 0, t('orders.status.active') => 1, t('orders.status.completed') => 3, t('orders.status.invalid') => 4 }, selected: @order.status, :disabled => true %>
         <% else %>
-        <%= f.input :status, :collection => { t('orders.status.inactive') => 0, t('orders.status.active') => 1, t('orders.status.completed') => 3 }, selected: @order.status %>
+          <%= f.input :status, :collection => { t('orders.status.inactive') => 0, t('orders.status.active') => 1, t('orders.status.assigned') => 2 }, selected: @order.status %>
         <% end %>
-        <%= f.button :submit, prompt: :translate %>
+          <%= f.button :submit, prompt: :translate %>
     <% end %>
 <% end %>

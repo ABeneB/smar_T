@@ -36,25 +36,26 @@ class OrdersController < ApplicationController
   end
 
   def edit
-  @order.intToTime
+    @order.intToTime
   end
 
   def create
     @order = Order.new(order_params)
     if @order.save
       flash[:success] = t('.success')
-    respond_with(@order)
-      else
+      respond_with(@order)
+    else
        flash[:alert] = t('.failure')
        render 'new'
     end
   end
 
   def update
+    @order.process_validity_geocoords()
     if @order.update(order_params)
       flash[:success] = t('.success')
-    respond_with(@order)
-      else
+      respond_with(@order)
+    else
       flash[:alert] = t('.failure')
       render("edit")
     end
@@ -84,10 +85,6 @@ class OrdersController < ApplicationController
         respond_with(@order)
       end
     end
-  end
-
-  def import
-    # todo: import orders from uploaded file
   end
 
   private
