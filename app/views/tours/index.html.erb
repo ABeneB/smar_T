@@ -54,9 +54,9 @@
           <th>Fahrer</th>
           <th class="center">Dauer<br/>[hh:mm]</th>
           <th class="center">Anfahrpunkte</th>
-          <th>Algorithmus</th>
           <th>Status</th>
           <th>Erstellt am</th>
+          <th>Abgeschlossen am</th>
           <th><%=t '.actions', :default => t("helpers.actions") %></th>
         </tr>
         </thead>
@@ -66,9 +66,9 @@
               <td><%= (Driver.where(id: tour.driver_id).first).name %></td>
               <td class="center"><%= Time.at(tour.duration * 60).utc.strftime("%H:%M") %></td>
               <td class="center"><%= tour.order_tours.count %></td>
-              <td><%= get_algorithm_display_text(tour.algorithm) %></td>
               <td><%= get_tour_status_as_string(tour.status) %></td>
               <td><%=l tour.created_at, format: :long %></td>
+              <td><%= tour.completed? ? l(tour.completed_at, format: :long) : "-" %></td>
               <td>
                 <%= link_to (fa_icon "search-plus 1x"), tour, :title =>  t('helpers.links.show'), :class => 'btn btn-info btn-xs' %>
                 <%= link_to (fa_icon "trash 1x"), tour, method: :delete, data: { confirm: t('.confirm', name: tour.id) }, :title => t('helpers.links.destroy'), :class => 'btn btn-danger btn-xs' unless current_user.is_driver? %>
