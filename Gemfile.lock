@@ -74,6 +74,7 @@ GEM
     capistrano-rvm (0.1.2)
       capistrano (~> 3.0)
       sshkit (~> 1.2)
+    charlock_holmes (0.7.5)
     client_side_validations (4.2.12)
       jquery-rails (>= 3.1.2, < 5.0.0)
       js_regex (~> 1.0, >= 1.0.19)
@@ -289,6 +290,7 @@ DEPENDENCIES
   capistrano-passenger (>= 0.1.1)
   capistrano-rails
   capistrano-rvm
+  charlock_holmes (~> 0.7.5)
   client_side_validations
   client_side_validations-simple_form
   coffee-rails (~> 4.0.0)

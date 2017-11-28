@@ -2,10 +2,14 @@
   <h1>Import von neuen Aufträgen</h1>
 </div>
 <p><b>Bitte wählen Sie die CSV-Datei aus, die sie importieren möchten:</b></p>
-<%= form_tag confirm_order_import_path, class: "order_import", multipart: true do %>
-    <%= file_field_tag :file, id: "inputfile", accept: 'text/csv' %>
-    <br>
-    <%= button_tag type: 'submit', id: "upload-orders-btn", class: "btn btn-primary btn-smart", disabled: "" do %>
-        <%= ((fa_icon "upload 1x") + " " + t('.upload_csv')) %>
-    <% end %>
-<% end %>
+<form action="<%= confirm_order_import_path %>" class="order_import" enctype="multipart/form-data" method="post">
+  <div style="display:none;">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  </div>
+  <input accept=".csv" id="inputfile" name="file" type="file">
+  <br>
+  <button class="btn btn-primary btn-smart" disabled="disabled" id="upload-orders-btn" name="button" type="submit">
+    <i class="fa fa-upload fa-1x"></i> <%= t('.upload_csv') %>
+  </button>
+</form>
+

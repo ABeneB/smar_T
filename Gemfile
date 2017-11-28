@@ -78,6 +78,9 @@ gem 'devise-i18n'
 gem 'client_side_validations'
 gem 'client_side_validations-simple_form'
 
+# CSV encoding detection
+gem 'charlock_holmes', '~> 0.7.5'
+
 # file management / upload
 gem 'paperclip', '~> 4.3', '>= 4.3.7'
 
