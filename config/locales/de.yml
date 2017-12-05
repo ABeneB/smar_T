@@ -278,7 +278,10 @@ de:
    choose_complete_orders_hint: "Bitte wählen Sie die bearbeiteten Aufträge aus. Nicht ausgewählte Aufträge werden aus der Tour entfernt und bei der Generierung zukünftiger Touren berücksichtigt."
   finish:
    success: "Die Tour wurde erfolgreich abgeschlossen."
-   failure: "Es ist ein Fehler aufgetreten. Die Tour und die dazugehörigen Aufträge konnte nicht abgeschlossen werden."
+   failure: "Es ist ein Fehler aufgetreten. Die Tour und die dazugehörigen Aufträge konnten nicht abgeschlossen werden."
+  remove_order_tour:
+   success: "Auftrag wurde erfolgreich aus der Tour entfernt."
+   failure: "Es ist ein Fehler aufgetreten. Der Auftrag konnte nicht aus der Tour entfernt werden."
  vehicles:
   index:
    confirm: "Möchten Sie das Fahrzeug wirklich löschen?"
