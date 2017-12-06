@@ -1,4 +1,7 @@
-<%- model_class = Tour -%>
+<%= javascript_include_tag 'jquery-ui-sortable' %>
+<%= javascript_include_tag 'sortable' %>
+
+  <%- model_class = Tour -%>
 <% if current_user.is_admin? || current_user.is_planer? || current_user.is_driver? || (current_user.is_superadmin? && current_user.company_id?)%>
 <div class="page-header">
   <div class="tour-details">
@@ -20,6 +23,7 @@
   <div style="float: right;">
     <%= link_to ((fa_icon "print 1x") + " " + t('.print_tour')), print_tour_path(:format => :pdf), class: 'btn btn-primary btn-smart', target: '_blank' %>
   </div>
+  <div style="clear: both;"></div>
 </div>
 <% if current_user.company.google_maps_api_key.blank? %>
     <div class="alert alert-warning"><%= t('tours.no_google_maps_api_key_assigned') %></div>
