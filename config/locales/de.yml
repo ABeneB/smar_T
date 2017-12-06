@@ -244,6 +244,7 @@ de:
    print_tour: "Drucken"
    complete_tour: "Tour abschliessen"
    expected_time_of_arrival: "gesch. Ankunftszeit"
+   processing_time: "Bearbeitungsdauer"
   index:
    confirm: "Möchten Sie die Tour wirklich löschen?"
    title: "Touren"
@@ -272,6 +273,8 @@ de:
   print:
    expected_time_of_arrival: "gesch. Ankunftszeit"
    order_ref: "Auftr.Ref"
+   processing_time_html: "Bearbeitungs- <br/>dauer"
+   estimated_total_duration: "geschätzte Gesamtdauer:"
   complete:
    title: "Tour abschließen"
    finish_tour: "Speichern"
@@ -414,7 +417,7 @@ de:
   manufacturer: "Hersteller"
   registration_number: "Kennzeichen"
   active: "Aktiv"
-  hours: "Stunden"
+  hours: "Stunde(n)"
   minutes: "Minuten"
   password: "Passwort"
   default_tour_start: "normale Startzeit für Touren"

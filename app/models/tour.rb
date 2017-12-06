@@ -14,6 +14,14 @@ class Tour < ActiveRecord::Base
     tour_duration
   end
 
+  def duration_as_string
+    total_duration = self.duration
+    hours = total_duration / 60
+    minutes = total_duration % 60 # remainder represents minutes
+
+    return (hours.to_s + ' ' + I18n.t('attributes.hours') + ' ' + minutes.to_s + ' ' + I18n.t('attributes.minutes'))
+  end
+
   # update the order of tour stops e.g. after removing order tours
   def update_place_order_tours
     self.order_tours.each_with_index do |order_tour, index|
