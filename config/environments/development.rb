@@ -29,7 +29,7 @@ Rails.application.configure do
   config.assets.compile = true
   config.assets.digest = true
 
-  config.assets.css_compressor = :yui
+  config.assets.css_compressor = :sass
   config.assets.js_compressor = :uglify
 
   # Adds additional error checking when serving assets at runtime.
