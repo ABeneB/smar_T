@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <% if current_user.try(:company).try(:google_maps_api_key) %>
+      <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=<%= current_user.company.google_maps_api_key %>"></script>
+    <% end %>
+    <%= wicked_pdf_stylesheet_link_tag 'pdf' %>
+    <%= wicked_pdf_javascript_include_tag 'gmaps/google' %>
+    <%= wicked_pdf_javascript_include_tag 'gmaps.js' %>
+    <%= wicked_pdf_javascript_include_tag 'maps' %>
+  </head>
+  <body>
+    <div>
+      <%= yield %>
+    </div>
+  </body>
+</html>

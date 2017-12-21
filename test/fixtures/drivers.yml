@@ -5,7 +5,7 @@ one:
   company_id: 
   work_start_time: 2015-09-04 09:50:36
   work_end_time: 2015-09-04 09:50:36
-  activ: false
+  active: false
   working_time: 1
 
 two:
@@ -13,5 +13,5 @@ two:
   company_id: 
   work_start_time: 2015-09-04 09:50:36
   work_end_time: 2015-09-04 09:50:36
-  activ: false
+  active: false
   working_time: 1

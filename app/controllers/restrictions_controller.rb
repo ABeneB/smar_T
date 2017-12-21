@@ -4,19 +4,19 @@ class RestrictionsController < ApplicationController
   respond_to :html
 
   def index
-    if current_user && current_user.is_admin?
-      @restrictions = Restriction.all
+    if current_user && current_user.company_id? && (current_user.role == "admin" || (current_user.role == "superadmin" && current_user.company_id?))
+      @restrictions = Restriction.where(company_id: current_user.company.id)
     end
   end
 
   def show
-    if current_user && current_user.is_admin?
+    if current_user && (current_user.role == "admin" || (current_user.role == "superadmin" && current_user.company_id?))
       @restriction
     end
   end
 
   def new
-    if current_user && current_user.is_admin?
+    if current_user && (current_user.role == "admin" || (current_user.role == "superadmin" && current_user.company_id?))
       @restriction = Restriction.new
     end
   end
@@ -27,18 +27,33 @@ class RestrictionsController < ApplicationController
 
   def create
     @restriction = Restriction.new(restriction_params)
-    @restriction.save
+    if @restriction.save
+      flash[:success] = t('.success')
     respond_with(@restriction)
+      else
+      flash[:alert] = t('.failure')
+      render 'new'
+    end
   end
 
   def update
-    @restriction.update(restriction_params)
+    if @restriction.update(restriction_params)
+      flash[:success] = t('.success')
     respond_with(@restriction)
+      else
+      flash[:alert] = t('.failure')
+      render("edit")
+    end
   end
 
   def destroy
-    @restriction.destroy
-    respond_with(@restriction)
+    if @restriction.destroy
+       flash[:success] = t('.success')
+       respond_with(@restriction)
+      else
+      flash[:alert] = t('.failure')
+      respond_with(@restriction)
+    end
   end
 
   private

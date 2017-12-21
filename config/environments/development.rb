@@ -25,7 +25,12 @@ Rails.application.configure do
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
-  config.assets.debug = true
+  config.assets.debug = false
+  config.assets.compile = true
+  config.assets.digest = true
+
+  config.assets.css_compressor = :sass
+  config.assets.js_compressor = :uglify
 
   # Adds additional error checking when serving assets at runtime.
   # Checks for improperly declared sprockets dependencies.
@@ -36,5 +41,6 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
   
   BetterErrors::Middleware.allow_ip! "0.0.0.0/0"
-  
+
+  Paperclip.options[:command_path] = "/usr/bin/"
 end

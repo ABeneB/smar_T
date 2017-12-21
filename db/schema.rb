@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170329120344) do
+ActiveRecord::Schema.define(version: 20171111171639) do
 
   create_table "companies", force: true do |t|
     t.string   "name"
@@ -21,18 +21,28 @@ ActiveRecord::Schema.define(version: 20170329120344) do
     t.datetime "updated_at"
     t.float    "latitude"
     t.float    "longitude"
+    t.string   "google_maps_api_key"
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+    t.datetime "logo_updated_at"
+    t.string   "email"
+    t.string   "default_tour_start",  default: "9:00"
   end
+
+  add_index "companies", ["email"], name: "index_companies_on_email", unique: true
 
   create_table "customers", force: true do |t|
     t.integer  "company_id"
     t.string   "address"
     t.string   "telefon"
-    t.string   "priority"
+    t.string   "priority",           default: "A"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
     t.float    "latitude"
     t.float    "longitude"
+    t.integer  "customer_reference"
   end
 
   add_index "customers", ["company_id"], name: "index_customers_on_company_id"
@@ -40,7 +50,7 @@ ActiveRecord::Schema.define(version: 20170329120344) do
   create_table "depots", force: true do |t|
     t.integer  "company_id"
     t.string   "address"
-    t.integer  "duration"
+    t.integer  "duration",   default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
@@ -54,11 +64,12 @@ ActiveRecord::Schema.define(version: 20170329120344) do
     t.integer  "user_id"
     t.datetime "work_start_time"
     t.datetime "work_end_time"
-    t.boolean  "activ"
-    t.integer  "working_time"
+    t.boolean  "active"
+    t.integer  "working_time",    default: 480
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.datetime "working_time_picker"
   end
 
   add_index "drivers", ["user_id"], name: "index_drivers_on_user_id"
@@ -66,17 +77,12 @@ ActiveRecord::Schema.define(version: 20170329120344) do
   create_table "order_tours", force: true do |t|
     t.integer  "order_id"
     t.integer  "tour_id"
-    t.string   "location"
     t.integer  "place"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "comment"
-    t.integer  "capacity"
-    t.integer  "capacity_status"
-    t.integer  "time"
-    t.integer  "duration"
-    t.float    "latitude"
-    t.float    "longitude"
+    t.integer  "capacity_status", default: 0
+    t.integer  "time",            default: 0
     t.string   "kind"
   end
 
@@ -85,19 +91,20 @@ ActiveRecord::Schema.define(version: 20170329120344) do
 
   create_table "orders", force: true do |t|
     t.integer  "customer_id"
-    t.string   "pickup_location"
-    t.string   "delivery_location"
-    t.integer  "capacity"
+    t.integer  "capacity",    default: 0
     t.datetime "start_time"
     t.datetime "end_time"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "comment"
-    t.integer  "duration_pickup"
-    t.integer  "duration_delivery"
-    t.float    "latitude"
-    t.float    "longitude"
-    t.boolean  "activ"
+    t.integer  "status",      default: 1
+    t.string   "comment2"
+    t.integer  "order_type",  default: 0
+    t.string   "location"
+    t.float    "lat"
+    t.float    "long"
+    t.integer  "duration",    default: 0
+    t.string   "order_ref"
   end
 
   add_index "orders", ["customer_id"], name: "index_orders_on_customer_id"
@@ -119,9 +126,12 @@ ActiveRecord::Schema.define(version: 20170329120344) do
 
   create_table "tours", force: true do |t|
     t.integer  "driver_id"
-    t.integer  "duration"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "status"
+    t.integer  "algorithm"
+    t.datetime "started_at"
+    t.datetime "completed_at"
   end
 
   add_index "tours", ["driver_id"], name: "index_tours_on_driver_id"
@@ -142,6 +152,7 @@ ActiveRecord::Schema.define(version: 20170329120344) do
     t.string   "username"
     t.string   "role"
     t.integer  "company_id"
+    t.string   "nickname"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
@@ -150,15 +161,20 @@ ActiveRecord::Schema.define(version: 20170329120344) do
 
   create_table "vehicles", force: true do |t|
     t.string   "position"
-    t.integer  "capacity"
+    t.integer  "capacity",            default: 0
     t.integer  "duration"
-    t.integer  "driver_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "latitude"
     t.float    "longitude"
+    t.integer  "company_id"
+    t.integer  "driver_id"
+    t.string   "model"
+    t.string   "registration_number"
+    t.string   "manufacturer"
   end
 
-  add_index "vehicles", ["driver_id"], name: "index_vehicles_on_driver_id"
+  add_index "vehicles", ["company_id"], name: "index_vehicles_on_company_id"
+  add_index "vehicles", ["driver_id"], name: "index_vehicles_on_driver_id", unique: true
 
 end

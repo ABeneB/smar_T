@@ -1,43 +1,53 @@
 <%- model_class = Vehicle -%>
 <% if current_user %>
-    <% if current_user.is_admin? || current_user.is_planer?%>
+    <% if current_user.is_admin? || current_user.is_planer? || (current_user.is_superadmin? && current_user.company_id?)%>
       <div class="page-header">
         <h1>Fahrzeuge</h1>
       </div>
       <% if current_user.company.nil? %>
         <div class="alert alert-info">Ihrem Benutzeraccount wurde noch kein Unternehmen zugewiesen. Sie können daher kein Fahrzeug anlegen.</div>
-      <% elsif !current_user.company.drivers.any? %>
-        <div class="alert alert-info">Es wurden noch keine Fahrer angelegt.</div>
       <% else %>
+        <%= link_to (fa_icon "plus 1x") + " " + t('.new', :default => t("helpers.links.new")), new_vehicle_path, :class => 'btn btn-primary btn-smart' %>
+        <hr/>
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Position</th>
-              <th>Kapazität</th>
-              <th>Fahrer</th>
+              <th><%= model_class.human_attribute_name(:registration_number) %></th>
+              <th><%= model_class.human_attribute_name(:manufacturer) %></th>
+              <th><%= model_class.human_attribute_name(:model) %></th>
+              <th><%= model_class.human_attribute_name(:position) %></th>
+              <% if  current_user.company.capacity_restriction? %>
+              <th class="center"><%= model_class.human_attribute_name(:capacity) %></th>
+              <% end %>
+              <th><%= model_class.human_attribute_name(:driver) %></th>
               <th><%=t '.actions', :default => t("helpers.actions") %></th>
             </tr>
           </thead>
           <tbody>
             <% @vehicles.each do |vehicle| %>
               <tr>
-                <td><%= vehicle.id %></td>
+                <td><%= vehicle.registration_number %></td>
+                <td><%= vehicle.manufacturer %></td>
+                <td><%= vehicle.model %></td>
                 <td><%= vehicle.position %></td>
-                <td><%= vehicle.capacity %></td>
-                <td><%= vehicle.driver_id %></td>
-                <td><%= link_to 'Show', vehicle, :class => 'btn btn-info btn-xs' %></td>
-                <td><%= link_to 'Edit', edit_vehicle_path(vehicle), :class => 'btn btn-warning btn-xs' %></td>
-                <td><%= link_to 'Destroy', vehicle, method: :delete,
-                data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
+                <% if  current_user.company.capacity_restriction? %>
+                <td class="center"><%= vehicle.capacity %></td>
+                <% end %>
+                <% if vehicle.driver %>
+                <td><%= vehicle.driver.name %></td>
+                <% else %>
+                <td>-</td>
+                <% end %>
+                <td>
+                  <%= link_to (fa_icon "search-plus 1x"), vehicle, :title =>  t('helpers.links.show'), :class => 'btn btn-info btn-xs' %>
+                  <%= link_to (fa_icon "pencil 1x"), edit_vehicle_path(vehicle), :title => t('helpers.links.edit'), :class => 'btn btn-warning btn-xs' %>
+                  <%= link_to (fa_icon "trash 1x"), vehicle, method: :delete, data: { confirm: t('.confirm', name: vehicle.id) }, :title => t('helpers.links.destroy'), :class => 'btn btn-danger btn-xs' %>
+                </td>
               </tr>
             <% end %>
           </tbody>
         </table>
 
-        <%= link_to t('.new', :default => t("helpers.links.new")),
-                    new_vehicle_path,
-                    :class => 'btn btn-primary' %>
       <% end %>
     <% else %>
     ZUGANG VERWEIGERT

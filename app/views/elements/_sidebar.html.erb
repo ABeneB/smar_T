@@ -1,0 +1,18 @@
+  <%# Jede Rolle hat eine andere sidebar mit den entsprechenden Navigationsoptionen%>
+
+<% if current_user.blank? %>
+  <%= render "/elements/sidebar_guest" %>
+<% elsif current_user.is_admin? %>
+  <%= render "/elements/sidebar_admin" %>
+<% elsif current_user.is_user? %>
+  <%= render "/elements/sidebar_user" %>
+<% elsif current_user.is_driver? %>
+  <%= render "/elements/sidebar_driver" %>
+<% elsif current_user.is_planer? %>
+  <%= render "/elements/sidebar_planer" %>
+<% elsif current_user.is_superadmin? %>
+    <%= render "/elements/sidebar_superadmin" %>
+<% else %>
+  <%# This should not happen%>
+  <%= render "/elements/sidebar_guest" %>
+<% end %>

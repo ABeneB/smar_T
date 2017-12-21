@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.4'
+gem 'rails', '~> 4.2.10'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use SCSS for stylesheets
@@ -10,7 +10,7 @@ gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.0.0'
+gem 'coffee-rails', '~> 4.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer',  platforms: :ruby
 
@@ -18,8 +18,6 @@ gem 'therubyracer',  platforms: :ruby
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
 
@@ -34,6 +32,13 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+# Pagination
+gem 'kaminari', '~> 1.1', '>= 1.1.1'
+
+# PDF generation
+gem 'wicked_pdf', '~> 1.1'
+gem 'wkhtmltopdf-binary', '~> 0.12.3.1'
 
 # simple_form
 gem 'simple_form'
@@ -51,23 +56,30 @@ gem 'gmaps4rails'
 # Für grobe Entfernung
 gem 'geocoder'
 
-gem 'better_errors'
 gem 'binding_of_caller'
 
-# Für Fahrzeit
-gem 'google_directions', git: "https://github.com/hendricius/google-directions-ruby.git"
-
-gem 'pry'
+# for calculation of drive time
+gem 'google_directions', git: 'https://github.com/hendricius/google-directions-ruby.git'
 
 gem 'bundler'
 
+gem 'rails-jquery-ui-sortable'
+
 gem 'bootstrap-sass', '3.3.5'
 gem 'bootstrap-sass-extras'
-gem 'devise', '3.5.2'
-gem 'omniauth'
-gem 'omniauth-facebook'
+gem 'devise', '~> 4.3'
 gem 'tzinfo-data'
 gem 'validates_formatting_of'
+gem 'font-awesome-rails'
+gem 'active_link_to'
+
+gem 'rails-i18n'
+gem 'devise-i18n'
+gem 'client_side_validations'
+gem 'client_side_validations-simple_form'
+
+# file management / upload
+gem 'paperclip', '~> 4.3', '>= 4.3.7'
 
 group :development do
   gem 'capistrano'
@@ -81,8 +93,19 @@ group :development do
   gem 'capistrano-rvm'
 
   # Pry debugger
+  gem 'pry'
   gem 'pry-rails'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  gem 'better_errors', '~> 2.4'
+end
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.6'
+  gem 'factory_girl_rails', '~> 4.9'
+  gem 'faker', '~> 1.7', '>= 1.7.3'
+  gem 'webmock', '~> 3.0', '>= 3.0.1'
+  gem 'byebug'
 end

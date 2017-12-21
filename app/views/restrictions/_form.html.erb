@@ -1,13 +1,12 @@
-<% if current_user.role == "admin" %>
-  <%= simple_form_for @restriction do |f| %>
-    <%= f.association :company %>
-    <%= f.input :problem %>
-    <%= f.input :dynamic %>
-    <%= f.input :multi_vehicle %>
-    <%= f.input :time_window %>
-    <%= f.input :capacity_restriction %>
-    <%= f.input :priorities %>
-    <%= f.input :work_time %>
-    <%= f.button :submit %>
+<% if current_user && ( current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?)) %>
+  <%= simple_form_for @restriction, validate: true do |f| %>
+    <%= f.input :problem, :collection => {t('dp')  => 'DP', t('pp')  => 'PP', t('pdp') => 'PDP'}, prompt: :translate %>
+    <%= f.input :dynamic, prompt: :translate %>
+    <%= f.input :multi_vehicle, prompt: :translate %>
+    <%= f.input :time_window, prompt: :translate %>
+    <%= f.input :capacity_restriction, prompt: :translate %>
+    <%= f.input :priorities, prompt: :translate %>
+    <%= f.input :work_time, prompt: :translate %>
+    <%= f.button :submit, prompt: :translate %>
   <% end %>
 <% end %>

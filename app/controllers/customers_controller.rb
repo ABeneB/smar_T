@@ -4,33 +4,24 @@ class CustomersController < ApplicationController
   respond_to :html
 
   def index
-    if current_user
-      if current_user.is_admin?
-        @customers = Customer.all
-      elsif current_user.is_planer?
-        @customers = Customer.where(company_id: current_user.company_id)
-      else
-        @customers = []
-      end
+    if current_user.is_planer? || current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?)
+      @customers = Customer.where(company_id: current_user.company_id).page params[:page]
     end
   end
 
   def show
     if current_user
-      if current_user.is_admin?
-        @customer
-      elsif current_user.is_planer?
-        if @customer.company_id == current_user.company_id
-          @customer
-        end
+      if @customer.company_id == current_user.company_id && (current_user.is_planer? || current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?))
+      @customer
       end
     end
   end
 
   def new
     if current_user
-      if current_user.is_admin? || current_user.is_planer?
+      if current_user.is_admin? || current_user.is_planer? || (current_user.is_superadmin? && current_user.company_id?)
         @customer = Customer.new
+        @customer.company_id = current_user.company_id
       end
     end
   end
@@ -41,26 +32,34 @@ class CustomersController < ApplicationController
 
   def create
     @customer = Customer.new(customer_params)
-    if current_user.is_planer?
-      @customer.user_id = current_user.id # automatisches setzen der user_id
-      @customer.company_id = current_user.company.id
-    end
-    @customer.save
+    @customer.company_id = current_user.company.id
     if @customer.save
-      redirect_to customers_path, notice: "saved"
+      flash[:success] = t('.success')
+      redirect_to customers_path
     else
+      flash[:alert] = t('.failure')
       render 'new'
     end
   end
 
   def update
-    @customer.update(customer_params)
+    if @customer.update(customer_params)
+    flash[:success] = t('.success')
     respond_with(@customer)
+    else
+    flash[:alert] = t('.failure')
+    render("edit")
+   end
   end
 
   def destroy
-    @customer.destroy
+    if @customer.destroy
+    flash[:success] = t('.success')
     respond_with(@customer)
+    else
+    flash[:alert] = t('.failure')
+    respond_with(@customer)
+    end
   end
 
   private

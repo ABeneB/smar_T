@@ -16,5 +16,9 @@
 //= require underscore
 //= require gmaps/google
 //= require gmaps.js
+//= require maps
+//= require custom
+//= require rails.validations
+//= require rails.validations.simple_form
+//= require address_autocomplete
 
-//= require_tree .

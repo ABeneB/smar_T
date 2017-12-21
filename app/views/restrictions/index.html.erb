@@ -1,5 +1,5 @@
 <%- model_class = Restriction -%>
-<% if current_user &&  current_user.is_admin? %>
+<% if current_user && ( current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?))%>
   <div class="page-header">
     <h1>Beschränkungen</h1>
   </div>
@@ -9,43 +9,35 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Unternehmen</th>
-          <th><%= model_class.human_attribute_name(:problem) %></th>
-          <th><%= model_class.human_attribute_name(:dynamic) %></th>
-          <th><%= model_class.human_attribute_name(:multi_vehicle) %></th>
-          <th><%= model_class.human_attribute_name(:time_window) %></th>
-          <th><%= model_class.human_attribute_name(:capacity_restriction) %></th>
-          <th><%= model_class.human_attribute_name(:priorities) %></th>
-          <th><%= model_class.human_attribute_name(:work_time) %></th>
-          <th><%= model_class.human_attribute_name(:created_at) %></th>
+          <th class="center"><%= model_class.human_attribute_name(:problem) %></th>
+          <th class="center"><%= model_class.human_attribute_name(:dynamic) %></th>
+          <th class="center"><%= model_class.human_attribute_name(:multi_vehicle) %></th>
+          <th class="center"><%= model_class.human_attribute_name(:time_window) %></th>
+          <th class="center">Kapazität</th>
+          <th class="center"><%= model_class.human_attribute_name(:priorities) %></th>
+          <th class="center"><%= model_class.human_attribute_name(:work_time) %></th>
           <th><%=t '.actions', :default => t("helpers.actions") %></th>
         </tr>
       </thead>
       <tbody>
         <% @restrictions.each do |restriction| %>
-          <tr>
-            <td><%= restriction.id %></td>
-            <td><%= restriction.company.name %></td>
-            <td><%= restriction.problem %></td>
-            <td><%= restriction.dynamic %></td>
-            <td><%= restriction.multi_vehicle %></td>
-            <td><%= restriction.time_window %></td>
-            <td><%= restriction.capacity_restriction %></td>
-            <td><%= restriction.priorities %></td>
-            <td><%= restriction.work_time %></td>
-            <td><%= link_to 'Show', restriction, :class => 'btn btn-info btn-xs' %></td>
-            <td><%= link_to 'Edit', edit_restriction_path(restriction), :class => 'btn btn-warning btn-xs' %></td>
-            <td><%= link_to 'Destroy', restriction, method: :delete,
-            data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs' %></td>
-          </tr>
+            <tr>
+              <td class="center"><%= restriction.problem %></td>
+              <td class="center"><div class="active_circle_<%= restriction.dynamic %>"></div></td>
+              <td class="center"><div class="active_circle_<%= restriction.multi_vehicle %>"></div></td>
+              <td class="center"><div class="active_circle_<%= restriction.time_window %>"></div></td>
+              <td class="center"><div class="active_circle_<%= restriction.capacity_restriction %>"></div></td>
+              <td class="center"><div class="active_circle_<%= restriction.priorities %>"></div></td>
+              <td class="center"><div class="active_circle_<%= restriction.work_time %>"></div></td>
+              <td>
+                <%= link_to (fa_icon "pencil 1x"), edit_restriction_path(restriction), :title => t('helpers.links.edit'), :class => 'btn btn-warning btn-xs' %>
+              </td>
+            </tr>
+
         <% end %>
       </tbody>
     </table>
-    <%= link_to t('.new', :default => t("helpers.links.new")),
-                new_restriction_path,
-                :class => 'btn btn-primary' %>
-                <% end %>
+  <% end %>
 <% else %>
 ZUGANG VERWEIGERT
 <% end %>

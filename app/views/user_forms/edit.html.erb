@@ -1,0 +1,49 @@
+<% if current_user && (current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?)) %>
+      <div class="page-header">
+      <h1><%=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => User %></h1>
+    </div>
+
+    <%= simple_form_for @user_form, validate: true do |f| %>
+      <%= f.input :nickname, prompt: :translate %>
+      <%= f.input :email, prompt: :translate %>
+      <% if current_user.role == "admin" && (@user_form.role =="driver" || @user_form.role == "planer") %>
+        <%= f.input :password, prompt: :translate %>
+        <%= f.input :role, :collection => {t('planer')  => 'planer', t('driver') => 'driver'}, prompt: :translate %>
+      <% elsif current_user.role == "admin" && (@user_form.role =="admin") %>
+        <%= f.input :role, :collection => {t('admin')  => 'admin'}, prompt: :translate, :disabled => true %>
+      <% elsif current_user.role == "superadmin" && (@user_form.role =="driver" || @user_form.role == "planer"|| @user_form.role == "admin")%>
+        <%= f.input :password, prompt: :translate %>
+        <%= f.input :role, :collection => {t('admin')  => 'admin', t('planer')  => 'planer', t('driver') => 'driver'}, prompt: :translate %>
+      <% end %>
+      <div id="driver">
+        <div id="driver_heading"><b><%=t('driver_properties') %></b></div>
+        <% if  current_user.company.work_time_restriction? %>
+        <div id="working_time_heading"><b><%=t('attributes.working_time') %></b></div>
+    <%= f.hidden_field :working_time, as: :integer, prompt: :translate %>
+
+     <div class="form-inline">
+
+       <div class="form-group">
+          <div class="form-inline">   
+          <%= f.input :hour, collection: (0..23), :selected => (@user_form.hour ? @user_form.hour : 0),label: false %>
+          <b>:</b>
+          </div>
+        <%=t('attributes.hours') %>
+       </div>
+
+       <div class="form-group">
+          <div class="form-inline">   
+          <%= f.input :minute, collection: (0..59), :selected => (@user_form.minute ? @user_form.minute : 0), label: false  %>
+          </div>
+      <%=t('attributes.minutes') %>
+       </div> 
+    </div>
+    <% end %>
+
+        <%= f.input :active, as: :boolean, prompt: :translate %>
+      </div>
+      <%= f.button :submit, prompt: :translate %>
+    <% end %>
+<% else %>
+  ZUGANG VERWEIGERT
+<% end %>

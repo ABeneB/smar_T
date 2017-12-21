@@ -2,22 +2,29 @@
 <html>
 <head>
   <title>SmarT</title>
-  <script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=true"></script>
+  <% if current_user.try(:company).try(:google_maps_api_key) %>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=<%= current_user.company.google_maps_api_key %>"></script>
+  <% end %>
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
 <meta name="viewport" content="width=device-width, initial-scale=1"/></head>
 <body>
 <%= render partial: "elements/navbar" %>
-<%= bootstrap_flash %>
-
-<div class="container">
+<div class="container-fluid">
+<div class="row">
+<%= render partial: "elements/sidebar" %>
+<div id="page-wrapper">
+<div class="container-fluid">
   <div class="row">
     <div class="col-xs-12">
+	<%= bootstrap_flash %>
       <%= yield %>
     </div>
   </div>
 </div>
-
+</div>
+</div>
+</div>
 </body>
 </html>
