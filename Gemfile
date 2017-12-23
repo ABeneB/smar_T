@@ -56,6 +56,9 @@ gem 'gmaps4rails'
 # Für grobe Entfernung
 gem 'geocoder'
 
+# Search within database
+gem 'scoped_search', '~> 4.1', '>= 4.1.2'
+
 gem 'binding_of_caller'
 
 # for calculation of drive time
