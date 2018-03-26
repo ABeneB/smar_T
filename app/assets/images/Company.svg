@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="100"
+   height="100"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="Company - Kopie.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="3.9597979"
+     inkscape:cx="23.917231"
+     inkscape:cy="52.453975"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1920"
+     inkscape:window-height="1018"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:object-nodes="true" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-952.3622)">
+    <path
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:26.39999962;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:105.6, 26.4;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 25.806641 0 C 20.446061 0 16.130859 4.3151814 16.130859 9.6757812 L 16.130859 99.919922 C 16.130859 99.946922 16.136719 99.973 16.136719 100 L 83.865234 100 C 83.865513 99.973 83.869141 99.946922 83.869141 99.919922 L 83.869141 9.6757812 C 83.869141 4.3151814 79.553947 0 74.193359 0 L 25.8125 0 L 25.806641 0 z M 21.921875 20.65625 L 37.59375 20.65625 L 37.59375 36.328125 L 21.921875 36.328125 L 21.921875 20.65625 z M 42.164062 20.65625 L 57.835938 20.65625 L 57.835938 36.328125 L 42.164062 36.328125 L 42.164062 20.65625 z M 62.40625 20.65625 L 78.078125 20.65625 L 78.078125 36.328125 L 62.40625 36.328125 L 62.40625 20.65625 z M 21.921875 40.898438 L 37.59375 40.898438 L 37.59375 56.570312 L 21.921875 56.570312 L 21.921875 40.898438 z M 42.164062 40.898438 L 57.835938 40.898438 L 57.835938 56.570312 L 42.164062 56.570312 L 42.164062 40.898438 z M 62.40625 40.898438 L 78.078125 40.898438 L 78.078125 56.570312 L 62.40625 56.570312 L 62.40625 40.898438 z M 21.921875 61.142578 L 37.59375 61.142578 L 37.59375 76.814453 L 21.921875 76.814453 L 21.921875 61.142578 z M 42.164062 61.142578 L 57.835938 61.142578 L 57.835938 95.75 L 42.164062 95.75 L 42.164062 61.142578 z M 62.40625 61.142578 L 78.078125 61.142578 L 78.078125 76.814453 L 62.40625 76.814453 L 62.40625 61.142578 z "
+       id="rect4417-1-6-9-3"
+       transform="translate(0,952.3622)" />
+  </g>
+</svg>

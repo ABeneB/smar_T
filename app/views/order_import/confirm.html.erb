@@ -1,0 +1,104 @@
+<div class="page-header">
+  <h1>Überprüfung der importierten Aufträge</h1>
+</div>
+<% if @imported_orders %>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Adresse</th>
+   <th>Auftragsref.</th>
+    <th class="center">Dauer<br/>[hh:mm:ss]</th>
+    <th class="center">Kapazität</th>
+    <th class="center">Priorität</th>
+    <th class="center">Typ</th>
+    <th class="center">Status</th>
+  </tr>
+  </thead>
+
+  <%= form_tag complete_order_import_path do  %>
+    <tbody>
+      <% @imported_orders.each do |order| %>
+      <%= fields_for "orders[]", order do  |f| %>
+        <tr>
+        <% if order.status == 4 %>
+        <% order.errors.add(:location, "") %>
+        <% end %>
+        <td><%= f.text_field :location, :size=>"50" %></td>
+        <%=  f.hidden_field :location, :id => ("address_" + (order.id).to_s) %>
+         <td><%= f.text_field :order_ref, size: "30" %></td>
+        <td class="center"><%= Time.at(order.duration * 60).utc.strftime("%H:%M:%S") %></td>
+        <td class="center"><%= f.number_field :capacity, in: 0...400 %></td>
+        <% if order.customer %>
+            <td class="center"><%= order.customer.priority %></td>
+        <% else %>
+            <td class="center">keine</td>
+        <% end %>
+        <td class="center"><%= f.select :order_type, options_for_select([
+                                                          [t('orders.types.delivery'), OrderTypeEnum::DELIVERY],
+                                                          [t('orders.types.pickup'), OrderTypeEnum::PICKUP],
+                                                          [t('orders.types.service'), OrderTypeEnum::SERVICE]]) %></td>
+         <% if order.status == 4 %>
+         <td class="center"><%= f.select :status, options_for_select([[t('orders.status.active'), 1], [t('orders.status.completed'), 3], [t('orders.status.inactive'), 0], [t('orders.status.invalid'), 4]], order.status), {}, {:disabled => true} %></td>
+         <% else %>
+        <td class="center"><%= f.select :status, options_for_select([[t('orders.status.active'), 1], [t('orders.status.completed'), 3], [t('orders.status.inactive'), 0], [t('orders.status.invalid'), 4]], order.status) %></td>
+        <% end %>
+        </tr>
+      <% end %>
+    <% end %>
+    </tbody>
+   <% if @invalid_orders != [] %>
+     <tbody>
+    </tr>
+        <td>
+        </td>
+    </tr>
+    </tbody>
+    <tbody>
+    </tr>
+        <td>
+        Folgende Aufträge haben eine ungültige Adresse. Bitte geben Sie hier eine gültige Adresse ein oder bearbeiten Sie den betroffenen Auftrag später über die Auftragsübersicht.
+        <br> Beachten Sie, dass der Status von ungültigen Aufträgen erst verändert werden kann, nachdem eine gültige Adresse eingegeben wurde.
+        </td>
+    </tr>
+    </tbody>
+    <tbody>
+      <% @invalid_orders.each do |order| %>
+      <%= fields_for "orders[]", order do  |f| %>
+        <tr class="highlight">
+        <% if order.status == 4 %>
+        <% order.errors.add(:location, "") %>
+        <% end %>
+        <td><%= f.text_field :location, :size=>"50" %></td>
+        <%=  f.hidden_field :location, :id => ("address_" + (order.id).to_s) %>
+         <td><%= f.text_field :order_ref, size: "30" %></td>
+        <td class="center"><%= Time.at(order.duration * 60).utc.strftime("%H:%M:%S") %></td>
+        <td class="center"><%= f.number_field :capacity, in: 0...400 %></td>
+        <% if order.customer %>
+            <td class="center"><%= order.customer.priority %></td>
+        <% else %>
+            <td class="center">keine</td>
+        <% end %>
+        <td class="center"><%= f.select :order_type, options_for_select([
+                                                          [t('orders.types.delivery'), OrderTypeEnum::DELIVERY],
+                                                          [t('orders.types.pickup'), OrderTypeEnum::PICKUP],
+                                                          [t('orders.types.service'), OrderTypeEnum::SERVICE]]) %></td>
+         <% if order.status == 4 %>
+         <td class="center"><%= f.select :status, options_for_select([[t('orders.status.active'), 1], [t('orders.status.completed'), 3], [t('orders.status.inactive'), 0], [t('orders.status.invalid'), 4]], order.status), {}, {:disabled => true} %></td>
+         <% else %>
+        <td class="center"><%= f.select :status, options_for_select([[t('orders.status.active'), 1], [t('orders.status.completed'), 3], [t('orders.status.inactive'), 0], [t('orders.status.invalid'), 4]], order.status) %></td>
+        <% end %>
+        </tr>
+      <% end %>
+    <% end %>
+    </tbody>
+   <% end %>
+  </table>
+
+
+
+
+  <%= submit_tag t('save_ressource'), class: 'btn btn-primary btn-smart' %>
+  <% end %>
+<% else %>
+    <div class="alert alert-info">Es konnten keine Aufträge importiert werden. Bitte versuchen Sie es erneut.</div>
+<% end %>

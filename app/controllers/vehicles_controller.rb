@@ -4,9 +4,9 @@ class VehiclesController < ApplicationController
   respond_to :html
 
   def index
-    if current_user.is_admin? || current_user.is_planer?
+    if (current_user.is_admin? || current_user.is_planer? || (current_user.is_superadmin? && current_user.company_id?)) && !current_user.company.nil?
       company = current_user.company
-      @vehicles = Vehicle.where(driver_id: company.driver_ids)
+      @vehicles = company.vehicles.page params[:page]
     else
       @vehicles = []
     end
@@ -18,12 +18,8 @@ class VehiclesController < ApplicationController
 
   def new
     if current_user
-      if current_user.is_admin? 
+      if current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?) || current_user.company_id
         @vehicle = Vehicle.new
-      elsif current_user.is_planer?
-        if @vehcle.company_id == current_user.company_id
-          @vehicle
-        end
       end
     end
   end
@@ -34,19 +30,34 @@ class VehiclesController < ApplicationController
 
   def create
     @vehicle = Vehicle.new(vehicle_params)
-    @vehicle.user_id = current_user.id
-    @vehicle.save
+    @vehicle.company_id = current_user.company.id
+    if @vehicle.save
+      flash[:success] = t('.success')
     respond_with(@vehicle)
+    else
+      flash[:alert] = t('.failure')
+      render 'new'
+    end
   end
 
   def update
-    @vehicle.update(vehicle_params)
+    if @vehicle.update(vehicle_params)
+      flash[:success] = t('.success')
     respond_with(@vehicle)
+      else
+      flash[:alert] = t('.failure')
+      render("edit")
+    end
   end
 
   def destroy
-    @vehicle.destroy
+    if @vehicle.destroy
+      flash[:success] = t('.success')
     respond_with(@vehicle)
+    else
+     flash[:alert] = t('.failure')
+     respond_with(@vehicle)
+    end
   end
 
   private
@@ -55,6 +66,6 @@ class VehiclesController < ApplicationController
     end
 
     def vehicle_params
-      params.require(:vehicle).permit(:user_id, :position, :capacity, :duration, :driver_id)
+      params.require(:vehicle).permit(:user_id, :position, :capacity, :duration, :driver_id, :model, :registration_number, :manufacturer)
     end
 end

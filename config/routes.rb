@@ -1,9 +1,19 @@
 Rails.application.routes.draw do
-  resources :costumers
+  root 'welcome#index'
+
+  get 'about/index'
+
+  resources :customers
 
   resources :vehicles
 
   resources :tours
+
+  get 'tours/:id/print' => 'tours#print', as: 'print_tour'
+  get 'tours/:id/start' => 'tours#start', as: 'start_tour'
+  get 'tours/:id/complete' => 'tours#complete', as: 'complete_tour'
+  post 'tours/:id/finish' => 'tours#finish', as: 'finish_tour'
+  post 'tours/:id/remove_order_tour' => 'tours#remove_order_tour', as: 'remove_order_tour'
 
   resources :restrictions
 
@@ -16,17 +26,26 @@ Rails.application.routes.draw do
   resources :depots
 
   resources :companies
-  
+  post 'companies/:id/delete_logo' => 'companies#delete_logo', as: 'delete_company_logo'
+
   resources :registered_users
 
-  get 'welcome/index'
+  resources :user_forms
 
-  devise_for :users, controllers: {registrations: "users/registrations", sessions: "users/sessions", passwords: "users/passwords"}, skip: [:sessions, :registrations]
+  get 'order_import/file', as:  'file_order_import'
+  post 'order_import/confirm', as: 'confirm_order_import'
+  post 'order_import/complete', as: 'complete_order_import'
+
+  get 'developer/index'
+  post 'developer/reset_database'
+
+  post "tours/positions/update" => "order_tours#update_positions"
+
+  devise_for :users, controllers: { registrations: "users/registrations", passwords: "users/passwords" }, skip: [:sessions, :registrations]
+  devise_for :users, controllers: { sessions: "sessions" }
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
-
-  # You can have the root of your site routed with "root"
-  root 'welcome#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
@@ -76,17 +95,6 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-  
-  #->Prelang (user_login:devise/stylized_paths)
-  devise_scope :user do
-    get    "login"   => "users/sessions#new",         as: :new_user_session
-    post   "login"   => "users/sessions#create",      as: :user_session
-    delete "signout" => "users/sessions#destroy",     as: :destroy_user_session
-    
-    get    "signup"  => "users/registrations#new",    as: :new_user_registration
-    post   "signup"  => "users/registrations#create", as: :user_registration
-    put    "signup"  => "users/registrations#update", as: :update_user_registration
-    get    "account" => "users/registrations#edit",   as: :edit_user_registration
-  end
 
+  #->Prelang (user_login:devise/stylized_paths)
 end

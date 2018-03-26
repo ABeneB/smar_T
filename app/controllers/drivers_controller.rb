@@ -4,7 +4,7 @@ class DriversController < ApplicationController
   respond_to :html
 
   def index
-    if current_user.is_admin? || current_user.is_planer?
+    if (current_user.is_admin? || current_user.is_planer? || (current_user.is_superadmin? && current_user.company_id?)) && !current_user.company.nil?
       company = current_user.company
       @drivers = company.drivers
     else
@@ -13,49 +13,58 @@ class DriversController < ApplicationController
   end
 
   def show
-    if current_user
-      if current_user.is_admin? 
-        @driver
-      elsif current_user.is_planer?
-        if @driver.company_id == current_user.company_id
+      if current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?)
+        if @driver.user.company_id == current_user.company_id
           @driver
         end
       end
-    end
   end
+
 
   def new
     if current_user
-      if current_user.is_admin? || current_user.is_planer?
+      if current_user.is_admin? || current_user.is_planer? || (current_user.is_superadmin? && current_user.company_id?)
         @driver = Driver.new
+        @driver.active = true
       end
     end
   end
 
   def edit
+   @driver.intToTime
     # FIXME
   end
 
   def create
     @driver = Driver.new(driver_params)
-    @driver.user_id = current_user.id # automatisches setzen der user_id
-    @driver.company_id = current_user.company.id # automatisches setzen der user_id
-    @driver.save
-    if @driver.save 
-      redirect_to drivers_path, notice: "saved"
+    @driver.timeToInt
+    if @driver.save
+      flash[:success] = t('.success', name: @driver.name)
+      redirect_to drivers_path
     else
+      flash[:alert] = t('.failure')
       render 'new'
     end
   end
 
   def update
-    @driver.update(driver_params)
+    if @driver.update(driver_params)
+      flash[:success] = t('.success', name: @driver.name)
     respond_with(@driver)
+    else
+      flash[:alert] = t('.failure', name: @driver.name)
+      render("edit")
+    end
   end
 
   def destroy
-    @driver.destroy
+    if @driver.destroy
+        flash[:success] = t('.success', name: @driver.name)
     respond_with(@driver)
+    else
+      flash[:alert] = t('.failure', name: @driver.name)
+      respond_with(@driver)
+    end
   end
 
   private
@@ -64,6 +73,6 @@ class DriversController < ApplicationController
     end
 
     def driver_params
-      params.require(:driver).permit(:user_id, :name, :company_id, :work_start_time, :work_end_time, :activ, :working_time)
+      params.require(:driver).permit(:user_id, :name, :work_start_time, :work_end_time, :active, :working_time, :hour, :minute)
     end
 end

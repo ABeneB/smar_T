@@ -4,56 +4,59 @@ class DepotsController < ApplicationController
   respond_to :html
 
   def index
-    # Nur Daten die Zur Rolle passen anzeigen
-    if current_user 
-      if current_user.is_admin?
-        @depots = Depot.all
-      elsif current_user.is_planer?
-        company = current_user.company
-        @depots = Depot.where(company_id: company.id)
-      else
-        @depots = []
-      end
+    if (current_user.is_admin? || current_user.is_superadmin? || current_user.is_planer?) && current_user.company_id?
+      @depots = Depot.where(company_id: current_user.company.id)
     end
   end
 
   def show
-    if current_user
-      if current_user.is_admin?
+    if (current_user.is_admin? || current_user.is_superadmin? || current_user.is_planer?) && current_user.company_id?
+      if @depot.company_id == current_user.company_id
         @depot
-      elsif current_user.is_planer?
-        if @depot.company_id == current_user.company_id
-          @depot
-        end
       end
     end
   end
 
   def new
-    if current_user
-      if current_user.is_admin? || current_user.is_planer?
-        @depot = Depot.new
-      end
+    if (current_user.is_admin? || current_user.is_superadmin?) && current_user.company_id?
+      @depot = Depot.new
     end
   end
 
   def edit
+  @depot.intToTime
   end
 
   def create
     @depot = Depot.new(depot_params)
-    @depot.save
-    respond_with(@depot)
+    @depot.company_id = current_user.company.id
+    if @depot.save
+      flash[:success] = t('.success')
+      respond_with(@depot)
+    else
+      flash[:alert] = t('.failure')
+      render 'new'
+    end
   end
 
   def update
-    @depot.update(depot_params)
-    respond_with(@depot)
+    if @depot.update(depot_params)
+      flash[:success] = t('.success')
+      respond_with(@depot)
+    else
+      flash[:alert] = t('.failure')
+      render("edit")
+    end
   end
 
   def destroy
-    @depot.destroy
-    respond_with(@depot)
+    if @depot.destroy
+      flash[:success] = t('.success')
+      respond_with(@depot)
+    else
+      flash[:alert] = t('.success')
+     respond_with(@depot)
+    end
   end
 
   private
@@ -62,6 +65,6 @@ class DepotsController < ApplicationController
     end
 
     def depot_params
-      params.require(:depot).permit(:user_id, :name, :company_id, :address, :duration)
+      params.require(:depot).permit(:user_id, :name, :company_id, :address, :duration, :hour, :minute)
     end
 end

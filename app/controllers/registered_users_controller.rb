@@ -1,22 +1,28 @@
 class RegisteredUsersController < ApplicationController
+  include UsersHelper
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   respond_to :html
 
   def index
-    if current_user && current_user.is_admin?
-      @users = User.all
+    if current_user && current_user.is_admin? && current_user.company_id?
+      @users = User.where(company_id: current_user.company.id).page params[:page]
+    end
+    if current_user && current_user.is_superadmin? && current_user.company_id?
+      @users = User.where(company_id: current_user.company.id).page params[:page]
     end
   end
 
   def show
-    if current_user && current_user.is_admin?
-      @user
+    if current_user && (current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?))
+      if @user.company_id == current_user.company_id
+        @user
+      end
     end
   end
 
   def new
-    if current_user && current_user.is_admin?
+    if current_user && (current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?))
       @user = User.new
     end
   end
@@ -27,21 +33,38 @@ class RegisteredUsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    @user.save
-    redirect_to(registered_user_path(@user))
+    @user.company_id = current_user.company_id
+    if @user.save
+      flash[:success] = t('.success')
+      redirect_to(registered_user_path(@user))
+      else
+        flash[:alert] = t('.failure')
+        render 'new'
+    end
   end
 
   def update
     if @user.update_attributes(user_params)
+      flash[:success] = t('.success')
       redirect_to(registered_user_path(@user))
     else
+      flash[:alert] = t('.failure')
       render("edit")
     end
   end
 
   def destroy
-    @user.destroy
-    redirect_to(registered_user_path)
+    if current_user && (current_user.is_admin? || current_user.is_superadmin?)
+      nickname = @user.nickname
+      user_id = @user.id
+      if @user.destroy
+        flash[:success] = t('.success', nick_name: nickname)
+        redirect_to(registered_users_path)
+      else
+        flash[:alert] = t('.failure', nick_name: nickname)
+        redirect_to(registered_users_path)
+      end
+    end
   end
 
   private
@@ -50,6 +73,6 @@ class RegisteredUsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:id, :email, :company_id, :password, :last_sign_in_at, :created_at, :username, :role)
+      params.require(:user).permit(:id, :email, :company_id, :password, :last_sign_in_at, :created_at, :nickname, :role)
     end
 end

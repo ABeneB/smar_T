@@ -1,0 +1,456 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+de:
+ hello: "Hallo Welt"
+ admin: "Administrator"
+ planer: "Planer"
+ customer: "Kunde"
+ company: "Unternehmen"
+ driver: "Fahrer"
+ vehicle: "Fahrzeug"
+ user: "Benutzer"
+ restriction: "Beschränkung"
+ depot: "Depot"
+ edit: "bearbeiten"
+ welcome_admin: "Herzlich Willkommen, %{name}!"
+ pp: "Pickup-Problem"
+ dp: "Delivery-Problem"
+ pdp: "Pickup- und Delivery-Problem"
+ driver_properties: "Fahrereigenschaften"
+ save_ressource: "Speichern"
+ end_time_after_start_time: "muss größer oder gleich der Startzeit sein"
+ start_time_in_past: "liegt in der Vergangenheit"
+ about: "Über smar_T"
+ about:
+  index:
+   title: "Über smar_T"
+   hint: "smar_T benutzt folgende externen Softwarebibliotheken:"
+   name: "Name"
+   website: "Webseite"
+   software: "Software"
+   version: "Version"
+ user_forms:
+  new:
+   title: "Neuer Benutzer"
+  edit:
+   title: "Benutzer bearbeiten"
+ customers:
+  index:
+   confirm: "Möchten Sie den Kunden '%{name}' wirklich löschen?"
+  show:
+   title: "Kunde"
+  new:
+   title: "Neuer Kunde"
+  edit:
+   title: "Kunde bearbeiten"
+  create:
+    success: "Kunde wurde erfolgreich angelegt"
+    failure: "Kunde konnte nicht angelegt werden"
+  update:
+   success: "Kunde wurde aktualisiert"
+   failure: "Kunde konnte nicht aktualisiert werden"
+  destroy:
+   success: "Kunde wurde gelöscht"
+   failure: "Kunde konnte nicht gelöscht werden"
+  search_field: "Name, Adresse, Referenz..."
+  search_button: "Suchen"
+ companies:
+  tour_start:
+   time: "Uhr"
+  index:
+   confirm: "Möchten Sie das Unternehmen '%{name}' wirklich löschen?"
+  show:
+   title: "Unternehmen"
+  new:
+   title: "Neues Unternehmen"
+  edit:
+   title: "Unternehmen bearbeiten"
+  create:
+   success: "Unternehmen %{company_name} wurde erfolgreich angelegt"
+   failure: "Unternehmen konnte nicht angelegt werden"
+  update:
+   success: "Unternehmen wurde aktualisiert"
+   failure: "Unternehmen konnte nicht aktualisiert werden"
+  destroy:
+   success: "Unternehmen %{company_name} wurde gelöscht"
+   failure: "Unternehmen %{company_name} konnte nicht gelöscht werden"
+  form:
+   address_hint: "Adresse bitte im Format 'Lietzenburger Straße 71, 29386 Dedelstorf' eingeben."
+   google_maps_key_hint: "Ein Google Maps API-Schlüssel ist für die Berechnung der Touren und Validierung der Adressen notwendig. Falls Sie noch keinen API-Schlüssel besitzen, können Sie unter https://developers.google.com/maps/?hl=de einen anfordern."
+   company_logo_hint: "Erlaubte Dateiformate: .PNG und .JPEG, maximale Dateigröße 3 MB"
+   upload_logo: "Logo ändern"
+ depots:
+  index:
+   confirm: "Möchten Sie das Depot '%{name}' wirklich löschen?"
+  show:
+   title: "Depot"
+  new:
+   title: "Neues Depot"
+  edit:
+   title: "Depot bearbeiten"
+  create:
+   success: "Depot wurde erfolgreich angelegt"
+   failure: "Depot konnte nicht angelegt werden"
+  update:
+   success: "Depot wurde aktualisiert"
+   failure: "Depot konnte nicht aktualisiert werden"
+  destroy:
+   success: "Depot wurde gelöscht"
+   failure: "Depot konnte nicht gelöscht werden"
+ drivers:
+  start_tour: "Starten"
+  show:
+   title: "Fahrer"
+  new:
+   title: "Neuer Fahrer"
+  edit:
+   title: "Fahrer bearbeiten"
+  create:
+   success: "Fahrer: %{name} wurde erfolgreich angelegt"
+   failure: "Fahrer konnte nicht angelegt werden"
+  update:
+   success: "Fahrer: %{name} wurde aktualisiert"
+   failure: "Fahrer: %{name} konnte nicht aktualisiert werden"
+  destroy:
+   success: "Fahrer: %{name} wurde gelöscht"
+   failure: "Fahrer: %{name} konnte nicht gelöscht werden"
+ orders:
+  filter_order_type_default: "Alle Typen"
+  filter_order_status_default: "Alle"
+  status:
+    active: "Aktiv"
+    inactive: "Inaktiv"
+    assigned: "Zugewiesen"
+    completed: "Abgeschlossen"
+    invalid: "Ungültig"
+  types:
+    delivery: "Lieferung"
+    pickup: "Abholung"
+    service: "Service"
+  show:
+   title: "Auftrag"
+   belongs_to_tour: "gehört zu "
+   order_owner: "Auftraggeber"
+   assigned_tour_does_not_exist_html: "<b>Achtung</b>: Die zugewiesene Tour existiert nicht. Möglicherweise wurde die Tour zwischenzeitlich gelöscht oder der Status dieses Auftrag manuell geändert."
+  index:
+   confirm: "Möchten Sie den Auftrag wirklich löschen?"
+   title: "Aufträge"
+   order_import: "Aufträge importieren"
+   filter_order_type: "Nach Typ filtern:"
+   filter_by_order_type: "Filtern"
+   filter_order_status: "Nach Status filtern:"
+  new:
+   title: "Neuer Auftrag"
+  edit:
+   title: "Auftrag bearbeiten"
+  create:
+   success: "Auftrag wurde erfolgreich angelegt"
+   failure: "Auftrag konnte nicht angelegt werden"
+  update:
+   success: "Auftrag wurde aktualisiert"
+   failure: "Auftrag konnte nicht aktualisiert werden"
+  destroy:
+   success: "Auftrag wurde gelöscht"
+   failure: "Auftrag konnte nicht gelöscht werden"
+   failure_due_tour_status: "Auftrag konnte nicht gelöscht werden, weil zugehörige Tour bereits abgeschlossen oder gestartet wurde."
+ registered_users:
+  index:
+   confirm: "Möchten Sie den Benutzer '%{name}' wirklich löschen?"
+  show:
+   title: "Benutzer"
+  new:
+   title: "Neuer Benutzer"
+  edit:
+   title: "Benutzer bearbeiten"
+  create:
+   success: "Benutzer wurde erfolgreich angelegt"
+   failure: "Benutzer konnte nicht angelegt werden"
+  update:
+   success: "Benutzer %{user_nickname} wurde aktualisiert"
+   failure: "Benutzer konnte nicht aktualisiert werden"
+  destroy:
+   success: "Benutzer %{nick_name} wurde gelöscht"
+   failure: "Benutzer %{nick_name} konnte nicht gelöscht werden"
+ users:
+  roles:
+   superadmin: "Super-Admin"
+   admin: "Administrator"
+   planer: "Planer"
+   driver: "Fahrer"
+ user_forms:
+  show:
+   title: "Benutzer"
+  new:
+   title: "Neuer Benutzer"
+  edit:
+   title: "Benutzer bearbeiten"
+  create:
+   success: "Benutzer %{user_nickname} wurde erfolgreich angelegt"
+   failure: "Benutzer konnte nicht angelegt werden"
+  update:
+   success: "Benutzer %{user_nickname} wurde aktualisiert"
+   failure: "Benutzer %{user_nickname} konnte nicht aktualisiert werden"
+  destroy:
+   success: "Benutzer %{user_nickname} wurde gelöscht"
+   failure: "Benutzer %{user_nickname} konnte nicht gelöscht werden"
+ restrictions:
+  show:
+   title: "Beschränkung"
+  new:
+   title: "Neue Beschränkung"
+  edit:
+   title: "Beschränkung bearbeiten"
+  create:
+   success: "Beschränkung wurde erfolgreich angelegt"
+   failure: "Beschränkung konnte nicht angelegt werden"
+  update:
+   success: "Beschränkung wurde aktualisiert"
+   failure: "Beschränkung konnte nicht aktualisiert werden"
+  destroy:
+   success: "Beschränkung wurde gelöscht"
+   failure: "Beschränkung konnte nicht gelöscht werden"
+ tours:
+  no_google_maps_api_key_assigned: "Ihrem Unternehmen wurde noch kein Google Maps API Key zugewiesen. Bitte setzen Sie den API Schlüssel in den Unternehmenseinstellungen oder kontaktieren Sie den Administrator."
+  generate_new_tours: "Generieren"
+  no_available_drivers_html: "Es stehen keine Fahrer zur Verfügung. Bitte stellen Sie Folgendes sicher: <b>1.</b> ihrem Unternehmen sind Benutzer mit der Rolle: Fahrer zugewiesen und diese sind aktiv,
+                        <b>2.</b> die vorgesehenen Fahrer besitzen ein Fahrzeug und <b>3.</b> die vorgesehenen Fahrer haben keine derzeit aktive Tour (Status: 'Bereit' oder 'Gestartet')."
+  filter_tour_status_default: "Alle"
+  started_at_timestamp: "Gestartet am: "
+  completed_at_timestamp: "Abgeschlossen am: "
+  status:
+   generated: "Generiert"
+   approved: "Bereit"
+   started: "Gestartet"
+   completed: "Abgeschlossen"
+  show:
+   title: "Tour"
+   print_tour: "Drucken"
+   complete_tour: "Tour abschliessen"
+   expected_time_of_arrival: "gesch. Ankunftszeit"
+   processing_time: "Bearbeitungsdauer"
+  index:
+   confirm: "Möchten Sie die Tour wirklich löschen?"
+   title: "Touren"
+   active_tours: "Aktuell"
+   completed_tours: "Abgeschlossen"
+   no_active_tours_available: "Keine aktiven Touren vorhanden"
+   no_completed_tours_available: "Keine abgeschlossenen Touren vorhanden"
+   generate_new_tours_hint: "Neue Touren generieren:"
+   filter_tour_status: "Nach Status filtern:"
+   please_wait_while_generating: "Bitte warten..."
+  new:
+   title: "Neue Tour"
+   no_company_assigned: "Ihr Benutzerkonto ist keinem Unternehmen zugeordnet. Bitte kontaktieren Sie den Administrator."
+   no_order_type_selected: "Es konnten keine Touren generiert werden, weil kein einziger Auftragstyp (z.B. Lieferung, Service, etc.) ausgewählt wurde."
+  edit:
+   title: "Tour bearbeiten"
+  create:
+   success: "Tour wurde erfolgreich angelegt"
+   failure: "Tour konnte nicht angelegt werden"
+  update:
+   success: "Tour wurde aktualisiert"
+   failure: "Tour konnte nicht aktualisiert werden"
+  destroy:
+   success: "Tour wurde gelöscht"
+   failure: "Tour konnte nicht gelöscht werden"
+  print:
+   expected_time_of_arrival: "gesch. Ankunftszeit"
+   order_ref: "Auftr.Ref"
+   processing_time_html: "Bearbeitungs- <br/>dauer"
+   estimated_total_duration: "geschätzte Gesamtdauer:"
+  complete:
+   title: "Tour abschließen"
+   finish_tour: "Speichern"
+   choose_complete_orders_hint: "Bitte wählen Sie die bearbeiteten Aufträge aus. Nicht ausgewählte Aufträge werden aus der Tour entfernt und bei der Generierung zukünftiger Touren berücksichtigt."
+  finish:
+   success: "Die Tour wurde erfolgreich abgeschlossen."
+   failure: "Es ist ein Fehler aufgetreten. Die Tour und die dazugehörigen Aufträge konnten nicht abgeschlossen werden."
+  remove_order_tour:
+   success: "Auftrag wurde erfolgreich aus der Tour entfernt."
+   failure: "Es ist ein Fehler aufgetreten. Der Auftrag konnte nicht aus der Tour entfernt werden."
+ vehicles:
+  index:
+   confirm: "Möchten Sie das Fahrzeug wirklich löschen?"
+  show:
+   title: "Fahrzeug"
+  new:
+   title: "Neues Fahrzeug"
+  edit:
+   title: "Fahrzeug bearbeiten"
+  create:
+   success: "Fahrzeug wurde erfolgreich angelegt"
+   failure: "Fahrzeug konnte nicht angelegt werden"
+  update:
+   success: "Fahrzeug wurde aktualisiert"
+   failure: "Fahrzeug konnte nicht aktualisiert werden"
+  destroy:
+   success: "Fahrzeug wurde gelöscht"
+   failure: "Fahrzeug konnte nicht gelöscht werden"
+  form:
+   driver_empty: "Ohne Fahrer"
+ order_import:
+  file:
+    upload_csv: "Hochladen"
+  complete:
+    success: "Die Aufträge wurden erfolgreich importiert."
+    failure: "Bei Import der Aufträge ist ein Fehler aufgetreten."
+    no_file_provided: "Es wurde keine Datei ausgewählt. Bitte wählen Sie eine Datei zum Hochladen aus."
+ views:
+  pagination:
+   first: "&laquo; Erste Seite"
+   last: "Letzte Seite &raquo;"
+   previous: "&lsaquo; Vorherige"
+   next: "Nächste &rsaquo;"
+   truncate: "&hellip;"
+ simple_form:
+  labels:
+   depot:
+    duration: "Dauer"
+  prompts:
+   customers:
+    priority: "Bitte wählen Sie aus"
+ helpers:
+  duration: "Total"
+  actions: "Aktionen"
+  links:
+   back: "Zurück"
+   cancel: "Abbrechen"
+   confirm: "Sind Sie sich sicher?"
+   destroy: "Löschen"
+   new: "Neu"
+   edit: "Bearbeiten"
+   show: "Anzeigen"
+   import: "Importieren"
+  titles:
+   edit: "Bearbeiten"
+   save: "Speichern"
+   new: "Neu"
+   delete: "Löschen"
+  submit:
+   company:
+    create: "Speichern"
+    update: "Speichern"
+   order:
+    create: "Speichern"
+    update: "Speichern"
+   customer:
+    create: "Speichern"
+    update: "Speichern"
+   driver:
+    create: "Speichern"
+    update: "Speichern"
+   vehicle:
+    create: "Speichern"
+    update: "Speichern"
+   user:
+    create: "Speichern"
+    update: "Speichern"
+   restriction:
+    create: "Speichern"
+    update: "Speichern"
+   depot:
+    create: "Speichern"
+    update: "Speichern"
+   user_form:
+    create: "Speichern"
+    update: "Speichern"
+   page_entries_info:
+    one_page:
+     display_entries:
+      zero: "%{entry_name} nicht gefunden"
+      one: "Zeige <b>1</b> %{entry_name}"
+      other: "Zeige <b>alle %{count}</b> %{entry_name} an"
+    more_pages:
+     display_entries: "Zeige an %{entry_name} <b>%{first}&nbsp;-&nbsp;%{last}</b> of <b>%{total}</b> in total"
+
+ attributes:
+  name: "Name"
+  address: "Adresse"
+  telefon: "Telefonnummer"
+  google_maps_api_key: "Google Maps API-Schlüssel (Key)"
+  logo: "Unternehmenslogo"
+  created_at: "Erstellt am"
+  problem: "Problem"
+  dynamic: "Dynamisch"
+  multi_vehicle: "Mehrere Fahrzeuge"
+  time_window: "Zeitfenster"
+  capacity_restriction: "Kapazitätsbeschränkung"
+  priorities: "Prioritäten"
+  work_time: "Arbeitszeit in Minuten"
+  place: "Reihenfolge"
+  location: "Ort"
+  time: "Zeit"
+  duration: "Dauer"
+  priority: "Priorität"
+  working_time: "Arbeitszeit in Stunden:Minuten"
+  status: "Status"
+  driver: "Fahrer"
+  company: "Unternehmen"
+  capacity: "Kapazität"
+  role: "Rolle"
+  comment: "Kommentar"
+  customer: "Kunde"
+  order_ref: "Auftragsreferenz"
+  start_time: "Startzeit"
+  end_time: "Endzeit"
+  user: "Benutzer"
+  position: "Standort"
+  order_type: "Typ"
+  model: "Modell"
+  manufacturer: "Hersteller"
+  registration_number: "Kennzeichen"
+  active: "Aktiv"
+  hours: "Stunde(n)"
+  minutes: "Minuten"
+  password: "Passwort"
+  default_tour_start: "normale Startzeit für Touren"
+ activerecord:
+  attributes:
+   restriction:
+    work_time: "Arbeitszeitbeschränkung"
+
+ devise:
+  sign_in: "Anmelden"
+  sign_out: "Abmelden"
+  edit_account: "Benutzer bearbeiten"
+  list_of_companies: "Liste aller Unternehmen"
+  navbar_text: "Sie sind eingeloggt als %{name} im Unternehmen: %{company_name} (%{company_id})."
+
+
+errors:
+  messages:
+    in_between: "muss zwischen %{min} und %{max} sein"
+    spoofed_media_type: "trägt eine Dateiendung, die nicht mit dem Inhalt der Datei übereinstimmt"
+
+number:
+  human:
+    storage_units:
+      format: "%n %u"
+      units:
+        byte:
+          one:   "Byte"
+          other: "Bytes"
+        kb: "KB"
+        mb: "MB"
+        gb: "GB"
+        tb: "TB"
+

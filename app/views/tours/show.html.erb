@@ -1,96 +1,125 @@
-<%- model_class = Tour -%>
-<% if current_user %>
-  <div class="page-header">
+<%= javascript_include_tag 'jquery-ui-sortable' %>
+<%= javascript_include_tag 'sortable' %>
+
+  <%- model_class = Tour -%>
+<% if current_user.is_admin? || current_user.is_planer? || current_user.is_driver? || (current_user.is_superadmin? && current_user.company_id?)%>
+<div class="page-header">
+  <div class="tour-details">
     <h1>Tour</h1>
+    <h4>#<%= @tour.id %> | Fahrer: <%= @tour.driver.name %> | Status: <%= get_tour_status_as_string(@tour.status) %></h4>
+    <b><%= t('tours.started_at_timestamp') + "" + (@tour.started_at ? @tour.started_at.strftime("%d.%m.%Y, %H:%M") + " " + t('companies.tour_start.time') : "-")  %> |
+      <%= t('tours.completed_at_timestamp') + "" + (@tour.completed_at ? @tour.completed_at.strftime("%d.%m.%Y, %H:%M") + " " + t('companies.tour_start.time') : "-" ) %></b>
   </div>
-  
-  <div class="fieldset">
-  <table class="table table-striped">
-      <thead>
-        <tr>
-          <th><%= model_class.human_attribute_name(:place) %></th>
-          <th>Art</th>
-          <th><%= model_class.human_attribute_name(:location) %></th>
-          <th><%= model_class.human_attribute_name(:time) %></th>
-          <th><%= model_class.human_attribute_name(:duration) %></th>
-          <th>Beschreibung</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @order_tours.each do |order_tour| %>
-          <tr>
-            <td><%= order_tour.place+1 %></td>
-            <td><%= order_tour.kind %></td>
-            <td><%= order_tour.location %></td>
-            <td><%= order_tour.time %></td>
-            <td><%= order_tour.duration %></td>
-            <td><%= order_tour.comment %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  
-  <% if current_user.is_driver? %>
-    <td><%= link_to 'Start', edit_tour_path(@tour), :class => 'btn btn-info' %></td>
-    <td><%= link_to 'Pause', edit_tour_path(@tour), :class => 'btn btn-info' %></td>
-    <td><%= link_to 'Erledigt', edit_tour_path(@tour), method: :delete, 
-          data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' %></td>   
-          
-  <input type="text" id="info" disabled>
+  <% if @tour.approved? %>
+    <%= link_to start_tour_path(), class: 'btn btn-primary btn-smart' do %>
+      <%= ((fa_icon "play 1x") + " " + t('drivers.start_tour')) %>
+    <% end %>
   <% end %>
-  
-  <div style='width: 800px;'>
-    <div id="map" style='width: 900px; height: 400px;'></div>
+  <% if @tour.approved? || @tour.started? %>
+    <%= link_to complete_tour_path(), class: 'btn btn-primary btn-smart' do %>
+      <%= ((fa_icon "check 1x") + " " + t('.complete_tour')) %>
+    <% end %>
+  <% end %>
+  <div style="float: right;">
+    <%= link_to ((fa_icon "print 1x") + " " + t('.print_tour')), print_tour_path(:format => :pdf), class: 'btn btn-primary btn-smart', target: '_blank' %>
   </div>
-  
-  <script>
-  
-  $(document).ready(function(){
-        
-        setInterval(function(){findMe(); }, 10000); //alle 10000 Milisekunden wird die Postion ausgelesen
-        //könnte anschließend in DB gespeichert werden per ajax. In diesem Prototypen nicht,
-        // damit die Test zur Tourenbildung durchgeführt werden können
-        
-        path = <%=raw @hash.to_json %>
-    
-        map = new GMaps({
-          div: '#map',
-          lat: path[0].latitude,
-          lng: path[0].longitude
-        });
-        
-        line_path = _.map(path, function(point){
-          return [point.latitude, point.longitude]
-        })
-        
-        _.each(path, function(coord){
-          map.addMarker({
-            lat: coord.latitude,
-            lng: coord.longitude,
-            title: coord.place
-          })
-        })
-        
-        _.each(line_path, function(coord, index){
-          if(line_path[index+1]){
-            map.drawRoute({
-              origin: [coord[0], coord[1]],
-              destination: [line_path[index+1][0], line_path[index+1][1]],
-              travelMode: 'driving',
-              strokeColor: getRandomColor(),
-              strokeOpacity: 0.6,
-              strokeWeight: 6
-            });
-          }
-        })
-      });
-      
-  function getRandomColor() {
-      var colors  = ["red", "darkred", "blue", "darkblue", "green", "darkgreen", "black", "darkgrey"];
-      color = _.sample(colors);
-      return color;
-  }
-  </script>
+  <div style="clear: both;"></div>
+</div>
+<% if current_user.company.google_maps_api_key.blank? %>
+    <div class="alert alert-warning"><%= t('tours.no_google_maps_api_key_assigned') %></div>
+<% end %>
+<div class="map-info alert alert-info hidden">
+  Sie haben die Reihenfolge der Tour verändert. Bitte aktualisieren Sie diese Seite um die neue Karte anzuzeigen.
+  <input type="button" value="Aktualisieren" onClick="history.go(0)">
+</div>
+<div class="fieldset">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th class="center">#</th>
+        <th class="center">Auftragsref.</th>
+        <th>Adresse</th>
+        <th class="center"><%= t('.expected_time_of_arrival') %><br/>[hh:mm]</th>
+        <th class="center"><%= t('.processing_time') %><br/>[hh:mm]</th>
+        <th>Beschreibung</th>
+        <th>Aktionen</th>
+      </tr>
+    </thead>
+    <tbody class="sortable">
+      <% time_of_arrivals = calculate_eta(@tour, @order_tours) %>
+      <% @order_tours.each_with_index do |order_tour, index| %>
+        <% if is_editable_order_tour?(order_tour) %>
+          <tr id="orderTour-<%= order_tour.id %>">
+            <td class="center"><%= order_tour.place + 1 %></td>
+            <td class="center"><%= order_tour.order ? order_tour.order.order_ref : '-' %></td>
+            <td><%= order_tour.location %></td>
+        <% else %>
+          <tr id="orderTour-<%= order_tour.id %>" class="unsortable">
+            <td class="center"><%= order_tour.place + 1 %></td>
+            <td class="center"><%= order_tour.order ? order_tour.order.order_ref : '-' %></td>
+            <td><%= order_tour.location %><%= image_tag('Lock.png', size: "17x17", class: "locked_icon") %></td>
+        <% end %>
+          <td class="center"><%= time_of_arrivals[index].strftime("%H:%M") %></td>
+          <td class="center"><%= Time.at(order_tour.duration * 60).utc.strftime("%H:%M") %></td>
+          <td><%= order_tour.comment %></td>
+          <td>
+            <% if is_editable_order_tour?(order_tour) && @tour.approved? %>
+              <%= button_to remove_order_tour_path(@tour, order_tour_id: order_tour.id), method: :post, :title => t('helpers.links.destroy'), :class => 'btn btn-danger btn-xs' do %>
+                  <%= fa_icon "trash 1x" %>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      <tr class="unsortable">
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="center"><strong><%= Time.at(@order_tours.inject(0){ |sum, x| sum + x.duration * 60 }).utc.strftime("%H:%M") %></strong></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <div style='width: 100%'>
+    <div id="map" style='width: 100%; height: 400px;'></div>
+  </div>
+
+</div>
+<script>
+function initMap() {
+  createMap(document.getElementById('map'));
+    <% tmp_array_latidude = [] %>
+    <% tmp_array_longitude = [] %>
+  <% @order_tours.each_with_index do | order_tour, index | %>
+    // set Marker
+    <% marker_not_set = TRUE %>
+    <% tmp_array_latidude.each_with_index do |a, index_lat| %>
+      <% if (tmp_array_latidude[index_lat] == order_tour.latitude) && (tmp_array_longitude[index_lat] == order_tour.longitude) %>
+        setMarker(parseFloat(<%= order_tour.latitude + 0.001%>), parseFloat(<%= order_tour.longitude + 0.001%>),"<%= order_tour.place + 1 %>");
+        <% marker_not_set = FALSE %>
+        <% tmp_array_latidude << order_tour.latitude + 0.001 %>
+        <% tmp_array_longitude << order_tour.longitude + 0.001 %>
+        <% break %>
+      <% end %>
+    <% end %>
+    <% if marker_not_set %>
+      setMarker(parseFloat(<%= order_tour.latitude %>), parseFloat(<%= order_tour.longitude %>),"<%= order_tour.place + 1 %>");
+      <% tmp_array_latidude << order_tour.latitude %>
+      <% tmp_array_longitude << order_tour.longitude %>
+    <% end %>
+
+    // set Route
+    <% if (index < @order_tours.length - 1) %>
+      var origin = {lat:<%= @order_tours[index].latitude.blank? ? 0 : @order_tours[index].latitude %>, lng: <%= @order_tours[index].longitude.blank? ? 0 : @order_tours[index].longitude %>};
+      var destination = {lat: <%= @order_tours[index + 1].latitude.blank? ? 0 : @order_tours[index + 1].latitude %>, lng: <%= @order_tours[index + 1].longitude.blank? ? 0 : @order_tours[index + 1].longitude %>};
+      setRoute(origin, destination);
+    <% end %>
+  <% end %>
+}
+initMap();
+</script>
+
 <% else %>
-ZUGANG VERWEIGERT
+    ZUGANG VERWEIGERT
 <% end %>

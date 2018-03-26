@@ -1,17 +1,28 @@
-<% if current_user.role == "admin" %>
-  <%= simple_form_for @depot do |f| %>
-    <%= f.association :user %>
-    <%= f.association :company %>
-    <%= f.input :name %>
-    <%= f.input :address %>
-    <%= f.input :duration %>
-    <%= f.button :submit %>
-  <% end %>
-<% elsif %>
-  <%= simple_form_for @depot do |f| %>
-    <%= f.input :name %>
-    <%= f.input :address %>
-    <%= f.input :duration %>
-    <%= f.button :submit %>
+<% if current_user.is_admin? || (current_user.is_superadmin? && current_user.company_id?)%>
+  <%= simple_form_for @depot, validate: true do |f| %>
+    <%= f.input :name, prompt: :translate %>
+    <%= f.input :address, prompt: :translate, input_html: { id: 'address' } %>
+    <div id="working_time_heading"><b><%=t('attributes.duration') %></b></div>
+    <%= f.hidden_field :duration, as: :integer, prompt: :translate %>
+
+     <div class="form-inline">
+
+       <div class="form-group">
+          <div class="form-inline">   
+          <%= f.input :hour, collection: (0..23), :selected => (@depot.hour ? @depot.hour : 0),label: false %>
+          <b>:</b>
+          </div>
+        <%=t('attributes.hours') %>
+       </div>
+
+       <div class="form-group">
+          <div class="form-inline">   
+          <%= f.input :minute, collection: (0..59), :selected => (@depot.minute ? @depot.minute : 0), label: false  %>
+          </div>
+      <%=t('attributes.minutes') %>
+       </div> 
+    </div>
+    <br>
+    <%= f.button :submit, prompt: :translate %>
   <% end %>
 <% end %>
